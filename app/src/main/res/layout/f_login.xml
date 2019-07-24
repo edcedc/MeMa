@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingLeft="@dimen/px60"
+        android:paddingRight="@dimen/px40"
+        tools:ignore="MissingConstraints">
+
+        <android.support.v7.widget.AppCompatImageView
+            android:id="@+id/iv_img"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/px100"
+            android:background="@mipmap/y1"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.flyco.tablayout.CommonTabLayout
+            android:id="@+id/tb_layout"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginTop="@dimen/px50"
+            android:layout_marginBottom="@dimen/px20"
+            app:layout_constraintTop_toBottomOf="@id/iv_img"
+            app:tl_divider_width="@dimen/px1"
+            app:tl_indicator_color="@color/red_EE3257"
+            app:tl_indicator_width_equal_title="true"
+            app:tl_tab_padding="15dp"
+            app:tl_tab_space_equal="true"
+            app:tl_textSelectColor="@color/red_EE3257"
+            app:tl_textUnselectColor="@color/red_F58FB5"
+            app:tl_textsize="18sp" />
+
+        <android.support.v7.widget.AppCompatImageView
+            android:background="@mipmap/y3"
+            android:visibility="gone"
+            app:layout_constraintTop_toBottomOf="@id/tb_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <android.support.v7.widget.AppCompatEditText
+            android:id="@+id/et_phone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/px60"
+            android:background="@null"
+            android:hint="@string/please_phone"
+            android:inputType="phone"
+            android:maxLength="11"
+            android:paddingTop="@dimen/px20"
+            android:paddingBottom="@dimen/px20"
+            android:textSize="@dimen/size26"
+            app:layout_constraintTop_toBottomOf="@id/tb_layout" />
+
+        <View
+            android:id="@+id/v_p"
+            style="@style/divider_1"
+            app:layout_constraintTop_toBottomOf="@id/et_phone" />
+
+        <android.support.v7.widget.AppCompatEditText
+            android:id="@+id/et_code"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/px50"
+            android:background="@null"
+            android:hint="@string/please_code"
+            android:paddingTop="@dimen/px20"
+            android:paddingBottom="@dimen/px20"
+            android:textSize="@dimen/size26"
+            app:layout_constraintTop_toBottomOf="@id/v_p" />
+
+        <com.flyco.roundview.RoundTextView
+            android:id="@+id/tv_code"
+            app:rv_strokeWidth="@dimen/px2"
+            android:padding="@dimen/px10"
+            app:rv_strokeColor="@color/red_F58FB5"
+            android:ems="6"
+            android:gravity="center"
+            app:layout_constraintTop_toTopOf="@id/et_code"
+            app:layout_constraintBottom_toBottomOf="@id/et_code"
+            app:layout_constraintRight_toRightOf="parent"
+            android:textColor="@color/red_F58FB5"
+            app:rv_cornerRadius="@dimen/px10"
+            android:text="获取验证码"
+            android:textSize="@dimen/size20"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <View
+            android:id="@+id/v_c"
+            style="@style/divider_1"
+            app:layout_constraintTop_toBottomOf="@id/et_code" />
+
+        <android.support.v7.widget.AppCompatEditText
+            android:id="@+id/et_pwd"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/px50"
+            android:background="@null"
+            android:hint="@string/please_pwd3"
+            android:inputType="textPassword"
+            android:paddingTop="@dimen/px20"
+            android:paddingBottom="@dimen/px20"
+            android:textSize="@dimen/size26"
+            app:layout_constraintTop_toBottomOf="@id/v_c" />
+
+        <View
+            android:id="@+id/v_pw"
+            style="@style/divider_1"
+            app:layout_constraintTop_toBottomOf="@id/et_pwd" />
+
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/bt_submit"
+            style="@style/RoundTextView"
+            android:layout_marginTop="@dimen/px130"
+            android:text="@string/login"
+            app:layout_constraintTop_toBottomOf="@id/v_pw" />
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/tv_forget"
+            style="@style/Tv11gray"
+            android:padding="@dimen/px20"
+            android:text="@string/forget_pwd"
+            app:layout_constraintTop_toBottomOf="@id/bt_submit" />
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/tv_register"
+            style="@style/Tv11gray"
+            android:padding="@dimen/px20"
+            android:visibility="gone"
+            android:text="@string/new_register"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/bt_submit" />
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/tv_agreement"
+            style="@style/Tv11gray"
+            android:padding="@dimen/px20"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent" />
+
+        <android.support.constraint.Group
+            android:id="@+id/gp_login"
+            android:visibility="visible"
+            app:constraint_referenced_ids="tv_forget, tv_agreement"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <LinearLayout
+            app:layout_constraintRight_toRightOf="parent"
+            android:id="@+id/ly_agreement"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/px80"
+            android:layout_marginTop="@dimen/px40"
+            android:orientation="horizontal"
+            app:layout_constraintTop_toBottomOf="@id/bt_submit">
+
+            <CheckBox
+                android:id="@+id/cb_submit"
+                android:checked="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:button="@drawable/cb_select"
+                android:paddingLeft="@dimen/px20"
+                android:text="我已阅读"
+                android:textColor="@color/tab_gray"
+                android:textSize="@dimen/px24" />
+
+            <TextView
+                android:textColor="@color/red_EE3257"
+                android:id="@+id/tv_agreement1"
+                style="@style/Tv11gray"
+                android:text="《用户注册协议》" />
+
+        </LinearLayout>
+
+        <android.support.constraint.Group
+            android:id="@+id/gp_re"
+            android:visibility="gone"
+            app:constraint_referenced_ids="ly_agreement, et_code, tv_code, v_c"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </android.support.constraint.ConstraintLayout>
+
+</layout>

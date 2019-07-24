@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:ignore="MissingConstraints"
+    android:padding="@dimen/px20"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <com.yc.mema.weight.RoundImageView
+        android:id="@+id/iv_img"
+        android:scaleType="centerCrop"
+        android:src="@mipmap/place_holder"
+        android:layout_width="125dp"
+        android:layout_height="80dp" />
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/tv_title"
+        android:layout_width="0dp"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toRightOf="@id/iv_img"
+        android:layout_marginLeft="@dimen/px20"
+        style="@style/Tv15black" />
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/tv_time"
+        app:layout_constraintBottom_toBottomOf="@id/iv_img"
+        app:layout_constraintRight_toRightOf="parent"
+        style="@style/Tv11gray" />
+
+    <CheckBox
+        android:visibility="gone"
+        android:id="@+id/cb_submit"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_margin="@dimen/px20"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:button="@drawable/cb_collection"/>
+
+
+</android.support.constraint.ConstraintLayout>

@@ -1,0 +1,60 @@
+<resources>
+    <string name="app_name">么马生日</string>
+    <string name="setting" translatable="false">设置</string>
+    <string name="resume" translatable="false">Resume</string>
+    <string name="title_dialog" translatable="false">Tips</string>
+    <string name="not_wx_pay" translatable="false">您未安装最新版本微信，不支持微信支付，请安装或升级微信版本</string>
+    <string name="message_permission_rationale">授予下列权限以继续程序:\n\n%1$s</string>
+    <string name="message_overlay_failed">您的电话不允许我们使用其他应用程序.</string>
+    <string name="message_permission_always_failed">我们需要以下权限，请在设置中为我们开启：\n\n%1$s</string>
+    <string name="share_title" translatable="false">神奇动物世界</string>
+    <string name="share_content" translatable="false">抢红包，听故事，跟国宝合影</string>
+
+
+    <!--提示语-->
+    <string name="error_phone" translatable="false">手机号码格式错误</string>
+    <string name="error_phone1" translatable="false">手机号码或验证码为空</string>
+    <string name="error_" translatable="false">请输入完整</string>
+    <string name="error_nickname" translatable="false">请输入您的昵称</string>
+    <string name="error_pwd_length" translatable="false">密码位于6~16位</string>
+    <string name="error_head" translatable="false">请上传您的头像</string>
+    <string name="please_phone" translatable="false">请输入手机号</string>
+    <string name="please_code" translatable="false">请输入验证码</string>
+    <string name="please_pwd1" translatable="false">请再次输入密码</string>
+    <string name="please_pwd2" translatable="false">两次密码不一致</string>
+    <string name="please_pwd3" translatable="false">请输入密码</string>
+    <string name="error_1" translatable="false">请阅读协议</string>
+    <string name="please_name" translatable="false">输入昵称</string>
+
+    <string name="submit" translatable="false">确定</string>
+    <string name="submit1" translatable="false">完成</string>
+    <string name="cancel" translatable="false">取消</string>
+    <string name="login" translatable="false">登录</string>
+    <string name="register" translatable="false">注册</string>
+    <string name="new_register" translatable="false">新用户注册</string>
+    <string name="forget_pwd" translatable="false">忘记密码</string>
+    <string name="reset_password" translatable="false">重置密码</string>
+    <string name="information" translatable="false">完善信息</string>
+    <string name="please_hp" translatable="false">选择您的生日</string>
+    <string name="birthday_prone" translatable="false">生日趴</string>
+    <string name="consult" translatable="false">咨询</string>
+    <string name="gift" translatable="false">礼包</string>
+    <string name="birthday_memorandum" translatable="false">生日备忘录</string>
+    <string name="set" translatable="false">设置</string>
+    <string name="collection" translatable="false">收藏</string>
+    <string name="manage" translatable="false">管理</string>
+    <string name="election" translatable="false">全选</string>
+    <string name="delete" translatable="false">删除</string>
+    <string name="head" translatable="false">头像</string>
+    <string name="user_head" translatable="false">个人头像</string>
+    <string name="mema" translatable="false">么马号</string>
+    <string name="birthday" translatable="false">生日</string>
+    <string name="sex" translatable="false">性别</string>
+    <string name="address" translatable="false">地区</string>
+    <string name="me_zking" translatable="false">我的二维码</string>
+    <string name="name" translatable="false">名字</string>
+    <string name="user_info" translatable="false">个人信息</string>
+    <string name="set_name" translatable="false">设置名字</string>
+
+
+</resources>
