@@ -18,8 +18,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|center"
         android:orientation="vertical"
-        app:rv_backgroundColor="@color/white"
-        app:rv_cornerRadius="@dimen/px20">
+        app:rv_backgroundColor="@color/white">
 
         <TextView
             android:id="@+id/tv_photo"

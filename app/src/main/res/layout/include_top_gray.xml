@@ -37,6 +37,7 @@
             android:paddingRight="15dp"
             android:id="@+id/top_right_fy"
             android:layout_width="wrap_content"
+            android:visibility="gone"
             android:layout_height="match_parent"
             android:layout_gravity="right" >
 
@@ -45,9 +46,9 @@
                 app:rv_cornerRadius="@dimen/px10"
                 android:paddingTop="@dimen/px10"
                 android:paddingBottom="@dimen/px10"
-                android:paddingLeft="@dimen/px20"
-                android:paddingRight="@dimen/px20"
-                app:rv_backgroundColor="@color/red_F58FB5"
+                android:paddingLeft="@dimen/px30"
+                android:paddingRight="@dimen/px30"
+                app:rv_backgroundColor="@color/red_F67690"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"

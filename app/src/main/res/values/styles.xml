@@ -64,6 +64,12 @@
         <item name="android:background">@color/white_f4f4f4</item>
     </style>
 
+    <style name="divider_3">
+        <item name="android:layout_height">1dp</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:background">@color/white_f4f4f4</item>
+    </style>
+
     <style name="myTransparent">
         <item name="android:windowBackground">@color/transparent</item>
         <item name="android:windowNoTitle">true</item>
@@ -88,10 +94,9 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:textColor">@android:color/white</item>
-        <item name="android:textSize">@dimen/size36</item>
-        <item name="android:padding">@dimen/px20</item>
+        <item name="android:textSize">@dimen/size32</item>
+        <item name="android:padding">@dimen/px30</item>
         <item name="android:gravity">center</item>
-        <item name="android:background">@mipmap/y5</item>
         <item name="android:layout_gravity">center</item>
     </style>
 

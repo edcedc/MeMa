@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">么马生日</string>
+    <string name="app_name">么马</string>
     <string name="setting" translatable="false">设置</string>
     <string name="resume" translatable="false">Resume</string>
     <string name="title_dialog" translatable="false">Tips</string>
@@ -9,8 +9,7 @@
     <string name="message_permission_always_failed">我们需要以下权限，请在设置中为我们开启：\n\n%1$s</string>
     <string name="share_title" translatable="false">神奇动物世界</string>
     <string name="share_content" translatable="false">抢红包，听故事，跟国宝合影</string>
-
-
+    <string name="digits" translatable="false">ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890</string>
     <!--提示语-->
     <string name="error_phone" translatable="false">手机号码格式错误</string>
     <string name="error_phone1" translatable="false">手机号码或验证码为空</string>
@@ -27,6 +26,7 @@
     <string name="please_name" translatable="false">输入昵称</string>
 
     <string name="submit" translatable="false">确定</string>
+    <string name="submit2" translatable="false">提交</string>
     <string name="submit1" translatable="false">完成</string>
     <string name="cancel" translatable="false">取消</string>
     <string name="login" translatable="false">登录</string>
@@ -48,13 +48,45 @@
     <string name="head" translatable="false">头像</string>
     <string name="user_head" translatable="false">个人头像</string>
     <string name="mema" translatable="false">么马号</string>
+    <string name="set_mema" translatable="false">设置么马号</string>
     <string name="birthday" translatable="false">生日</string>
     <string name="sex" translatable="false">性别</string>
+    <string name="set_sex" translatable="false">设置性别</string>
     <string name="address" translatable="false">地区</string>
+    <string name="set_address" translatable="false">地区设置</string>
     <string name="me_zking" translatable="false">我的二维码</string>
     <string name="name" translatable="false">名字</string>
     <string name="user_info" translatable="false">个人信息</string>
     <string name="set_name" translatable="false">设置名字</string>
+    <string name="nan" translatable="false">男</string>
+    <string name="nv" translatable="false">女</string>
+    <string name="locate" translatable="false">定位到到位置</string>
+    <string name="all" translatable="false">全部</string>
+    <string name="mema1" translatable="false">扫喵二维码图案，加我么马</string>
+    <string name="account" translatable="false">账号与安全</string>
+    <string name="message" translatable="false">新消息通知</string>
+    <string name="privacy" translatable="false">隐私</string>
+    <string name="clear_cash" translatable="false">清除缓存</string>
+    <string name="help" translatable="false">帮助与反馈</string>
+    <string name="about" translatable="false">关于么马</string>
+    <string name="out" translatable="false">退出登陆</string>
+    <string name="change_password" translatable="false">修改密码</string>
+    <string name="change_password1" translatable="false">更改密码</string>
+    <string name="bind_phone" translatable="false">绑定手机号</string>
+    <string name="bind_phone1" translatable="false">更改绑定</string>
+    <string name="mema2" translatable="false">已绑定的手机号不能更改</string>
+    <string name="voice" translatable="false">声音</string>
+    <string name="shock" translatable="false">震动</string>
+    <string name="is_search" translatable="false">是否被搜索</string>
+    <string name="blacklist" translatable="false">黑名单</string>
+    <string name="message_not" translatable="false">新消息通知</string>
+    <string name="recovery" translatable="false">恢复</string>
+    <string name="mema3" translatable="false">请详细描述您遇到的问题</string>
+    <string name="mema4" translatable="false">可留下您的联系方式</string>
+    <string name="scoring" translatable="false">去评分</string>
+    <string name="complaint" translatable="false">投诉</string>
+    <string name="version_update" translatable="false">版本更新</string>
+    <string name="mema5" translatable="false">程诺科技 版权所有 \n Copyright © 2019 chengnuokeji. All Rights Reserved.</string>
 
 
 </resources>

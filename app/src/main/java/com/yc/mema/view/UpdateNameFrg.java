@@ -44,4 +44,13 @@ public class UpdateNameFrg extends BaseFragment<InformationPresenter, FNameBindi
 
     }
 
+    @Override
+    public void setRefreshLayoutMode(int totalRow) {
+
+    }
+
+    @Override
+    public void setData(Object data) {
+
+    }
 }

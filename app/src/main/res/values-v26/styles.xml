@@ -7,18 +7,6 @@
         <item name="android:windowAnimationStyle">@android:style/Animation.Translucent</item>
     </style>
 
-    <style name="RoundTextView">
-        <item name="android:text">xxxx</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:textColor">@android:color/white</item>
-        <item name="android:textSize">@dimen/size30</item>
-        <item name="android:padding">@dimen/px20</item>
-        <item name="android:background">@drawable/btn_check</item>
-        <item name="android:gravity">center</item>
-        <item name="android:layout_gravity">center</item>
-    </style>
-
     <style name="Tv12white" parent="TextStyle">
         <item name="android:textColor">@color/white</item>
         <item name="android:textSize">@dimen/size24</item>

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+    </data>
+
+    <LinearLayout
+        android:background="@color/white_f4f4f4"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <include layout="@layout/include_top"/>
+
+        <com.flyco.roundview.RoundLinearLayout
+            android:layout_margin="@dimen/px40"
+            android:orientation="vertical"
+            app:rv_cornerRadius="@dimen/px10"
+            app:rv_backgroundColor="@color/white"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+
+            <com.yc.mema.weight.CircleImageView
+                android:id="@+id/iv_head"
+                android:layout_marginTop="@dimen/px50"
+                android:src="@mipmap/place_holder_user"
+                android:layout_width="@dimen/px180"
+                android:layout_height="@dimen/px180" />
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/tv_name"
+                android:layout_marginTop="@dimen/px20"
+                android:textSize="@dimen/size40"
+                style="@style/Tv15black" />
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/tv_birthday"
+                android:layout_marginTop="@dimen/px10"
+                style="@style/Tv15gray" />
+            
+            <android.support.v7.widget.AppCompatImageView
+                android:id="@+id/iv_zking"
+                android:layout_marginTop="@dimen/px20"
+                android:src="@mipmap/place_holder"
+                android:layout_width="170dp"
+                android:layout_height="170dp" />
+
+            <android.support.v7.widget.AppCompatTextView
+                android:layout_marginTop="@dimen/px100"
+                android:layout_marginBottom="@dimen/px40"
+                android:text="@string/mema1"
+                style="@style/Tv15gray" />
+
+        </com.flyco.roundview.RoundLinearLayout>
+
+    </LinearLayout>
+
+</layout>

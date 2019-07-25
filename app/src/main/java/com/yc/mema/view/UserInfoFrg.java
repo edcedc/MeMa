@@ -9,6 +9,10 @@ import com.yc.mema.base.BasePresenter;
 import com.yc.mema.base.User;
 import com.yc.mema.controller.UIHelper;
 import com.yc.mema.databinding.FInfoBinding;
+import com.yc.mema.impl.InformationContract;
+import com.yc.mema.presenter.InformationPresenter;
+import com.yc.mema.utils.DatePickerUtils;
+import com.yc.mema.utils.GlideLoadingUtils;
 
 import org.json.JSONObject;
 
@@ -19,7 +23,7 @@ import org.json.JSONObject;
  * Time: 19:43
  *  用户信息
  */
-public class UserInfoFrg extends BaseFragment<BasePresenter, FInfoBinding> implements View.OnClickListener {
+public class UserInfoFrg extends BaseFragment<InformationPresenter, FInfoBinding> implements InformationContract.View, View.OnClickListener {
 
     public static UserInfoFrg newInstance() {
         
@@ -65,6 +69,8 @@ public class UserInfoFrg extends BaseFragment<BasePresenter, FInfoBinding> imple
         mB.lySex.setOnClickListener(this);
         mB.lyAddress.setOnClickListener(this);
         mB.lyZking.setOnClickListener(this);
+
+        GlideLoadingUtils.load(act, "", mB.ivHead);
     }
 
     @Override
@@ -77,21 +83,37 @@ public class UserInfoFrg extends BaseFragment<BasePresenter, FInfoBinding> imple
                 UIHelper.startUpdateNameFrg(this);
                 break;
             case R.id.ly_moma:
-
+                UIHelper.startMemaFrg(this);
                 break;
             case R.id.ly_birthday:
-
+                DatePickerUtils.getYearMonthDayPicker(act, "选择生日", new DatePickerUtils.OnYearMonthDayListener() {
+                    @Override
+                    public void onTime(String year, String month, String day) {
+                        mB.tvBirthday.setText(year + "-" + month + "-" + day);
+                        mPresenter.birthday(mB.tvBirthday.getText().toString());
+                    }
+                });
                 break;
             case R.id.ly_sex:
-
+                UIHelper.startSexFrg(this);
                 break;
             case R.id.ly_address:
-
+                UIHelper.startAddressFrg(this);
                 break;
             case R.id.ly_zking:
-
+                UIHelper.startZkingFrg(this);
                 break;
 
         }
+    }
+
+    @Override
+    public void setRefreshLayoutMode(int totalRow) {
+
+    }
+
+    @Override
+    public void setData(Object data) {
+
     }
 }

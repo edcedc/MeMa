@@ -18,12 +18,13 @@ import com.yc.mema.base.BaseBottomSheetFrag;
 public class CameraBottomFrg extends BaseBottomSheetFrag implements View.OnClickListener{
 
 
-    private boolean isSave = false;
+    private int type;
+
     public CameraBottomFrg() {
     }
 
-    public CameraBottomFrg(boolean b) {
-        this.isSave = b;
+    public CameraBottomFrg(int type) {
+        this.type = type;
     }
 
     @Override
@@ -38,7 +39,20 @@ public class CameraBottomFrg extends BaseBottomSheetFrag implements View.OnClick
         view.findViewById(R.id.tv_photo).setOnClickListener(this);
         view.findViewById(R.id.tv_save).setOnClickListener(this);
         view.findViewById(R.id.layout).setOnClickListener(this);
-        view.findViewById(R.id.tv_save).setVisibility(isSave ? View.VISIBLE : View.GONE);
+
+        switch (type){
+            case 0:
+                view.findViewById(R.id.tv_save).setVisibility(View.VISIBLE);
+                break;
+            case 1:
+                view.findViewById(R.id.tv_camera).setVisibility(View.GONE);
+                view.findViewById(R.id.tv_photo).setVisibility(View.GONE);
+                view.findViewById(R.id.tv_save).setVisibility(View.VISIBLE);
+                break;
+            case 2:
+
+                break;
+        }
     }
 
     @Override
@@ -59,7 +73,9 @@ public class CameraBottomFrg extends BaseBottomSheetFrag implements View.OnClick
                  }
                 break;
             case R.id.tv_save:
-
+                if (listener != null){
+                    listener.save();
+                }
                 break;
         }
     }
@@ -72,6 +88,7 @@ public class CameraBottomFrg extends BaseBottomSheetFrag implements View.OnClick
     public interface onCameraListener{
         void camera();
         void photo();
+        void save();
     }
 
 

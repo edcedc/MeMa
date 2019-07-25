@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:gravity="center_vertical"
+    android:orientation="vertical">
+
+    <com.flyco.roundview.RoundTextView
+        app:rv_backgroundColor="@color/red_F67690"
+        android:id="@+id/catalog"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="#E0E0E0"
+        android:textColor="#ffffff"
+        app:rv_cornerRadius_BR="@dimen/px30"
+        app:rv_cornerRadius_TR="@dimen/px30"
+        android:layout_weight="1.0"
+        android:paddingLeft="@dimen/px100"
+        android:paddingRight="@dimen/px50"
+        android:paddingTop="5dip"
+        android:paddingBottom="5dip"
+        android:text="A"/>
+
+    <LinearLayout
+        android:gravity="center"
+        android:layout_margin="@dimen/px20"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <com.yc.mema.weight.CircleImageView
+            android:id="@+id/iv_head"
+            android:layout_marginLeft="@dimen/px50"
+            android:layout_marginRight="@dimen/px30"
+            android:src="@mipmap/place_holder_user"
+            android:layout_width="@dimen/px100"
+            android:layout_height="@dimen/px100" />
+
+        <TextView
+            android:id="@+id/title"
+           style="@style/Tv15black"
+            android:layout_weight="1.0"
+            android:layout_marginLeft="5dip"
+            android:paddingTop="10dip"
+            android:paddingBottom="10dip"/>
+
+        <TextView
+            android:id="@+id/tv_huifu"
+            style="@style/Tv15gray"
+            android:text="@string/recovery"/>
+
+    </LinearLayout>
+
+</LinearLayout>

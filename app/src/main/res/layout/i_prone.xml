@@ -8,7 +8,7 @@
 
     <com.yc.mema.weight.RoundImageView
         android:id="@+id/iv_img"
-        android:scaleType="fitXY"
+        android:scaleType="centerCrop"
         android:src="@mipmap/place_holder"
         android:layout_width="match_parent"
         android:layout_height="140dp"/>

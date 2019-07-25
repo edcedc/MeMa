@@ -21,10 +21,10 @@ public class WPopupWindow extends PopupWindow {
 
     private Context context;
     private boolean isBgAlpha=true;
-    private float alpha=0.5f;
+    private float alpha = 1f;
 
     public WPopupWindow(View contentView) {
-        this(contentView, ViewGroup.LayoutParams.MATCH_PARENT , ViewGroup.LayoutParams.WRAP_CONTENT);
+        this(contentView, ViewGroup.LayoutParams.MATCH_PARENT , ViewGroup.LayoutParams.MATCH_PARENT);
     }
 
     public WPopupWindow(Context context) {
@@ -131,10 +131,8 @@ public class WPopupWindow extends PopupWindow {
             lp.alpha = alpha;
             //保证华为honor颜色变暗
             lp.dimAmount=alpha;
-            ((Activity) context).getWindow().setFlags(WindowManager.LayoutParams.FLAG_BLUR_BEHIND,
-                    WindowManager.LayoutParams.FLAG_BLUR_BEHIND);
+            ((Activity) context).getWindow().setFlags(WindowManager.LayoutParams.FLAG_BLUR_BEHIND,WindowManager.LayoutParams.FLAG_BLUR_BEHIND);
             ((Activity) context).getWindow().addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
-            ////////////////////////////////////////////////////
             ((Activity) context).getWindow().setAttributes(lp);
         }
     }

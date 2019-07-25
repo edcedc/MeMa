@@ -106,7 +106,7 @@ public class FiveFrg extends BaseFragment<FivePresenter, FFiveBinding> implement
 
                 break;
             case R.id.tv_set:
-
+                UIHelper.startSetAct();
                 break;
         }
     }

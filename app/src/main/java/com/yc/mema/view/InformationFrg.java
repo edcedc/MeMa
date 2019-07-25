@@ -77,6 +77,11 @@ public class InformationFrg extends BaseFragment<InformationPresenter, FInformat
                 PictureSelectorTool.photo(act, CameraInEvent.HEAD_PHOTO, true);
                 if (cameraBottomFrg != null && cameraBottomFrg.isShowing())cameraBottomFrg.dismiss();
             }
+
+            @Override
+            public void save() {
+
+            }
         });
     }
 
@@ -95,7 +100,7 @@ public class InformationFrg extends BaseFragment<InformationPresenter, FInformat
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.tv_hp:
-                DatePickerUtils.getYearMonthDayPicker(act, new DatePickerUtils.OnYearMonthDayListener() {
+                DatePickerUtils.getYearMonthDayPicker(act, "选择生日", new DatePickerUtils.OnYearMonthDayListener() {
                     @Override
                     public void onTime(String year, String month, String day) {
                         mB.tvHp.setText(year + "-" + month + "-" + day);
@@ -116,5 +121,15 @@ public class InformationFrg extends BaseFragment<InformationPresenter, FInformat
     public void onDestroy() {
         super.onDestroy();
         EventBus.getDefault().unregister(this);
+    }
+
+    @Override
+    public void setRefreshLayoutMode(int totalRow) {
+
+    }
+
+    @Override
+    public void setData(Object data) {
+
     }
 }

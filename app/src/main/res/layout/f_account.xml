@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <include layout="@layout/include_top_gray" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:orientation="vertical"
+            tools:ignore="MissingConstraints">
+
+            <LinearLayout
+                android:id="@+id/ly_phone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="?actionBarItemBackground"
+                android:orientation="horizontal"
+                android:padding="@dimen/px30">
+
+                <android.support.v7.widget.AppCompatTextView
+                    style="@style/Tv15black"
+                    android:layout_weight="1"
+                    android:text="@string/bind_phone" />
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/tv_phone"
+                    style="@style/Tv15gray"
+                    android:drawableRight="@mipmap/y16"
+                    android:drawablePadding="@dimen/px20" />
+
+            </LinearLayout>
+
+            <View style="@style/divider_3" />
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/tv_pwd"
+                style="@style/Tv15black"
+                android:layout_width="match_parent"
+                android:background="?actionBarItemBackground"
+                android:drawableRight="@mipmap/y16"
+                android:drawablePadding="@dimen/px20"
+                android:padding="@dimen/px30"
+                android:text="@string/change_password" />
+
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</layout>

@@ -63,7 +63,7 @@ public class HeadFrg extends BaseFragment<InformationPresenter, FHeadBinding> im
         mB.ivHead.setLayoutParams(params);
 
         if (cameraBottomFrg == null){
-            cameraBottomFrg = new CameraBottomFrg(true);
+            cameraBottomFrg = new CameraBottomFrg(0);
         }
         cameraBottomFrg.setCameraListener(new CameraBottomFrg.onCameraListener() {
             @Override
@@ -76,6 +76,11 @@ public class HeadFrg extends BaseFragment<InformationPresenter, FHeadBinding> im
             public void photo() {
                 PictureSelectorTool.photo(act, CameraInEvent.HEAD_PHOTO, true);
                 if (cameraBottomFrg != null && cameraBottomFrg.isShowing())cameraBottomFrg.dismiss();
+            }
+
+            @Override
+            public void save() {
+
             }
         });
 
@@ -99,4 +104,13 @@ public class HeadFrg extends BaseFragment<InformationPresenter, FHeadBinding> im
         cameraBottomFrg.show(getChildFragmentManager(), "dialog");
     }
 
+    @Override
+    public void setRefreshLayoutMode(int totalRow) {
+
+    }
+
+    @Override
+    public void setData(Object data) {
+
+    }
 }

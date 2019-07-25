@@ -19,6 +19,8 @@
     <uses-permission android:name="android.permission.READ_SETTINGS" />
     <!--如果是安卓8.0，应用编译配置的targetSdkVersion>=26，请务必添加以下权限 -->
     <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
+    <!-- 获取应用市场-->
+    <!--<category android:name="android.intent.category.APP_MARKET" />-->
 
     <application
         android:name=".mar.MyApplication"
@@ -41,7 +43,7 @@
             android:windowSoftInputMode="adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
+                <category android:name="android.intent.category.APP_MARKET" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -62,6 +64,11 @@
             android:screenOrientation="portrait"/>
         <activity
             android:name=".view.act.UserInfoAct"
+            android:resizeableActivity="true"
+            android:theme="@style/AppTheme.NoActionBar.SwipeBack"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".view.act.SetAct"
             android:resizeableActivity="true"
             android:theme="@style/AppTheme.NoActionBar.SwipeBack"
             android:screenOrientation="portrait"/>

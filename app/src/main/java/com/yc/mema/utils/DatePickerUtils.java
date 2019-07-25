@@ -19,14 +19,14 @@ import cn.addapp.pickers.picker.DatePicker;
 public class DatePickerUtils {
 
 
-    public static void getYearMonthDayPicker(Activity act, final OnYearMonthDayListener listener){
+    public static void getYearMonthDayPicker(Activity act, String title, final OnYearMonthDayListener listener){
         String[] times = TimeUtils.getNowString(new SimpleDateFormat("yyyy-MM-dd")).split("-");
         Integer year = Integer.valueOf(times[0]);
         Integer mon = Integer.valueOf(times[1]);
         Integer day = Integer.valueOf(times[2]);
 
         final DatePicker picker = new DatePicker(act);
-        picker.setTitleText("选择生日");
+        picker.setTitleText(title);
         picker.setSubmitTextColor(Color.parseColor("#FA8099"));
         picker.setCanLoop(true);
         picker.setWheelModeEnable(true);

@@ -118,7 +118,7 @@
             android:id="@+id/tv_br"
             android:padding="@dimen/px30"
             android:background="?actionBarItemBackground"
-            android:drawableRight="@mipmap/close"
+            android:drawableRight="@mipmap/y16"
             android:layout_width="match_parent"
             android:text="@string/birthday_prone"
             style="@style/Tv15black" />
@@ -127,7 +127,7 @@
             android:id="@+id/tv_bm"
             android:padding="@dimen/px30"
             android:background="?actionBarItemBackground"
-            android:drawableRight="@mipmap/close"
+            android:drawableRight="@mipmap/y16"
             android:layout_width="match_parent"
             android:text="@string/birthday_memorandum"
             style="@style/Tv15black" />
@@ -138,7 +138,7 @@
             android:id="@+id/tv_set"
             android:padding="@dimen/px30"
             android:background="?actionBarItemBackground"
-            android:drawableRight="@mipmap/close"
+            android:drawableRight="@mipmap/y16"
             android:layout_width="match_parent"
             android:text="@string/set"
             style="@style/Tv15black" />
