@@ -72,6 +72,11 @@
             android:resizeableActivity="true"
             android:theme="@style/AppTheme.NoActionBar.SwipeBack"
             android:screenOrientation="portrait"/>
+        <activity
+            android:name=".view.act.GiftAct"
+            android:resizeableActivity="true"
+            android:theme="@style/AppTheme.NoActionBar.SwipeBack"
+            android:screenOrientation="portrait"/>
 
         <service android:name=".service.InitializeService"
             android:exported="false"/>

@@ -21,6 +21,7 @@ import com.yanzhenjie.permission.Permission;
 import com.yanzhenjie.permission.Setting;
 import com.yc.mema.R;
 import com.yc.mema.base.BasePresenter;
+import com.yc.mema.bean.DataBean;
 import com.yc.mema.controller.UIHelper;
 import com.yc.mema.databinding.FSplashBinding;
 import com.yc.mema.utils.GlideImageLoader;
@@ -77,10 +78,16 @@ public class SplashFrg extends BaseFragment<BasePresenter, FSplashBinding> imple
     @Override
     protected void initView(View view) {
         act = getActivity();
-        final List<Integer> images = new ArrayList<>();
-        images.add(R.mipmap.y7);
-        images.add(R.mipmap.y8);
-        images.add(R.mipmap.yingdaoye_4);
+        final List<DataBean> images = new ArrayList<>();
+        DataBean bean1 = new DataBean();
+        bean1.setImg(R.mipmap.y7);
+        images.add(bean1);
+        DataBean bean2 = new DataBean();
+        bean2.setImg(R.mipmap.y8);
+        images.add(bean2);
+        DataBean bean3 = new DataBean();
+        bean3.setImg(R.mipmap.yingdaoye_4);
+        images.add(bean3);
         mB.banner.setImages(images)
                 .setImageLoader(new GlideImageLoader())
                 .setOnBannerListener(this)
@@ -88,10 +95,10 @@ public class SplashFrg extends BaseFragment<BasePresenter, FSplashBinding> imple
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                if (!ShareIsLoginCache.getInstance(act).getIsLogin()){
+                if (!ShareIsLoginCache.getInstance(act).getIsLogin()) {
                     mB.banner.setVisibility(View.VISIBLE);
                     mB.banner.start();
-                }else {
+                } else {
                     handler.sendEmptyMessage(mHandle_splash);
                 }
             }

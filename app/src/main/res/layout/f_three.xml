@@ -1,10 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tl="http://schemas.android.com/apk/res-auto">
 
-    <android.support.constraint.ConstraintLayout
+    <com.yc.mema.weight.LoadingLayout
+        android:id="@+id/loadinglayout"
+        android:background="@color/white"
         android:layout_width="match_parent"
-        android:background="#aa3"
         android:layout_height="match_parent">
 
-    </android.support.constraint.ConstraintLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <View style="@style/title_bar" />
+
+            <LinearLayout
+                android:background="@color/white"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="@dimen/px20">
+
+                <include layout="@layout/include_search" />
+
+            </LinearLayout>
+
+            <com.flyco.tablayout.SlidingTabLayout
+                android:id="@+id/tb_layout"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                tl:tl_tab_padding="15dp"
+                tl:tl_tab_space_equal="false"
+                tl:tl_indicator_color="@color/transparent"
+                tl:tl_textSelectColor="@color/black_333333"
+                tl:tl_textUnselectColor="@color/tab_gray"
+                tl:tl_textsize="14sp" />
+
+            <com.yc.mema.weight.NoScrollViewPager
+                android:id="@+id/viewPager"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+        </LinearLayout>
+
+    </com.yc.mema.weight.LoadingLayout>
+
 </layout>

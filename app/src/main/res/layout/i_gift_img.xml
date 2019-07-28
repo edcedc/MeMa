@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    tools:ignore="MissingConstraints"
+    android:background="?actionBarItemBackground"
+    android:layout_height="match_parent">
+
+    <com.yc.mema.weight.RoundImageView
+        android:id="@+id/iv_img"
+        android:layout_gravity="center"
+        android:scaleType="centerCrop"
+        android:src="@mipmap/place_holder"
+        android:layout_width="match_parent"
+        android:layout_height="81dp"/>
+
+</FrameLayout>

@@ -164,6 +164,7 @@ dependencies {
     implementation  'com.umeng.umsdk:analytics:8.0.0'
     implementation  'com.umeng.umsdk:common:2.0.0'
 
+
     //腾讯X5webview
     implementation files('libs/tbs_sdk_thirdapp_v3.6.0.1352_43618_sharewithdownload_withoutGame_obfs_20180918_120327.jar')
 
@@ -172,6 +173,7 @@ dependencies {
 
     //点击加载框
     implementation project(path: ':ToprightmenuLibrary')
+    implementation project(path: ':cosmocalendar')
     implementation files('libs/umeng-share-core-6.9.6.jar')
     implementation files('libs/umeng-share-QQ-simplify-6.9.6.jar')
     implementation files('libs/umeng-share-sina-simplify-6.9.6.jar')

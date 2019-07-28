@@ -1,5 +1,7 @@
 package com.yc.mema.base;
 
+import android.os.Handler;
+
 import com.lzy.okgo.model.Response;
 import com.yc.mema.bean.BaseListBean;
 import com.yc.mema.bean.BaseResponseBean;
@@ -7,6 +9,7 @@ import com.yc.mema.bean.DataBean;
 import com.yc.mema.callback.Code;
 import com.yc.mema.controller.CloudApi;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.Observer;
@@ -23,7 +26,7 @@ import io.reactivex.functions.Consumer;
 public class BaseListPresenter extends BaseListContract.Presenter{
     @Override
     public void onRequest(String url, int pagerNumber) {
-        CloudApi.list(pagerNumber, url)
+        /*CloudApi.list(pagerNumber, url)
                 .doOnSubscribe(new Consumer<Disposable>() {
                     @Override
                     public void accept(Disposable disposable) throws Exception {
@@ -64,12 +67,23 @@ public class BaseListPresenter extends BaseListContract.Presenter{
                     public void onComplete() {
 
                     }
-                });
+                });*/
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                List<DataBean> list = new ArrayList<>();
+                for (int i = 0;i<15;i++){
+                    list.add(new DataBean());
+                }
+                mView.setData(list);
+                mView.hideLoading();
+            }
+        }, 500);
     }
 
     @Override
     public void onRequest(String url) {
-        CloudApi.list2(url)
+        /*CloudApi.list2(url)
                 .doOnSubscribe(new Consumer<Disposable>() {
                     @Override
                     public void accept(Disposable disposable) throws Exception {
@@ -104,6 +118,17 @@ public class BaseListPresenter extends BaseListContract.Presenter{
                     public void onComplete() {
 
                     }
-                });
+                });*/
+       new Handler().postDelayed(new Runnable() {
+           @Override
+           public void run() {
+               List<DataBean> list = new ArrayList<>();
+               for (int i = 0;i<15;i++){
+                   list.add(new DataBean());
+               }
+               mView.setData(list);
+               mView.hideLoading();
+           }
+       }, 500);
     }
 }

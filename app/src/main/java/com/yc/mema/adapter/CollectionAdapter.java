@@ -18,6 +18,7 @@ import com.flyco.roundview.RoundViewDelegate;
 import com.yc.mema.R;
 import com.yc.mema.base.BaseRecyclerviewAdapter;
 import com.yc.mema.bean.DataBean;
+import com.yc.mema.controller.UIHelper;
 import com.yc.mema.utils.GlideLoadingUtils;
 import com.yc.mema.weight.CircleImageView;
 import com.yc.mema.weight.RoundImageView;
@@ -102,6 +103,12 @@ public class CollectionAdapter extends BaseRecyclerviewAdapter<DataBean> {
                 }
             });
             isDel(viewHolder.cb_submit);
+            viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    UIHelper.startGiftAct();
+                }
+            });
         }
     }
 

@@ -13,7 +13,7 @@ import java.util.List;
 public class DataBean implements Serializable {
 
     private String name;
-    private int img;
+    private int img = -1;
     private boolean isSelect = false;
     private int position;
     private double price;

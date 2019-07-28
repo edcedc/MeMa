@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+        <include layout="@layout/include_top" />
+
+        <com.yc.mema.weight.LoadingLayout
+            android:id="@+id/loadinglayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <com.lcodecore.tkrefreshlayout.TwinklingRefreshLayout
+                android:id="@+id/refreshLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <android.support.v4.widget.NestedScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <LinearLayout
+                        android:descendantFocusability="blocksDescendants"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
+
+                        <android.support.v7.widget.AppCompatTextView
+                            android:id="@+id/tv_title"
+                            style="@style/Tv15black"
+                            android:textStyle="bold"
+                            android:layout_gravity="center"
+                            android:layout_marginTop="@dimen/px40"
+                            android:layout_marginLeft="@dimen/px20"
+                            android:layout_marginRight="@dimen/px20"
+                            android:layout_marginBottom="@dimen/px20"
+                            android:textSize="22sp" />
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="right"
+                            android:layout_marginRight="@dimen/px30"
+                            android:orientation="horizontal">
+
+                            <android.support.v7.widget.AppCompatTextView
+                                android:id="@+id/tv_like"
+                                style="@style/Tv12gray"
+                                android:layout_marginRight="@dimen/px50"
+                                android:drawableLeft="@mipmap/y24"
+                                android:drawablePadding="@dimen/px10"
+                                android:text="0" />
+
+                            <android.support.v7.widget.AppCompatTextView
+                                android:id="@+id/tv_coll"
+                                style="@style/Tv12gray"
+                                android:layout_marginRight="@dimen/px50"
+                                android:drawableLeft="@mipmap/y25"
+                                android:drawablePadding="@dimen/px10"
+                                android:text="0" />
+
+                            <android.support.v7.widget.AppCompatTextView
+                                android:id="@+id/tv_lock"
+                                style="@style/Tv12gray"
+                                android:drawableLeft="@mipmap/y26"
+                                android:drawablePadding="@dimen/px10"
+                                android:text="0" />
+
+                        </LinearLayout>
+
+                        <View
+                            style="@style/divider_3"
+                            android:layout_height="@dimen/px10"
+                            android:layout_marginTop="@dimen/px20" />
+
+                        <android.support.v7.widget.AppCompatTextView
+                            android:id="@+id/tv_time"
+                            style="@style/Tv12gray"
+                            android:layout_margin="@dimen/px30"
+                            android:drawableLeft="@mipmap/y27"
+                            android:drawablePadding="@dimen/px10"
+                            android:text="0" />
+
+                        <android.support.v7.widget.AppCompatTextView
+                            android:id="@+id/tv_phone"
+                            style="@style/Tv12gray"
+                            android:layout_marginLeft="@dimen/px30"
+                            android:drawableLeft="@mipmap/y27"
+                            android:drawablePadding="@dimen/px10"
+                            android:text="0" />
+
+                        <android.support.v7.widget.AppCompatTextView
+                            android:id="@+id/tv_address"
+                            style="@style/Tv12gray"
+                            android:layout_margin="@dimen/px30"
+                            android:drawableLeft="@mipmap/y30"
+                            android:drawablePadding="@dimen/px10"
+                            android:text="0" />
+
+                        <android.support.v7.widget.AppCompatTextView
+                            style="@style/Tv15black"
+                            android:layout_marginLeft="@dimen/px30"
+                            android:text="@string/concessions" />
+
+                        <com.zhy.view.flowlayout.TagFlowLayout
+                            android:id="@+id/fl_label"
+                            android:layout_width="match_parent"
+                            android:layout_marginLeft="@dimen/px20"
+                            android:layout_marginRight="@dimen/px20"
+                            android:layout_height="wrap_content" />
+
+                        <com.yc.mema.weight.WithScrollGridView
+                            android:id="@+id/recyclerView"
+                            android:numColumns="3"
+                            android:layout_margin="@dimen/px30"
+                            android:verticalSpacing="@dimen/px20"
+                            android:horizontalSpacing="@dimen/px20"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:nestedScrollingEnabled="false"
+                            android:overScrollMode="never" />
+
+                    </LinearLayout>
+
+                </android.support.v4.widget.NestedScrollView>
+
+            </com.lcodecore.tkrefreshlayout.TwinklingRefreshLayout>
+
+        </com.yc.mema.weight.LoadingLayout>
+
+    </LinearLayout>
+
+
+</layout>

@@ -103,7 +103,7 @@ public class FiveFrg extends BaseFragment<FivePresenter, FFiveBinding> implement
 
                 break;
             case R.id.tv_bm:
-
+                UIHelper.startBirthdayRecordsFrg(this);
                 break;
             case R.id.tv_set:
                 UIHelper.startSetAct();

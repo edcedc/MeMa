@@ -20,8 +20,8 @@
             android:id="@+id/trm_menu_item_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="#5D5C5A"
-            android:textSize="12sp" />
+            android:textColor="#EE3157"
+            android:textSize="15sp" />
     </LinearLayout>
 
     <View

@@ -4,6 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:ignore="MissingConstraints"
     android:padding="@dimen/px20"
+    android:background="?actionBarItemBackground"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 

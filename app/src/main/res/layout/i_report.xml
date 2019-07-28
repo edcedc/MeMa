@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:orientation="horizontal"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    tools:ignore="MissingConstraints"
+    android:gravity="center"
+    android:background="@color/white"
+    android:padding="@dimen/px30"
+    android:layout_height="wrap_content">
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/tv_locate"
+        style="@style/Tv15black"
+        android:layout_weight="1"/>
+
+    <android.support.v7.widget.AppCompatImageView
+        android:id="@+id/iv_img"
+        android:visibility="gone"
+        android:layout_width="wrap_content"
+        android:background="@mipmap/y18"
+        android:layout_height="wrap_content" />
+
+</LinearLayout>

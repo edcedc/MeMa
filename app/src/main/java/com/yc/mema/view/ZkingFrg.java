@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.ViewTreeObserver;
 
+import com.blankj.utilcode.util.TimeUtils;
 import com.google.zxing.WriterException;
 import com.yc.mema.R;
 import com.yc.mema.base.BaseFragment;
@@ -12,6 +13,7 @@ import com.yc.mema.base.BasePresenter;
 import com.yc.mema.databinding.FZkingBinding;
 import com.yc.mema.event.CameraInEvent;
 import com.yc.mema.utils.GlideLoadingUtils;
+import com.yc.mema.utils.ImageUtils;
 import com.yc.mema.view.bottomFrg.CameraBottomFrg;
 import com.yc.mema.weight.PictureSelectorTool;
 import com.yc.mema.weight.ZXingUtils;
@@ -79,7 +81,8 @@ public class ZkingFrg extends BaseFragment<BasePresenter, FZkingBinding> {
 
             @Override
             public void save() {
-
+                ImageUtils.viewSaveToImage(act, mB.layout);
+                showToast("保存成功");
             }
         });
     }

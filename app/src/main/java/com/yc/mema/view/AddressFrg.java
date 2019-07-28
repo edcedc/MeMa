@@ -66,7 +66,7 @@ public class AddressFrg extends BaseFragment<InformationPresenter, FAddressBindi
                 mPresenter.onRequest( pagerNumber += 1);
             }
         });
-        mB.tvLocate.setText("广州");
+        mB.tvLocation.setText("广州");
     }
 
     @Override

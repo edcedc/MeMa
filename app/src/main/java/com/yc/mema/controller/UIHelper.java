@@ -7,11 +7,14 @@ import com.yc.mema.MainActivity;
 import com.yc.mema.base.BaseFragment;
 import com.yc.mema.view.AboutFrg;
 import com.yc.mema.view.AccountFrg;
+import com.yc.mema.view.AddBirthdayRecordsFrg;
 import com.yc.mema.view.AddressFrg;
 import com.yc.mema.view.BingPhoneFrg;
+import com.yc.mema.view.BirthdayRecordsFrg;
 import com.yc.mema.view.BlackListFrg;
 import com.yc.mema.view.ChangePwdFrg;
 import com.yc.mema.view.CollectionFrg;
+import com.yc.mema.view.ComplaintFrg;
 import com.yc.mema.view.FiveFrg;
 import com.yc.mema.view.ForgetFrg;
 import com.yc.mema.view.HeadFrg;
@@ -20,16 +23,24 @@ import com.yc.mema.view.InformationFrg;
 import com.yc.mema.view.MainFrg;
 import com.yc.mema.view.MemaFrg;
 import com.yc.mema.view.MsgFrg;
+import com.yc.mema.view.OneFrg;
 import com.yc.mema.view.PrivacyFrg;
+import com.yc.mema.view.ReportNewsFrg;
+import com.yc.mema.view.SearchGiftFrg;
+import com.yc.mema.view.SearchNewsFrg;
 import com.yc.mema.view.SetFrg;
 import com.yc.mema.view.SexFrg;
+import com.yc.mema.view.ThreeChildFrg;
+import com.yc.mema.view.ThreeFrg;
 import com.yc.mema.view.UpdateNameFrg;
 import com.yc.mema.view.UserInfoFrg;
 import com.yc.mema.view.ZkingFrg;
+import com.yc.mema.view.act.GiftAct;
 import com.yc.mema.view.act.HtmlAct;
 import com.yc.mema.view.act.LoginAct;
 import com.yc.mema.view.act.SetAct;
 import com.yc.mema.view.act.UserInfoAct;
+import com.zaaach.toprightmenu.TopRightMenu;
 
 
 /**
@@ -99,7 +110,7 @@ public final class UIHelper {
     }
 
     /**
-     *  收藏
+     *  y24
      */
     public static void startCollectionFrg(BaseFragment root) {
         CollectionFrg frg = new CollectionFrg();
@@ -176,11 +187,15 @@ public final class UIHelper {
      *  设置地址
      * @param root
      */
-    public static void startAddressFrg(BaseFragment root) {
+    public static void startAddressFrg(BaseFragment root, int type) {
         AddressFrg frg = new AddressFrg();
         Bundle bundle = new Bundle();
         frg.setArguments(bundle);
-        root.start(frg);
+        if (type == 0){
+            ((MainFrg) root.getParentFragment()).startBrotherFragment(frg);
+        }else {
+            root.start(frg);
+        }
     }
 
     /**
@@ -269,5 +284,78 @@ public final class UIHelper {
         Bundle bundle = new Bundle();
         frg.setArguments(bundle);
         root.start(frg);
+    }
+
+    /**
+     *  生日备忘录
+     * @param root
+     */
+    public static void startBirthdayRecordsFrg(BaseFragment root) {
+        BirthdayRecordsFrg frg = new BirthdayRecordsFrg();
+        Bundle bundle = new Bundle();
+        frg.setArguments(bundle);
+        ((MainFrg) root.getParentFragment()).startBrotherFragment(frg);
+    }
+
+    /**
+     *  添加生日记录
+     * @param root
+     */
+    public static void startAddBirthdayRecordsFrg(BaseFragment root) {
+        AddBirthdayRecordsFrg frg = new AddBirthdayRecordsFrg();
+        Bundle bundle = new Bundle();
+        frg.setArguments(bundle);
+        root.start(frg);
+    }
+
+    /**
+     *  用户投诉反馈
+     * @param root
+     */
+    public static void startComplaintFrg(BaseFragment root) {
+        ComplaintFrg frg = new ComplaintFrg();
+        Bundle bundle = new Bundle();
+        frg.setArguments(bundle);
+        root.start(frg);
+    }
+
+    /**
+     *  添加生日记录
+     */
+    public static void startGiftAct() {
+        ActivityUtils.startActivity(GiftAct.class);
+    }
+
+    /**
+     *  搜索礼包
+     * @param root
+     */
+    public static void startSearchGiftFrg(BaseFragment root) {
+        SearchGiftFrg frg = new SearchGiftFrg();
+        Bundle bundle = new Bundle();
+        frg.setArguments(bundle);
+        ((MainFrg) root.getParentFragment()).startBrotherFragment(frg);
+    }
+
+    /**
+     *  搜索新闻 咨询
+     * @param root
+     */
+    public static void startSearchNewsFrg(BaseFragment root) {
+        SearchNewsFrg frg = new SearchNewsFrg();
+        Bundle bundle = new Bundle();
+        frg.setArguments(bundle);
+        ((MainFrg) root.getParentFragment()).startBrotherFragment(frg);
+    }
+
+    /**
+     *  举报新闻
+     * @param root
+     */
+    public static void startReportNewsFrg(BaseFragment root) {
+        ReportNewsFrg frg = new ReportNewsFrg();
+        Bundle bundle = new Bundle();
+        frg.setArguments(bundle);
+        ((MainFrg) root.getParentFragment().getParentFragment()).startBrotherFragment(frg);
     }
 }

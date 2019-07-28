@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+    </data>
+
+    <com.yc.mema.weight.LoadingLayout
+        android:id="@+id/loadinglayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <com.lcodecore.tkrefreshlayout.TwinklingRefreshLayout
+            android:id="@+id/refreshLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white_f4f4f4">
+
+            <android.support.v4.widget.NestedScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <LinearLayout
+                    android:descendantFocusability="blocksDescendants"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <com.youth.banner.Banner
+                        android:id="@+id/banner"
+                        android:layout_width="match_parent"
+                        android:layout_height="160dp"
+                        app:image_scale_type="fit_xy"
+                        app:indicator_drawable_selected="@color/red_F67690"
+                        app:indicator_drawable_unselected="@android:color/white"
+                        app:indicator_height="4dp"
+                        app:indicator_margin="4dp"
+                        app:indicator_width="20dp"
+                        app:is_auto_play="true" />
+
+                    <View style="@style/divider_2" />
+
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/recyclerView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:nestedScrollingEnabled="false"
+                        android:overScrollMode="never" />
+
+                </LinearLayout>
+
+            </android.support.v4.widget.NestedScrollView>
+
+        </com.lcodecore.tkrefreshlayout.TwinklingRefreshLayout>
+
+    </com.yc.mema.weight.LoadingLayout>
+
+</layout>

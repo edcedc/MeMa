@@ -40,7 +40,7 @@
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <android.support.v7.widget.AppCompatTextView
-                        android:id="@+id/tv_locate"
+                        android:id="@+id/tv_location"
                         style="@style/Tv15black"
                         android:layout_width="match_parent"
                         android:layout_marginTop="@dimen/px10"
@@ -55,10 +55,10 @@
                         android:id="@+id/gp_locate"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        app:constraint_referenced_ids="tv_locate1, tv_locate" />
+                        app:constraint_referenced_ids="tv_locate1, tv_location" />
 
                     <android.support.v7.widget.AppCompatTextView
-                        app:layout_constraintTop_toBottomOf="@id/tv_locate"
+                        app:layout_constraintTop_toBottomOf="@id/tv_location"
                         android:id="@+id/tv_all"
                         style="@style/Tv15gray"
                         android:layout_margin="@dimen/px30"

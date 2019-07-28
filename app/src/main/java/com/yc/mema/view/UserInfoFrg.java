@@ -98,7 +98,7 @@ public class UserInfoFrg extends BaseFragment<InformationPresenter, FInfoBinding
                 UIHelper.startSexFrg(this);
                 break;
             case R.id.ly_address:
-                UIHelper.startAddressFrg(this);
+                UIHelper.startAddressFrg(this, 1);
                 break;
             case R.id.ly_zking:
                 UIHelper.startZkingFrg(this);

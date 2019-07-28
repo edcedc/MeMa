@@ -39,6 +39,7 @@
     <string name="birthday_prone" translatable="false">生日趴</string>
     <string name="consult" translatable="false">咨询</string>
     <string name="gift" translatable="false">礼包</string>
+    <string name="gift_desc" translatable="false">礼包详情</string>
     <string name="birthday_memorandum" translatable="false">生日备忘录</string>
     <string name="set" translatable="false">设置</string>
     <string name="collection" translatable="false">收藏</string>
@@ -56,6 +57,7 @@
     <string name="set_address" translatable="false">地区设置</string>
     <string name="me_zking" translatable="false">我的二维码</string>
     <string name="name" translatable="false">名字</string>
+    <string name="concessions" translatable="false">折扣优惠</string>
     <string name="user_info" translatable="false">个人信息</string>
     <string name="set_name" translatable="false">设置名字</string>
     <string name="nan" translatable="false">男</string>
@@ -87,6 +89,22 @@
     <string name="complaint" translatable="false">投诉</string>
     <string name="version_update" translatable="false">版本更新</string>
     <string name="mema5" translatable="false">程诺科技 版权所有 \n Copyright © 2019 chengnuokeji. All Rights Reserved.</string>
+    <string name="add_records" translatable="false">添加新记录</string>
+    <string name="add_records1" translatable="false">添加生日记录</string>
+    <string name="recordbook" translatable="false">记录本</string>
+    <string name="name_relationship" translatable="false">输入朋友的姓名/关系</string>
+    <string name="choose_birthday" translatable="false">选择他的生日</string>
+    <string name="search" translatable="false">搜索</string>
+    <string name="cake" translatable="false">蛋糕</string>
+    <string name="eat" translatable="false">吃</string>
+    <string name="drink" translatable="false">喝</string>
+    <string name="play" translatable="false">玩</string>
+    <string name="hHappy" translatable="false">乐</string>
+    <string name="free" translatable="false">免费</string>
+    <string name="mema6" translatable="false">请选择投诉该内容的原因</string>
+    <string name="mema7" translatable="false">用户投诉反馈</string>
+    <string name="mema8" translatable="false">请输入搜索内容</string>
+    <string name="mema9" translatable="false">请选择举报该用户（言论）的原因</string>
 
 
 </resources>

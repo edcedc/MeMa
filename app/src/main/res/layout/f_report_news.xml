@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white_f4f4f4"
+        android:orientation="vertical">
+
+        <include layout="@layout/include_top_gray" />
+
+        <android.support.v7.widget.AppCompatTextView
+            style="@style/Tv15gray"
+            android:layout_margin="@dimen/px30"
+            android:text="@string/mema9" />
+
+        <com.yc.mema.weight.LoadingLayout
+            android:id="@+id/loadinglayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <com.lcodecore.tkrefreshlayout.TwinklingRefreshLayout
+                    android:id="@+id/refreshLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1">
+
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/recyclerView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/white"
+                        android:nestedScrollingEnabled="false"
+                        android:overScrollMode="never" />
+
+                </com.lcodecore.tkrefreshlayout.TwinklingRefreshLayout>
+
+                <com.flyco.roundview.RoundTextView
+                    android:id="@+id/bt_submit"
+                    style="@style/RedTextView"
+                    android:layout_marginLeft="@dimen/px30"
+                    android:layout_marginRight="@dimen/px30"
+                    android:layout_marginBottom="@dimen/px50"
+                    android:text="@string/submit"
+                    app:rv_backgroundColor="@color/red_F67690"
+                    app:rv_cornerRadius="@dimen/px10" />
+
+            </LinearLayout>
+
+        </com.yc.mema.weight.LoadingLayout>
+
+    </LinearLayout>
+
+</layout>

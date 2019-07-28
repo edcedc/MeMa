@@ -21,7 +21,7 @@ public class Constants {
    public static final String WB_APPID = "761285940";
    public static final String WB_SECRET = "83c30696e0218437f471581f73b5985c";
 
-   public static final String mainPath = Environment.getExternalStorageDirectory() + "/shegou/";
+   public static final String mainPath = Environment.getExternalStorageDirectory() + "/mema/";
    public static final String imgUrl = mainPath + "img/";
    public static final String videoUrl = mainPath + "video/";
 

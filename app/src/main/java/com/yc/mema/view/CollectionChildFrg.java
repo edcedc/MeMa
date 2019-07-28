@@ -84,7 +84,7 @@ public class CollectionChildFrg extends BaseFragment<CollectionPresenter, FColle
                 break;
             default:
                 setRecyclerViewType(mB.recyclerView);
-                mB.recyclerView.addItemDecoration(new LinearDividerItemDecoration(act, DividerItemDecoration.VERTICAL,  1));
+                mB.recyclerView.addItemDecoration(new LinearDividerItemDecoration(act, DividerItemDecoration.VERTICAL,  2));
                 break;
         }
         mB.recyclerView.setAdapter(adapter);

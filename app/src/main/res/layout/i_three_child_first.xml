@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:padding="@dimen/px20"
+    android:background="?actionBarItemBackground"
+    tools:ignore="MissingConstraints"
+    android:layout_height="wrap_content">
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/tv_title"
+        style="@style/Tv15black" />
+
+    <android.support.v7.widget.AppCompatTextView
+        app:layout_constraintTop_toBottomOf="@id/tv_title"
+        android:id="@+id/tv_time"
+        style="@style/Tv12gray" />
+
+    <com.yc.mema.weight.RoundImageView
+        android:id="@+id/iv_img"
+        android:layout_marginTop="@dimen/px20"
+        app:layout_constraintTop_toBottomOf="@id/tv_time"
+        android:src="@mipmap/place_holder"
+        android:scaleType="centerCrop"
+        android:layout_width="match_parent"
+        android:layout_height="155dp" />
+
+</android.support.constraint.ConstraintLayout>

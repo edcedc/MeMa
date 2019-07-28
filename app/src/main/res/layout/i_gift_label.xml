@@ -11,6 +11,8 @@
         android:id="@+id/tv_text"
         android:paddingLeft="@dimen/px15"
         app:rv_strokeWidth="@dimen/px2"
+        android:paddingTop="@dimen/px5"
+        android:paddingBottom="@dimen/px5"
         app:rv_strokeColor="@color/red_EE3257"
         android:paddingRight="@dimen/px15"
         android:textSize="@dimen/size20"
