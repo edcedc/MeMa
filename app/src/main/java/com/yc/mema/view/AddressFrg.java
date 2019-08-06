@@ -3,15 +3,17 @@ package com.yc.mema.view;
 import android.os.Bundle;
 import android.view.View;
 
-import com.lcodecore.tkrefreshlayout.RefreshListenerAdapter;
-import com.lcodecore.tkrefreshlayout.TwinklingRefreshLayout;
+import com.blankj.utilcode.util.StringUtils;
 import com.yc.mema.R;
 import com.yc.mema.adapter.AddressAdapter;
 import com.yc.mema.base.BaseFragment;
 import com.yc.mema.bean.DataBean;
 import com.yc.mema.databinding.FAddressBinding;
+import com.yc.mema.event.AddressInEvent;
 import com.yc.mema.impl.InformationContract;
 import com.yc.mema.presenter.InformationPresenter;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,6 +29,10 @@ public class AddressFrg extends BaseFragment<InformationPresenter, FAddressBindi
 
     private List<DataBean> listBean = new ArrayList<>();
     private AddressAdapter adapter;
+    private StringBuffer sb = new StringBuffer();
+    private String addressEnd = "";
+    private String parentId;
+    private boolean isUpdate = false;
 
     @Override
     public void initPresenter() {
@@ -35,7 +41,7 @@ public class AddressFrg extends BaseFragment<InformationPresenter, FAddressBindi
 
     @Override
     protected void initParms(Bundle bundle) {
-
+        isUpdate = bundle.getBoolean("isUpdate");
     }
 
     @Override
@@ -47,49 +53,54 @@ public class AddressFrg extends BaseFragment<InformationPresenter, FAddressBindi
     protected void initView(View view) {
         setTitle(getString(R.string.set_address), getString(R.string.submit1));
         if (adapter == null){
-            adapter = new AddressAdapter(act, listBean);
+            adapter = new AddressAdapter(act, this, listBean);
         }
         setRecyclerViewType(mB.recyclerView);
         mB.recyclerView.setAdapter(adapter);
-
         showLoadDataing();
-        mB.refreshLayout.startRefresh();
-        setRefreshLayout(mB.refreshLayout, new RefreshListenerAdapter() {
-            @Override
-            public void onRefresh(TwinklingRefreshLayout refreshLayout) {
-                mPresenter.onRequest( pagerNumber = 1);
-            }
-
-            @Override
-            public void onLoadMore(TwinklingRefreshLayout refreshLayout) {
-                super.onLoadMore(refreshLayout);
-                mPresenter.onRequest( pagerNumber += 1);
-            }
-        });
+        mPresenter.onRequest(null);
         mB.tvLocation.setText("广州");
+        adapter.setOnClickListener((parentId, address, regionLevel) -> {
+            mB.gpLocate.setVisibility(View.GONE);
+            mB.tvAll.setText(sb.toString());
+            if (regionLevel >= 3){
+                this.addressEnd = address;
+            }else {
+                sb.append(address);
+                mPresenter.onRequest(parentId);
+            }
+            mB.tvAll.setText(sb.toString() + addressEnd);
+            this.parentId = parentId;
+        });
+    }
+
+    @Override
+    protected void setOnRightClickListener() {
+        super.setOnRightClickListener();
+        if (StringUtils.isEmpty(addressEnd))return;
+        if (!isUpdate){
+            sb.append(addressEnd);
+            EventBus.getDefault().post(new AddressInEvent(parentId, addressEnd));
+        }else {
+            mPresenter.address(parentId);
+        }
     }
 
     @Override
     public void setRefreshLayoutMode(int totalRow) {
-        super.setRefreshLayoutMode(listBean.size(), totalRow, mB.refreshLayout);
-    }
 
-    @Override
-    public void hideLoading() {
-        super.hideLoading();
-        super.setRefreshLayout(pagerNumber, mB.refreshLayout);
     }
 
     @Override
     public void setData(Object data) {
         List<DataBean> list = (List<DataBean>) data;
-        if (pagerNumber == 1) {
-            listBean.clear();
-            mB.refreshLayout.finishRefreshing();
-        } else {
-            mB.refreshLayout.finishLoadmore();
-        }
+        listBean.clear();
         listBean.addAll(list);
         adapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onSaveUser() {
+        pop();
     }
 }

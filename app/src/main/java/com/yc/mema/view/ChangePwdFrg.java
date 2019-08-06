@@ -5,10 +5,13 @@ import android.view.View;
 
 import com.yc.mema.R;
 import com.yc.mema.base.BaseFragment;
+import com.yc.mema.base.User;
 import com.yc.mema.databinding.FChangePwdBinding;
 import com.yc.mema.impl.ChangePwdContract;
 import com.yc.mema.presenter.ChangePwdPresenter;
 import com.yc.mema.utils.CountDownTimerUtils;
+
+import org.json.JSONObject;
 
 /**
  * Created by Android Studio.
@@ -38,6 +41,8 @@ public class ChangePwdFrg extends BaseFragment<ChangePwdPresenter, FChangePwdBin
         setTitle(getString(R.string.change_password1));
         mB.tvCode.setOnClickListener(this);
         mB.btSubmit.setOnClickListener(this);
+        JSONObject userObj = User.getInstance().getUserObj();
+        mB.tvPhone.setText(userObj.optString("iphone"));
     }
 
     @Override
@@ -55,5 +60,10 @@ public class ChangePwdFrg extends BaseFragment<ChangePwdPresenter, FChangePwdBin
     @Override
     public void onCode() {
         new CountDownTimerUtils(act, 60000, 1000, mB.tvCode).start();
+    }
+
+    @Override
+    public void onChange() {
+        pop();
     }
 }

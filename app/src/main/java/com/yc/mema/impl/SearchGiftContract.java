@@ -17,8 +17,7 @@ public interface SearchGiftContract {
 
     abstract class Presenter extends BasePresenter<View> {
 
-        public abstract void onRequest(String text, int pagetNumber);
-
+        public abstract void onRequest(String county, String text, int pagetNumber);
 
     }
 

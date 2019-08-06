@@ -15,6 +15,7 @@ public interface BingPhoneContract {
 
         void onCode();
 
+        void onBingPhone();
     }
 
     abstract class Presenter extends BasePresenter<View> {

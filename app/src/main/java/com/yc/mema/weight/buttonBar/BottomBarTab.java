@@ -102,16 +102,16 @@ public class BottomBarTab extends FrameLayout {
             case 0:
                 mIcon.setImageResource(selected? R.mipmap.dibudaohan_shengrili_1 : R.mipmap.dibudaohan_shengrili_2);
                 break;
+//            case 1:
+//                mIcon.setImageResource(selected? R.mipmap.dibudaohan_yuanliao_1 : R.mipmap.dibudaohan_yuanliao_2);
+//                break;
             case 1:
-                mIcon.setImageResource(selected? R.mipmap.dibudaohan_yuanliao_1 : R.mipmap.dibudaohan_yuanliao_2);
-                break;
-            case 2:
                 mIcon.setImageResource(selected? R.mipmap.dibudaohan_jintian_1 : R.mipmap.dibudaohan_jintian_2);
                 break;
-            case 3:
+            case 2:
                 mIcon.setImageResource(selected? R.mipmap.dibudaohan_shenripa_1 : R.mipmap.dibudaohan_shenripa_2);
                 break;
-            case 4:
+            case 3:
                 mIcon.setImageResource(selected? R.mipmap.dibudaohan_wode_1 : R.mipmap.dibudaohan_wode_2);
                break;
         }

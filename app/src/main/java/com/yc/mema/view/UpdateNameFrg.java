@@ -41,7 +41,7 @@ public class UpdateNameFrg extends BaseFragment<InformationPresenter, FNameBindi
     @Override
     protected void setOnRightClickListener() {
         super.setOnRightClickListener();
-
+        mPresenter.name(mB.etText.getText().toString());
     }
 
     @Override
@@ -52,5 +52,10 @@ public class UpdateNameFrg extends BaseFragment<InformationPresenter, FNameBindi
     @Override
     public void setData(Object data) {
 
+    }
+
+    @Override
+    public void onSaveUser() {
+        pop();
     }
 }

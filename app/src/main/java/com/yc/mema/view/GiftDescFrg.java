@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
+import com.blankj.utilcode.util.StringUtils;
 import com.flyco.roundview.RoundTextView;
 import com.flyco.roundview.RoundViewDelegate;
 import com.yc.mema.R;
@@ -30,6 +31,8 @@ import java.util.List;
  */
 public class GiftDescFrg extends BaseFragment<GiftDescPresenter, FGiftBinding> implements GiftDescContract.View, View.OnClickListener {
 
+    private String id;
+
     public static GiftDescFrg newInstance() {
 
         Bundle args = new Bundle();
@@ -51,7 +54,7 @@ public class GiftDescFrg extends BaseFragment<GiftDescPresenter, FGiftBinding> i
 
     @Override
     protected void initParms(Bundle bundle) {
-
+        id = bundle.getString("id");
     }
 
     @Override
@@ -67,15 +70,9 @@ public class GiftDescFrg extends BaseFragment<GiftDescPresenter, FGiftBinding> i
             adapter = new GiftDescAdapter(act, listBean);
         }
         mB.recyclerView.setAdapter(adapter);
-
-        mPresenter.onRequest();
+        mPresenter.onRequest(id);
         complaintBottomFrg = new ComplaintBottomFrg();
-        complaintBottomFrg.setComplaintListener(new ComplaintBottomFrg.onComplaintListener() {
-            @Override
-            public void onComplaint() {
-                UIHelper.startComplaintFrg(GiftDescFrg.this);
-            }
-        });
+        complaintBottomFrg.setComplaintListener(() -> UIHelper.startComplaintFrg(GiftDescFrg.this));
     }
 
     @Override
@@ -87,41 +84,33 @@ public class GiftDescFrg extends BaseFragment<GiftDescPresenter, FGiftBinding> i
 
     @Override
     public void setData(DataBean bean) {
-        mB.tvTitle.setText("胡桃里音乐酒馆 生日免费送特色菜，超多礼包等你来拿");
-        mB.tvLike.setText("0");
-        mB.tvColl.setText("0");
-        mB.tvLock.setText("0");
-        mB.tvTime.setText("营业时间：" +
-                "9：00-21：00");
-        mB.tvPhone.setText("020-88987689");
+        mB.tvTitle.setText(bean.getWalTitle());
+        mB.tvLike.setText(bean.getPraiseCount() + "");
+        mB.tvColl.setText(bean.getCollectCount() + "");
+        mB.tvLock.setText(bean.getBrowseCount() + "");
+        mB.tvTime.setText(bean.getBusinessTime());
+        mB.tvPhone.setText(bean.getIphone());
         mB.tvAddress.setText("商家地址：" +
-                "广州  天河区  289艺术创意园34-36号");
-
-        List<DataBean> list = new ArrayList<>();
-        list.add(new DataBean());
-        list.add(new DataBean());
-        list.add(new DataBean());
-        list.add(new DataBean());
-        list.add(new DataBean());
-        list.add(new DataBean());
-        list.add(new DataBean());
-        list.add(new DataBean());
-        list.add(new DataBean());
-        listBean.addAll(list);
-        adapter.notifyDataSetChanged();
-        mB.flLabel.removeAllViews();
-        mB.flLabel.setAdapter(new TagAdapter<DataBean>(list){
-            @Override
-            public View getView(FlowLayout parent, int position, DataBean dataBean) {
-                View view = View.inflate(act, R.layout.i_gift_label, null);
-                RoundTextView tvText = view.findViewById(R.id.tv_text);
-                RoundViewDelegate delegate = tvText.getDelegate();
-                delegate.setBackgroundColor(act.getColor(R.color.red_EE3257));
-                tvText.setTextColor(act.getColor(R.color.white));
-                tvText.setText(position + "全部");
-                return view;
-            }
-        });
+                bean.getPcyAdd() + bean.getAddress());
+        String discount = bean.getDiscount();
+        if (!StringUtils.isEmpty(discount)){
+            String[] split = discount.split(",");
+            mB.flLabel.removeAllViews();
+            mB.flLabel.setAdapter(new TagAdapter<String>(split){
+                @Override
+                public View getView(FlowLayout parent, int position, String dataBean) {
+                    View view = View.inflate(act, R.layout.i_gift_label, null);
+                    TextView tvText = view.findViewById(R.id.tv_text);
+                    tvText.setText(dataBean);
+                    return view;
+                }
+            });
+        }
+        List<DataBean> welfareImgs = bean.getWelfareImgs();
+        if (welfareImgs != null && welfareImgs.size() != 0){
+            listBean.addAll(welfareImgs);
+            adapter.notifyDataSetChanged();
+        }
     }
 
     @Override

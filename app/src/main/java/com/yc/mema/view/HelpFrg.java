@@ -47,4 +47,9 @@ public class HelpFrg extends BaseFragment<HelpPresenter, FHelpBinding> implement
                 break;
         }
     }
+
+    @Override
+    public void onFeed() {
+        pop();
+    }
 }

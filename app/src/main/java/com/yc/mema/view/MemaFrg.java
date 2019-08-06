@@ -44,12 +44,9 @@ public class MemaFrg extends BaseFragment<InformationPresenter, FMemaBinding> im
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.tv_time:
-                DatePickerUtils.getYearMonthDayPicker(act, "选择时间", new DatePickerUtils.OnYearMonthDayListener() {
-                    @Override
-                    public void onTime(String year, String month, String day) {
-                        mB.tvTime.setText(year + "-" + month + "-" + day);
-                    }
-                });
+                DatePickerUtils.getYearMonthDayPicker(act, "选择时间", ((year, month, day) ->{
+                    mB.tvTime.setText(year + "-" + month + "-" + day);
+                } ));
                 break;
         }
     }
@@ -57,7 +54,7 @@ public class MemaFrg extends BaseFragment<InformationPresenter, FMemaBinding> im
     @Override
     protected void setOnRightClickListener() {
         super.setOnRightClickListener();
-        mPresenter.mema(mB.tvTime.getText().toString(), mB.etText.getText().toString());
+        mPresenter.mema(mB.tvTime.getText().toString(), mB.etText.getText().toString(), 1);
     }
 
     @Override
@@ -68,5 +65,10 @@ public class MemaFrg extends BaseFragment<InformationPresenter, FMemaBinding> im
     @Override
     public void setData(Object data) {
 
+    }
+
+    @Override
+    public void onSaveUser() {
+        pop();
     }
 }

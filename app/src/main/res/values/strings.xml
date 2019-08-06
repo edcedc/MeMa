@@ -105,6 +105,19 @@
     <string name="mema7" translatable="false">用户投诉反馈</string>
     <string name="mema8" translatable="false">请输入搜索内容</string>
     <string name="mema9" translatable="false">请选择举报该用户（言论）的原因</string>
+    <string name="mema10" translatable="false">谈点什么...</string>
+    <string name="mema11" translatable="false">说点什么...</string>
+    <string name="all_comments" translatable="false">全部评论</string>
+    <string name="praise_most" translatable="false">最多点赞</string>
+    <string name="news_desc" translatable="false">详情</string>
+    <string name="copy" translatable="false">复制</string>
+    <string name="report" translatable="false">举报</string>
+    <string name="world" translatable="false">世界</string>
+    <string name="good_friend" translatable="false">好友</string>
+    <string name="my_prone" translatable="false">我的生日趴</string>
+    <string name="release" translatable="false">发布</string>
+    <string name="msg" translatable="false">通知</string>
+    <string name="mema12" translatable="false">么马号四位数并且包含数字和英文</string>
 
 
 </resources>

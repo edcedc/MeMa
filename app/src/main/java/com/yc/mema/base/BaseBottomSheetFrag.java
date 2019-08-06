@@ -8,9 +8,11 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.annotation.Nullable;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.BottomSheetDialog;
 import android.support.design.widget.BottomSheetDialogFragment;
+import android.support.v4.app.DialogFragment;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -58,13 +60,11 @@ public abstract class BaseBottomSheetFrag extends BottomSheetDialogFragment {
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-
-
         //每次打开都调用该方法 类似于onCreateView 用于返回一个Dialog实例
         dialog = (BottomSheetDialog) super.onCreateDialog(savedInstanceState);
         if (rootView == null) {
             getActivity().getWindow().setSoftInputMode
-                    (WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN|
+                    (WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN |
                             WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
 
 
@@ -97,6 +97,7 @@ public abstract class BaseBottomSheetFrag extends BottomSheetDialogFragment {
         }
         return dialog;
     }
+
 
     public abstract int bindLayout();
 
@@ -134,7 +135,7 @@ public abstract class BaseBottomSheetFrag extends BottomSheetDialogFragment {
         }
     }
 
-    protected void setRefreshLayoutMode(int listSize, int totalRow, TwinklingRefreshLayout refreshLayout){
+    protected void setRefreshLayoutMode(int listSize, int totalRow, TwinklingRefreshLayout refreshLayout) {
         if (listSize == totalRow) {
             refreshLayout.setEnableLoadmore(false);
         } else {
@@ -178,11 +179,11 @@ public abstract class BaseBottomSheetFrag extends BottomSheetDialogFragment {
     private final int handler_load = 0;
     private final int handler_hide = 1;
 
-    private Handler mHandler = new Handler(){
+    private Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
-            switch (msg.what){
+            switch (msg.what) {
                 case handler_load:
                     if (progressDialog != null && progressDialog.isShowing()) return;
                     progressDialog = new ProgressDialog(act);
@@ -207,4 +208,4 @@ public abstract class BaseBottomSheetFrag extends BottomSheetDialogFragment {
         ToastUtils.showShort(str);
     }
 
- }
+}

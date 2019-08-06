@@ -5,6 +5,7 @@ import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.view.View;
 
+import com.blankj.utilcode.util.ActivityUtils;
 import com.yc.mema.R;
 import com.yc.mema.base.BaseFragment;
 import com.yc.mema.base.BasePresenter;
@@ -36,7 +37,7 @@ public class MainFrg extends BaseFragment<BasePresenter, FMainBinding> implement
     private final int FOUR = 3;
     private final int FIVE = 4;
 
-    private SupportFragment[] mFragments = new SupportFragment[5];
+    private SupportFragment[] mFragments = new SupportFragment[4];
 
 
     @Override
@@ -58,16 +59,13 @@ public class MainFrg extends BaseFragment<BasePresenter, FMainBinding> implement
     protected void initView(View view) {
        mB.bottomBar
                 .addItem(new BottomBarTab(_mActivity, R.mipmap.zw01, "生日礼"))
-                .addItem(new BottomBarTab(_mActivity, R.mipmap.zx01,"缘聊"))
+//                .addItem(new BottomBarTab(_mActivity, R.mipmap.zx01,"缘聊"))
                 .addItem(new BottomBarTab(_mActivity, R.mipmap.st01,"今天"))
                 .addItem(new BottomBarTab(_mActivity, R.mipmap.wd01,"生日趴"))
                 .addItem(new BottomBarTab(_mActivity, R.mipmap.wd01,"我的"));
         mB.bottomBar.setOnTabSelectedListener(new BottomBar.OnTabSelectedListener() {
             @Override
             public void onTabSelected(int position, int prePosition) {
-                if (position == SECOND){
-//                    if (!isUserLogin())return;
-                }
                 showHideFragment(mFragments[position], mFragments[prePosition]);
             }
 
@@ -91,27 +89,27 @@ public class MainFrg extends BaseFragment<BasePresenter, FMainBinding> implement
         SupportFragment firstFragment = findChildFragment(OneFrg.class);
         if (firstFragment == null) {
             mFragments[FIRST] = OneFrg.newInstance();
-            mFragments[SECOND] = TwoFrg.newInstance();
-            mFragments[THIRD] = ThreeFrg.newInstance();
-            mFragments[FOUR] = FourFrg.newInstance();
-            mFragments[FIVE] = FiveFrg.newInstance();
+//            mFragments[SECOND] = TwoFrg.newInstance();
+            mFragments[SECOND] = ThreeFrg.newInstance();
+            mFragments[THIRD] = FourFrg.newInstance();
+            mFragments[FOUR] = FiveFrg.newInstance();
 
             loadMultipleRootFragment(R.id.fl_container,
                     FIRST,
                     mFragments[FIRST],
+//                    mFragments[SECOND],
                     mFragments[SECOND],
                     mFragments[THIRD],
-                    mFragments[FOUR],
-                    mFragments[FIVE]);
+                    mFragments[FOUR]);
         } else {
             // 这里库已经做了Fragment恢复,所有不需要额外的处理了, 不会出现重叠问题
 
             // 这里我们需要拿到mFragments的引用
             mFragments[FIRST] = firstFragment;
-            mFragments[SECOND] = findChildFragment(TwoFrg.class);
-            mFragments[THIRD] = findChildFragment(ThreeFrg.class);
-            mFragments[FOUR] = findChildFragment(FourFrg.class);
-            mFragments[FIVE] = findChildFragment(FiveFrg.class);
+//            mFragments[SECOND] = findChildFragment(TwoFrg.class);
+            mFragments[SECOND] = findChildFragment(ThreeFrg.class);
+            mFragments[THIRD] = findChildFragment(FourFrg.class);
+            mFragments[FOUR] = findChildFragment(FiveFrg.class);
         }
         setSwipeBackEnable(false);
     }
@@ -153,7 +151,7 @@ public class MainFrg extends BaseFragment<BasePresenter, FMainBinding> implement
             return;
         } else {
 //            Cockroach.uninstall();
-            act.finish();
+            ActivityUtils.finishAllActivities();
             System.exit(0);
         }
     }

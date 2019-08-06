@@ -28,8 +28,9 @@
         android:allowBackup="false"
         android:debuggable="false"
         android:hardwareAccelerated="true"
+        android:usesCleartextTraffic="true"
         android:label="@string/app_name"
-        android:icon="@mipmap/login_logo"
+        android:icon="@mipmap/y1"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="HardcodedDebugMode"
@@ -73,7 +74,22 @@
             android:theme="@style/AppTheme.NoActionBar.SwipeBack"
             android:screenOrientation="portrait"/>
         <activity
+            android:name=".view.act.NewsDescAct"
+            android:resizeableActivity="true"
+            android:theme="@style/AppTheme.NoActionBar.SwipeBack"
+            android:screenOrientation="portrait"/>
+        <activity
             android:name=".view.act.GiftAct"
+            android:resizeableActivity="true"
+            android:theme="@style/AppTheme.NoActionBar.SwipeBack"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".view.act.VideoAct"
+            android:resizeableActivity="true"
+            android:theme="@style/AppTheme.NoActionBar.SwipeBack"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".view.act.ReleaseAct"
             android:resizeableActivity="true"
             android:theme="@style/AppTheme.NoActionBar.SwipeBack"
             android:screenOrientation="portrait"/>

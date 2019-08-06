@@ -54,6 +54,7 @@
         android:layout_height="wrap_content"/>
 
     <LinearLayout
+        android:layout_marginTop="@dimen/px10"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -67,6 +68,7 @@
 
         <com.yc.mema.weight.RoundImageView
             android:id="@+id/iv_img"
+            android:visibility="visible"
             android:src="@mipmap/place_holder"
             android:scaleType="centerCrop"
             android:layout_width="0dp"
@@ -74,7 +76,7 @@
             android:layout_height="155dp" />
 
        <LinearLayout
-            android:layout_marginLeft="@dimen/px10"
+           android:layout_marginLeft="@dimen/px10"
            android:layout_width="0dp"
            android:layout_weight="0.4"
            android:layout_height="match_parent"
@@ -83,6 +85,7 @@
            <com.yc.mema.weight.RoundImageView
                android:id="@+id/iv_img1"
                android:src="@mipmap/place_holder"
+               android:visibility="gone"
                android:scaleType="centerCrop"
                android:layout_width="match_parent"
                android:layout_height="0dp"
@@ -90,6 +93,7 @@
 
            <com.yc.mema.weight.RoundImageView
                android:id="@+id/iv_img2"
+               android:visibility="gone"
                android:layout_marginTop="@dimen/px10"
                android:src="@mipmap/place_holder"
                android:scaleType="centerCrop"

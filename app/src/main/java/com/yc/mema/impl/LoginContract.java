@@ -3,6 +3,8 @@ package com.yc.mema.impl;
 import com.yc.mema.base.BasePresenter;
 import com.yc.mema.base.IBaseView;
 
+import org.json.JSONObject;
+
 /**
  * Created by Android Studio.
  * User: ${edison}
@@ -15,6 +17,9 @@ public interface LoginContract {
 
         void onCode();
 
+        void onResgist(String phone, String pwd);
+
+        void onLogin(JSONObject user);
     }
 
     abstract class Presenter extends BasePresenter<View> {

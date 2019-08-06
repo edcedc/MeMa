@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="?actionBarItemBackground"
+    android:layout_width="match_parent"
+    android:paddingTop="@dimen/px20"
+    android:paddingBottom="@dimen/px20"
+    android:paddingLeft="@dimen/px30"
+    android:paddingRight="@dimen/px30"
+    tools:ignore="MissingConstraints"
+    android:layout_height="wrap_content">
+
+    <android.support.v7.widget.AppCompatImageView
+        android:id="@+id/iv_head"
+        android:background="@mipmap/tonzhi_xitongtonzhi_1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <com.yc.mema.weight.CircleImageView
+        android:id="@+id/iv_img"
+        android:src="@color/red_EE3257"
+        app:layout_constraintEnd_toEndOf="@id/iv_head"
+        android:layout_width="10dp"
+        android:layout_height="10dp" />
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/tv_title"
+        app:layout_constraintLeft_toRightOf="@id/iv_head"
+        android:layout_marginLeft="@dimen/px40"
+        app:layout_constraintBottom_toTopOf="@id/tv_content"
+        app:layout_constraintTop_toTopOf="parent"
+        style="@style/Tv15black" />
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/tv_content"
+        app:layout_constraintLeft_toRightOf="@id/iv_head"
+        android:layout_marginLeft="@dimen/px40"
+        app:layout_constraintTop_toBottomOf="@id/tv_title"
+        app:layout_constraintBottom_toBottomOf="parent"
+        style="@style/Tv12gray" />
+
+    <android.support.v7.widget.AppCompatImageView
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:background="@mipmap/y16"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+</android.support.constraint.ConstraintLayout>

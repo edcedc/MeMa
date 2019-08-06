@@ -14,6 +14,7 @@ import org.json.JSONObject;
 public interface HelpContract {
 
     interface View extends IBaseView {
+        void onFeed();
     }
 
     abstract class Presenter extends BasePresenter<View> {

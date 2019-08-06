@@ -10,6 +10,7 @@ import com.google.zxing.WriterException;
 import com.yc.mema.R;
 import com.yc.mema.base.BaseFragment;
 import com.yc.mema.base.BasePresenter;
+import com.yc.mema.base.User;
 import com.yc.mema.databinding.FZkingBinding;
 import com.yc.mema.event.CameraInEvent;
 import com.yc.mema.utils.GlideLoadingUtils;
@@ -17,6 +18,8 @@ import com.yc.mema.utils.ImageUtils;
 import com.yc.mema.view.bottomFrg.CameraBottomFrg;
 import com.yc.mema.weight.PictureSelectorTool;
 import com.yc.mema.weight.ZXingUtils;
+
+import org.json.JSONObject;
 
 /**
  * Created by Android Studio.
@@ -47,10 +50,10 @@ public class ZkingFrg extends BaseFragment<BasePresenter, FZkingBinding> {
     @Override
     protected void initView(View view) {
         setTitle(getString(R.string.me_zking), R.mipmap.y20);
-        GlideLoadingUtils.load(act, "", mB.ivHead);
-        mB.tvName.setText("z繁浩");
-        mB.tvBirthday.setText("生日：" +
-                "1995-12-15");
+        JSONObject userObj = User.getInstance().getUserObj();
+        GlideLoadingUtils.load(act, userObj.optString("headUrl"), mB.ivHead, true);
+        mB.tvName.setText(userObj.optString("nickName"));
+        mB.tvBirthday.setText("生日：" + userObj.optString("birthday"));
         mB.ivZking.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
             public void onGlobalLayout() {

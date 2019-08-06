@@ -45,12 +45,12 @@ public class SexFrg extends BaseFragment<InformationPresenter, FSexBinding> impl
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.ly_nan:
-                type = 0;
+                type = 1;
                 mB.ivNan.setVisibility(View.VISIBLE);
                 mB.ivNv.setVisibility(View.GONE);
                 break;
             case R.id.ly_nv:
-                type = 1;
+                type = 2;
                 mB.ivNan.setVisibility(View.GONE);
                 mB.ivNv.setVisibility(View.VISIBLE);
                 break;
@@ -71,5 +71,10 @@ public class SexFrg extends BaseFragment<InformationPresenter, FSexBinding> impl
     @Override
     public void setData(Object data) {
 
+    }
+
+    @Override
+    public void onSaveUser() {
+        pop();
     }
 }

@@ -11,7 +11,7 @@ import com.yc.mema.base.User;
 public class Constants {
 
    public static final int ITEMCOUNT = 10;
-   public static final int pageSize = 10;
+   public static final int pageSize = 20;
 
    public static final String ShareID = "5d22bec94ca357c136000062";
    public static final String WX_APPID = "wxed3971fb41174390";

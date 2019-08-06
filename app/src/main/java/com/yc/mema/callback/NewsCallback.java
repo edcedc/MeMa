@@ -14,6 +14,7 @@ package com.yc.mema.callback;/*
  * limitations under the License.
  */
 
+import com.blankj.utilcode.util.ToastUtils;
 import com.blankj.utilcode.util.Utils;
 import com.google.gson.stream.JsonReader;
 import com.lzy.okgo.callback.AbsCallback;
@@ -51,21 +52,16 @@ public abstract class NewsCallback<T> extends AbsCallback<T> {
         Type rawType = ((ParameterizedType) type).getRawType();
         if (rawType == BaseResponseBean.class) {
             BaseResponseBean gankResponse = Convert.fromJson(jsonReader, type);
-            if (gankResponse.code == 1) {
+            if (gankResponse.code == Code.CODE_SUCCESS) {
                 response.close();
                 //noinspection unchecked
                 return (T) gankResponse;
-            }else if (gankResponse.code == 0){
-//                ToastUtils.showShort(gankResponse.desc);
+            }else if (gankResponse.code == Code.CODE_FAILED){
+                ToastUtils.showShort(gankResponse.description);
                 response.close();
-                //noinspection unchecked
-                return (T) gankResponse;
+                throw new IllegalStateException(gankResponse.description);
             } else if (gankResponse.code == 2){
                 response.close();
-//                UIHelper.startSplashAct();
-//                ActivityUtils.startActivity(LoginAct.class);
-                ShareSessionIdCache.getInstance(Utils.getApp()).remove();
-//                ActivityUtils.finishAllActivities();
                 throw new IllegalStateException("用户在第三方登录");
             }else {
                 response.close();

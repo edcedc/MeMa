@@ -36,7 +36,7 @@ public class UserInfoFrg extends BaseFragment<InformationPresenter, FInfoBinding
     
     @Override
     public void initPresenter() {
-
+        mPresenter.init(this);
     }
 
     @Override
@@ -47,11 +47,18 @@ public class UserInfoFrg extends BaseFragment<InformationPresenter, FInfoBinding
     @Override
     public void onSupportVisible() {
         super.onSupportVisible();
-//        setData(User.getInstance().getUserObj());
+        setData(User.getInstance().getUserObj());
     }
 
     private void setData(JSONObject userObj) {
         if (userObj == null)return;
+        GlideLoadingUtils.load(act, userObj.optString("headUrl"), mB.ivHead, true);
+        mB.tvName.setText(userObj.optString("nickName"));
+        mB.tvMoma.setText(userObj.optString("mema"));
+        mB.tvBirthday.setText(userObj.optString("birthday"));
+        int sex = userObj.optInt("sex");
+        mB.tvSex.setText(sex <= 0 ? "" : sex == 1 ? "男" : "女");
+        mB.tvAddress.setText(userObj.optString("address"));
     }
 
     @Override
@@ -69,8 +76,6 @@ public class UserInfoFrg extends BaseFragment<InformationPresenter, FInfoBinding
         mB.lySex.setOnClickListener(this);
         mB.lyAddress.setOnClickListener(this);
         mB.lyZking.setOnClickListener(this);
-
-        GlideLoadingUtils.load(act, "", mB.ivHead);
     }
 
     @Override
@@ -83,27 +88,28 @@ public class UserInfoFrg extends BaseFragment<InformationPresenter, FInfoBinding
                 UIHelper.startUpdateNameFrg(this);
                 break;
             case R.id.ly_moma:
+                JSONObject userObj = User.getInstance().getUserObj();
+                if (userObj.optInt("updataMema") != 0){
+                    showToast("么马号只能设置一次");
+                    return;
+                }
                 UIHelper.startMemaFrg(this);
                 break;
             case R.id.ly_birthday:
-                DatePickerUtils.getYearMonthDayPicker(act, "选择生日", new DatePickerUtils.OnYearMonthDayListener() {
-                    @Override
-                    public void onTime(String year, String month, String day) {
-                        mB.tvBirthday.setText(year + "-" + month + "-" + day);
-                        mPresenter.birthday(mB.tvBirthday.getText().toString());
-                    }
+                DatePickerUtils.getYearMonthDayPicker(act, "选择生日", (year, month, day) -> {
+                    mB.tvBirthday.setText(year + "-" + month + "-" + day);
+                    mPresenter.birthday(mB.tvBirthday.getText().toString());
                 });
                 break;
             case R.id.ly_sex:
                 UIHelper.startSexFrg(this);
                 break;
             case R.id.ly_address:
-                UIHelper.startAddressFrg(this, 1);
+                UIHelper.startAddressFrg(this, 1, true);
                 break;
             case R.id.ly_zking:
                 UIHelper.startZkingFrg(this);
                 break;
-
         }
     }
 
@@ -114,6 +120,11 @@ public class UserInfoFrg extends BaseFragment<InformationPresenter, FInfoBinding
 
     @Override
     public void setData(Object data) {
+
+    }
+
+    @Override
+    public void onSaveUser() {
 
     }
 }

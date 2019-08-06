@@ -14,14 +14,21 @@ import android.text.TextUtils;
 import android.view.View;
 
 import com.blankj.utilcode.util.ActivityUtils;
+import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.StringUtils;
+import com.lzy.okgo.model.Response;
 import com.yanzhenjie.permission.Action;
 import com.yanzhenjie.permission.AndPermission;
 import com.yanzhenjie.permission.Permission;
 import com.yanzhenjie.permission.Setting;
 import com.yc.mema.R;
 import com.yc.mema.base.BasePresenter;
+import com.yc.mema.base.User;
+import com.yc.mema.bean.BaseListBean;
+import com.yc.mema.bean.BaseResponseBean;
 import com.yc.mema.bean.DataBean;
+import com.yc.mema.callback.Code;
+import com.yc.mema.controller.CloudApi;
 import com.yc.mema.controller.UIHelper;
 import com.yc.mema.databinding.FSplashBinding;
 import com.yc.mema.utils.GlideImageLoader;
@@ -36,6 +43,11 @@ import com.yc.mema.weight.RuntimeRationale;
 import com.youth.banner.BannerConfig;
 import com.youth.banner.listener.OnBannerListener;
 import com.youth.banner.transformer.DefaultTransformer;
+
+import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Consumer;
 
 /**
  * 作者：yc on 2018/6/15.
@@ -52,8 +64,7 @@ public class SplashFrg extends BaseFragment<BasePresenter, FSplashBinding> imple
         return fragment;
     }
 
-    private List<Integer> listImage = new ArrayList<>();
-    private List<String> tips = new ArrayList<String>();
+    private List<DataBean> listBean = new ArrayList<>();
 
     private final int mHandle_splash = 0;
     private final int mHandle_permission = 1;
@@ -77,50 +88,69 @@ public class SplashFrg extends BaseFragment<BasePresenter, FSplashBinding> imple
 
     @Override
     protected void initView(View view) {
+        setSwipeBackEnable(false);
         act = getActivity();
-        final List<DataBean> images = new ArrayList<>();
-        DataBean bean1 = new DataBean();
-        bean1.setImg(R.mipmap.y7);
-        images.add(bean1);
-        DataBean bean2 = new DataBean();
-        bean2.setImg(R.mipmap.y8);
-        images.add(bean2);
-        DataBean bean3 = new DataBean();
-        bean3.setImg(R.mipmap.yingdaoye_4);
-        images.add(bean3);
-        mB.banner.setImages(images)
-                .setImageLoader(new GlideImageLoader())
-                .setOnBannerListener(this)
-                .setBannerAnimation(DefaultTransformer.class).setBannerStyle(BannerConfig.NOT_INDICATOR);
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                if (!ShareIsLoginCache.getInstance(act).getIsLogin()) {
-                    mB.banner.setVisibility(View.VISIBLE);
-                    mB.banner.start();
-                } else {
-                    handler.sendEmptyMessage(mHandle_splash);
-                }
-            }
-        }, 1000);
+        if (!ShareIsLoginCache.getInstance(act).getIsLogin()) {
+            getDuideList();
+        } else {
+            handler.sendEmptyMessage(mHandle_permission);
+        }
         mB.banner.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
             }
 
             @Override
             public void onPageSelected(int position) {
-                if (position == images.size() - 1) {
+                if (position == listBean.size() - 1) {
                     handler.sendEmptyMessageDelayed(mHandle_permission, 1000);
                 }
             }
 
             @Override
             public void onPageScrollStateChanged(int state) {
-
             }
         });
+    }
+
+    private void getDuideList() {
+        CloudApi.list2(CloudApi.guideGetDuideList)
+                .doOnSubscribe(disposable -> {})
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<Response<BaseResponseBean<List<DataBean>>>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                        addDisposable(d);
+                    }
+
+                    @Override
+                    public void onNext(Response<BaseResponseBean<List<DataBean>>> baseResponseBeanResponse) {
+                        if (baseResponseBeanResponse.body().code == Code.CODE_SUCCESS) {
+                            List<DataBean> list = baseResponseBeanResponse.body().result;
+                            if (list != null && list.size() != 0) {
+                                listBean.addAll(list);
+                                mB.banner.setImages(listBean)
+                                        .setImageLoader(new GlideImageLoader())
+                                        .setOnBannerListener(SplashFrg.this::OnBannerClick)
+                                        .setBannerAnimation(DefaultTransformer.class)
+                                        .setBannerStyle(BannerConfig.NOT_INDICATOR)
+                                        .start();
+                            } else {
+                                handler.sendEmptyMessage(mHandle_permission);
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        SplashFrg.this.onError(e);
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
     }
 
     private Handler handler = new Handler() {
@@ -159,20 +189,12 @@ public class SplashFrg extends BaseFragment<BasePresenter, FSplashBinding> imple
                         Manifest.permission.CAMERA//拍照权限, 允许访问摄像头进行拍照
                 )
                 .rationale(new RuntimeRationale())
-                .onGranted(new Action<List<String>>() {
-                    @Override
-                    public void onAction(List<String> permissions) {
-                        setPermissionOk();
-                    }
-                })
-                .onDenied(new Action<List<String>>() {
-                    @Override
-                    public void onAction(@NonNull List<String> permissions) {
-                        if (AndPermission.hasAlwaysDeniedPermission(SplashFrg.this, permissions)) {
-                            showSettingDialog(act, permissions);
-                        } else {
-                            setPermissionCancel();
-                        }
+                .onGranted(permissions -> setPermissionOk())
+                .onDenied(permissions -> {
+                    if (AndPermission.hasAlwaysDeniedPermission(SplashFrg.this, permissions)) {
+                        showSettingDialog(act, permissions);
+                    } else {
+                        setPermissionCancel();
                     }
                 })
                 .start();
@@ -189,18 +211,8 @@ public class SplashFrg extends BaseFragment<BasePresenter, FSplashBinding> imple
                 .setCancelable(false)
                 .setTitle(R.string.title_dialog)
                 .setMessage(message)
-                .setPositiveButton(R.string.setting, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        setPermission();
-                    }
-                })
-                .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        setPermissionCancel();
-                    }
-                })
+                .setPositiveButton(R.string.setting, (dialog, which) -> setPermission())
+                .setNegativeButton(R.string.cancel, (dialog, which) -> setPermissionCancel())
                 .show();
     }
 
@@ -211,12 +223,9 @@ public class SplashFrg extends BaseFragment<BasePresenter, FSplashBinding> imple
         AndPermission.with(this)
                 .runtime()
                 .setting()
-                .onComeback(new Setting.Action() {
-                    @Override
-                    public void onAction() {
-                        setHasPermission();
+                .onComeback(() -> {
+                    setHasPermission();
 //                        ToastUtils.showShort("用户从设置页面返回。");
-                    }
                 })
                 .start();
     }
@@ -233,17 +242,19 @@ public class SplashFrg extends BaseFragment<BasePresenter, FSplashBinding> imple
      */
     private void setPermissionOk() {
         String sessionId = ShareSessionIdCache.getInstance(act).getSessionId();
-        if (!StringUtils.isEmpty(sessionId)) {
-
+        String userId = ShareSessionIdCache.getInstance(act).getUserId();
+        if (!StringUtils.isEmpty(sessionId) && !StringUtils.isEmpty(userId)) {
+            User.getInstance().setLogin(true);
         } else {
 
         }
         startNext();
+        ShareIsLoginCache.getInstance(act).save(true);
     }
 
     private void startNext() {
-//        UIHelper.startMainAct();
-        UIHelper.startLoginAct();
+        UIHelper.startMainAct();
+//        UIHelper.startLoginAct();
         ActivityUtils.finishAllActivities();
     }
 

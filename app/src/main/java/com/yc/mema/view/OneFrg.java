@@ -1,6 +1,5 @@
 package com.yc.mema.view;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.widget.DividerItemDecoration;
 import android.view.View;
@@ -13,14 +12,16 @@ import com.yc.mema.base.BaseFragment;
 import com.yc.mema.bean.DataBean;
 import com.yc.mema.controller.UIHelper;
 import com.yc.mema.databinding.FOneBinding;
+import com.yc.mema.event.AddressInEvent;
 import com.yc.mema.impl.OneContract;
 import com.yc.mema.presenter.OnePresenter;
-import com.yc.mema.utils.GlideImageLoader;
 import com.yc.mema.utils.OneGlideImageLoader;
 import com.yc.mema.weight.LinearDividerItemDecoration;
-import com.yc.mema.weight.RoundImageView;
 import com.youth.banner.listener.OnBannerListener;
 import com.youth.banner.transformer.DefaultTransformer;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,6 +39,10 @@ public class OneFrg extends BaseFragment<OnePresenter, FOneBinding> implements O
 
     private List<DataBean> listBean = new ArrayList<>();
     private CollectionAdapter adapter;
+    private String searchText = null;
+    private String parentId;
+
+    private int itemize;
 
     @Override
     public void initPresenter() {
@@ -58,6 +63,7 @@ public class OneFrg extends BaseFragment<OnePresenter, FOneBinding> implements O
     protected void initView(View view) {
         setSwipeBackEnable(false);
         setSofia(false);
+        EventBus.getDefault().register(this);
         view.findViewById(R.id.et_search).setOnClickListener(this);
         mB.tvLocation.setOnClickListener(this);
 
@@ -72,16 +78,20 @@ public class OneFrg extends BaseFragment<OnePresenter, FOneBinding> implements O
         mB.refreshLayout.startRefresh();
         mPresenter.onBanner();
         mPresenter.onGridView(this, mB.rvLabel);
+        mB.rvLabel.setOnItemClickListener((adapterView, view1, i, l) -> {
+            this.itemize = i;
+            mB.refreshLayout.startRefresh();
+        });
         setRefreshLayout(mB.refreshLayout, new RefreshListenerAdapter() {
             @Override
             public void onRefresh(TwinklingRefreshLayout refreshLayout) {
-                mPresenter.onRequest(pagerNumber = 1);
+                mPresenter.onRequest(parentId == null ? mB.tvLocation.getText().toString() : parentId, searchText, itemize, pagerNumber = 1);
             }
 
             @Override
             public void onLoadMore(TwinklingRefreshLayout refreshLayout) {
                 super.onLoadMore(refreshLayout);
-                mPresenter.onRequest(pagerNumber += 1);
+                mPresenter.onRequest(parentId == null ? mB.tvLocation.getText().toString() : parentId, searchText, itemize, pagerNumber += 1);
             }
         });
 
@@ -92,7 +102,7 @@ public class OneFrg extends BaseFragment<OnePresenter, FOneBinding> implements O
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.et_search:
-                UIHelper.startSearchGiftFrg(this);
+                UIHelper.startSearchGiftFrg(this, parentId, mB.tvLocation.getText().toString());
                 break;
             case R.id.tv_location:
                 UIHelper.startAddressFrg(this, 0);
@@ -127,10 +137,11 @@ public class OneFrg extends BaseFragment<OnePresenter, FOneBinding> implements O
     @Override
     public void setBanner(List<DataBean> list) {
         listBannerBean.addAll(list);
-        mB.banner.setImages(list)
+        mB.banner.setImages(listBannerBean)
                 .setImageLoader(new OneGlideImageLoader())
                 .setOnBannerListener(this)
-                .setBannerAnimation(DefaultTransformer.class).start();
+                .setBannerAnimation(DefaultTransformer.class)
+                .start();
     }
 
     @Override
@@ -151,4 +162,15 @@ public class OneFrg extends BaseFragment<OnePresenter, FOneBinding> implements O
         mB.banner.stopAutoPlay();
     }
 
+    @Subscribe
+    public void AddressInEvent(AddressInEvent event){
+        parentId = event.getParentId();
+        mB.tvLocation.setText(event.getAddress());
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
+    }
 }

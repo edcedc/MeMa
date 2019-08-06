@@ -120,7 +120,7 @@
                         <com.yc.mema.weight.WithScrollGridView
                             android:id="@+id/recyclerView"
                             android:numColumns="3"
-                            android:layout_margin="@dimen/px30"
+                            android:layout_margin="@dimen/px10"
                             android:verticalSpacing="@dimen/px20"
                             android:horizontalSpacing="@dimen/px20"
                             android:layout_width="match_parent"

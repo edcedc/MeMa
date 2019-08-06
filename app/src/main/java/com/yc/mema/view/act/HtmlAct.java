@@ -29,6 +29,7 @@ public class HtmlAct extends BaseActivity<BasePresenter, AHtmlBinding> {
     private String url;
 
     public static final int REGISTER = 4;//隐私协议
+    public static final int SYSTEM = 1;//系统通知
 
 
     @Override
@@ -48,9 +49,11 @@ public class HtmlAct extends BaseActivity<BasePresenter, AHtmlBinding> {
 
     @Override
     protected void initView() {
-        ImmersionBar.with(this).navigationBarColor(R.color.white).statusBarDarkFont(true).init();
-
+        setSofia(true);
         switch (type){
+            case SYSTEM:
+                setTitle("系统通知");
+                break;
             case REGISTER:
                 setTitle("隐私协议");
                 break;

@@ -13,6 +13,7 @@ import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 
+import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.StringUtils;
 import com.flyco.roundview.RoundLinearLayout;
 import com.lcodecore.tkrefreshlayout.RefreshListenerAdapter;
@@ -23,9 +24,13 @@ import com.yc.mema.base.BaseFragment;
 import com.yc.mema.bean.DataBean;
 import com.yc.mema.controller.UIHelper;
 import com.yc.mema.databinding.FSearchGiftBinding;
+import com.yc.mema.event.AddressInEvent;
 import com.yc.mema.impl.SearchGiftContract;
 import com.yc.mema.presenter.SearchGiftPresenter;
 import com.yc.mema.weight.LinearDividerItemDecoration;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,6 +47,8 @@ public class SearchGiftFrg extends BaseFragment<SearchGiftPresenter, FSearchGift
     private List<DataBean> listBean = new ArrayList<>();
     private CollectionAdapter adapter;
     private AppCompatEditText etSearch;
+    private String parentId;
+    private String location;
 
     @Override
     public void initPresenter() {
@@ -50,7 +57,8 @@ public class SearchGiftFrg extends BaseFragment<SearchGiftPresenter, FSearchGift
 
     @Override
     protected void initParms(Bundle bundle) {
-
+        parentId = bundle.getString("parentId");
+        location = bundle.getString("location");
     }
 
     @Override
@@ -61,6 +69,7 @@ public class SearchGiftFrg extends BaseFragment<SearchGiftPresenter, FSearchGift
     @Override
     protected void initView(View view) {
         setSofia(false);
+        EventBus.getDefault().register(this);
         etSearch = view.findViewById(R.id.et_search);
         RoundLinearLayout lySearch = view.findViewById(R.id.ly_search);
         lySearch.getDelegate().setBackgroundColor(act.getColor(R.color.white_f4f4f4));
@@ -81,34 +90,31 @@ public class SearchGiftFrg extends BaseFragment<SearchGiftPresenter, FSearchGift
         setRefreshLayout(mB.refreshLayout, new RefreshListenerAdapter() {
             @Override
             public void onRefresh(TwinklingRefreshLayout refreshLayout) {
-                mPresenter.onRequest(etSearch.getText().toString(), pagerNumber = 1);
+                mPresenter.onRequest(parentId == null ? location : parentId, etSearch.getText().toString(), pagerNumber = 1);
             }
 
             @Override
             public void onLoadMore(TwinklingRefreshLayout refreshLayout) {
                 super.onLoadMore(refreshLayout);
-                mPresenter.onRequest(etSearch.getText().toString(), pagerNumber += 1);
+                mPresenter.onRequest(parentId == null ? location : parentId, etSearch.getText().toString(), pagerNumber += 1);
             }
         });
-        etSearch.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                //判断是否是“完成”键
-                if(actionId == EditorInfo.IME_ACTION_SEARCH){
-                    //隐藏软键盘
-                    InputMethodManager imm = (InputMethodManager) v.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-                    if (imm.isActive()) {
-                        imm.hideSoftInputFromWindow(v.getApplicationWindowToken(), 0);
-                    }
-                    if (StringUtils.isEmpty(etSearch.getText().toString())){
-                        showToast(act.getString(R.string.mema8));
-                        return false;
-                    }
-                    mB.refreshLayout.startRefresh();
-                    return true;
+        etSearch.setOnEditorActionListener((v, actionId, event) -> {
+            //判断是否是“完成”键
+            if(actionId == EditorInfo.IME_ACTION_SEARCH){
+                //隐藏软键盘
+                InputMethodManager imm = (InputMethodManager) v.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                if (imm.isActive()) {
+                    imm.hideSoftInputFromWindow(v.getApplicationWindowToken(), 0);
                 }
-                return false;
+                if (StringUtils.isEmpty(etSearch.getText().toString())){
+                    showToast(act.getString(R.string.mema8));
+                    return false;
+                }
+                mB.refreshLayout.startRefresh();
+                return true;
             }
+            return false;
         });
         etSearch.addTextChangedListener(new TextWatcher() {
             @Override
@@ -123,14 +129,11 @@ public class SearchGiftFrg extends BaseFragment<SearchGiftPresenter, FSearchGift
 
             @Override
             public void afterTextChanged(final Editable editable) {
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        if (editable.length() == 0){
-                            mB.tvSearch.setText(getText(R.string.search));
-                        }else {
-                            mB.tvSearch.setText(getText(R.string.cancel));
-                        }
+                new Handler().postDelayed(() -> {
+                    if (editable.length() == 0){
+                        mB.tvSearch.setText(getText(R.string.search));
+                    }else {
+                        mB.tvSearch.setText(getText(R.string.cancel));
                     }
                 }, 300);
             }
@@ -160,6 +163,13 @@ public class SearchGiftFrg extends BaseFragment<SearchGiftPresenter, FSearchGift
         }
     }
 
+    @Subscribe
+    public void AddressInEvent(AddressInEvent event){
+        parentId = event.getParentId();
+        location = event.getAddress();
+        mB.tvLocation.setText(event.getAddress());
+    }
+
     @Override
     public void setRefreshLayoutMode(int totalRow) {
         super.setRefreshLayoutMode(listBean.size(), totalRow, mB.refreshLayout);
@@ -182,5 +192,11 @@ public class SearchGiftFrg extends BaseFragment<SearchGiftPresenter, FSearchGift
         }
         listBean.addAll(list);
         adapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
     }
 }

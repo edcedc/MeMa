@@ -6,6 +6,7 @@ import android.widget.PopupWindow;
 
 import com.blankj.utilcode.util.ActivityUtils;
 import com.yc.mema.R;
+import com.yc.mema.base.BaseActivity;
 import com.yc.mema.base.BaseFragment;
 import com.yc.mema.base.BasePresenter;
 import com.yc.mema.base.User;
@@ -63,6 +64,7 @@ public class SetFrg extends BaseFragment<BasePresenter, FSetBinding> implements 
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.tv_account:
+                if (!((BaseActivity)act).isLogin())return;
                 UIHelper.startAccountFrg(this);
                 break;
             case R.id.tv_message:
@@ -72,12 +74,7 @@ public class SetFrg extends BaseFragment<BasePresenter, FSetBinding> implements 
                 UIHelper.startPrivacyFrg(this);
                 break;
             case R.id.tv_clear:
-                PopupWindowTool.showDialog(act, PopupWindowTool.clear, new PopupWindowTool.DialogListener() {
-                    @Override
-                    public void onClick() {
-                        showToast("清楚成功");
-                    }
-                });
+                PopupWindowTool.showDialog(act, PopupWindowTool.clear, () -> showToast("清楚成功"));
                 break;
             case R.id.tv_help:
                 UIHelper.startHelpFrg(this);

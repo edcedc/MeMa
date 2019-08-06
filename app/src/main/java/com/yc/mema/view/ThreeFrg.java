@@ -13,6 +13,7 @@ import com.yc.mema.base.BaseListContract;
 import com.yc.mema.base.BaseListPresenter;
 import com.yc.mema.base.User;
 import com.yc.mema.bean.DataBean;
+import com.yc.mema.controller.CloudApi;
 import com.yc.mema.controller.UIHelper;
 import com.yc.mema.databinding.FOneBinding;
 import com.yc.mema.databinding.FThreeBinding;
@@ -43,7 +44,7 @@ public class ThreeFrg extends BaseFragment<BaseListPresenter, FThreeBinding> imp
         if (isRequest){
             isRequest = false;
             showLoadDataing();
-            mPresenter.onRequest("");
+            mPresenter.onRequest(CloudApi.informationGetInfoSortList);
         }
     }
 
@@ -64,6 +65,7 @@ public class ThreeFrg extends BaseFragment<BaseListPresenter, FThreeBinding> imp
 
     @Override
     protected void initView(View view) {
+        setSwipeBackEnable(false);
         view.findViewById(R.id.et_search).setOnClickListener(this);
         RoundLinearLayout lySearch = view.findViewById(R.id.ly_search);
         lySearch.getDelegate().setBackgroundColor(act.getColor(R.color.white_f4f4f4));
@@ -90,10 +92,10 @@ public class ThreeFrg extends BaseFragment<BaseListPresenter, FThreeBinding> imp
         String[] strings = new String[list.size()];
         for (int i = 0; i < list.size(); i++){
             DataBean bean = list.get(i);
-            strings[i] = "新闻" + i;
+            strings[i] = bean.getSortName();
             ThreeChildFrg frg = new ThreeChildFrg();
             Bundle bundle = new Bundle();
-//            bundle.putString("id", bean.getClassId());
+            bundle.putString("id", bean.getSortId());
             frg.setArguments(bundle);
             mFragments.add(frg);
         }

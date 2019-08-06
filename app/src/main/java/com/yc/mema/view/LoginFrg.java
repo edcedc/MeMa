@@ -7,6 +7,7 @@ import android.text.Spanned;
 import android.text.style.ForegroundColorSpan;
 import android.view.View;
 
+import com.blankj.utilcode.util.StringUtils;
 import com.flyco.tablayout.listener.CustomTabEntity;
 import com.flyco.tablayout.listener.OnTabSelectListener;
 import com.gyf.immersionbar.ImmersionBar;
@@ -20,6 +21,8 @@ import com.yc.mema.utils.CountDownTimerUtils;
 import com.yc.mema.view.act.HtmlAct;
 import com.yc.mema.weight.TabEntity;
 
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 
 /**
@@ -32,9 +35,7 @@ import java.util.ArrayList;
 public class LoginFrg extends BaseFragment<LoginPresenter, FLoginBinding> implements LoginContract.View, View.OnClickListener {
 
     public static LoginFrg newInstance() {
-        
         Bundle args = new Bundle();
-        
         LoginFrg fragment = new LoginFrg();
         fragment.setArguments(args);
         return fragment;
@@ -82,9 +83,11 @@ public class LoginFrg extends BaseFragment<LoginPresenter, FLoginBinding> implem
             public void onTabSelect(int position) {
                 mPosition = position;
                 if (position == 0){
+                    mB.btSubmit.setText(getString(R.string.login));
                     mB.gpRe.setVisibility(View.GONE);
                     mB.gpLogin.setVisibility(View.VISIBLE);
                 }else {
+                    mB.btSubmit.setText(getString(R.string.register));
                     mB.gpRe.setVisibility(View.VISIBLE);
                     mB.gpLogin.setVisibility(View.GONE);
                 }
@@ -100,8 +103,7 @@ public class LoginFrg extends BaseFragment<LoginPresenter, FLoginBinding> implem
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.bt_submit:
-                UIHelper.startInformationFrg(this);
-//                mPresenter.login(mB.etPhone.getText().toString(), mB.etCode.getText().toString(), mB.etPwd.getText().toString(), mB.cbSubmit.isChecked(), mPosition);
+                mPresenter.login(mB.etPhone.getText().toString(), mB.etCode.getText().toString(), mB.etPwd.getText().toString(), mB.cbSubmit.isChecked(), mPosition);
                 break;
             case R.id.tv_code:
                 mPresenter.code(mB.etPhone.getText().toString());
@@ -120,4 +122,23 @@ public class LoginFrg extends BaseFragment<LoginPresenter, FLoginBinding> implem
     public void onCode() {
         new CountDownTimerUtils(act, 60000, 1000, mB.tvCode).start();
     }
+
+    @Override
+    public void onResgist(String phone, String pwd) {
+        mB.tbLayout.setCurrentTab(0);
+        mPosition = 0;
+        mB.btSubmit.setText(getString(R.string.login));
+        mB.gpRe.setVisibility(View.GONE);
+        mB.gpLogin.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void onLogin(JSONObject user) {
+        if (user.optString("headUrl").equals("null") || user.optString("nickName").equals("null") || user.optString("birthday").equals("null")){
+            UIHelper.startInformationFrg(this);
+        }else {
+            act.finish();
+        }
+    }
+
 }

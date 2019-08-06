@@ -40,6 +40,7 @@ public class CollectionChildFrg extends BaseFragment<CollectionPresenter, FColle
     private boolean isRequest = true;
     private List<DataBean> listBean = new ArrayList<>();
     private CollectionAdapter adapter;
+    private boolean isChecked = false;
 
     @Override
     public void onSupportVisible() {
@@ -74,11 +75,13 @@ public class CollectionChildFrg extends BaseFragment<CollectionPresenter, FColle
     protected void initView(View view) {
         EventBus.getDefault().register(this);
         mB.tvDel.setOnClickListener(this);
+        mB.cb.setOnClickListener(this);
         if (adapter == null){
-            adapter = new CollectionAdapter(act, listBean, type);
+            adapter = new CollectionAdapter(act, listBean, type, true);
         }
         switch (type){
             case 0:
+                mB.refreshLayout.setBackgroundColor(act.getColor(R.color.white));
                 setRecyclerViewGridType(mB.recyclerView, 3, 10, 10, R.color.white);
                 setMargins(mB.recyclerView, 30, 0, 30, 0);
                 break;
@@ -103,24 +106,18 @@ public class CollectionChildFrg extends BaseFragment<CollectionPresenter, FColle
                 mPresenter.onRequest(type, pagerNumber += 1);
             }
         });
-        mB.cb.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                for (DataBean bean : listBean){
-                    bean.setSelect(b);
+        adapter.setOnClickListener((position, isSelect) -> {
+            for (DataBean bean : listBean){
+                if (!bean.isSelect()){
+                    mB.cb.setChecked(false);
+                    return;
                 }
-                adapter.notifyDataSetChanged();
+                mB.cb.setChecked(true);
             }
         });
     }
 
-    public static void setMargins (View v, int l, int t, int r, int b) {
-        if (v.getLayoutParams() instanceof ViewGroup.MarginLayoutParams) {
-            ViewGroup.MarginLayoutParams p = (ViewGroup.MarginLayoutParams) v.getLayoutParams();
-            p.setMargins(l, t, r, b);
-            v.requestLayout();
-        }
-    }
+
 
     @Override
     public void setRefreshLayoutMode(int totalRow) {
@@ -163,6 +160,14 @@ public class CollectionChildFrg extends BaseFragment<CollectionPresenter, FColle
                     mB.fYDel.setVisibility(View.GONE);
                     EventBus.getDefault().post(new CollectionInEvent(false, true));
                 }
+                break;
+            case R.id.cb_:
+                if (listBean.size() == 0)return;
+                isChecked = !isChecked;
+                for (DataBean bean : listBean){
+                    bean.setSelect(isChecked);
+                }
+                adapter.notifyDataSetChanged();
                 break;
         }
     }

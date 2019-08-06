@@ -150,13 +150,10 @@ public abstract class BaseFragment<P extends BasePresenter, VB extends ViewDataB
     }
 
     protected void showToast(final String str) {
-        act.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
+        act.runOnUiThread(() -> {
 //                ToastUtils.setGravity(Gravity.CENTER, 0, 0);
 //                ToastUtils.showLong(str);
-                ToastUtils.showShort(str);
-            }
+            ToastUtils.showShort(str);
         });
     }
 
@@ -303,17 +300,13 @@ public abstract class BaseFragment<P extends BasePresenter, VB extends ViewDataB
     }
 
     protected void setRefreshLayout(final int pagerNumber, final TwinklingRefreshLayout refreshLayout) {
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                if (pagerNumber == 1) {
-                    refreshLayout.finishRefreshing();
-                } else {
-                    refreshLayout.finishLoadmore();
-                }
+        new Handler().postDelayed(() -> {
+            if (pagerNumber == 1) {
+                refreshLayout.finishRefreshing();
+            } else {
+                refreshLayout.finishLoadmore();
             }
         }, 300);
-
     }
 
 
@@ -473,6 +466,14 @@ public abstract class BaseFragment<P extends BasePresenter, VB extends ViewDataB
                 setOnRightClickListener();
             }
         });
+    }
+
+    public static void setMargins (View v, int l, int t, int r, int b) {
+        if (v.getLayoutParams() instanceof ViewGroup.MarginLayoutParams) {
+            ViewGroup.MarginLayoutParams p = (ViewGroup.MarginLayoutParams) v.getLayoutParams();
+            p.setMargins(l, t, r, b);
+            v.requestLayout();
+        }
     }
 
     private CompositeDisposable compositeDisposable;

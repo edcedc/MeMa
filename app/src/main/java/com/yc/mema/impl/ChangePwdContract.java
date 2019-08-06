@@ -15,6 +15,7 @@ public interface ChangePwdContract {
 
         void onCode();
 
+        void onChange();
     }
 
     abstract class Presenter extends BasePresenter<View> {

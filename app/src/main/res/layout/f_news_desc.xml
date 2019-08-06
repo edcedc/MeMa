@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <include layout="@layout/include_top"/>
+
+        <com.yc.mema.weight.LoadingLayout
+            android:id="@+id/loadinglayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <com.lcodecore.tkrefreshlayout.TwinklingRefreshLayout
+                android:id="@+id/refreshLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/white_f4f4f4">
+
+            <android.support.v4.widget.NestedScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <LinearLayout
+                    android:background="@color/white_f4f4f4"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <ProgressBar
+                        android:id="@+id/progressBar"
+                        style="?android:attr/progressBarStyleHorizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="2dp"
+                        android:max="100"
+                        android:progress="0" />
+
+                    <android.support.v7.widget.AppCompatTextView
+                        android:id="@+id/tv_title"
+                        android:layout_margin="@dimen/px20"
+                        style="@style/Tv15black" />
+
+                    <LinearLayout
+                        android:paddingLeft="@dimen/px20"
+                        android:paddingRight="@dimen/px20"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <android.support.v7.widget.AppCompatTextView
+                            android:id="@+id/tv_time"
+                            android:layout_weight="1"
+                            style="@style/Tv12gray" />
+
+                        <android.support.v7.widget.AppCompatTextView
+                            android:id="@+id/tv_like"
+                            android:layout_marginRight="@dimen/px50"
+                            android:drawablePadding="@dimen/px10"
+                            android:drawableLeft="@mipmap/y24"
+                            style="@style/Tv12gray" />
+
+                        <android.support.v7.widget.AppCompatTextView
+                            android:id="@+id/tv_comment"
+                            android:drawablePadding="@dimen/px10"
+                            android:drawableLeft="@mipmap/pinlun_1"
+                            style="@style/Tv12gray" />
+
+                    </LinearLayout>
+
+                    <com.yc.mema.weight.RoundImageView
+                        android:id="@+id/iv_img"
+                        android:layout_margin="@dimen/px20"
+                        android:src="@mipmap/place_holder"
+                        android:scaleType="centerCrop"
+                        android:layout_width="match_parent"
+                        android:layout_height="155dp" />
+
+
+
+                    <com.yc.mema.weight.X5WebView
+                        android:id="@+id/webView"
+                        android:layout_marginLeft="@dimen/px20"
+                        android:layout_marginRight="@dimen/px20"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"  />
+
+                    <LinearLayout
+                        android:layout_marginTop="@dimen/px20"
+                        android:padding="@dimen/px30"
+                        android:background="@color/white"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <android.support.v7.widget.AppCompatTextView
+                            android:text="@string/all_comments"
+                            android:layout_weight="1"
+                            style="@style/Tv12gray" />
+
+                        <android.support.v7.widget.AppCompatTextView
+                            android:text="@string/praise_most"
+                            android:drawableRight="@mipmap/y33"
+                            android:drawablePadding="@dimen/px10"
+                            android:textColor="@color/red_F58FB5"
+                            style="@style/Tv12gray" />
+
+                    </LinearLayout>
+
+                    <View
+                        style="@style/divider_1"/>
+
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/recyclerView"
+                        android:background="@color/white"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:nestedScrollingEnabled="false"
+                        android:overScrollMode="never" />
+
+
+
+                </LinearLayout>
+
+            </android.support.v4.widget.NestedScrollView>
+
+                <com.flyco.roundview.RoundTextView
+                    android:id="@+id/tv_points"
+                    style="@style/Tv15black"
+                    android:layout_margin="@dimen/px40"
+                    android:layout_alignParentBottom ="true"
+                    android:layout_width="match_parent"
+                    android:drawableLeft="@mipmap/y36"
+                    android:drawablePadding="@dimen/px40"
+                    android:padding="@dimen/px30"
+                    android:text="@string/mema10"
+                    android:textColor="@color/red_F58FB5"
+                    app:rv_backgroundColor="@color/white"
+                    app:rv_cornerRadius="@dimen/px60" />
+
+            </com.lcodecore.tkrefreshlayout.TwinklingRefreshLayout>
+
+        </com.yc.mema.weight.LoadingLayout>
+
+    </LinearLayout>
+</layout>

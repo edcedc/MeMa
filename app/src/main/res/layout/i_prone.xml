@@ -1,60 +1,84 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:ignore="MissingConstraints"
+    android:layout_height="wrap_content"
     android:background="?actionBarItemBackground"
-    android:layout_height="wrap_content">
+    tools:ignore="MissingConstraints">
 
     <com.yc.mema.weight.RoundImageView
         android:id="@+id/iv_img"
-        android:scaleType="centerCrop"
-        android:src="@mipmap/place_holder"
         android:layout_width="match_parent"
-        android:layout_height="140dp"/>
+        android:layout_height="140dp"
+        android:scaleType="centerCrop"
+        android:src="@mipmap/place_holder" />
 
     <CheckBox
-        android:visibility="gone"
         android:id="@+id/cb_submit"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_margin="@dimen/px10"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:button="@drawable/cb_collection"/>
+        android:layout_margin="@dimen/px10"
+        android:button="@drawable/cb_collection"
+        android:visibility="gone"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <FrameLayout
+        android:id="@+id/layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_margin="@dimen/px10"
-        android:id="@+id/fy_head"
-        app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_width="40dp"
-        android:layout_height="40dp">
+        app:layout_constraintLeft_toLeftOf="parent">
 
-        <com.yc.mema.weight.CircleImageView
-            android:src="@color/white"
-            android:layout_gravity="center"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-
-        <com.yc.mema.weight.CircleImageView
-            android:id="@+id/iv_head"
-            android:scaleType="centerCrop"
-            android:layout_gravity="center"
-            android:layout_margin="@dimen/px5"
-            android:src="@mipmap/place_holder_user"
+        <com.flyco.roundview.RoundLinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:rv_cornerRadius="@dimen/px60">
+
+            <FrameLayout
+                android:id="@+id/fy_head"
+                android:layout_width="35dp"
+                android:layout_height="35dp">
+
+                <com.yc.mema.weight.CircleImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:src="@color/white" />
+
+                <com.yc.mema.weight.CircleImageView
+                    android:id="@+id/iv_head"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_margin="@dimen/px5"
+                    android:scaleType="centerCrop"
+                    android:src="@mipmap/place_holder_user" />
+
+            </FrameLayout>
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/tv_name"
+                android:layout_gravity="center"
+                style="@style/Tv15white"
+                android:layout_marginLeft="@dimen/px30"
+                android:layout_marginRight="@dimen/px40" />
+
+        </com.flyco.roundview.RoundLinearLayout>
+
+        <com.flyco.roundview.RoundFrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:alpha="0.2"
+            android:orientation="horizontal"
+            android:layout_marginRight="@dimen/px20"
+            app:rv_backgroundColor="@color/black_333333"
+            app:rv_cornerRadius="@dimen/px60" />
 
     </FrameLayout>
 
-    <android.support.v7.widget.AppCompatTextView
-        android:id="@+id/tv_name"
-        android:layout_marginLeft="@dimen/px10"
-        app:layout_constraintLeft_toRightOf="@id/fy_head"
-        app:layout_constraintTop_toTopOf="@id/fy_head"
-        app:layout_constraintBottom_toBottomOf="@id/fy_head"
-        style="@style/Tv15white" />
 
 </android.support.constraint.ConstraintLayout>

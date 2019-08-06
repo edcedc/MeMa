@@ -39,7 +39,7 @@ android {
 
             android.applicationVariants.all { variant ->
                 variant.outputs.all {
-                    outputFileName = "sg_${defaultConfig.versionName}_${releaseTime()}.apk"
+                    outputFileName = "mema_${defaultConfig.versionName}_${releaseTime()}.apk"
                 }
             }
         }
@@ -60,13 +60,17 @@ android {
             keyPassword "123456"
         }
     }
-
+    compileOptions {
+        sourceCompatibility 1.8
+        targetCompatibility 1.8
+    }
     //设置虚拟机堆内存空间大小，避免在编译期间OOM
 //    dexOptions {
 //        jumboMode true
 //        incremental true
 //        javaMaxHeapSize "4g"
 //    }
+
 
     repositories {
         flatDir {
@@ -123,15 +127,20 @@ dependencies {
 
     //渐变式导航栏
     implementation 'com.gyf.immersionbar:immersionbar:3.0.0-beta05'
+
     //zking
     implementation 'com.google.zxing:core:3.3.0'
+
     //选择自定义VIEW
     implementation 'com.flyco.roundview:FlycoRoundView_Lib:1.1.4@aar'
     implementation 'com.flyco.tablayout:FlycoTabLayout_Lib:2.1.2@aar'
+
     //流式布局
     implementation 'com.hyman:flowlayout-lib:1.1.2'
+
     //轮播图
     implementation 'com.youth.banner:banner:1.4.10'
+
     //选中时间控件
     implementation 'com.github.addappcn:android-pickers:1.0.3'
 
@@ -161,9 +170,8 @@ dependencies {
     implementation 'com.tencent.mm.opensdk:wechat-sdk-android-with-mta:+'
 
     //友盟统计
-    implementation  'com.umeng.umsdk:analytics:8.0.0'
-    implementation  'com.umeng.umsdk:common:2.0.0'
-
+    implementation 'com.umeng.umsdk:analytics:8.0.0'
+    implementation 'com.umeng.umsdk:common:2.0.0'
 
     //腾讯X5webview
     implementation files('libs/tbs_sdk_thirdapp_v3.6.0.1352_43618_sharewithdownload_withoutGame_obfs_20180918_120327.jar')
@@ -179,4 +187,14 @@ dependencies {
     implementation files('libs/umeng-share-sina-simplify-6.9.6.jar')
     implementation files('libs/umeng-share-wechat-simplify-6.9.6.jar')
     implementation files('libs/umeng-sharetool-6.9.6.jar')
+    implementation project(':dkplayer-java')
+    implementation project(':dkplayer-ui')
+    implementation project(path: ':dkplayer-players:ijk')
+    implementation project(path: ':dkplayer-players:exo')
+    implementation project(path: ':dkplayer-players:ijk-armv5')
+    implementation project(path: ':dkplayer-players:ijk-x86')
+    implementation project(path: ':dkplayer-players:ijk-arm64')
+    implementation project(path: ':dkplayer-players:ijk-armv7a')
+    implementation project(path: ':dkplayer-players:ijk-x86_64')
+    implementation files('libs/OpenInstall_v2.2.2.jar')
 }

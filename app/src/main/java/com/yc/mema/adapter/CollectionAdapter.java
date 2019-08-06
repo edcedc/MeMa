@@ -1,23 +1,19 @@
 package com.yc.mema.adapter;
 
 import android.content.Context;
-import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
-import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.blankj.utilcode.util.LogUtils;
-import com.flyco.roundview.RoundTextView;
-import com.flyco.roundview.RoundViewDelegate;
+import com.blankj.utilcode.util.StringUtils;
 import com.yc.mema.R;
 import com.yc.mema.base.BaseRecyclerviewAdapter;
 import com.yc.mema.bean.DataBean;
+import com.yc.mema.controller.CloudApi;
 import com.yc.mema.controller.UIHelper;
 import com.yc.mema.utils.GlideLoadingUtils;
 import com.yc.mema.weight.CircleImageView;
@@ -26,7 +22,6 @@ import com.zhy.view.flowlayout.FlowLayout;
 import com.zhy.view.flowlayout.TagAdapter;
 import com.zhy.view.flowlayout.TagFlowLayout;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -38,10 +33,25 @@ import java.util.List;
 public class CollectionAdapter extends BaseRecyclerviewAdapter<DataBean> {
 
     private int type;
+    private boolean isState = false;
+    private boolean isMe = false;
 
     public CollectionAdapter(Context act, List<DataBean> listBean, int type) {
         super(act, listBean);
         this.type = type;
+    }
+
+    public CollectionAdapter(Context act, List<DataBean> listBean, int type, boolean isState) {
+        super(act, listBean);
+        this.type = type;
+        this.isState = isState;
+    }
+
+    public CollectionAdapter(Context act, List<DataBean> listBean, int type, boolean isState, boolean isMe) {
+        super(act, listBean);
+        this.type = type;
+        this.isState = isState;
+        this.isMe = isMe;
     }
 
     private boolean isDel = false;
@@ -55,73 +65,89 @@ public class CollectionAdapter extends BaseRecyclerviewAdapter<DataBean> {
         final DataBean bean = listBean.get(position);
         if (holder instanceof ProneViewHolder){
             ProneViewHolder viewHolder = (ProneViewHolder) holder;
-            showImg(viewHolder.iv_img);
-            showImg(viewHolder.iv_head);
+            if (isMe){
+                viewHolder.layout.setVisibility(View.GONE);
+            }
             viewHolder.tv_name.setText("番号");
             isDel(viewHolder.cb_submit);
-            viewHolder.cb_submit.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                @Override
-                public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                    bean.setSelect(b);
+            viewHolder.cb_submit.setChecked(bean.isSelect());
+            viewHolder.cb_submit.setOnClickListener(view -> {
+                if (listener != null) {
+                    if (bean.isSelect()){
+                        bean.setSelect(false);
+                    }else {
+                        bean.setSelect(true);
+                    }
+                    viewHolder.cb_submit.setChecked(bean.isSelect());
+                    listener.click(position, bean.isSelect());
                 }
             });
-            viewHolder.cb_submit.setChecked(bean.isSelect());
+            viewHolder.itemView.setOnClickListener(view -> UIHelper.startVideoAct(isState));
         }else if (holder instanceof ConsultViewHolder){
             ConsultViewHolder viewHolder = (ConsultViewHolder) holder;
-            showImg(viewHolder.iv_img);
             viewHolder.tv_title.setText("首届世界人道主义峰会在土耳其闭幕，与会方共作出1500项承诺");
             viewHolder.tv_time.setText("2019-05-24");
             isDel(viewHolder.cb_submit);
-            viewHolder.cb_submit.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                @Override
-                public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                    bean.setSelect(b);
-                }
-            });
+            viewHolder.cb_submit.setOnCheckedChangeListener((compoundButton, b) -> bean.setSelect(b));
+            viewHolder.itemView.setOnClickListener(view -> UIHelper.startNewsDescAct(bean.getInfoId()));
         }else if (holder instanceof GiftViewHolder){
             GiftViewHolder viewHolder = (GiftViewHolder) holder;
-            showImg(viewHolder.iv_img);
-            showImg(viewHolder.iv_img1);
-            showImg(viewHolder.iv_img2);
-            viewHolder.tv_title.setText("胡桃里音乐酒馆 ");
-            viewHolder.tv_add.setText("广州" +
-                    "·" +
-                    "天河 ");
+            viewHolder.tv_title.setText(bean.getWalTitle());
+            viewHolder.tv_add.setText(bean.getPcyAdd() + bean.getAddress());
+            String discount = bean.getDiscount();
+            if (!StringUtils.isEmpty(discount)){
+                String[] split = discount.split(",");
+                viewHolder.fl_label.removeAllViews();
+                viewHolder.fl_label.setAdapter(new TagAdapter<String>(split){
+                    @Override
+                    public View getView(FlowLayout parent, int position, String dataBean) {
+                        View view = View.inflate(act, R.layout.i_gift_label, null);
+                        TextView tvText = view.findViewById(R.id.tv_text);
+                        tvText.setText(dataBean);
+                        return view;
+                    }
+                });
+            }
 
-            List<DataBean> list = new ArrayList<>();
-            list.add(new DataBean());
-            list.add(new DataBean());
-            list.add(new DataBean());
-            viewHolder.fl_label.removeAllViews();
-            viewHolder.fl_label.setAdapter(new TagAdapter<DataBean>(list){
-                @Override
-                public View getView(FlowLayout parent, int position, DataBean dataBean) {
-                    View view = View.inflate(act, R.layout.i_gift_label, null);
-                    TextView tvText = view.findViewById(R.id.tv_text);
-                    tvText.setText(position + "全部");
-                    return view;
-                }
-            });
+            List<DataBean> welfareImgs = bean.getWelfareImgs();
+            switch (welfareImgs.size()){
+                case 0:
+                    viewHolder.iv_img.setVisibility(View.VISIBLE);
+                    GlideLoadingUtils.load(act, CloudApi.SERVLET_IMG_URL + welfareImgs.get(0).getAttachId(), viewHolder.iv_img);
+                    break;
+                case 1:
+                    viewHolder.iv_img.setVisibility(View.VISIBLE);
+                    GlideLoadingUtils.load(act, CloudApi.SERVLET_IMG_URL + welfareImgs.get(0).getAttachId(), viewHolder.iv_img);
+                    viewHolder.iv_img1.setVisibility(View.VISIBLE);
+                    GlideLoadingUtils.load(act, CloudApi.SERVLET_IMG_URL + welfareImgs.get(1).getAttachId(), viewHolder.iv_img1);
+                    break;
+                default:
+                    viewHolder.iv_img.setVisibility(View.VISIBLE);
+                    GlideLoadingUtils.load(act, CloudApi.SERVLET_IMG_URL + welfareImgs.get(0).getAttachId(), viewHolder.iv_img);
+                    viewHolder.iv_img1.setVisibility(View.VISIBLE);
+                    GlideLoadingUtils.load(act, CloudApi.SERVLET_IMG_URL + welfareImgs.get(1).getAttachId(), viewHolder.iv_img1);
+                     viewHolder.iv_img2.setVisibility(View.VISIBLE);
+                    GlideLoadingUtils.load(act, CloudApi.SERVLET_IMG_URL + welfareImgs.get(2).getAttachId(), viewHolder.iv_img2);
+                    break;
+            }
+
             isDel(viewHolder.cb_submit);
-            viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    UIHelper.startGiftAct();
-                }
-            });
+            viewHolder.itemView.setOnClickListener(view -> UIHelper.startGiftAct(bean.getWelId()));
         }
     }
 
+    private OnClickListener listener;
+    public interface OnClickListener{
+        void click(int position, boolean isSelect);
+    }
+    public void setOnClickListener(OnClickListener listener){
+        this.listener = listener;
+    }
+
+
     private void isDel(CheckBox box){
         box.setVisibility(isDel ? View.VISIBLE : View.GONE);
-
-
     }
-
-    private void showImg(ImageView imageView){
-        GlideLoadingUtils.load(act, "", imageView);
-    }
-
 
     @Override
     protected RecyclerView.ViewHolder onCreateViewHolde(ViewGroup parent, int viewType) {
@@ -142,6 +168,7 @@ public class CollectionAdapter extends BaseRecyclerviewAdapter<DataBean> {
         CheckBox cb_submit;
         AppCompatTextView tv_name;
         CircleImageView iv_head;
+        View layout;
 
         public ProneViewHolder(View itemView) {
             super(itemView);
@@ -149,6 +176,7 @@ public class CollectionAdapter extends BaseRecyclerviewAdapter<DataBean> {
             cb_submit = itemView.findViewById(R.id.cb_submit);
             tv_name = itemView.findViewById(R.id.tv_name);
             iv_head = itemView.findViewById(R.id.iv_head);
+            layout = itemView.findViewById(R.id.layout);
         }
     }
 

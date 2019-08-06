@@ -8,11 +8,13 @@
     <color name="color_f6">#f6f6f6</color>
     <color name="tab_unselect">#666666</color>
     <color name="tab_gray">#999999</color>
+    <color name="gray_eeeeee">#eeeeee</color>
     <color name="tab_black">#111111</color>
     <color name="black_333333">#333333</color>
 
     <color name="red_EE3257">#EE3257</color>
     <color name="red_F58FB5">#F58FB5</color>
+    <color name="red_FAB7C1">#FAB7C1</color>
     <color name="red_F67690">#F67690</color>
 
 </resources>

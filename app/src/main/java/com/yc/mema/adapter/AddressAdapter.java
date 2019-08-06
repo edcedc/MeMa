@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.yc.mema.R;
+import com.yc.mema.base.BaseFragment;
 import com.yc.mema.base.BaseRecyclerviewAdapter;
 import com.yc.mema.bean.DataBean;
 
@@ -21,27 +22,32 @@ import java.util.List;
  */
 public class AddressAdapter extends BaseRecyclerviewAdapter<DataBean> {
 
-    public AddressAdapter(Context act, List<DataBean> listBean) {
-        super(act, listBean);
+    public AddressAdapter(Context act, BaseFragment root, List<DataBean> listBean) {
+        super(act, root, listBean);
     }
 
     @Override
     protected void onBindViewHolde(RecyclerView.ViewHolder holder, int position) {
         ViewHolder viewHolder = (ViewHolder) holder;
         DataBean bean = listBean.get(position);
-
-        viewHolder.tv_locate.setCompoundDrawablesWithIntrinsicBounds(null,
-                null, act.getResources().getDrawable(R.mipmap.y16, null), null);
-
-        viewHolder.tv_locate.setText("广州");
-
-
-        viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-            }
+        if (bean.getRegionLevel() >= 3){
+            viewHolder.tv_locate.setCompoundDrawablesWithIntrinsicBounds(null,null, null, null);
+        }else {
+            viewHolder.tv_locate.setCompoundDrawablesWithIntrinsicBounds(null,
+                    null, act.getResources().getDrawable(R.mipmap.y16, null), null);
+        }
+        viewHolder.tv_locate.setText(bean.getRegionName());
+        viewHolder.itemView.setOnClickListener(view -> {
+            if (listener != null)listener.onClick(bean.getRegionId(), bean.getRegionName(), bean.getRegionLevel());
         });
+    }
+
+    private OnClickListener listener;
+    public interface OnClickListener{
+        void onClick(String parentId, String address, int regionLevel);
+    }
+    public void setOnClickListener(OnClickListener listener){
+        this.listener = listener;
     }
 
     @Override

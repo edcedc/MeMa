@@ -18,9 +18,9 @@ import com.yc.mema.databinding.FAccountBinding;
  *  账号与安全
  */
 public class AccountFrg extends BaseFragment<BasePresenter, FAccountBinding> implements View.OnClickListener {
+
     @Override
     public void initPresenter() {
-
     }
 
     @Override

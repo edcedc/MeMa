@@ -14,6 +14,7 @@ import com.yc.mema.view.GiftDescFrg;
  */
 public class GiftAct extends BaseActivity {
 
+
     @Override
     protected void initPresenter() {
 
@@ -26,13 +27,16 @@ public class GiftAct extends BaseActivity {
 
     @Override
     protected void initParms(Bundle bundle) {
-
     }
 
     @Override
     protected void initView() {
         if (findFragment(GiftDescFrg.class) == null) {
-            loadRootFragment(R.id.fl_container, GiftDescFrg.newInstance());
+            GiftDescFrg frg = GiftDescFrg.newInstance();
+            Bundle bundle = new Bundle();
+            bundle.putString("id", getIntent().getStringExtra("id"));
+            frg.setArguments(bundle);
+            loadRootFragment(R.id.fl_container, frg);
         }
     }
 

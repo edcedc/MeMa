@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import com.yc.mema.R;
 import com.yc.mema.base.BaseListViewAdapter;
 import com.yc.mema.bean.DataBean;
+import com.yc.mema.controller.CloudApi;
 import com.yc.mema.utils.GlideLoadingUtils;
 import com.yc.mema.weight.RoundImageView;
 
@@ -34,8 +35,7 @@ public class GiftDescAdapter extends BaseListViewAdapter<DataBean> {
             viewHolder = (ViewHolder) convertView.getTag();
         }
         final DataBean bean = listBean.get(position);
-
-        GlideLoadingUtils.load(act, "", viewHolder.iv_img);
+        GlideLoadingUtils.load(act, CloudApi.SERVLET_IMG_URL + bean.getAttachId(), viewHolder.iv_img);
         return convertView;
     }
 

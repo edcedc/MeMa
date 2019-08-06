@@ -21,62 +21,55 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <com.lcodecore.tkrefreshlayout.TwinklingRefreshLayout
-                android:id="@+id/refreshLayout"
+            <android.support.constraint.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@color/white_f4f4f4">
+                android:layout_height="match_parent">
 
-                <android.support.constraint.ConstraintLayout
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/tv_locate1"
+                    style="@style/Tv15gray"
+                    android:layout_margin="@dimen/px30"
+                    android:text="@string/locate"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/tv_location"
+                    style="@style/Tv15black"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_marginTop="@dimen/px10"
+                    android:background="@color/white"
+                    android:drawableLeft="@mipmap/y19"
+                    android:drawableRight="@mipmap/y18"
+                    android:drawablePadding="@dimen/px20"
+                    android:padding="@dimen/px30"
+                    app:layout_constraintTop_toBottomOf="@id/tv_locate1" />
 
-                    <android.support.v7.widget.AppCompatTextView
-                        android:id="@+id/tv_locate1"
-                        style="@style/Tv15gray"
-                        android:layout_margin="@dimen/px30"
-                        android:text="@string/locate"
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                <android.support.constraint.Group
+                    android:id="@+id/gp_locate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:constraint_referenced_ids="tv_locate1, tv_location" />
 
-                    <android.support.v7.widget.AppCompatTextView
-                        android:id="@+id/tv_location"
-                        style="@style/Tv15black"
-                        android:layout_width="match_parent"
-                        android:layout_marginTop="@dimen/px10"
-                        android:background="@color/white"
-                        android:drawableLeft="@mipmap/y19"
-                        android:drawableRight="@mipmap/y18"
-                        android:drawablePadding="@dimen/px20"
-                        android:padding="@dimen/px30"
-                        app:layout_constraintTop_toBottomOf="@id/tv_locate1" />
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/tv_all"
+                    style="@style/Tv15gray"
+                    android:layout_margin="@dimen/px30"
+                    android:text="@string/all"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_location" />
 
-                    <android.support.constraint.Group
-                        android:id="@+id/gp_locate"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:constraint_referenced_ids="tv_locate1, tv_location" />
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/recyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/px10"
+                    android:nestedScrollingEnabled="false"
+                    android:overScrollMode="never"
+                    app:layout_constraintTop_toBottomOf="@id/tv_all" />
 
-                    <android.support.v7.widget.AppCompatTextView
-                        app:layout_constraintTop_toBottomOf="@id/tv_location"
-                        android:id="@+id/tv_all"
-                        style="@style/Tv15gray"
-                        android:layout_margin="@dimen/px30"
-                        android:text="@string/all"
-                        app:layout_constraintLeft_toLeftOf="parent" />
+            </android.support.constraint.ConstraintLayout>
 
-                    <android.support.v7.widget.RecyclerView
-                        android:id="@+id/recyclerView"
-                        android:layout_marginTop="@dimen/px10"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:nestedScrollingEnabled="false"
-                        android:overScrollMode="never"
-                        app:layout_constraintTop_toBottomOf="@id/tv_all" />
-
-                </android.support.constraint.ConstraintLayout>
-
-            </com.lcodecore.tkrefreshlayout.TwinklingRefreshLayout>
 
         </com.yc.mema.weight.LoadingLayout>
 

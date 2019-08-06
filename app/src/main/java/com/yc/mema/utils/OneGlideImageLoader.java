@@ -7,6 +7,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.yc.mema.R;
 import com.yc.mema.bean.DataBean;
+import com.yc.mema.controller.CloudApi;
 import com.yc.mema.weight.RoundImageView;
 import com.youth.banner.loader.ImageLoader;
 
@@ -20,7 +21,7 @@ public class OneGlideImageLoader extends ImageLoader {
         RequestOptions options = new RequestOptions();
         options.placeholder(R.mipmap.place_holder);
         Glide.with(context.getApplicationContext())
-                .load(bean.getImage())
+                .load(CloudApi.SERVLET_IMG_URL + bean.getAttachId())
                 .apply(options)
                 .into(imageView);
     }

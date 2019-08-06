@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:ignore="MissingConstraints"
+    android:layout_height="match_parent">
+
+    <FrameLayout
+        android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <android.support.v7.widget.AppCompatImageView
+            android:id="@+id/iv_img"
+            android:layout_gravity="center"
+            android:scaleType="fitXY"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </FrameLayout>
+
+    <View
+        android:id="@+id/fy_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="0dp" />
+
+    <FrameLayout
+        android:id="@+id/fy_head"
+        android:layout_marginTop="100dp"
+        android:layout_marginRight="@dimen/px15"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <FrameLayout
+            android:layout_width="60dp"
+            android:layout_height="60dp">
+
+            <com.yc.mema.weight.CircleImageView
+                android:src="@color/white"
+                android:layout_gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+            <com.yc.mema.weight.CircleImageView
+                android:id="@+id/iv_head"
+                android:layout_margin="@dimen/px10"
+                android:layout_gravity="center"
+                android:src="@mipmap/place_holder_user"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+
+        </FrameLayout>
+
+        <CheckBox
+            android:id="@+id/cb_follow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|center"
+            android:layout_marginTop="@dimen/px90"
+            android:background="@drawable/cb_follow"
+            android:button="@null" />
+
+    </FrameLayout>
+
+    <CheckBox
+        android:id="@+id/cb_zan"
+        android:button="@null"
+        android:layout_marginTop="@dimen/px20"
+        app:layout_constraintTop_toBottomOf="@id/fy_head"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginRight="@dimen/px20"
+        android:drawableTop="@drawable/cb_zan"
+        android:gravity="center"
+        android:drawablePadding="@dimen/px5"
+        android:text="0"
+        style="@style/Tv15white" />
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/tv_comment"
+        android:layout_marginTop="@dimen/px20"
+        app:layout_constraintTop_toBottomOf="@id/cb_zan"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginRight="@dimen/px20"
+        android:drawableTop="@mipmap/liuyan_1"
+        android:gravity="center"
+        android:drawablePadding="@dimen/px5"
+        android:text="0"
+        style="@style/Tv15white" />
+
+    <CheckBox
+        android:id="@+id/cb_coll"
+        android:layout_marginTop="@dimen/px20"
+        app:layout_constraintTop_toBottomOf="@id/tv_comment"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginRight="@dimen/px20"
+        android:drawableTop="@drawable/cb_coll"
+        android:gravity="center"
+        android:button="@null"
+        android:drawablePadding="@dimen/px5"
+        android:text="@string/collection"
+        style="@style/Tv15white" />
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/tv_name"
+        android:textSize="@dimen/size36"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginLeft="@dimen/px20"
+        app:layout_constraintBottom_toTopOf="@id/tv_moma"
+        style="@style/Tv15white" />
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/tv_moma"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginLeft="@dimen/px20"
+        app:layout_constraintBottom_toTopOf="@id/tv_content"
+        style="@style/Tv12white" />
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/tv_content"
+        android:layout_width="0dp"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginLeft="@dimen/px20"
+        android:layout_marginBottom="@dimen/px50"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        style="@style/Tv15white" />
+
+</android.support.constraint.ConstraintLayout>

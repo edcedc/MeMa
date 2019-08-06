@@ -72,6 +72,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/px50"
             android:background="@null"
+            android:inputType="phone"
             android:hint="@string/please_code"
             android:paddingTop="@dimen/px20"
             android:paddingBottom="@dimen/px20"
@@ -143,6 +144,7 @@
 
         <android.support.v7.widget.AppCompatTextView
             android:id="@+id/tv_agreement"
+            android:visibility="gone"
             style="@style/Tv11gray"
             android:padding="@dimen/px20"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -152,7 +154,7 @@
         <android.support.constraint.Group
             android:id="@+id/gp_login"
             android:visibility="visible"
-            app:constraint_referenced_ids="tv_forget, tv_agreement"
+            app:constraint_referenced_ids="tv_forget"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
@@ -172,9 +174,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@null"
-                android:button="@drawable/cb_select"
-                android:paddingLeft="@dimen/px20"
-                android:text="我已阅读"
+                android:text="  我已阅读"
                 android:textColor="@color/tab_gray"
                 android:textSize="@dimen/px24" />
 

@@ -1,10 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
 
     <android.support.constraint.ConstraintLayout
+        tools:ignore="MissingConstraints"
+        android:background="@color/white_f4f4f4"
         android:layout_width="match_parent"
-        android:background="#aa7"
         android:layout_height="match_parent">
 
+        <com.yc.mema.weight.NoScrollViewPager
+            android:id="@+id/viewPager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <com.flyco.roundview.RoundTextView
+            android:id="@+id/tv_world"
+            android:text="@string/world"
+            android:layout_marginTop="@dimen/px60"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintRight_toLeftOf="@id/tv_friend"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:rv_backgroundColor="@color/white"
+            android:padding="@dimen/px15"
+            android:ems="6"
+            android:gravity="center"
+            android:alpha="0.8"
+            app:rv_cornerRadius="@dimen/px80"
+            android:textColor="@color/red_F67690"
+            style="@style/Tv15black" />
+
+        <com.flyco.roundview.RoundTextView
+            android:id="@+id/tv_friend"
+            android:layout_marginRight="@dimen/px40"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintLeft_toRightOf="@id/tv_world"
+            app:layout_constraintTop_toTopOf="@id/tv_world"
+            app:layout_constraintBottom_toBottomOf="@id/tv_world"
+            android:alpha="0.8"
+            android:text="@string/good_friend"
+            app:rv_backgroundColor="@color/white"
+            android:padding="@dimen/px15"
+            android:ems="6"
+            android:gravity="center"
+            app:rv_cornerRadius="@dimen/px80"
+            style="@style/Tv15black" />
+
+        <android.support.v7.widget.AppCompatImageView
+            android:id="@+id/iv_camera"
+            app:layout_constraintTop_toTopOf="@id/tv_friend"
+            android:layout_marginRight="@dimen/px40"
+            app:layout_constraintBottom_toBottomOf="@id/tv_friend"
+            app:layout_constraintRight_toRightOf="parent"
+            android:background="@mipmap/y40"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+
+
     </android.support.constraint.ConstraintLayout>
+
 </layout>

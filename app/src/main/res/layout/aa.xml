@@ -11,12 +11,15 @@
         android:layout_height="wrap_content"
         android:minHeight="?attr/actionBarSize" />
 
-    <com.applikeysolutions.cosmocalendar.view.CalendarView
-        android:id="@+id/calendar_view"
-        app:calendarBackgroundColor="#FF4000"
-        app:dayTextColor="#ffffff"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+    <CheckBox
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_margin="@dimen/px20"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="xxxxxxxxx"
+        android:button="@null"
+        android:drawableTop="@drawable/cb_collection"/>
 
 
 

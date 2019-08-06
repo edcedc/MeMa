@@ -26,12 +26,8 @@ import io.reactivex.functions.Consumer;
 public class BaseListPresenter extends BaseListContract.Presenter{
     @Override
     public void onRequest(String url, int pagerNumber) {
-        /*CloudApi.list(pagerNumber, url)
-                .doOnSubscribe(new Consumer<Disposable>() {
-                    @Override
-                    public void accept(Disposable disposable) throws Exception {
-                    }
-                })
+        CloudApi.list(pagerNumber, url)
+                .doOnSubscribe(disposable -> { })
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<Response<BaseResponseBean<BaseListBean<DataBean>>>>() {
                     @Override
@@ -43,12 +39,12 @@ public class BaseListPresenter extends BaseListContract.Presenter{
                     public void onNext(Response<BaseResponseBean<BaseListBean<DataBean>>> baseResponseBeanResponse) {
                         mView.hideLoading();
                         if (baseResponseBeanResponse.body().code == Code.CODE_SUCCESS){
-                            BaseListBean<DataBean> data = baseResponseBeanResponse.body().data;
+                            BaseListBean<DataBean> data = baseResponseBeanResponse.body().result;
                             if (data != null){
                                 List<DataBean> list = data.getList();
-                                if (list != null && list.size() != 0){
+                                if (list != null){
                                     mView.setData(list);
-                                    mView.setRefreshLayoutMode(data.getTotalRow());
+                                    mView.setRefreshLayoutMode(data.getTotalCount());
                                 }else {
                                     mView.showLoadEmpty();
                                 }
@@ -67,28 +63,13 @@ public class BaseListPresenter extends BaseListContract.Presenter{
                     public void onComplete() {
 
                     }
-                });*/
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                List<DataBean> list = new ArrayList<>();
-                for (int i = 0;i<15;i++){
-                    list.add(new DataBean());
-                }
-                mView.setData(list);
-                mView.hideLoading();
-            }
-        }, 500);
+                });
     }
 
     @Override
     public void onRequest(String url) {
-        /*CloudApi.list2(url)
-                .doOnSubscribe(new Consumer<Disposable>() {
-                    @Override
-                    public void accept(Disposable disposable) throws Exception {
-                    }
-                })
+        CloudApi.list2(url)
+                .doOnSubscribe(disposable -> {})
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<Response<BaseResponseBean<List<DataBean>>>>() {
                     @Override
@@ -98,10 +79,10 @@ public class BaseListPresenter extends BaseListContract.Presenter{
 
                     @Override
                     public void onNext(Response<BaseResponseBean<List<DataBean>>> baseResponseBeanResponse) {
+                        mView.hideLoading();
                         if (baseResponseBeanResponse.body().code == Code.CODE_SUCCESS){
-                            List<DataBean> data = baseResponseBeanResponse.body().data;
-                            if (data != null && data.size() != 0){
-                                mView.hideLoading();
+                            List<DataBean> data = baseResponseBeanResponse.body().result;
+                            if (data != null){
                                 mView.setData(data);
                             }
                         }else {
@@ -118,17 +99,6 @@ public class BaseListPresenter extends BaseListContract.Presenter{
                     public void onComplete() {
 
                     }
-                });*/
-       new Handler().postDelayed(new Runnable() {
-           @Override
-           public void run() {
-               List<DataBean> list = new ArrayList<>();
-               for (int i = 0;i<15;i++){
-                   list.add(new DataBean());
-               }
-               mView.setData(list);
-               mView.hideLoading();
-           }
-       }, 500);
+                });
     }
 }

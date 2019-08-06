@@ -1,5 +1,6 @@
 package com.yc.mema.controller;
 
+import android.app.Activity;
 import android.os.Bundle;
 
 import com.blankj.utilcode.util.ActivityUtils;
@@ -15,32 +16,31 @@ import com.yc.mema.view.BlackListFrg;
 import com.yc.mema.view.ChangePwdFrg;
 import com.yc.mema.view.CollectionFrg;
 import com.yc.mema.view.ComplaintFrg;
-import com.yc.mema.view.FiveFrg;
 import com.yc.mema.view.ForgetFrg;
 import com.yc.mema.view.HeadFrg;
 import com.yc.mema.view.HelpFrg;
 import com.yc.mema.view.InformationFrg;
 import com.yc.mema.view.MainFrg;
 import com.yc.mema.view.MemaFrg;
+import com.yc.mema.view.MessageFrg;
 import com.yc.mema.view.MsgFrg;
-import com.yc.mema.view.OneFrg;
 import com.yc.mema.view.PrivacyFrg;
+import com.yc.mema.view.ProneFrg;
 import com.yc.mema.view.ReportNewsFrg;
 import com.yc.mema.view.SearchGiftFrg;
 import com.yc.mema.view.SearchNewsFrg;
-import com.yc.mema.view.SetFrg;
 import com.yc.mema.view.SexFrg;
-import com.yc.mema.view.ThreeChildFrg;
-import com.yc.mema.view.ThreeFrg;
 import com.yc.mema.view.UpdateNameFrg;
 import com.yc.mema.view.UserInfoFrg;
 import com.yc.mema.view.ZkingFrg;
 import com.yc.mema.view.act.GiftAct;
 import com.yc.mema.view.act.HtmlAct;
 import com.yc.mema.view.act.LoginAct;
+import com.yc.mema.view.act.NewsDescAct;
+import com.yc.mema.view.act.ReleaseAct;
+import com.yc.mema.view.act.VideoAct;
 import com.yc.mema.view.act.SetAct;
 import com.yc.mema.view.act.UserInfoAct;
-import com.zaaach.toprightmenu.TopRightMenu;
 
 
 /**
@@ -197,6 +197,17 @@ public final class UIHelper {
             root.start(frg);
         }
     }
+    public static void startAddressFrg(BaseFragment root, int type, boolean isUpdate) {
+        AddressFrg frg = new AddressFrg();
+        Bundle bundle = new Bundle();
+        bundle.putBoolean("isUpdate", isUpdate);
+        frg.setArguments(bundle);
+        if (type == 0){
+            ((MainFrg) root.getParentFragment()).startBrotherFragment(frg);
+        }else {
+            root.start(frg);
+        }
+    }
 
     /**
      *  我的二维码
@@ -321,18 +332,25 @@ public final class UIHelper {
 
     /**
      *  添加生日记录
+     * @param welId
      */
-    public static void startGiftAct() {
-        ActivityUtils.startActivity(GiftAct.class);
+    public static void startGiftAct(String welId) {
+        Bundle bundle = new Bundle();
+        bundle.putString("id", welId);
+        ActivityUtils.startActivity(bundle, GiftAct.class);
     }
 
     /**
      *  搜索礼包
      * @param root
+     * @param parentId
+     * @param s
      */
-    public static void startSearchGiftFrg(BaseFragment root) {
+    public static void startSearchGiftFrg(BaseFragment root, String parentId, String s) {
         SearchGiftFrg frg = new SearchGiftFrg();
         Bundle bundle = new Bundle();
+        bundle.putString("parentId", parentId);
+        bundle.putString("location", s);
         frg.setArguments(bundle);
         ((MainFrg) root.getParentFragment()).startBrotherFragment(frg);
     }
@@ -356,6 +374,63 @@ public final class UIHelper {
         ReportNewsFrg frg = new ReportNewsFrg();
         Bundle bundle = new Bundle();
         frg.setArguments(bundle);
-        ((MainFrg) root.getParentFragment().getParentFragment()).startBrotherFragment(frg);
+        root.start(frg);
     }
+
+    /**
+     *  我的生日趴
+     * @param root
+     */
+    public static void startProneFrg(BaseFragment root) {
+        ProneFrg frg = new ProneFrg();
+        Bundle bundle = new Bundle();
+        frg.setArguments(bundle);
+        ((MainFrg) root.getParentFragment()).startBrotherFragment(frg);
+    }
+
+    /**
+     *  消息
+     * @param root
+     */
+    public static void startMessageFrg(BaseFragment root) {
+        MessageFrg frg = new MessageFrg();
+        Bundle bundle = new Bundle();
+        frg.setArguments(bundle);
+        ((MainFrg) root.getParentFragment()).startBrotherFragment(frg);
+    }
+
+    /**
+     *  新闻详情
+     * @param infoId
+     */
+    public static void startNewsDescAct(String infoId) {
+        Bundle bundle = new Bundle();
+        bundle.putString("id", infoId);
+        ActivityUtils.startActivity(bundle, NewsDescAct.class);
+    }
+
+    /**
+     *  生日趴
+     */
+    public static void startVideoAct(boolean isState) {
+        Bundle bundle = new Bundle();
+        bundle.putBoolean("isState", isState);
+        ActivityUtils.startActivity(bundle, VideoAct.class);
+    }
+
+    /**
+     *  录制视频
+     */
+    public static void startRecordedAct(Activity act){
+//        Intent intent = new Intent(act, RecordedActivity.class);
+//        act.startActivityForResult(intent, 1);
+    }
+
+    /**
+     *  视频发布
+     */
+    public static void startReleaseAct(){
+        ActivityUtils.startActivity(ReleaseAct.class);
+    }
+
 }

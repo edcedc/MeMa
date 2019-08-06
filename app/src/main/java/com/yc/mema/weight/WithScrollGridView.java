@@ -16,7 +16,7 @@ import android.widget.ListAdapter;
  */
 public class WithScrollGridView extends GridView {
     private static final String TAG = "AutoGridView";
-    private int numColumnsID;
+    private int numColumnsID = 1;
     private int previousFirstVisible;
     private int numColumns = 1;
     public WithScrollGridView(Context context, AttributeSet attrs, int defStyle) {

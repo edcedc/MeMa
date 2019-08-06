@@ -12,6 +12,7 @@ import com.luck.picture.lib.PictureSelector;
 import com.luck.picture.lib.entity.LocalMedia;
 import com.yc.mema.R;
 import com.yc.mema.base.BaseFragment;
+import com.yc.mema.base.User;
 import com.yc.mema.databinding.FHeadBinding;
 import com.yc.mema.event.CameraInEvent;
 import com.yc.mema.impl.InformationContract;
@@ -20,8 +21,10 @@ import com.yc.mema.utils.GlideLoadingUtils;
 import com.yc.mema.view.bottomFrg.CameraBottomFrg;
 import com.yc.mema.weight.PictureSelectorTool;
 
+import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -57,13 +60,13 @@ public class HeadFrg extends BaseFragment<InformationPresenter, FHeadBinding> im
     @Override
     protected void initView(View view) {
         setTitle(getString(R.string.user_head), R.mipmap.y17);
+        EventBus.getDefault().register(this);
         ViewGroup.LayoutParams params = mB.ivHead.getLayoutParams();
         params.width = ScreenUtils.getScreenWidth();
         params.height = params.width;
         mB.ivHead.setLayoutParams(params);
-
         if (cameraBottomFrg == null){
-            cameraBottomFrg = new CameraBottomFrg(0);
+            cameraBottomFrg = new CameraBottomFrg(2);
         }
         cameraBottomFrg.setCameraListener(new CameraBottomFrg.onCameraListener() {
             @Override
@@ -84,7 +87,8 @@ public class HeadFrg extends BaseFragment<InformationPresenter, FHeadBinding> im
             }
         });
 
-        GlideLoadingUtils.load(act, "", mB.ivHead);
+        JSONObject userObj = User.getInstance().getUserObj();
+        GlideLoadingUtils.load(act, userObj.optString("headUrl"), mB.ivHead, true);
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
@@ -95,7 +99,7 @@ public class HeadFrg extends BaseFragment<InformationPresenter, FHeadBinding> im
         String path = localMediaList.get(0).getCompressPath();
         headPath = path;
         Glide.with(act).load(path).into(mB.ivHead);
-        LogUtils.e(path);
+        mPresenter.head(headPath);
     }
 
     @Override
@@ -112,5 +116,16 @@ public class HeadFrg extends BaseFragment<InformationPresenter, FHeadBinding> im
     @Override
     public void setData(Object data) {
 
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
+    }
+
+    @Override
+    public void onSaveUser() {
+        pop();
     }
 }

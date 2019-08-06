@@ -1,15 +1,20 @@
 package com.yc.mema.adapter;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.blankj.utilcode.util.LogUtils;
+import com.bumptech.glide.Glide;
 import com.yc.mema.R;
 import com.yc.mema.base.BaseRecyclerviewAdapter;
 import com.yc.mema.bean.DataBean;
+import com.yc.mema.controller.CloudApi;
+import com.yc.mema.controller.UIHelper;
 import com.yc.mema.utils.GlideLoadingUtils;
 import com.yc.mema.weight.RoundImageView;
 
@@ -31,16 +36,13 @@ public class ThreeChildAdapter extends BaseRecyclerviewAdapter<DataBean> {
     protected void onBindViewHolde(RecyclerView.ViewHolder holder, int position) {
         ViewHolder viewHolder = (ViewHolder) holder;
         DataBean bean = listBean.get(position);
-
-        viewHolder.tv_title.setText("首届世界人道主义峰会在土耳其闭幕，与会方共作出 1500项承诺");
-        viewHolder.tv_time.setText("2019-05-24");
-        GlideLoadingUtils.load(act, "", viewHolder.iv_img);
-        viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-            }
-        });
+        viewHolder.tv_title.setText(bean.getTitle());
+        viewHolder.tv_time.setText(bean.getCreateTime().split(" ")[0]);
+        List<DataBean> img = bean.getInformationImg();
+        if (img != null && img.size() != 0){
+            GlideLoadingUtils.load(act, CloudApi.SERVLET_IMG_URL + img.get(0).getAttachId(), viewHolder.iv_img);
+        }
+        viewHolder.itemView.setOnClickListener(view -> UIHelper.startNewsDescAct(bean.getInfoId()));
     }
 
     @Override

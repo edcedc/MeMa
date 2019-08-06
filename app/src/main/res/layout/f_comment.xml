@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.NestedScrollView
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:ignore="MissingConstraints"
+    android:background="@color/white"
+    android:padding="@dimen/px20"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <com.flyco.roundview.RoundLinearLayout
+        android:orientation="vertical"
+        app:rv_backgroundColor="@color/red_FAB7C1"
+        app:rv_cornerRadius="@dimen/px60"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <android.support.v7.widget.AppCompatEditText
+            android:id="@+id/et_text"
+            style="@style/Tv15black"
+            android:imeOptions="actionSend"
+            android:singleLine="true"
+            android:background="@null"
+            android:layout_width="match_parent"
+            android:drawableLeft="@mipmap/y37"
+            android:drawablePadding="@dimen/px40"
+            android:padding="@dimen/px30"
+            android:hint="@string/mema10"
+            android:textColorHint="@color/white"
+            android:textColor="@color/white"
+            />
+
+    </com.flyco.roundview.RoundLinearLayout>
+
+</android.support.v4.widget.NestedScrollView>

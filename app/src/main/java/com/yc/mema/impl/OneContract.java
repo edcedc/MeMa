@@ -1,7 +1,5 @@
 package com.yc.mema.impl;
 
-import android.support.v7.widget.RecyclerView;
-
 import com.yc.mema.base.BaseFragment;
 import com.yc.mema.base.BasePresenter;
 import com.yc.mema.base.IBaseListView;
@@ -25,7 +23,7 @@ public interface OneContract {
 
     abstract class Presenter extends BasePresenter<View> {
 
-        public abstract void onRequest(int pagetNumber);
+        public abstract void onRequest(String county, String search, int itemize, int pagetNumber);
         public abstract void onBanner();
         public abstract void onGridView(BaseFragment root, WithScrollGridView recyclerView);
 

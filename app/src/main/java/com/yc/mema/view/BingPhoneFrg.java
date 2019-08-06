@@ -56,4 +56,9 @@ public class BingPhoneFrg extends BaseFragment<BingPhonePresenter, FBingPhoneBin
     public void onCode() {
         new CountDownTimerUtils(act, 60000, 1000, mB.tvCode).start();
     }
+
+    @Override
+    public void onBingPhone() {
+        pop();
+    }
 }

@@ -35,6 +35,7 @@ public class ThreeChildFrg extends BaseFragment<ThreeChildPresenter, FThreeChild
 
     private List<DataBean> listBean = new ArrayList<>();
     private ThreeChildAdapter adapter;
+    private String id;
 
     @Override
     public void initPresenter() {
@@ -56,7 +57,7 @@ public class ThreeChildFrg extends BaseFragment<ThreeChildPresenter, FThreeChild
 
     @Override
     protected void initParms(Bundle bundle) {
-
+        id = bundle.getString("id");
     }
 
     @Override
@@ -66,6 +67,7 @@ public class ThreeChildFrg extends BaseFragment<ThreeChildPresenter, FThreeChild
 
     @Override
     protected void initView(View view) {
+        setSwipeBackEnable(false);
         if (adapter == null) {
             adapter = new ThreeChildAdapter(act, listBean);
         }
@@ -75,13 +77,13 @@ public class ThreeChildFrg extends BaseFragment<ThreeChildPresenter, FThreeChild
         setRefreshLayout(mB.refreshLayout, new RefreshListenerAdapter() {
             @Override
             public void onRefresh(TwinklingRefreshLayout refreshLayout) {
-                mPresenter.onRequest("", pagerNumber = 1);
+                mPresenter.onRequest(id, pagerNumber = 1);
             }
 
             @Override
             public void onLoadMore(TwinklingRefreshLayout refreshLayout) {
                 super.onLoadMore(refreshLayout);
-                mPresenter.onRequest("",pagerNumber += 1);
+                mPresenter.onRequest(id, pagerNumber += 1);
             }
         });
     }
@@ -122,6 +124,5 @@ public class ThreeChildFrg extends BaseFragment<ThreeChildPresenter, FThreeChild
     @Override
     public void OnBannerClick(int position) {
         DataBean bean = listBannerBean.get(position);
-        UIHelper.startReportNewsFrg(this);
     }
 }

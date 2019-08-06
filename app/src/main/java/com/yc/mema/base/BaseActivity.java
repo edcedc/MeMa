@@ -24,21 +24,24 @@ import android.widget.TextView;
 import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.StringUtils;
 import com.blankj.utilcode.util.ToastUtils;
+import com.gyf.immersionbar.ImmersionBar;
 import com.tencent.mm.opensdk.modelpay.PayReq;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 import com.umeng.analytics.MobclickAgent;
 import com.yc.mema.R;
+import com.yc.mema.controller.UIHelper;
 import com.yc.mema.utils.Constants;
 import com.yc.mema.utils.TUtil;
+import com.yc.mema.utils.cache.ShareSessionIdCache;
 import com.yc.mema.utils.pay.PayResult;
 import com.yc.mema.weight.AuthResult;
+import com.yc.mema.weight.LoadingLayout;
 
 import org.json.JSONObject;
 
 import java.util.Map;
 
-import ezy.ui.layout.LoadingLayout;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import me.yokeyword.fragmentation.SwipeBackLayout;
@@ -86,7 +89,7 @@ public abstract class BaseActivity<P extends BasePresenter, VB extends ViewDataB
 
         initView();
 //        vLoading = LoadingLayout.wrap(act);
-        vLoading = findViewById(R.id.loading);
+        vLoading = findViewById(R.id.loadinglayout);
 
         api = WXAPIFactory.createWXAPI(act, Constants.WX_APPID);
 
@@ -97,7 +100,11 @@ public abstract class BaseActivity<P extends BasePresenter, VB extends ViewDataB
     protected abstract void initPresenter();
 
     protected void setSofia(boolean isFullScreen) {
-
+        if (!isFullScreen){
+            ImmersionBar.with(this).transparentStatusBar().statusBarDarkFont(true).init();
+        }else {
+            ImmersionBar.with(this).navigationBarColor(R.color.white).statusBarDarkFont(true).init();
+        }
     }
 
     protected abstract int bindLayout();
@@ -355,28 +362,20 @@ public abstract class BaseActivity<P extends BasePresenter, VB extends ViewDataB
     //微信支付
     protected IWXAPI api;
     protected void wxPay(final JSONObject data){
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                if (api.getWXAppSupportAPI() >= com.tencent.mm.opensdk.constants.Build.PAY_SUPPORTED_SDK_INT) {
-                    PayReq req = new PayReq();
-                    req.appId = data.optString("appid");
-                    req.partnerId = data.optString("partnerid");
-                    req.prepayId = data.optString("prepayid");
-                    req.nonceStr = data.optString("noncestr");
-                    req.timeStamp = data.optString("timestamp");
-                    req.packageValue = data.optString("package");
-                    req.sign = data.optString("sign");
-                    req.extData = "app data"; // optional
-                    api.sendReq(req);
-                }else {
-                    act.runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            showToast(getResources().getString(R.string.not_wx_pay));
-                        }
-                    });
-                }
+        new Thread(() -> {
+            if (api.getWXAppSupportAPI() >= com.tencent.mm.opensdk.constants.Build.PAY_SUPPORTED_SDK_INT) {
+                PayReq req = new PayReq();
+                req.appId = data.optString("appid");
+                req.partnerId = data.optString("partnerid");
+                req.prepayId = data.optString("prepayid");
+                req.nonceStr = data.optString("noncestr");
+                req.timeStamp = data.optString("timestamp");
+                req.packageValue = data.optString("package");
+                req.sign = data.optString("sign");
+                req.extData = "app data"; // optional
+                api.sendReq(req);
+            }else {
+                act.runOnUiThread(() -> showToast(getResources().getString(R.string.not_wx_pay)));
             }
         }).start();
     }
@@ -436,6 +435,17 @@ public abstract class BaseActivity<P extends BasePresenter, VB extends ViewDataB
     @Override
     public boolean swipeBackPriority() {
         return super.swipeBackPriority();
+    }
+
+
+    public boolean isLogin(){
+        if (User.getInstance().isLogin() && !StringUtils.isEmpty(ShareSessionIdCache.getInstance(act).getSessionId()) && !StringUtils.isEmpty(ShareSessionIdCache.getInstance(act).getUserId())){
+            return true;
+        }else {
+            UIHelper.startLoginAct();
+            showToast("请登录");
+            return false;
+        }
     }
 
 }

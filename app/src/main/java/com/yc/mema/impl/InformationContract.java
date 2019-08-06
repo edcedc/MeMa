@@ -2,10 +2,6 @@ package com.yc.mema.impl;
 
 import com.yc.mema.base.BasePresenter;
 import com.yc.mema.base.IBaseListView;
-import com.yc.mema.base.IBaseView;
-import com.yc.mema.bean.DataBean;
-
-import java.util.List;
 
 /**
  * Created by Android Studio.
@@ -17,6 +13,7 @@ public interface InformationContract {
 
     interface View extends IBaseListView {
 
+        void onSaveUser();
     }
 
     abstract class Presenter extends BasePresenter<View> {
@@ -27,15 +24,16 @@ public interface InformationContract {
 
         public abstract void name(String name);
 
-        public abstract void mema(String time, String mema);
+        public abstract void mema(String time, String mema, int updataMema);
 
         public abstract void birthday(String birthday);
 
         public abstract void sex(int type);
 
-        public abstract void onRequest(int pagetNumber);
+        public abstract void onRequest(String parentId);
 
 
+        public abstract void address(String parentId);
     }
 
 }

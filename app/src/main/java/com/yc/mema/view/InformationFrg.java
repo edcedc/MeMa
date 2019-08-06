@@ -68,7 +68,7 @@ public class InformationFrg extends BaseFragment<InformationPresenter, FInformat
         cameraBottomFrg.setCameraListener(new CameraBottomFrg.onCameraListener() {
             @Override
             public void camera() {
-                PictureSelectorTool.PictureSelectorImage(act, CameraInEvent.HEAD_CAMEAR, true);
+                PictureSelectorTool.PictureSelectorImage(act, CameraInEvent.HEAD_CAMEAR, false);
                 if (cameraBottomFrg != null && cameraBottomFrg.isShowing())cameraBottomFrg.dismiss();
             }
 
@@ -93,23 +93,18 @@ public class InformationFrg extends BaseFragment<InformationPresenter, FInformat
         String path = localMediaList.get(0).getCompressPath();
         headPath = path;
         Glide.with(act).load(path).into(mB.ivHead);
-        LogUtils.e(path);
     }
 
     @Override
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.tv_hp:
-                DatePickerUtils.getYearMonthDayPicker(act, "选择生日", new DatePickerUtils.OnYearMonthDayListener() {
-                    @Override
-                    public void onTime(String year, String month, String day) {
-                        mB.tvHp.setText(year + "-" + month + "-" + day);
-                    }
-                });
+                DatePickerUtils.getYearMonthDayPicker(act, "选择生日", (year, month, day) ->
+                        mB.tvHp.setText(year + "-" + month + "-" + day)
+                );
                 break;
             case R.id.bt_submit:
-//                mPresenter.submit(headPath, mB.etName.getText().toString(), mB.tvHp.getText().toString());
-                UIHelper.startMainAct();
+                mPresenter.submit(headPath, mB.etName.getText().toString(), mB.tvHp.getText().toString());
                 break;
             case R.id.iv_head:
                 cameraBottomFrg.show(getChildFragmentManager(), "dialog");
@@ -131,5 +126,10 @@ public class InformationFrg extends BaseFragment<InformationPresenter, FInformat
     @Override
     public void setData(Object data) {
 
+    }
+
+    @Override
+    public void onSaveUser() {
+        act.finish();
     }
 }

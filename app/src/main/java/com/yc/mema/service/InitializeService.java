@@ -4,8 +4,14 @@ import android.app.Activity;
 import android.app.IntentService;
 import android.content.Context;
 import android.content.Intent;
+import android.os.StrictMode;
+
 import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.Utils;
+import com.dueeeke.videoplayer.BuildConfig;
+import com.dueeeke.videoplayer.ijk.IjkPlayerFactory;
+import com.dueeeke.videoplayer.player.VideoViewConfig;
+import com.dueeeke.videoplayer.player.VideoViewManager;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.cache.CacheEntity;
 import com.lzy.okgo.cache.CacheMode;
@@ -20,6 +26,7 @@ import com.umeng.commonsdk.UMConfigure;
 import com.umeng.socialize.PlatformConfig;
 import com.yc.mema.mar.MyApplication;
 import com.yc.mema.utils.Constants;
+import com.yc.mema.utils.cache.ShareSessionIdCache;
 
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
@@ -68,6 +75,22 @@ public class InitializeService extends IntentService {
         initAutoSizeConfig();
         initQbSdk();
         initShare();
+        //播放器配置，注意：此为全局配置，按需开启
+        VideoViewManager.setConfig(VideoViewConfig.newBuilder()
+                .setLogEnabled(BuildConfig.DEBUG)
+                .setPlayerFactory(IjkPlayerFactory.create(this))
+//                .setPlayerFactory(ExoMediaPlayerFactory.create(this))
+//                .setAutoRotate(true)
+//                .setEnableMediaCodec(true)
+//                .setUsingSurfaceView(true)
+//                .setEnableParallelPlay(true)
+//                .setEnableAudioFocus(false)
+//                .setScreenScale(VideoView.SCREEN_SCALE_MATCH_PARENT)
+                .build());
+        if (BuildConfig.DEBUG) {
+            StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder().detectAll().penaltyLog().build());
+            StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder().detectAll().penaltyLog().build());
+        }
 //        LogUtils.getConfig().setLogSwitch(false);
         // 设置崩溃后自动重启 APP
 //        UncaughtExceptionHandlerImpl.getInstance().init(this, BuildConfig.DEBUG, true, 0, MainActivity.class);
@@ -152,7 +175,7 @@ public class InitializeService extends IntentService {
     private void initOkGo() {
         //---------这里给出的是示例代码,告诉你可以这么传,实际使用的时候,根据需要传,不需要就不传-------------//
         HttpHeaders headers = new HttpHeaders();
-        headers.put("fanwang", "yc");    //header不支持中文，不允许有特殊字符
+        headers.put("token", ShareSessionIdCache.getInstance(Utils.getApp()).getSessionId());
         //        headers.put("commonHeaderKey2", "commonHeaderValue2");
         com.lzy.okgo.model.HttpParams params = new com.lzy.okgo.model.HttpParams();
         //        params.put("sessionId", User.getInstance().getSessionId());     //param支持中文,直接传,不要自己编码
@@ -214,7 +237,7 @@ public class InitializeService extends IntentService {
      */
     private class SafeTrustManager implements X509TrustManager {
         @Override
-        public void checkClientTrusted(X509Certificate[] chain, String authType) throws CertificateException {
+        public void checkClientTrusted(X509Certificate[] chain, String authType) {
         }
 
         @Override

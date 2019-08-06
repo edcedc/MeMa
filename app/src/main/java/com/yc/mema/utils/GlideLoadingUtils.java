@@ -35,17 +35,16 @@ import static com.bumptech.glide.load.resource.bitmap.VideoDecoder.FRAME_OPTION;
 
 public class GlideLoadingUtils {
 
-    public static void load(Context act, Object url, ImageView imageView) {
-        url = "http://wx1.sinaimg.cn/mw600/007uWeI8ly1g5b00gvgfvj30k00zkn0k.jpg";
-        RequestOptions options = new RequestOptions();
-        options.placeholder(R.mipmap.place_holder);
-        Glide.with(act).load(url).apply(options).into(imageView);
-    }
+
 
     public static void load(Context act, Object url, ImageView imageView, boolean isUser) {
         ld(act, url, imageView, isUser);
     }
     public static void load(Context act, Object url, CircleImageView imageView) {
+        ld(act, url, imageView, false);
+    }
+
+    public static void load(Context act, Object url, ImageView imageView) {
         ld(act, url, imageView, false);
     }
 

@@ -42,7 +42,6 @@ public class CameraBottomFrg extends BaseBottomSheetFrag implements View.OnClick
 
         switch (type){
             case 0:
-                view.findViewById(R.id.tv_save).setVisibility(View.VISIBLE);
                 break;
             case 1:
                 view.findViewById(R.id.tv_camera).setVisibility(View.GONE);
@@ -50,7 +49,7 @@ public class CameraBottomFrg extends BaseBottomSheetFrag implements View.OnClick
                 view.findViewById(R.id.tv_save).setVisibility(View.VISIBLE);
                 break;
             case 2:
-
+                view.findViewById(R.id.tv_save).setVisibility(View.VISIBLE);
                 break;
         }
     }
