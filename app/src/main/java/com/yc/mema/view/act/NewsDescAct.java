@@ -35,6 +35,7 @@ public class NewsDescAct extends BaseActivity {
             NewsDescFrg frg = NewsDescFrg.newInstance();
             Bundle bundle = new Bundle();
             bundle.putString("id", getIntent().getStringExtra("id"));
+            bundle.putString("bean", getIntent().getStringExtra("bean"));
             frg.setArguments(bundle);
             loadRootFragment(R.id.fl_container, frg);
         }

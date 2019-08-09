@@ -42,7 +42,7 @@ public class ThreeChildAdapter extends BaseRecyclerviewAdapter<DataBean> {
         if (img != null && img.size() != 0){
             GlideLoadingUtils.load(act, CloudApi.SERVLET_IMG_URL + img.get(0).getAttachId(), viewHolder.iv_img);
         }
-        viewHolder.itemView.setOnClickListener(view -> UIHelper.startNewsDescAct(bean.getInfoId()));
+        viewHolder.itemView.setOnClickListener(view -> UIHelper.startNewsDescAct(bean.getInfoId(), null));
     }
 
     @Override

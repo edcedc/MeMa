@@ -15,6 +15,7 @@ import com.yc.mema.controller.UIHelper;
 import com.yc.mema.databinding.FGiftBinding;
 import com.yc.mema.impl.GiftDescContract;
 import com.yc.mema.presenter.GiftDescPresenter;
+import com.yc.mema.utils.Constants;
 import com.yc.mema.view.bottomFrg.ComplaintBottomFrg;
 import com.zhy.view.flowlayout.FlowLayout;
 import com.zhy.view.flowlayout.TagAdapter;
@@ -32,6 +33,8 @@ import java.util.List;
 public class GiftDescFrg extends BaseFragment<GiftDescPresenter, FGiftBinding> implements GiftDescContract.View, View.OnClickListener {
 
     private String id;
+    private int getpIsTrue;
+    private int getcIsTrue;
 
     public static GiftDescFrg newInstance() {
 
@@ -65,6 +68,8 @@ public class GiftDescFrg extends BaseFragment<GiftDescPresenter, FGiftBinding> i
     @Override
     protected void initView(View view) {
         setTitle(getString(R.string.gift_desc), R.mipmap.y20);
+        mB.tvLike.setOnClickListener(this);
+        mB.tvColl.setOnClickListener(this);
         mB.refreshLayout.setPureScrollModeOn();
         if (adapter == null){
             adapter = new GiftDescAdapter(act, listBean);
@@ -72,13 +77,18 @@ public class GiftDescFrg extends BaseFragment<GiftDescPresenter, FGiftBinding> i
         mB.recyclerView.setAdapter(adapter);
         mPresenter.onRequest(id);
         complaintBottomFrg = new ComplaintBottomFrg();
-        complaintBottomFrg.setComplaintListener(() -> UIHelper.startComplaintFrg(GiftDescFrg.this));
+        complaintBottomFrg.setComplaintListener(() -> UIHelper.startComplaintFrg(GiftDescFrg.this, id, Constants.CAUSES_WELFARE_COMPLAINTS));
     }
 
     @Override
     public void onClick(View view) {
         switch (view.getId()){
-
+            case R.id.tv_like:
+                mPresenter.onZan(id, getpIsTrue);
+                break;
+            case R.id.tv_coll:
+                mPresenter.onColl(id, getcIsTrue);
+                break;
         }
     }
 
@@ -111,6 +121,26 @@ public class GiftDescFrg extends BaseFragment<GiftDescPresenter, FGiftBinding> i
             listBean.addAll(welfareImgs);
             adapter.notifyDataSetChanged();
         }
+        getpIsTrue = bean.getpIsTrue();
+        getcIsTrue = bean.getcIsTrue();
+        setInfoZanState(getpIsTrue);
+        setCollState(getcIsTrue);
+    }
+
+    @Override
+    public void setZan(int finalType) {
+        this.getpIsTrue = finalType;
+        setInfoZanState(finalType);
+        Integer collNum = Integer.valueOf(mB.tvLike.getText().toString());
+        mB.tvLike.setText((finalType == 0 ? collNum - 1 : collNum + 1) + "");
+    }
+
+    @Override
+    public void setColl(int finalType) {
+        this.getcIsTrue = finalType;
+        setCollState(finalType);
+        Integer collNum = Integer.valueOf(mB.tvColl.getText().toString());
+        mB.tvColl.setText((finalType == 0 ? collNum - 1 : collNum + 1) + "");
     }
 
     @Override
@@ -118,4 +148,25 @@ public class GiftDescFrg extends BaseFragment<GiftDescPresenter, FGiftBinding> i
         super.setOnRightClickListener();
         complaintBottomFrg.show(getChildFragmentManager(), "dialog");
     }
+
+    private void setInfoZanState(int isTrue) {
+        if (isTrue == 0) {
+            mB.tvLike.setCompoundDrawablesWithIntrinsicBounds(act.getResources().getDrawable(R.mipmap.y24, null),
+                    null, null, null);
+        } else {
+            mB.tvLike.setCompoundDrawablesWithIntrinsicBounds(act.getResources().getDrawable(R.mipmap.y44, null),
+                    null, null, null);
+        }
+    }
+
+    private void setCollState(int isTrue) {
+        if (isTrue == 0) {
+            mB.tvColl.setCompoundDrawablesWithIntrinsicBounds(act.getResources().getDrawable(R.mipmap.y25, null),
+                    null, null, null);
+        } else {
+            mB.tvColl.setCompoundDrawablesWithIntrinsicBounds(act.getResources().getDrawable(R.mipmap.y46, null),
+                    null, null, null);
+        }
+    }
+
 }

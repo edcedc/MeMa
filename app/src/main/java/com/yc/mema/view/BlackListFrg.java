@@ -80,24 +80,17 @@ public class BlackListFrg extends BaseFragment<SortPresenter, FSortListBinding> 
         mPresenter.onRequest(pagerNumber = 1);
 
         //设置右侧触摸监听
-        mB.sidrbar.setOnTouchingLetterChangedListener(new SideBar.OnTouchingLetterChangedListener() {
-
-            @Override
-            public void onTouchingLetterChanged(String s) {
-                //该字母首次出现的位置
-                int position = adapter.getPositionForSection(s.charAt(0));
-                if(position != -1){
-                    mB.listView.setSelection(position);
-                }
+        mB.sidrbar.setOnTouchingLetterChangedListener(s -> {
+            //该字母首次出现的位置
+            int position = adapter.getPositionForSection(s.charAt(0));
+            if(position != -1){
+                mB.listView.setSelection(position);
             }
         });
 
-        mB.listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view,int position, long id) {
-                //这里要利用adapter.getItem(position)来获取当前position所对应的对象
-                LogUtils.e(listBean.get(position).getName());
-            }
+        mB.listView.setOnItemClickListener((parent, view1, position, id) -> {
+            //这里要利用adapter.getItem(position)来获取当前position所对应的对象
+            LogUtils.e(listBean.get(position).getName());
         });
 
         //根据输入框输入值的改变来过滤搜索
@@ -150,7 +143,7 @@ public class BlackListFrg extends BaseFragment<SortPresenter, FSortListBinding> 
             filterDateList.clear();
             for(DataBean sortModel : listBean){
                 String name = sortModel.getName();
-                if(name.indexOf(filterStr.toString()) != -1 || characterParser.getSelling(name).startsWith(filterStr.toString())){
+                if(name.indexOf(filterStr) != -1 || characterParser.getSelling(name).startsWith(filterStr.toString())){
                     filterDateList.add(sortModel);
                 }
             }

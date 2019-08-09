@@ -21,10 +21,24 @@ public class Constants {
    public static final String WB_APPID = "761285940";
    public static final String WB_SECRET = "83c30696e0218437f471581f73b5985c";
 
-   public static final String mainPath = Environment.getExternalStorageDirectory() + "/mema/";
+   public static final String mainPath = Environment.getExternalStorageDirectory() + "/么马/";
    public static final String imgUrl = mainPath + "img/";
    public static final String videoUrl = mainPath + "video/";
 
    public static final String ZFB_PAY = "2018102061789029";
+
+   //用户投诉原因
+   public static final int REASONS_USER_COMPLAINTS = 1;
+   //群投诉原因
+   public static final int CAUSES_GROUP_COMPLAINTS = 2;
+   //福利投诉原因
+   public static final int CAUSES_WELFARE_COMPLAINTS  = 5;
+   //评论投诉原因
+   public static final int COMMENT_CAUSES_COMPLAINTS = 7;
+   //资讯投诉原因
+   public static final int REASONS_INFORMATION_COMPLAINTS = 8;
+   //视频投诉原因
+   public static final int CAUSES_VIDEO_COMPLAINTS = 9;
+
 
 }

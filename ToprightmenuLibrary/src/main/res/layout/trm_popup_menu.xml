@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:padding="10dp"
-    android:background="@drawable/rect_with" >
+    android:background="@mipmap/new_nav_join_tc" >
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/trm_recyclerview"

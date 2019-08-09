@@ -8,11 +8,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.blankj.utilcode.util.LogUtils;
 import com.yc.mema.R;
+import com.yc.mema.base.BaseFragment;
 import com.yc.mema.base.BaseRecyclerviewAdapter;
 import com.yc.mema.bean.DataBean;
 import com.yc.mema.controller.UIHelper;
 import com.yc.mema.utils.GlideLoadingUtils;
+import com.yc.mema.utils.TimeUtil;
 import com.yc.mema.view.act.HtmlAct;
 import com.yc.mema.weight.CircleImageView;
 import com.yc.mema.weight.RoundImageView;
@@ -27,50 +30,116 @@ import java.util.List;
  */
 public class MessageAdapter extends BaseRecyclerviewAdapter<DataBean> {
 
-    public MessageAdapter(Context act, List<DataBean> listBean) {
-        super(act, listBean);
+    public MessageAdapter(Context act, BaseFragment root, List<DataBean> listBean) {
+        super(act, root, listBean);
     }
 
     @Override
     protected void onBindViewHolde(RecyclerView.ViewHolder holder, int position) {
         DataBean bean = listBean.get(position);
-        if (holder instanceof SystemViewHolder){
+        if (holder instanceof SystemViewHolder) {
             SystemViewHolder viewHolder = (SystemViewHolder) holder;
-            viewHolder.tv_title.setText("系统通知");
-            viewHolder.tv_content.setText("群聊APP5.4版本上线啦，欢迎大家下载玩耍");
-            viewHolder.itemView.setOnClickListener(view ->
-                    UIHelper.startHtmlAct(HtmlAct.SYSTEM)
-            );
-        }else {
+            viewHolder.tv_title.setText(bean.getTitle());
+            viewHolder.tv_content.setText(bean.getContext());
+            viewHolder.iv_img.setVisibility(bean.getIsRead() == 0 ? View.VISIBLE : View.GONE);
+            viewHolder.itemView.setOnClickListener(view -> {
+                if (listener != null) {
+                    listener.onClick(position, bean.getType());
+                }
+                UIHelper.startSystemDescFrg(root, bean);
+            });
+        } else {
             ViewHolder viewHolder = (ViewHolder) holder;
-            GlideLoadingUtils.load(act, "", viewHolder.iv_head);
-            viewHolder.tv_title.setText("小妹妹 " +
-                    "回复了" +
-                    "你");
-            viewHolder.tv_content.setText("爱上西藏或者有勇气前来，真的好喜欢西藏。");
-            viewHolder.tv_time.setText("3小时");
-            GlideLoadingUtils.load(act, "", viewHolder.iv_img1);
-            viewHolder.tv_comment.setText("也许不是每个人都能在城市生活中找到安宁， 便不怪乎他要逆时光之流而行...");
-            viewHolder.itemView.setOnClickListener(view -> {} );
-        }
+            switch (bean.getType()){
+                case 1://点赞资讯
 
+                    break;
+                case 2://评论资讯
+
+                    break;
+                case 4://回复资讯评论
+
+                    break;
+                case 8://点赞视频
+
+                    break;
+                case 16://评论视频
+
+                    break;
+                case 32://评论视频评论
+
+                    break;
+                case 64://资讯评论点赞
+                    DataBean userList = bean.getUserList();
+                    GlideLoadingUtils.load(act, userList.getHeadUrl(), viewHolder.iv_head, true);
+                    viewHolder.tv_title.setText(userList.getNickName() +
+                            " 点赞了你的评论");
+                    DataBean infoDisList = bean.getInfoDisList();
+                    viewHolder.tv_content.setText(infoDisList.getContext());
+                    viewHolder.layout.setVisibility(View.GONE);
+                    break;
+                case 128://视频评论点赞
+
+                    break;
+            }
+            viewHolder.tv_time.setText(TimeUtil.getTimeFormatText(bean.getCreateTime()));
+            viewHolder.itemView.setOnClickListener(view -> {
+                switch (bean.getType()){
+                    case 1://点赞资讯
+
+                        break;
+                    case 2://评论资讯
+
+                        break;
+                    case 4://回复资讯评论
+
+                        break;
+                    case 8://点赞视频
+
+                        break;
+                    case 16://评论视频
+
+                        break;
+                    case 32://评论视频评论
+
+                        break;
+                    case 64://资讯评论点赞
+                        DataBean infoDisList = bean.getInfoDisList();
+                        UIHelper.startNewsDescAct(infoDisList.getInfoId(), infoDisList);
+                        break;
+                    case 128://视频评论点赞
+
+                        break;
+                }
+            });
+        }
+    }
+
+    private OnClickListener listener;
+
+    public void setOnClickListener(OnClickListener listener) {
+        this.listener = listener;
+    }
+
+    public interface OnClickListener {
+        void onClick(int position, int type);
     }
 
     @Override
     public int getItemViewType(int position) {
-        return position == 0 ? 0 : position;
+        return listBean.get(position).getType();
     }
 
     @Override
     protected RecyclerView.ViewHolder onCreateViewHolde(ViewGroup parent, int viewType) {
-        if (viewType == 0){
+        if (viewType == 0) {
             return new SystemViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.i_system_msg, parent, false));
-        }else {
+        } else {
             return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.i_msg, parent, false));
         }
     }
 
-    class SystemViewHolder  extends RecyclerView.ViewHolder{
+    class SystemViewHolder extends RecyclerView.ViewHolder {
 
         CircleImageView iv_img;
         AppCompatTextView tv_title;
@@ -84,7 +153,7 @@ public class MessageAdapter extends BaseRecyclerviewAdapter<DataBean> {
         }
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder{
+    class ViewHolder extends RecyclerView.ViewHolder {
 
         CircleImageView iv_head;
         CircleImageView iv_img;

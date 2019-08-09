@@ -33,6 +33,7 @@ public class CommentChildAdapter extends BaseListViewAdapter<DataBean> {
     }
 
     private boolean isLock = false;
+    public static final int lockNum = 5;
 
     public void setLock(boolean lock) {
         isLock = lock;

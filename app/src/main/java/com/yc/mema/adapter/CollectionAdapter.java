@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.TextView;
 
+import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.StringUtils;
 import com.yc.mema.R;
 import com.yc.mema.base.BaseRecyclerviewAdapter;
@@ -22,6 +23,7 @@ import com.zhy.view.flowlayout.FlowLayout;
 import com.zhy.view.flowlayout.TagAdapter;
 import com.zhy.view.flowlayout.TagFlowLayout;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -85,18 +87,33 @@ public class CollectionAdapter extends BaseRecyclerviewAdapter<DataBean> {
             viewHolder.itemView.setOnClickListener(view -> UIHelper.startVideoAct(isState));
         }else if (holder instanceof ConsultViewHolder){
             ConsultViewHolder viewHolder = (ConsultViewHolder) holder;
-            viewHolder.tv_title.setText("首届世界人道主义峰会在土耳其闭幕，与会方共作出1500项承诺");
-            viewHolder.tv_time.setText("2019-05-24");
+            viewHolder.tv_title.setText(bean.getTitle());
+            viewHolder.tv_time.setText(bean.getCreateTime().split(" ")[0]);
             isDel(viewHolder.cb_submit);
-            viewHolder.cb_submit.setOnCheckedChangeListener((compoundButton, b) -> bean.setSelect(b));
-            viewHolder.itemView.setOnClickListener(view -> UIHelper.startNewsDescAct(bean.getInfoId()));
+            viewHolder.cb_submit.setChecked(bean.isSelect());
+            viewHolder.cb_submit.setOnClickListener(view -> {
+                if (listener != null) {
+                    if (bean.isSelect()){
+                        bean.setSelect(false);
+                    }else {
+                        bean.setSelect(true);
+                    }
+                    viewHolder.cb_submit.setChecked(bean.isSelect());
+                    listener.click(position, bean.isSelect());
+                }
+            });
+            viewHolder.itemView.setOnClickListener(view -> UIHelper.startNewsDescAct(bean.getInfoId(), null));
+            List<DataBean> img = bean.getInformationImg();
+            if (img != null && img.size() != 0){
+                GlideLoadingUtils.load(act, CloudApi.SERVLET_IMG_URL + img.get(0).getAttachId(), viewHolder.iv_img);
+            }
         }else if (holder instanceof GiftViewHolder){
             GiftViewHolder viewHolder = (GiftViewHolder) holder;
             viewHolder.tv_title.setText(bean.getWalTitle());
             viewHolder.tv_add.setText(bean.getPcyAdd() + bean.getAddress());
             String discount = bean.getDiscount();
             if (!StringUtils.isEmpty(discount)){
-                String[] split = discount.split(",");
+                String[] split = discount.split("，");
                 viewHolder.fl_label.removeAllViews();
                 viewHolder.fl_label.setAdapter(new TagAdapter<String>(split){
                     @Override
@@ -132,6 +149,18 @@ public class CollectionAdapter extends BaseRecyclerviewAdapter<DataBean> {
             }
 
             isDel(viewHolder.cb_submit);
+            viewHolder.cb_submit.setChecked(bean.isSelect());
+            viewHolder.cb_submit.setOnClickListener(view -> {
+                if (listener != null) {
+                    if (bean.isSelect()){
+                        bean.setSelect(false);
+                    }else {
+                        bean.setSelect(true);
+                    }
+                    viewHolder.cb_submit.setChecked(bean.isSelect());
+                    listener.click(position, bean.isSelect());
+                }
+            });
             viewHolder.itemView.setOnClickListener(view -> UIHelper.startGiftAct(bean.getWelId()));
         }
     }

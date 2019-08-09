@@ -51,6 +51,7 @@
 
     <com.flyco.roundview.RoundLinearLayout
         android:id="@+id/layout"
+        android:visibility="gone"
         android:layout_marginTop="@dimen/px20"
         android:layout_width="0dp"
         android:padding="@dimen/px20"

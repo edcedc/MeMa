@@ -44,7 +44,7 @@ public class SortAdapter extends BaseListViewAdapter<DataBean> implements Sectio
         }else {
             viewHolder.tvLetter.setVisibility(View.GONE);
         }
-        GlideLoadingUtils.load(act, "", viewHolder.iv_head);
+        GlideLoadingUtils.load(act, "", viewHolder.iv_head, true);
         viewHolder.tvTitle.setText(bean.getName());
         return convertView;
     }

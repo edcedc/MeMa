@@ -1,10 +1,14 @@
 package com.yc.mema.view.act;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.yc.mema.R;
 import com.yc.mema.base.BaseActivity;
+import com.yc.mema.event.CameraInEvent;
 import com.yc.mema.view.GiftDescFrg;
+
+import org.greenrobot.eventbus.EventBus;
 
 /**
  * Created by Android Studio.
@@ -37,6 +41,14 @@ public class GiftAct extends BaseActivity {
             bundle.putString("id", getIntent().getStringExtra("id"));
             frg.setArguments(bundle);
             loadRootFragment(R.id.fl_container, frg);
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            EventBus.getDefault().post(new CameraInEvent(requestCode, data));
         }
     }
 

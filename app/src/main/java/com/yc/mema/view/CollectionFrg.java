@@ -56,19 +56,11 @@ public class CollectionFrg extends BaseFragment<BasePresenter, FCollectBinding> 
         strings[1] = getString(R.string.consult);
         strings[2] = getString(R.string.gift);
         for (int i = 0; i < strings.length; i++){
-            if (i == 0){
-                CollectionChildFrg frg = new CollectionChildFrg();
-                Bundle bundle = new Bundle();
-                bundle.putInt("type", i);
-                frg.setArguments(bundle);
-                mFragments.add(frg);
-            }else {
-                CollectionChildFrg frg = new CollectionChildFrg();
-                Bundle bundle = new Bundle();
-                bundle.putInt("type", i);
-                frg.setArguments(bundle);
-                mFragments.add(frg);
-            }
+            CollectionChildFrg frg = new CollectionChildFrg();
+            Bundle bundle = new Bundle();
+            bundle.putInt("type", i);
+            frg.setArguments(bundle);
+            mFragments.add(frg);
         }
         mB.viewPager.setAdapter(new MyPagerAdapter(getChildFragmentManager(), mFragments, strings));
         mB.tbLayout.setViewPager(mB.viewPager);

@@ -45,8 +45,8 @@ public class OnePresenter extends OneContract.Presenter {
                                 List<DataBean> list = data.getList();
                                 if (list != null) {
                                     mView.setData(list);
-                                    mView.hideLoading();
                                 }
+                                mView.hideLoading();
                                 mView.setRefreshLayoutMode(data.getTotalCount());
                             }
                         }

@@ -60,10 +60,10 @@ android {
             keyPassword "123456"
         }
     }
-    compileOptions {
-        sourceCompatibility 1.8
-        targetCompatibility 1.8
-    }
+        compileOptions {
+            sourceCompatibility 1.8
+            targetCompatibility 1.8
+        }
     //设置虚拟机堆内存空间大小，避免在编译期间OOM
 //    dexOptions {
 //        jumboMode true
@@ -177,7 +177,7 @@ dependencies {
     implementation files('libs/tbs_sdk_thirdapp_v3.6.0.1352_43618_sharewithdownload_withoutGame_obfs_20180918_120327.jar')
 
     //加载样式
-    implementation project(path: ':library')
+    implementation project(path: ':loadingLibrary')
 
     //点击加载框
     implementation project(path: ':ToprightmenuLibrary')

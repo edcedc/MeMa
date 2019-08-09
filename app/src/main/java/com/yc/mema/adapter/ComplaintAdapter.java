@@ -8,8 +8,10 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.yc.mema.R;
+import com.yc.mema.base.BaseFragment;
 import com.yc.mema.base.BaseRecyclerviewAdapter;
 import com.yc.mema.bean.DataBean;
+import com.yc.mema.controller.UIHelper;
 
 import java.util.List;
 
@@ -21,8 +23,13 @@ import java.util.List;
  */
 public class ComplaintAdapter extends BaseRecyclerviewAdapter<DataBean> {
 
-    public ComplaintAdapter(Context act, List<DataBean> listBean) {
-        super(act, listBean);
+    private String id;
+    private int type;
+
+    public ComplaintAdapter(Context act, BaseFragment root, List<DataBean> listBean, String id, int type) {
+        super(act, root, listBean);
+        this.id = id;
+        this.type = type;
     }
 
     @Override
@@ -31,13 +38,9 @@ public class ComplaintAdapter extends BaseRecyclerviewAdapter<DataBean> {
         DataBean bean = listBean.get(position);
         viewHolder.tv_locate.setCompoundDrawablesWithIntrinsicBounds(null,
                 null, act.getResources().getDrawable(R.mipmap.y16, null), null);
-
-        viewHolder.tv_locate.setText("商家优惠信息存在虚假宣传");
-        viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-            }
+        viewHolder.tv_locate.setText(bean.getSoName());
+        viewHolder.itemView.setOnClickListener(view -> {
+            UIHelper.startReportFrg(root, id, type, bean.getSoId(), bean.getSoName());
         });
     }
 

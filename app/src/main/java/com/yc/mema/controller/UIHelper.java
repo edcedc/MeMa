@@ -4,8 +4,10 @@ import android.app.Activity;
 import android.os.Bundle;
 
 import com.blankj.utilcode.util.ActivityUtils;
+import com.google.gson.Gson;
 import com.yc.mema.MainActivity;
 import com.yc.mema.base.BaseFragment;
+import com.yc.mema.bean.DataBean;
 import com.yc.mema.view.AboutFrg;
 import com.yc.mema.view.AccountFrg;
 import com.yc.mema.view.AddBirthdayRecordsFrg;
@@ -22,14 +24,17 @@ import com.yc.mema.view.HelpFrg;
 import com.yc.mema.view.InformationFrg;
 import com.yc.mema.view.MainFrg;
 import com.yc.mema.view.MemaFrg;
+import com.yc.mema.view.MemorandumFrg;
 import com.yc.mema.view.MessageFrg;
 import com.yc.mema.view.MsgFrg;
 import com.yc.mema.view.PrivacyFrg;
 import com.yc.mema.view.ProneFrg;
+import com.yc.mema.view.ReportFrg;
 import com.yc.mema.view.ReportNewsFrg;
 import com.yc.mema.view.SearchGiftFrg;
 import com.yc.mema.view.SearchNewsFrg;
 import com.yc.mema.view.SexFrg;
+import com.yc.mema.view.SystemDescFrg;
 import com.yc.mema.view.UpdateNameFrg;
 import com.yc.mema.view.UserInfoFrg;
 import com.yc.mema.view.ZkingFrg;
@@ -136,6 +141,17 @@ public final class UIHelper {
     public static void startHeadFrg(BaseFragment root) {
         HeadFrg frg = new HeadFrg();
         Bundle bundle = new Bundle();
+        frg.setArguments(bundle);
+        root.start(frg);
+    }
+
+    /**
+     *  系统通知详情
+     */
+    public static void startSystemDescFrg(BaseFragment root, DataBean bean) {
+        SystemDescFrg frg = new SystemDescFrg();
+        Bundle bundle = new Bundle();
+        bundle.putString("bean", new Gson().toJson(bean));
         frg.setArguments(bundle);
         root.start(frg);
     }
@@ -276,6 +292,17 @@ public final class UIHelper {
     }
 
     /**
+     *  记事本
+     * @param root
+     */
+    public static void startMemorandumFrgFrg(BaseFragment root) {
+        MemorandumFrg frg = new MemorandumFrg();
+        Bundle bundle = new Bundle();
+        frg.setArguments(bundle);
+        root.start(frg);
+    }
+
+    /**
      *  帮助与反馈
      * @param root
      */
@@ -322,10 +349,27 @@ public final class UIHelper {
     /**
      *  用户投诉反馈
      * @param root
+     * @param id
      */
-    public static void startComplaintFrg(BaseFragment root) {
+    public static void startComplaintFrg(BaseFragment root, String id, int type) {
         ComplaintFrg frg = new ComplaintFrg();
         Bundle bundle = new Bundle();
+        bundle.putString("id", id);
+        bundle.putInt("type", type);
+        frg.setArguments(bundle);
+        root.start(frg);
+    }
+
+    /**
+     *  投诉
+     */
+    public static void startReportFrg(BaseFragment root, String id, int type, String soId, String soName) {
+        ReportFrg frg = new ReportFrg();
+        Bundle bundle = new Bundle();
+        bundle.putString("id", id);
+        bundle.putString("soId", soId);
+        bundle.putString("soName", soName);
+        bundle.putInt("type", type);
         frg.setArguments(bundle);
         root.start(frg);
     }
@@ -367,12 +411,15 @@ public final class UIHelper {
     }
 
     /**
-     *  举报新闻
+     *  各种举报
      * @param root
      */
-    public static void startReportNewsFrg(BaseFragment root) {
+    public static void startReportNewsFrg(BaseFragment root, String discussId, String infoId, int type) {
         ReportNewsFrg frg = new ReportNewsFrg();
         Bundle bundle = new Bundle();
+        bundle.putInt("type", type);
+        bundle.putString("discussId", discussId);
+        bundle.putString("infoId", infoId);
         frg.setArguments(bundle);
         root.start(frg);
     }
@@ -403,9 +450,10 @@ public final class UIHelper {
      *  新闻详情
      * @param infoId
      */
-    public static void startNewsDescAct(String infoId) {
+    public static void startNewsDescAct(String infoId, DataBean bean) {
         Bundle bundle = new Bundle();
         bundle.putString("id", infoId);
+        bundle.putString("bean", new Gson().toJson(bean));
         ActivityUtils.startActivity(bundle, NewsDescAct.class);
     }
 

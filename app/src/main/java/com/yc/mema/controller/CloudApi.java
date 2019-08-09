@@ -4,6 +4,7 @@ import com.blankj.utilcode.util.EncodeUtils;
 import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.StringUtils;
 import com.blankj.utilcode.util.Utils;
+import com.luck.picture.lib.entity.LocalMedia;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.Response;
 import com.lzy.okgo.request.GetRequest;
@@ -76,6 +77,22 @@ public class CloudApi {
      */
     public static final String informationGetInfoSortList = "information/getInfoSortList";
 
+    /**
+     *  获取我的福利收藏
+     */
+    public static final String welfareGetWelCollectList = "welfare/getWelCollectList";
+
+
+    /**
+     *  获取我的资讯收藏
+     */
+    public static final String informationGetInfoPraList = "information/getInfoPraList";
+
+    /**
+     *  获取我的视频收藏
+     */
+    public static final String videoGetVideoCollList = "video/getVideoCollList";
+
 
     /**
      * 更新/保存用户
@@ -97,6 +114,25 @@ public class CloudApi {
                 .converter(new NewsCallback<BaseResponseBean<DataBean>>() {
                     @Override
                     public void onSuccess(Response<BaseResponseBean<DataBean>> response) {
+
+                    }
+                })
+                .adapt(new ObservableResponse<>())
+                .subscribeOn(Schedulers.io());
+    }
+
+    /**
+     * 保存编辑备忘录
+     */
+    public static Observable<Response<BaseResponseBean>> bookSaveBook(String brithday, String frendName) {
+        return OkGo.<BaseResponseBean>post(SERVLET_URL + "book/saveBook")
+                .headers("token", ShareSessionIdCache.getInstance(Utils.getApp()).getSessionId())
+                .params("userId", ShareSessionIdCache.getInstance(Utils.getApp()).getUserId())
+                .params("brithday", brithday)
+                .params("frendName", frendName)
+                .converter(new JsonCallback<BaseResponseBean>() {
+                    @Override
+                    public void onSuccess(Response<BaseResponseBean> response) {
 
                     }
                 })
@@ -148,6 +184,8 @@ public class CloudApi {
      */
     public static Observable<Response<BaseResponseBean<DataBean>>> welfareGetWelfare(String id) {
         return OkGo.<BaseResponseBean<DataBean>>get(SERVLET_URL + "welfare/getWelfare")
+                .headers("token", ShareSessionIdCache.getInstance(Utils.getApp()).getSessionId())
+                .params("userId", ShareSessionIdCache.getInstance(Utils.getApp()).getUserId())
                 .params("welId", id)
                 .converter(new NewsCallback<BaseResponseBean<DataBean>>() {
                     @Override
@@ -195,7 +233,6 @@ public class CloudApi {
      * 查找用户
      */
     public static Observable<JSONObject> userFindByUser() {
-        LogUtils.e(ShareSessionIdCache.getInstance(Utils.getApp()).getSessionId(), ShareSessionIdCache.getInstance(Utils.getApp()).getUserId());
         return OkGo.<JSONObject>get(SERVLET_URL + "user/findByUser")
                 .headers("token", ShareSessionIdCache.getInstance(Utils.getApp()).getSessionId())
                 .params("userId", ShareSessionIdCache.getInstance(Utils.getApp()).getUserId())
@@ -223,6 +260,45 @@ public class CloudApi {
     }
 
     /**
+     * 福利点赞
+     */
+    public static Observable<Response<BaseResponseBean>> welfareWelPraise(String welId, int status) {
+        return OkGo.<BaseResponseBean>post(SERVLET_URL + "welfare/welPraise")
+                .headers("token", ShareSessionIdCache.getInstance(Utils.getApp()).getSessionId())
+                .params("userId", ShareSessionIdCache.getInstance(Utils.getApp()).getUserId())
+                .params("welId", welId)
+                .params("status", status)
+                .converter(new JsonCallback<BaseResponseBean>() {
+                    @Override
+                    public void onSuccess(Response<BaseResponseBean> response) {
+
+                    }
+                })
+                .adapt(new ObservableResponse<>())
+                .subscribeOn(Schedulers.io());
+    }
+    /**
+     * 福利收藏
+     */
+    public static Observable<Response<BaseResponseBean>> welfareWelCollect(String welId, int status) {
+        return OkGo.<BaseResponseBean>post(SERVLET_URL + "welfare/welCollect")
+                .headers("token", ShareSessionIdCache.getInstance(Utils.getApp()).getSessionId())
+                .params("userId", ShareSessionIdCache.getInstance(Utils.getApp()).getUserId())
+                .params("ids", welId)
+                .params("status", status)
+                .converter(new JsonCallback<BaseResponseBean>() {
+                    @Override
+                    public void onSuccess(Response<BaseResponseBean> response) {
+
+                    }
+                })
+                .adapt(new ObservableResponse<>())
+                .subscribeOn(Schedulers.io());
+    }
+
+
+
+    /**
      * 评论点赞
      */
     public static Observable<Response<BaseResponseBean>> informationSaveInfoDispra(String discussId, int status) {
@@ -230,6 +306,25 @@ public class CloudApi {
                 .headers("token", ShareSessionIdCache.getInstance(Utils.getApp()).getSessionId())
                 .params("userId", ShareSessionIdCache.getInstance(Utils.getApp()).getUserId())
                 .params("discussId", discussId)
+                .params("status", status)
+                .converter(new JsonCallback<BaseResponseBean>() {
+                    @Override
+                    public void onSuccess(Response<BaseResponseBean> response) {
+
+                    }
+                })
+                .adapt(new ObservableResponse<>())
+                .subscribeOn(Schedulers.io());
+    }
+
+    /**
+     * 资讯点赞
+     */
+    public static Observable<Response<BaseResponseBean>> informationInfoPraise(String infoId, int status) {
+        return OkGo.<BaseResponseBean>post(SERVLET_URL + "information/infoPraise")
+                .headers("token", ShareSessionIdCache.getInstance(Utils.getApp()).getSessionId())
+                .params("userId", ShareSessionIdCache.getInstance(Utils.getApp()).getUserId())
+                .params("ids", infoId)
                 .params("status", status)
                 .converter(new JsonCallback<BaseResponseBean>() {
                     @Override
@@ -341,11 +436,12 @@ public class CloudApi {
     /**
      * 获取评论列表
      */
-    public static Observable<Response<BaseResponseBean<BaseListBean<DataBean>>>> informationGetInfoDiscussList(int pageNumber, String infoId) {
+    public static Observable<Response<BaseResponseBean<BaseListBean<DataBean>>>> informationGetInfoDiscussList(int pageNumber, String infoId, int type) {
         return OkGo.<BaseResponseBean<BaseListBean<DataBean>>>get(SERVLET_URL + "information/getInfoDiscussList")
                 .params("page", pageNumber)
                 .params("size", Constants.pageSize)
                 .params("infoId", infoId)
+                .params("type", type)
                 .converter(new NewsCallback<BaseResponseBean<BaseListBean<DataBean>>>() {
                     @Override
                     public void onSuccess(Response<BaseResponseBean<BaseListBean<DataBean>>> response) {
@@ -393,6 +489,125 @@ public class CloudApi {
                 .subscribeOn(Schedulers.io());
     }
 
+    /**
+     * 获取评论点赞通知列表
+     */
+    public static Observable<Response<BaseResponseBean<BaseListBean<DataBean>>>> sysmsgGetRingList(int pageNumber) {
+        return OkGo.<BaseResponseBean<BaseListBean<DataBean>>>get(SERVLET_URL + "sysmsg/getRingList")
+                .headers("token", ShareSessionIdCache.getInstance(Utils.getApp()).getSessionId())
+                .params("userId", ShareSessionIdCache.getInstance(Utils.getApp()).getUserId())
+                .params("page", pageNumber)
+                .params("size", Constants.pageSize)
+                .converter(new NewsCallback<BaseResponseBean<BaseListBean<DataBean>>>() {
+                    @Override
+                    public void onSuccess(Response<BaseResponseBean<BaseListBean<DataBean>>> response) {
+                    }
+                })
+                .adapt(new ObservableResponse<>())
+                .subscribeOn(Schedulers.io());
+    }
+
+    /**
+     * 获取原因列表
+     */
+    public static Observable<Response<BaseResponseBean<List<DataBean>>>> complainGetComplainSos(String complainId) {
+        return OkGo.<BaseResponseBean<List<DataBean>>>get(SERVLET_URL + "complain/getComplainSos")
+                .params("complainId", complainId)
+                .converter(new NewsCallback<BaseResponseBean<List<DataBean>>>() {
+                    @Override
+                    public void onSuccess(Response<BaseResponseBean<List<DataBean>>> response) {
+                    }
+                })
+                .adapt(new ObservableResponse<>())
+                .subscribeOn(Schedulers.io());
+    }
+
+    /**
+     * 获取一条投诉模块信息
+     */
+    public static Observable<Response<BaseResponseBean<DataBean>>> complainGetComplain(String complainId) {
+        return OkGo.<BaseResponseBean<DataBean>>get(SERVLET_URL + "complain/getComplain")
+                .params("complainId", complainId)
+                .converter(new JsonCallback<BaseResponseBean<DataBean>>() {
+                    @Override
+                    public void onSuccess(Response<BaseResponseBean<DataBean>> response) {
+                    }
+                })
+                .adapt(new ObservableResponse<>())
+                .subscribeOn(Schedulers.io());
+    }
+
+    /**
+     * 系统消息列表
+     */
+    public static Observable<Response<BaseResponseBean<DataBean>>> sysmsgGetSysmsgList() {
+        return OkGo.<BaseResponseBean<DataBean>>get(SERVLET_URL + "sysmsg/getSysmsgList")
+                .headers("token", ShareSessionIdCache.getInstance(Utils.getApp()).getSessionId())
+                .params("userId", ShareSessionIdCache.getInstance(Utils.getApp()).getUserId())
+                .converter(new NewsCallback<BaseResponseBean<DataBean>>() {
+                    @Override
+                    public void onSuccess(Response<BaseResponseBean<DataBean>> response) {
+                    }
+                })
+                .adapt(new ObservableResponse<>())
+                .subscribeOn(Schedulers.io());
+    }
+
+    /**
+     * 保存编辑资讯反馈信息
+     */
+    public static Observable<Response<BaseResponseBean>> informationSaveInfoBack(List<LocalMedia> localMediaList, String infoId, String discussId, String soId, String content, String welId) {
+        PostRequest<BaseResponseBean> post = OkGo.post(SERVLET_URL + "information/saveInfoBack");
+        if (localMediaList != null && localMediaList.size() != 0){
+            for (LocalMedia media : localMediaList){
+                post.params("files", new File(media.getPath()));
+            }
+        }
+        return post
+                .headers("token", ShareSessionIdCache.getInstance(Utils.getApp()).getSessionId())
+                .params("userId", ShareSessionIdCache.getInstance(Utils.getApp()).getUserId())
+                .params("infoId", infoId)
+                .params("discussId", discussId)
+                .params("soId", soId)
+                .params("handle", 1)
+                .params("context", content)
+                .params("welId", welId)
+                .converter(new JsonCallback<BaseResponseBean>() {
+                    @Override
+                    public void onSuccess(Response<BaseResponseBean> response) {
+                    }
+                })
+                .adapt(new ObservableResponse<>())
+                .subscribeOn(Schedulers.io());
+    }
+
+    /**
+     * 保存福利反馈信息
+     */
+    public static Observable<Response<BaseResponseBean>> welfareSaveWelfareBack(List<LocalMedia> localMediaList, String infoId, String discussId, String soId, String content, String welId) {
+        PostRequest<BaseResponseBean> post = OkGo.post(SERVLET_URL + "welfare/saveWelfareBack");
+        if (localMediaList != null && localMediaList.size() != 0){
+            for (LocalMedia media : localMediaList){
+                post.params("files", new File(media.getPath()));
+            }
+        }
+        return post
+                .headers("token", ShareSessionIdCache.getInstance(Utils.getApp()).getSessionId())
+                .params("userId", ShareSessionIdCache.getInstance(Utils.getApp()).getUserId())
+                .params("infoId", infoId)
+                .params("discussId", discussId)
+                .params("soId", soId)
+                .params("handle", 1)
+                .params("context", content)
+                .params("welId", welId)
+                .converter(new JsonCallback<BaseResponseBean>() {
+                    @Override
+                    public void onSuccess(Response<BaseResponseBean> response) {
+                    }
+                })
+                .adapt(new ObservableResponse<>())
+                .subscribeOn(Schedulers.io());
+    }
 
     /**
      * 根据父级ID查询
@@ -414,9 +629,10 @@ public class CloudApi {
      */
     public static Observable<Response<BaseResponseBean<BaseListBean<DataBean>>>> list(int pageNumber, String url) {
         return OkGo.<BaseResponseBean<BaseListBean<DataBean>>>get(SERVLET_URL + url)
+                .headers("token", ShareSessionIdCache.getInstance(Utils.getApp()).getSessionId())
+                .params("userId", ShareSessionIdCache.getInstance(Utils.getApp()).getUserId())
                 .params("page", pageNumber)
                 .params("size", Constants.pageSize)
-                .params("sessionId", ShareSessionIdCache.getInstance(Utils.getApp()).getSessionId())
                 .converter(new NewsCallback<BaseResponseBean<BaseListBean<DataBean>>>() {
                     @Override
                     public void onSuccess(Response<BaseResponseBean<BaseListBean<DataBean>>> response) {
@@ -431,7 +647,6 @@ public class CloudApi {
      */
     public static Observable<Response<BaseResponseBean<List<DataBean>>>> list2(String url) {
         return OkGo.<BaseResponseBean<List<DataBean>>>get(SERVLET_URL + url)
-                .params("sessionId", ShareSessionIdCache.getInstance(Utils.getApp()).getSessionId())
                 .converter(new NewsCallback<BaseResponseBean<List<DataBean>>>() {
                     @Override
                     public void onSuccess(Response<BaseResponseBean<List<DataBean>>> response) {

@@ -16,7 +16,7 @@
 
         <include layout="@layout/include_top_gray" />
 
-        <com.yc.mema.weight.LoadingLayout
+        <ezy.ui.layout.LoadingLayout
             android:id="@+id/loadinglayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
@@ -71,7 +71,7 @@
             </android.support.constraint.ConstraintLayout>
 
 
-        </com.yc.mema.weight.LoadingLayout>
+        </ezy.ui.layout.LoadingLayout>
 
     </LinearLayout>
 

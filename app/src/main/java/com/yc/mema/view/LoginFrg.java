@@ -18,6 +18,7 @@ import com.yc.mema.databinding.FLoginBinding;
 import com.yc.mema.impl.LoginContract;
 import com.yc.mema.presenter.LoginPresenter;
 import com.yc.mema.utils.CountDownTimerUtils;
+import com.yc.mema.utils.cache.SharedAccount;
 import com.yc.mema.view.act.HtmlAct;
 import com.yc.mema.weight.TabEntity;
 
@@ -141,4 +142,15 @@ public class LoginFrg extends BaseFragment<LoginPresenter, FLoginBinding> implem
         }
     }
 
+    @Override
+    public void onSupportVisible() {
+        super.onSupportVisible();
+        SharedAccount account = SharedAccount.getInstance(act);
+        String mobile = account.getMobile();
+        String pwd = account.getPwd();
+        if (!StringUtils.isEmpty(mobile) && !StringUtils.isEmpty(pwd)){
+            mB.etPhone.setText(mobile);
+            mB.etPwd.setText(pwd);
+        }
+    }
 }

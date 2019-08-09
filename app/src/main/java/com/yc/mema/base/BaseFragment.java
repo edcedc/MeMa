@@ -53,12 +53,12 @@ import com.yc.mema.event.PayInEvent;
 import com.yc.mema.utils.TUtil;
 import com.yc.mema.utils.pay.PayResult;
 import com.yc.mema.weight.GridDividerItemDecoration;
-import com.yc.mema.weight.LoadingLayout;
 
 import org.greenrobot.eventbus.EventBus;
 
 import java.util.Map;
 
+import ezy.ui.layout.LoadingLayout;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import me.yokeyword.fragmentation_swipeback.SwipeBackFragment;
@@ -240,11 +240,17 @@ public abstract class BaseFragment<P extends BasePresenter, VB extends ViewDataB
                     }
                     break;
                 case handler_empty:
+                    if (dialog != null && dialog.isShowing()) {
+                        dialog.dismiss();
+                    }
                     if (vLoading != null) {
                         vLoading.showEmpty();
                     }
                     break;
                 case handler_error:
+                    if (dialog != null && dialog.isShowing()) {
+                        dialog.dismiss();
+                    }
                     if (vLoading != null) {
                         vLoading.showError();
                     }
@@ -292,9 +298,13 @@ public abstract class BaseFragment<P extends BasePresenter, VB extends ViewDataB
      * @param refreshLayout
      */
     protected void setRefreshLayoutMode(int listSize, int totalRow, TwinklingRefreshLayout refreshLayout) {
+        if (totalRow == 0){
+            showLoadEmpty();
+            return;
+        }
         if (listSize == totalRow) {
             refreshLayout.setEnableLoadmore(false);
-        } else {
+        }else {
             refreshLayout.setEnableLoadmore(true);
         }
     }

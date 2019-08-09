@@ -23,8 +23,8 @@ import io.reactivex.disposables.Disposable;
 public class NewsDescPresenter extends NewsDescContract.Presenter{
 
     @Override
-    public void onRequest(String id, int pagerNumper) {
-        CloudApi.informationGetInfoDiscussList(pagerNumper, id)
+    public void onRequest(String id, int pagerNumper, int type) {
+        CloudApi.informationGetInfoDiscussList(pagerNumper, id,type)
                 .doOnSubscribe(disposable -> {})
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<Response<BaseResponseBean<BaseListBean<DataBean>>>>() {
@@ -155,8 +155,10 @@ public class NewsDescPresenter extends NewsDescContract.Presenter{
     }
 
     @Override
-    public void onZan(int position, String discussId, int type) {
-        CloudApi.informationSaveInfoDispra(discussId, type)
+    public void onZan(int position, String infoId, int type) {
+        type = type == 0 ? 1 : 0;
+        int finalType = type;
+        CloudApi.informationSaveInfoDispra(infoId, type)
                 .doOnSubscribe(disposable -> {mView.showLoading();})
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<Response<BaseResponseBean>>() {
@@ -168,7 +170,39 @@ public class NewsDescPresenter extends NewsDescContract.Presenter{
                     @Override
                     public void onNext(Response<BaseResponseBean> baseResponseBeanResponse) {
                         if (baseResponseBeanResponse.body().code == Code.CODE_SUCCESS){
-                            mView.onZan(position, type);
+                            mView.onZan(position, finalType);
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        mView.onError(e);
+                    }
+
+                    @Override
+                    public void onComplete() {
+                        mView.hideLoading();
+                    }
+                });
+    }
+
+    @Override
+    public void onInfoPraise(String id, int isTrue) {
+        isTrue = isTrue == 0 ? 1 : 0;
+        int finalIsTrue = isTrue;
+        CloudApi.informationInfoPraise(id, isTrue)
+                .doOnSubscribe(disposable -> {mView.showLoading();})
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<Response<BaseResponseBean>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                        mView.addDisposable(d);
+                    }
+
+                    @Override
+                    public void onNext(Response<BaseResponseBean> baseResponseBeanResponse) {
+                        if (baseResponseBeanResponse.body().code == Code.CODE_SUCCESS){
+                            mView.setInfoZan(finalIsTrue);
                         }
                     }
 

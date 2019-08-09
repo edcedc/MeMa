@@ -14,48 +14,54 @@
 
         <include layout="@layout/include_top" />
 
-        <com.flyco.roundview.RoundLinearLayout
-            android:id="@+id/layout"
+        <android.support.v4.widget.NestedScrollView
+            android:padding="@dimen/px40"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/px40"
-            android:gravity="center"
-            android:orientation="vertical"
-            app:rv_backgroundColor="@color/white"
-            app:rv_cornerRadius="@dimen/px10">
+            android:layout_height="match_parent">
 
-            <com.yc.mema.weight.CircleImageView
-                android:id="@+id/iv_head"
-                android:layout_width="@dimen/px180"
-                android:layout_height="@dimen/px180"
-                android:layout_marginTop="@dimen/px50"
-                android:src="@mipmap/place_holder_user" />
+            <com.flyco.roundview.RoundLinearLayout
+                android:id="@+id/layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical"
+                app:rv_backgroundColor="@color/white"
+                app:rv_cornerRadius="@dimen/px10">
 
-            <android.support.v7.widget.AppCompatTextView
-                android:id="@+id/tv_name"
-                style="@style/Tv15black"
-                android:layout_marginTop="@dimen/px20"
-                android:textSize="@dimen/size40" />
+                <com.yc.mema.weight.CircleImageView
+                    android:id="@+id/iv_head"
+                    android:layout_width="@dimen/px180"
+                    android:layout_height="@dimen/px180"
+                    android:layout_marginTop="@dimen/px50"
+                    android:src="@mipmap/place_holder_user" />
 
-            <android.support.v7.widget.AppCompatTextView
-                android:id="@+id/tv_birthday"
-                style="@style/Tv15gray"
-                android:layout_marginTop="@dimen/px10" />
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/tv_name"
+                    style="@style/Tv15black"
+                    android:layout_marginTop="@dimen/px20"
+                    android:textSize="@dimen/size40" />
 
-            <android.support.v7.widget.AppCompatImageView
-                android:id="@+id/iv_zking"
-                android:layout_width="170dp"
-                android:layout_height="170dp"
-                android:layout_marginTop="@dimen/px20"
-                android:src="@mipmap/place_holder" />
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/tv_birthday"
+                    style="@style/Tv15gray"
+                    android:layout_marginTop="@dimen/px10" />
 
-            <android.support.v7.widget.AppCompatTextView
-                style="@style/Tv15gray"
-                android:layout_marginTop="@dimen/px100"
-                android:layout_marginBottom="@dimen/px40"
-                android:text="@string/mema1" />
+                <android.support.v7.widget.AppCompatImageView
+                    android:id="@+id/iv_zking"
+                    android:layout_width="170dp"
+                    android:layout_height="170dp"
+                    android:layout_marginTop="@dimen/px20"
+                    android:src="@mipmap/place_holder" />
 
-        </com.flyco.roundview.RoundLinearLayout>
+                <android.support.v7.widget.AppCompatTextView
+                    style="@style/Tv15gray"
+                    android:layout_marginTop="@dimen/px100"
+                    android:layout_marginBottom="@dimen/px40"
+                    android:text="@string/mema1" />
+
+            </com.flyco.roundview.RoundLinearLayout>
+
+        </android.support.v4.widget.NestedScrollView>
 
     </LinearLayout>
 

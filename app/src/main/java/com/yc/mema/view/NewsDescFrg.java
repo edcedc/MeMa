@@ -1,10 +1,12 @@
 package com.yc.mema.view;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.widget.DividerItemDecoration;
 import android.view.View;
 
 import com.blankj.utilcode.util.ToastUtils;
+import com.google.gson.Gson;
 import com.lcodecore.tkrefreshlayout.RefreshListenerAdapter;
 import com.lcodecore.tkrefreshlayout.TwinklingRefreshLayout;
 import com.tencent.smtt.sdk.WebChromeClient;
@@ -39,6 +41,9 @@ public class NewsDescFrg extends BaseFragment<NewsDescPresenter, FNewsDescBindin
 
     private CommentBottomFrg commentBottomFrg;
     private String id;
+    private int isTrue;
+    private int type = 1;//1正常 2最多点赞
+    private DataBean topBean;
 
     public static NewsDescFrg newInstance() {
         Bundle args = new Bundle();
@@ -55,6 +60,7 @@ public class NewsDescFrg extends BaseFragment<NewsDescPresenter, FNewsDescBindin
     @Override
     protected void initParms(Bundle bundle) {
         id = bundle.getString("id");
+        topBean = new Gson().fromJson(bundle.getString("bean"), DataBean.class);
     }
 
     @Override
@@ -66,6 +72,8 @@ public class NewsDescFrg extends BaseFragment<NewsDescPresenter, FNewsDescBindin
     protected void initView(View view) {
         setTitle(getString(R.string.news_desc));
         mB.tvPoints.setOnClickListener(this);
+        mB.tvLike.setOnClickListener(this);
+        mB.tvScreen.setOnClickListener(this);
         commentBottomFrg = new CommentBottomFrg();
         commentBottomFrg.setOnCommentListener(new CommentBottomFrg.onCommentListener() {
             @Override
@@ -78,11 +86,11 @@ public class NewsDescFrg extends BaseFragment<NewsDescPresenter, FNewsDescBindin
                 mPresenter.onSecondComment(position, infoId, discussId, text, pUserId);
             }
         });
-        if (adapter == null){
+        if (adapter == null) {
             adapter = new CommentAdapter(act, this, listBean);
         }
         setRecyclerViewType(mB.recyclerView);
-        mB.recyclerView.addItemDecoration(new LinearDividerItemDecoration(act, DividerItemDecoration.VERTICAL,  2));
+        mB.recyclerView.addItemDecoration(new LinearDividerItemDecoration(act, DividerItemDecoration.VERTICAL, 2));
         mB.recyclerView.setAdapter(adapter);
 
         mPresenter.onInformation(id);
@@ -90,13 +98,13 @@ public class NewsDescFrg extends BaseFragment<NewsDescPresenter, FNewsDescBindin
         setRefreshLayout(mB.refreshLayout, new RefreshListenerAdapter() {
             @Override
             public void onRefresh(TwinklingRefreshLayout refreshLayout) {
-                mPresenter.onRequest(id, pagerNumber = 1);
+                mPresenter.onRequest(id, pagerNumber = 1, type);
             }
 
             @Override
             public void onLoadMore(TwinklingRefreshLayout refreshLayout) {
                 super.onLoadMore(refreshLayout);
-                mPresenter.onRequest(id, pagerNumber += 1);
+                mPresenter.onRequest(id, pagerNumber += 1, type);
             }
         });
 
@@ -141,10 +149,19 @@ public class NewsDescFrg extends BaseFragment<NewsDescPresenter, FNewsDescBindin
 
     @Override
     public void onClick(View view) {
-        if (!((BaseActivity)act).isLogin())return;
-        switch (view.getId()){
+        if (!((BaseActivity) act).isLogin()) return;
+        switch (view.getId()) {
             case R.id.tv_points:
                 commentBottomFrg.show(getChildFragmentManager(), "dialog");
+                break;
+            case R.id.tv_like:
+                mPresenter.onInfoPraise(id, isTrue);
+                break;
+            case R.id.tv_screen:
+                type = type == 1 ? 2 : 1;
+                mB.tvScreen.setText(type == 1 ? "最多评论" : "最多点赞");
+                pagerNumber = 1;
+                mB.refreshLayout.startRefresh();
                 break;
         }
     }
@@ -169,8 +186,34 @@ public class NewsDescFrg extends BaseFragment<NewsDescPresenter, FNewsDescBindin
         } else {
             mB.refreshLayout.finishLoadmore();
         }
+        listBean.add(0, topBean);
         listBean.addAll(list);
         adapter.notifyDataSetChanged();
+
+        if (topBean != null && pagerNumber == 1) {
+            new Handler().postDelayed(() -> {
+                moveToPosition(0);
+                topBean = null;
+            }, 200);
+        }
+    }
+
+    /**
+     * 缓慢滑动
+     * 当指定位置位于第一个可见位置之上时，可以滚动，利用smoothScrollToPosition实现
+     * 当指定位置位于可视位置之间时，得到距离顶部的距离，然后smoothScrollBy向上滚动固定的距离
+     * 当指定的位置位于最后一个可见位置之下时，可以滚动，利用利用smoothScrollToPosition实现实现
+     */
+    public void moveToPosition(int position) {
+        int firstItem = mB.recyclerView.getChildLayoutPosition(mB.recyclerView.getChildAt(0));
+        int lastItem = mB.recyclerView.getChildLayoutPosition(mB.recyclerView.getChildAt(mB.recyclerView.getChildCount() - 1));
+        if (position < firstItem || position > lastItem) {
+            mB.recyclerView.smoothScrollToPosition(position);
+        } else {
+            int movePosition = position - firstItem;
+            int top = mB.recyclerView.getChildAt(movePosition).getTop();
+            mB.recyclerView.smoothScrollBy(0, top);
+        }
     }
 
     @Override
@@ -187,10 +230,23 @@ public class NewsDescFrg extends BaseFragment<NewsDescPresenter, FNewsDescBindin
         mB.tvLike.setText(bean.getPraise() + "");
         mB.tvComment.setText(bean.getDiscuss() + "");
         List<DataBean> img = bean.getInformationImg();
-        if (img != null && img.size() != 0){
+        if (img != null && img.size() != 0) {
             GlideLoadingUtils.load(act, CloudApi.SERVLET_IMG_URL + img.get(0).getAttachId(), mB.ivImg);
         }
         mB.webView.loadDataWithBaseURL(null, bean.getContext(), "text/html", "utf-8", null);
+
+        isTrue = bean.getIsTrue();
+        setInfoZanState(isTrue);
+    }
+
+    private void setInfoZanState(int isTrue) {
+        if (isTrue == 0) {
+            mB.tvLike.setCompoundDrawablesWithIntrinsicBounds(act.getResources().getDrawable(R.mipmap.y24, null),
+                    null, null, null);
+        } else {
+            mB.tvLike.setCompoundDrawablesWithIntrinsicBounds(act.getResources().getDrawable(R.mipmap.y44, null),
+                    null, null, null);
+        }
     }
 
     @Override
@@ -214,6 +270,19 @@ public class NewsDescFrg extends BaseFragment<NewsDescPresenter, FNewsDescBindin
 
     @Override
     public void onZan(int position, int type) {
-
+        DataBean bean = listBean.get(position);
+        bean.setIsTrue(type);
+        bean.setPraiseCount(type == 0 ? bean.getPraiseCount() - 1 : bean.getPraiseCount() + 1);
+//        adapter.notifyDataSetChanged();
+        adapter.notifyItemChanged(position);
     }
+
+    @Override
+    public void setInfoZan(int finalIsTrue) {
+        this.isTrue = finalIsTrue;
+        setInfoZanState(finalIsTrue);
+        int num = Integer.valueOf(mB.tvLike.getText().toString());
+        mB.tvLike.setText((finalIsTrue == 0 ? num - 1 : num + 1) + "");
+    }
+
 }

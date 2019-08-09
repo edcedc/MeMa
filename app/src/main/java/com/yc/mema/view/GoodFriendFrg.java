@@ -109,4 +109,9 @@ public class GoodFriendFrg extends BaseFragment<CollectionPresenter, FGoodFriend
         listBean.addAll(list);
         adapter.notifyDataSetChanged();
     }
+
+    @Override
+    public void setDel(List<DataBean> list) {
+
+    }
 }

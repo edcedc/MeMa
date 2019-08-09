@@ -90,25 +90,22 @@ public class SearchNewsFrg extends BaseFragment<SearchNewsPresenter, FSearchNews
                 mPresenter.onRequest(etSearch.getText().toString(), pagerNumber += 1);
             }
         });
-        etSearch.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                //判断是否是“完成”键
-                if(actionId == EditorInfo.IME_ACTION_SEARCH){
-                    //隐藏软键盘
-                    InputMethodManager imm = (InputMethodManager) v.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-                    if (imm.isActive()) {
-                        imm.hideSoftInputFromWindow(v.getApplicationWindowToken(), 0);
-                    }
-                    if (StringUtils.isEmpty(etSearch.getText().toString())){
-                        showToast(act.getString(R.string.mema8));
-                        return false;
-                    }
-                    mB.refreshLayout.startRefresh();
-                    return true;
+        etSearch.setOnEditorActionListener((v, actionId, event) -> {
+            //判断是否是“完成”键
+            if(actionId == EditorInfo.IME_ACTION_SEARCH){
+                //隐藏软键盘
+                InputMethodManager imm = (InputMethodManager) v.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                if (imm.isActive()) {
+                    imm.hideSoftInputFromWindow(v.getApplicationWindowToken(), 0);
                 }
-                return false;
+                if (StringUtils.isEmpty(etSearch.getText().toString())){
+                    showToast(act.getString(R.string.mema8));
+                    return false;
+                }
+                mB.refreshLayout.startRefresh();
+                return true;
             }
+            return false;
         });
         etSearch.addTextChangedListener(new TextWatcher() {
             @Override
@@ -123,14 +120,11 @@ public class SearchNewsFrg extends BaseFragment<SearchNewsPresenter, FSearchNews
 
             @Override
             public void afterTextChanged(final Editable editable) {
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        if (editable.length() == 0){
-                            mB.tvSearch.setText(getText(R.string.search));
-                        }else {
-                            mB.tvSearch.setText(getText(R.string.cancel));
-                        }
+                new Handler().postDelayed(() -> {
+                    if (editable.length() == 0){
+                        mB.tvSearch.setText(getText(R.string.search));
+                    }else {
+                        mB.tvSearch.setText(getText(R.string.cancel));
                     }
                 }, 300);
             }

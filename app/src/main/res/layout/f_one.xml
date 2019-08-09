@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <com.yc.mema.weight.LoadingLayout
+    <ezy.ui.layout.LoadingLayout
         android:id="@+id/loadinglayout"
         android:background="@color/white"
         android:layout_width="match_parent"
@@ -109,6 +109,6 @@
 
         </FrameLayout>
 
-    </com.yc.mema.weight.LoadingLayout>
+    </ezy.ui.layout.LoadingLayout>
 
 </layout>

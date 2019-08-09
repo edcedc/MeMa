@@ -56,23 +56,17 @@ public class ReleaseAct extends BaseActivity<ReleasePresenter, FReleaseBinding> 
     protected void initView() {
         setTitle(getString(R.string.release));
         mB.btSubmit.setOnClickListener(this);
-        imageAdapter = new ImageAdapter(act, new ImageAdapter.onAddPicClickListener() {
-            @Override
-            public void onAddPicClick() {
-                imageAdapter.setSelectMax(1);
-                PictureSelectorTool.PictureSelectorVideo(act);
-            }
+        imageAdapter = new ImageAdapter(act, () -> {
+            imageAdapter.setSelectMax(1);
+            PictureSelectorTool.PictureSelectorVideo(act);
         });
         mB.recyclerView.setLayoutManager(new FullyGridLayoutManager(act, 4, GridLayoutManager.VERTICAL, false));
         mB.recyclerView.setItemAnimator(new DefaultItemAnimator());
         mB.recyclerView.setAdapter(imageAdapter);
-        imageAdapter.setOnItemClickListener(new ImageAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(int position, View v) {
-                LocalMedia media = localMediaList.get(position);
-                String path = media.getPath();
-                PictureSelectorTool.PictureMediaType(act, localMediaList, 0);
-            }
+        imageAdapter.setOnItemClickListener((position, v) -> {
+            LocalMedia media = localMediaList.get(position);
+            String path = media.getPath();
+            PictureSelectorTool.PictureMediaType(act, localMediaList, 0);
         });
     }
 

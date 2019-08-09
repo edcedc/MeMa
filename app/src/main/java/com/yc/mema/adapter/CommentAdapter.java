@@ -14,6 +14,7 @@ import com.yc.mema.base.BaseFragment;
 import com.yc.mema.base.BaseRecyclerviewAdapter;
 import com.yc.mema.bean.DataBean;
 import com.yc.mema.controller.UIHelper;
+import com.yc.mema.utils.Constants;
 import com.yc.mema.utils.GlideLoadingUtils;
 import com.yc.mema.utils.PopupWindowTool;
 import com.yc.mema.weight.CircleImageView;
@@ -55,20 +56,18 @@ public class CommentAdapter extends BaseRecyclerviewAdapter<DataBean> {
                 view.getLocationInWindow(viewLocation);
                 int viewX = viewLocation[0]; // x 坐标
                 int viewY = viewLocation[1]; // y 坐标
-                LogUtils.e(viewX, viewY);
-
                 PopupWindowTool.clickXY(view);
                 PopupWindowTool.createPopupWindow(act, view, new PopupWindowTool.OnGestureClickListener() {
                     @Override
                     public void copy() {
                         // 得到剪贴板管理器
-                        ClipboardUtils.copyText("");
+                        ClipboardUtils.copyText(list.get(i).getContext());
                         showToast("复制成功");
                     }
 
                     @Override
                     public void report() {
-                        UIHelper.startReportNewsFrg(root);
+                        UIHelper.startReportNewsFrg(root, list.get(i).getDiscussId(), list.get(i).getInfoId(), Constants.COMMENT_CAUSES_COMPLAINTS);
                     }
                 });
 
@@ -86,15 +85,15 @@ public class CommentAdapter extends BaseRecyclerviewAdapter<DataBean> {
                 }else {
                     adapter.setLock(false);
                     viewHolder.tv_lock.setText("展开" +
-                            (list.size() - 5) +
+                            (list.size() - CommentChildAdapter.lockNum) +
                             "条回复>");
                 }
                 adapter.notifyDataSetChanged();
             });
-            if (list.size() > 5){
+            if (list.size() > CommentChildAdapter.lockNum){
                 viewHolder.tv_lock.setVisibility(View.VISIBLE);
                 viewHolder.tv_lock.setText("展开" +
-                        list.size() +
+                        (list.size() - CommentChildAdapter.lockNum) +
                         "条回复>");
             }else {
                 viewHolder.tv_lock.setVisibility(View.GONE);
@@ -103,8 +102,14 @@ public class CommentAdapter extends BaseRecyclerviewAdapter<DataBean> {
         }else {
             viewHolder.layout.setVisibility(View.GONE);
         }
-        viewHolder.tv_zan.setCompoundDrawablesWithIntrinsicBounds(act.getResources().getDrawable(R.mipmap.y34, null),
-                null, null, null);
+        if (bean.getIsTrue() == 0){
+            viewHolder.tv_zan.setCompoundDrawablesWithIntrinsicBounds(act.getResources().getDrawable(R.mipmap.y34, null),
+                    null, null, null);
+        }else {
+            viewHolder.tv_zan.setCompoundDrawablesWithIntrinsicBounds(act.getResources().getDrawable(R.mipmap.y45, null),
+                    null, null, null);
+        }
+
         viewHolder.itemView.setOnClickListener(view -> {
             if (listener != null){
                 listener.onSecondComment(position, bean.getInfoId(), bean.getDiscussId(), null);
@@ -112,7 +117,7 @@ public class CommentAdapter extends BaseRecyclerviewAdapter<DataBean> {
         });
         viewHolder.tv_zan.setOnClickListener(view -> {
             if (listener != null){
-                listener.onZan(position, bean.getDiscussId(), 1);
+                listener.onZan(position, bean.getDiscussId(), bean.getIsTrue());
             }
         });
     }

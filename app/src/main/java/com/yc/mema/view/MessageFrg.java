@@ -50,7 +50,7 @@ public class MessageFrg extends BaseFragment<MessagePresenter, BRecyclerBinding>
     protected void initView(View view) {
         setTitle(getString(R.string.msg));
         if (adapter == null){
-            adapter = new MessageAdapter(act, listBean);
+            adapter = new MessageAdapter(act, this, listBean);
         }
         setRecyclerViewType(mB.recyclerView);
         mB.recyclerView.addItemDecoration(new LinearDividerItemDecoration(act, DividerItemDecoration.VERTICAL,  2));
@@ -61,7 +61,7 @@ public class MessageFrg extends BaseFragment<MessagePresenter, BRecyclerBinding>
         setRefreshLayout(mB.refreshLayout, new RefreshListenerAdapter() {
             @Override
             public void onRefresh(TwinklingRefreshLayout refreshLayout) {
-                mPresenter.onRequest(pagerNumber = 1);
+                mPresenter.onSystem(pagerNumber = 1);
             }
 
             @Override
@@ -70,11 +70,14 @@ public class MessageFrg extends BaseFragment<MessagePresenter, BRecyclerBinding>
                 mPresenter.onRequest( pagerNumber += 1);
             }
         });
+        adapter.setOnClickListener((position, type) -> {
+
+        });
     }
 
     @Override
     public void setRefreshLayoutMode(int totalRow) {
-        super.setRefreshLayoutMode(listBean.size(), totalRow, mB.refreshLayout);
+        super.setRefreshLayoutMode(listBean.size() - 1, totalRow, mB.refreshLayout);
     }
 
     @Override
@@ -87,7 +90,6 @@ public class MessageFrg extends BaseFragment<MessagePresenter, BRecyclerBinding>
     public void setData(Object data) {
         List<DataBean> list = (List<DataBean>) data;
         if (pagerNumber == 1) {
-            listBean.clear();
             mB.refreshLayout.finishRefreshing();
         } else {
             mB.refreshLayout.finishLoadmore();
@@ -96,4 +98,13 @@ public class MessageFrg extends BaseFragment<MessagePresenter, BRecyclerBinding>
         adapter.notifyDataSetChanged();
     }
 
+    @Override
+    public void setSystem(DataBean bean) {
+        listBean.clear();
+        if (bean != null){
+            bean.setType(0);
+            listBean.add(bean);
+        }
+        mPresenter.onRequest(pagerNumber = 1);
+    }
 }

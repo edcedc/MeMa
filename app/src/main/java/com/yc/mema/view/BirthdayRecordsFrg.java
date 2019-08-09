@@ -23,6 +23,7 @@ import com.yc.mema.databinding.FBirthdayRecordsBinding;
 import com.yc.mema.impl.BirthdayRecordsContract;
 import com.yc.mema.listeners.OnAdapterClickListener;
 import com.yc.mema.presenter.BirthdayRecordsPresenter;
+import com.yc.mema.utils.DigitalConversionUtils;
 import com.zaaach.toprightmenu.MenuItem;
 import com.zaaach.toprightmenu.TopRightMenu;
 import com.zaaach.toprightmenu.TopRightMenuTool;
@@ -94,7 +95,9 @@ public class BirthdayRecordsFrg extends BaseFragment<BirthdayRecordsPresenter, F
         mB.calendarView.setOnMonthChangeListener(new OnMonthChangeListener() {
             @Override
             public void onMonthChanged(Month month) {
-//                LogUtils.e(month.getMonthName(), month.getDays(), month.getFirstDay());
+                String[] split = month.getMonthName().split("月");
+                String upper = DigitalConversionUtils.numeral(split[0]);
+                LogUtils.e(split[1] + "-" + upper);
             }
 
             @Override
@@ -111,12 +114,9 @@ public class BirthdayRecordsFrg extends BaseFragment<BirthdayRecordsPresenter, F
         setRecyclerViewType(mB.recyclerView);
         mB.recyclerView.setAdapter(adapter);
         mPresenter.onRequest(pagerNumber = 1);
-        adapter.setOnAdapterClickListener(new OnAdapterClickListener() {
-            @Override
-            public void onClick(int position) {
-                adapter.setPosition(position);
-                adapter.notifyDataSetChanged();
-            }
+        adapter.setOnAdapterClickListener(position -> {
+            adapter.setPosition(position);
+            adapter.notifyDataSetChanged();
         });
 
         menuItems.add(new MenuItem(getString(R.string.add_records)));
@@ -126,17 +126,14 @@ public class BirthdayRecordsFrg extends BaseFragment<BirthdayRecordsPresenter, F
     @Override
     protected void setOnRightClickListener() {
         super.setOnRightClickListener();
-        TopRightMenuTool.TopRightMenu(act, menuItems, topRightFy, 350, -220, new TopRightMenu.OnMenuItemClickListener() {
-            @Override
-            public void onMenuItemClick(int position) {
-                switch (position){
-                    case 0:
-                        UIHelper.startAddBirthdayRecordsFrg(BirthdayRecordsFrg.this);
-                        break;
-                    case 1:
-
-                        break;
-                }
+        TopRightMenuTool.TopRightMenu(act, menuItems, topRightFy, 350, -220, position -> {
+            switch (position){
+                case 0:
+                    UIHelper.startAddBirthdayRecordsFrg(BirthdayRecordsFrg.this);
+                    break;
+                case 1:
+                    UIHelper.startMemorandumFrgFrg(BirthdayRecordsFrg.this);
+                    break;
             }
         });
     }

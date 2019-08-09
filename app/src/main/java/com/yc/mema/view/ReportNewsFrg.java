@@ -27,6 +27,11 @@ public class ReportNewsFrg extends BaseFragment<ReportNewsPresenter, FReportNews
 
     private List<DataBean> listBean = new ArrayList<>();
     private ReportNewsAdapter adapter;
+    private int type;
+    private String soId;
+    private String complainId;
+    private String infoId;
+    private String discussId;
 
     @Override
     public void initPresenter() {
@@ -35,7 +40,9 @@ public class ReportNewsFrg extends BaseFragment<ReportNewsPresenter, FReportNews
 
     @Override
     protected void initParms(Bundle bundle) {
-
+        type = bundle.getInt("type");
+        infoId = bundle.getString("infoId");
+        discussId = bundle.getString("discussId");
     }
 
     @Override
@@ -45,40 +52,20 @@ public class ReportNewsFrg extends BaseFragment<ReportNewsPresenter, FReportNews
 
     @Override
     protected void initView(View view) {
-        setTitle(getString(R.string.mema7));
         mB.btSubmit.setOnClickListener(this);
         if (adapter == null){
             adapter = new ReportNewsAdapter(act, listBean);
         }
         setRecyclerViewType(mB.recyclerView);
         mB.recyclerView.setAdapter(adapter);
-        adapter.setOnClickListener(new ReportNewsAdapter.OnClickListener() {
-            @Override
-            public void onClick(int position) {
-                adapter.setPosition(position);
-                adapter.notifyDataSetChanged();
-            }
+        adapter.setOnClickListener(position -> {
+            soId = listBean.get(position).getSoId();
+            adapter.setPosition(position);
+            adapter.notifyDataSetChanged();
         });
 
-        showLoadDataing();
-        mB.refreshLayout.startRefresh();
-        setRefreshLayout(mB.refreshLayout, new RefreshListenerAdapter() {
-            @Override
-            public void onRefresh(TwinklingRefreshLayout refreshLayout) {
-                mPresenter.onRequest( pagerNumber = 1);
-            }
-
-            @Override
-            public void onLoadMore(TwinklingRefreshLayout refreshLayout) {
-                super.onLoadMore(refreshLayout);
-                mPresenter.onRequest(pagerNumber += 1);
-            }
-        });
-    }
-
-    @Override
-    public void setRefreshLayoutMode(int totalRow) {
-        super.setRefreshLayoutMode(listBean.size(), totalRow, mB.refreshLayout);
+        mPresenter.onComplainList(type);
+        mB.refreshLayout.setPureScrollModeOn();
     }
 
     @Override
@@ -88,14 +75,7 @@ public class ReportNewsFrg extends BaseFragment<ReportNewsPresenter, FReportNews
     }
 
     @Override
-    public void setData(Object data) {
-        List<DataBean> list = (List<DataBean>) data;
-        if (pagerNumber == 1) {
-            listBean.clear();
-            mB.refreshLayout.finishRefreshing();
-        } else {
-            mB.refreshLayout.finishLoadmore();
-        }
+    public void setData(List<DataBean> list) {
         listBean.addAll(list);
         adapter.notifyDataSetChanged();
     }
@@ -104,7 +84,24 @@ public class ReportNewsFrg extends BaseFragment<ReportNewsPresenter, FReportNews
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.bt_submit:
+                mPresenter.onReport(discussId, soId, type, infoId);
+                break;
+        }
+    }
 
+    @Override
+    public void setComplain(DataBean result) {
+        complainId = result.getComplainId();
+        mPresenter.onRequest(complainId);
+        mB.tvTitle.setText(result.getComplainName());
+        setTitle(mB.tvTitle.getText().toString());
+    }
+
+    @Override
+    public void setReport() {
+        switch (type){
+            case 7:
+                pop();
                 break;
         }
     }

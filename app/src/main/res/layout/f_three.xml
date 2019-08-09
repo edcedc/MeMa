@@ -2,7 +2,7 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tl="http://schemas.android.com/apk/res-auto">
 
-    <com.yc.mema.weight.LoadingLayout
+    <ezy.ui.layout.LoadingLayout
         android:id="@+id/loadinglayout"
         android:background="@color/white"
         android:layout_width="match_parent"
@@ -44,6 +44,6 @@
 
         </LinearLayout>
 
-    </com.yc.mema.weight.LoadingLayout>
+    </ezy.ui.layout.LoadingLayout>
 
 </layout>

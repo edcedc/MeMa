@@ -21,11 +21,13 @@ public interface NewsDescContract{
         void secondComment(int position, DataBean result);
 
         void onZan(int position, int type);
+
+        void setInfoZan(int finalIsTrue);
     }
 
     abstract class Presenter extends BasePresenter<View> {
 
-        public abstract void onRequest(String id, int pagerNumper);
+        public abstract void onRequest(String id, int pagerNumper, int type);
 
         public abstract void onInformation(String id);
 
@@ -34,6 +36,8 @@ public interface NewsDescContract{
         public abstract void onSecondComment(int position, String infoId, String discussId, String text, String pUserId);
 
         public abstract void onZan(int position, String discussId, int type);
+
+        public abstract void onInfoPraise(String id, int isTrue);
     }
 
 }

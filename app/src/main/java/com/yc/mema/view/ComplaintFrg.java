@@ -12,6 +12,8 @@ import com.yc.mema.base.BaseListContract;
 import com.yc.mema.base.BaseListPresenter;
 import com.yc.mema.bean.DataBean;
 import com.yc.mema.databinding.FComplaintBinding;
+import com.yc.mema.impl.ReportNewsContract;
+import com.yc.mema.presenter.ReportNewsPresenter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,10 +25,12 @@ import java.util.List;
  * Time: 16:35
  *  用户投诉反馈
  */
-public class ComplaintFrg extends BaseFragment<BaseListPresenter, FComplaintBinding> implements BaseListContract.View {
+public class ComplaintFrg extends BaseFragment<ReportNewsPresenter, FComplaintBinding> implements ReportNewsContract.View {
 
     private List<DataBean> listBean = new ArrayList<>();
     private ComplaintAdapter adapter;
+    private String id;
+    private int type;
 
     @Override
     public void initPresenter() {
@@ -35,7 +39,8 @@ public class ComplaintFrg extends BaseFragment<BaseListPresenter, FComplaintBind
 
     @Override
     protected void initParms(Bundle bundle) {
-
+        id = bundle.getString("id");
+        type = bundle.getInt("type");
     }
 
     @Override
@@ -47,48 +52,34 @@ public class ComplaintFrg extends BaseFragment<BaseListPresenter, FComplaintBind
     protected void initView(View view) {
         setTitle(getString(R.string.mema7));
         if (adapter == null){
-            adapter = new ComplaintAdapter(act, listBean);
+            adapter = new ComplaintAdapter(act, this, listBean, id, type);
         }
         setRecyclerViewType(mB.recyclerView);
         mB.recyclerView.setAdapter(adapter);
-
-        showLoadDataing();
-        mB.refreshLayout.startRefresh();
-        setRefreshLayout(mB.refreshLayout, new RefreshListenerAdapter() {
-            @Override
-            public void onRefresh(TwinklingRefreshLayout refreshLayout) {
-                mPresenter.onRequest("", pagerNumber = 1);
-            }
-
-            @Override
-            public void onLoadMore(TwinklingRefreshLayout refreshLayout) {
-                super.onLoadMore(refreshLayout);
-                mPresenter.onRequest("", pagerNumber += 1);
-            }
-        });
+        mPresenter.onRequest(type + "");
     }
 
     @Override
-    public void setRefreshLayoutMode(int totalRow) {
-        super.setRefreshLayoutMode(listBean.size(), totalRow, mB.refreshLayout);
-    }
-
-    @Override
-    public void hideLoading() {
-        super.hideLoading();
-        super.setRefreshLayout(pagerNumber, mB.refreshLayout);
-    }
-
-    @Override
-    public void setData(Object data) {
-        List<DataBean> list = (List<DataBean>) data;
-        if (pagerNumber == 1) {
-            listBean.clear();
-            mB.refreshLayout.finishRefreshing();
-        } else {
-            mB.refreshLayout.finishLoadmore();
-        }
+    public void setData(List<DataBean> list) {
         listBean.addAll(list);
         adapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void setComplain(DataBean result) {
+
+    }
+
+    @Override
+    public void setReport() {
+
+    }
+
+    @Override
+    public void onSupportVisible() {
+        super.onSupportVisible();
+        if (ReportFrg.isFinish){
+            pop();
+        }
     }
 }

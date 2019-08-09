@@ -13,6 +13,7 @@ public interface AddBirthdayRecordsContract {
 
     interface View extends IBaseView {
 
+        void setAdd();
     }
 
     abstract class Presenter extends BasePresenter<View> {

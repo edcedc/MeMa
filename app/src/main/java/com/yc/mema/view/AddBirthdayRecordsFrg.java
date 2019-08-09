@@ -37,16 +37,10 @@ public class AddBirthdayRecordsFrg extends BaseFragment<AddBirthdayRecordsPresen
     @Override
     protected void initView(View view) {
         setTitle(getString(R.string.add_records1), getString(R.string.submit1));
-        mB.layout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                DatePickerUtils.getYearMonthDayPicker(act, "选择生日", new DatePickerUtils.OnYearMonthDayListener() {
-                    @Override
-                    public void onTime(String year, String month, String day) {
-                        mB.tvTime.setText(year + "-" + month + "-" + day);
-                    }
-                });
-            }
+        mB.layout.setOnClickListener(view1 -> {
+            DatePickerUtils.getYearMonthDayPicker(act, "选择生日", (year, month, day) ->
+                    mB.tvTime.setText(year + "-" + month + "-" + day)
+            );
         });
     }
 
@@ -54,5 +48,10 @@ public class AddBirthdayRecordsFrg extends BaseFragment<AddBirthdayRecordsPresen
     protected void setOnRightClickListener() {
         super.setOnRightClickListener();
         mPresenter.add(mB.etText.getText().toString(), mB.tvTime.getText().toString());
+    }
+
+    @Override
+    public void setAdd() {
+        pop();
     }
 }

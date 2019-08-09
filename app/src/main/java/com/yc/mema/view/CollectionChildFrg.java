@@ -1,19 +1,14 @@
 package com.yc.mema.view;
 
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.support.v7.widget.DividerItemDecoration;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.CompoundButton;
 
-import com.blankj.utilcode.util.LogUtils;
 import com.lcodecore.tkrefreshlayout.RefreshListenerAdapter;
 import com.lcodecore.tkrefreshlayout.TwinklingRefreshLayout;
 import com.yc.mema.R;
 import com.yc.mema.adapter.CollectionAdapter;
 import com.yc.mema.base.BaseFragment;
-import com.yc.mema.base.User;
 import com.yc.mema.bean.DataBean;
 import com.yc.mema.databinding.FCollectChildBinding;
 import com.yc.mema.event.CollectionInEvent;
@@ -45,11 +40,11 @@ public class CollectionChildFrg extends BaseFragment<CollectionPresenter, FColle
     @Override
     public void onSupportVisible() {
         super.onSupportVisible();
-        if (isRequest){
+        if (isRequest) {
             isRequest = false;
             mB.refreshLayout.startRefresh();
         }
-        for (DataBean bean : listBean){
+        for (DataBean bean : listBean) {
             bean.setSelect(false);
             adapter.notifyDataSetChanged();
         }
@@ -76,10 +71,10 @@ public class CollectionChildFrg extends BaseFragment<CollectionPresenter, FColle
         EventBus.getDefault().register(this);
         mB.tvDel.setOnClickListener(this);
         mB.cb.setOnClickListener(this);
-        if (adapter == null){
+        if (adapter == null) {
             adapter = new CollectionAdapter(act, listBean, type, true);
         }
-        switch (type){
+        switch (type) {
             case 0:
                 mB.refreshLayout.setBackgroundColor(act.getColor(R.color.white));
                 setRecyclerViewGridType(mB.recyclerView, 3, 10, 10, R.color.white);
@@ -87,11 +82,10 @@ public class CollectionChildFrg extends BaseFragment<CollectionPresenter, FColle
                 break;
             default:
                 setRecyclerViewType(mB.recyclerView);
-                mB.recyclerView.addItemDecoration(new LinearDividerItemDecoration(act, DividerItemDecoration.VERTICAL,  2));
+                mB.recyclerView.addItemDecoration(new LinearDividerItemDecoration(act, DividerItemDecoration.VERTICAL, 2));
                 break;
         }
         mB.recyclerView.setAdapter(adapter);
-
         showLoadDataing();
         mB.refreshLayout.startRefresh();
         setRefreshLayout(mB.refreshLayout, new RefreshListenerAdapter() {
@@ -107,8 +101,8 @@ public class CollectionChildFrg extends BaseFragment<CollectionPresenter, FColle
             }
         });
         adapter.setOnClickListener((position, isSelect) -> {
-            for (DataBean bean : listBean){
-                if (!bean.isSelect()){
+            for (DataBean bean : listBean) {
+                if (!bean.isSelect()) {
                     mB.cb.setChecked(false);
                     return;
                 }
@@ -116,8 +110,6 @@ public class CollectionChildFrg extends BaseFragment<CollectionPresenter, FColle
             }
         });
     }
-
-
 
     @Override
     public void setRefreshLayoutMode(int totalRow) {
@@ -145,26 +137,21 @@ public class CollectionChildFrg extends BaseFragment<CollectionPresenter, FColle
 
     @Override
     public void onClick(View view) {
-        switch (view.getId()){
+        switch (view.getId()) {
             case R.id.tv_del:
                 List<DataBean> list = new ArrayList<>();
-                for (DataBean bean : listBean){
-                    LogUtils.e(bean.isSelect());
-                    if (bean.isSelect()){
+                for (DataBean bean : listBean) {
+                    if (bean.isSelect()) {
+                        bean.setType(type);
                         list.add(bean);
                     }
                 }
-                listBean.removeAll(list);
-                adapter.notifyDataSetChanged();
-                if (listBean.size() == 0){
-                    mB.fYDel.setVisibility(View.GONE);
-                    EventBus.getDefault().post(new CollectionInEvent(false, true));
-                }
+                mPresenter.onDel(list);
                 break;
             case R.id.cb_:
-                if (listBean.size() == 0)return;
+                if (listBean.size() == 0) return;
                 isChecked = !isChecked;
-                for (DataBean bean : listBean){
+                for (DataBean bean : listBean) {
                     bean.setSelect(isChecked);
                 }
                 adapter.notifyDataSetChanged();
@@ -173,14 +160,14 @@ public class CollectionChildFrg extends BaseFragment<CollectionPresenter, FColle
     }
 
     @Subscribe
-    public void CollectionInEvent(CollectionInEvent event){
+    public void CollectionInEvent(CollectionInEvent event) {
         adapter.setDel(event.isCollection);
         adapter.notifyDataSetChanged();
-        if (event.isCollection){
+        if (event.isCollection) {
             mB.fYDel.setVisibility(View.VISIBLE);
-        }else {
+        } else {
             mB.fYDel.setVisibility(View.GONE);
-            for (DataBean bean : listBean){
+            for (DataBean bean : listBean) {
                 bean.setSelect(false);
             }
             adapter.notifyDataSetChanged();
@@ -193,4 +180,14 @@ public class CollectionChildFrg extends BaseFragment<CollectionPresenter, FColle
         EventBus.getDefault().unregister(this);
     }
 
+    @Override
+    public void setDel(List<DataBean> list) {
+        listBean.removeAll(list);
+        adapter.notifyDataSetChanged();
+        if (listBean.size() == 0) {
+            showLoadEmpty();
+            mB.fYDel.setVisibility(View.GONE);
+            EventBus.getDefault().post(new CollectionInEvent(false, true));
+        }
+    }
 }

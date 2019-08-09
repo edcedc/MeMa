@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <com.yc.mema.weight.LoadingLayout
+    <ezy.ui.layout.LoadingLayout
         android:id="@+id/loadinglayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -21,6 +21,6 @@
 
         </com.lcodecore.tkrefreshlayout.TwinklingRefreshLayout>
 
-    </com.yc.mema.weight.LoadingLayout>
+    </ezy.ui.layout.LoadingLayout>
 
 </layout>

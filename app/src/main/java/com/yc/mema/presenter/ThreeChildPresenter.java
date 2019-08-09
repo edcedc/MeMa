@@ -63,7 +63,7 @@ public class ThreeChildPresenter extends ThreeChildContract.Presenter {
 
     @Override
     public void onBanner() {
-        CloudApi.list2( CloudApi.informationGetInfoAdvertList)
+        CloudApi.list2(CloudApi.informationGetInfoAdvertList)
                 .doOnSubscribe(disposable -> {})
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<Response<BaseResponseBean<List<DataBean>>>>() {

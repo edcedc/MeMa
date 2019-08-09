@@ -36,12 +36,12 @@ import com.yc.mema.utils.TUtil;
 import com.yc.mema.utils.cache.ShareSessionIdCache;
 import com.yc.mema.utils.pay.PayResult;
 import com.yc.mema.weight.AuthResult;
-import com.yc.mema.weight.LoadingLayout;
 
 import org.json.JSONObject;
 
 import java.util.Map;
 
+import ezy.ui.layout.LoadingLayout;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import me.yokeyword.fragmentation.SwipeBackLayout;

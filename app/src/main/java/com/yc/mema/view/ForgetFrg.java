@@ -22,7 +22,7 @@ public class ForgetFrg extends BaseFragment<ForgetPresenter, FForgetBinding> imp
 
     @Override
     public void initPresenter() {
-
+        mPresenter.init(this);
     }
 
     @Override
@@ -57,5 +57,10 @@ public class ForgetFrg extends BaseFragment<ForgetPresenter, FForgetBinding> imp
     @Override
     public void onCode() {
         new CountDownTimerUtils(act, 60000, 1000, mB.tvCode).start();
+    }
+
+    @Override
+    public void onForget() {
+        pop();
     }
 }

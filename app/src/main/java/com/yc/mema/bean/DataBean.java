@@ -58,6 +58,59 @@ public class DataBean implements Serializable {
     private String puserId;
     private String pNickName;
     private String userId;
+    private int isTrue;//0未1是
+    private String complainName;
+    private String complainId;
+    private String soName;
+    private String soId;
+    private String childId;
+    private int pIsTrue;
+    private int cIsTrue;
+    private int isRead;//0未读 1已读
+
+    public int getIsRead() {
+        return isRead;
+    }
+
+    public void setIsRead(int isRead) {
+        this.isRead = isRead;
+    }
+
+    public int getcIsTrue() {
+        return cIsTrue;
+    }
+
+    public int getpIsTrue() {
+        return pIsTrue;
+    }
+
+    public String getChi1ldId() {
+        return childId;
+    }
+
+    public String getSoId() {
+        return soId;
+    }
+
+    public String getSoName() {
+        return soName;
+    }
+
+    public String getComplainId() {
+        return complainId;
+    }
+
+    public String getComplainName() {
+        return complainName;
+    }
+
+    public int getIsTrue() {
+        return isTrue;
+    }
+
+    public void setIsTrue(int isTrue) {
+        this.isTrue = isTrue;
+    }
 
     public String getUserId() {
         return userId;
@@ -149,6 +202,10 @@ public class DataBean implements Serializable {
 
     public int getPraiseCount() {
         return praiseCount;
+    }
+
+    public void setPraiseCount(int praiseCount) {
+        this.praiseCount = praiseCount;
     }
 
     public int getCollectCount() {
@@ -302,19 +359,19 @@ public class DataBean implements Serializable {
     }
 
 
-    public List<DataBean> welfareImgs;
+    private List<DataBean> welfareImgs;
 
     public List<DataBean> getWelfareImgs() {
         return welfareImgs;
     }
 
-    public List<DataBean> informationImg;
+    private List<DataBean> informationImg;
 
     public List<DataBean> getInformationImg() {
         return informationImg;
     }
 
-    public List<DataBean> list = new ArrayList<>();
+    private List<DataBean> list = new ArrayList<>();
 
     public void setList(List<DataBean> list) {
         this.list = list;
@@ -322,5 +379,17 @@ public class DataBean implements Serializable {
 
     public List<DataBean> getList() {
         return list;
+    }
+
+    private DataBean userList;
+
+    private DataBean infoDisList;
+
+    public DataBean getUserList() {
+        return userList;
+    }
+
+    public DataBean getInfoDisList() {
+        return infoDisList;
     }
 }

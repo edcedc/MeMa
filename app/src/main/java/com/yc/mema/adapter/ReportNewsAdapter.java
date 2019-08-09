@@ -36,15 +36,11 @@ public class ReportNewsAdapter extends BaseRecyclerviewAdapter<DataBean> {
     protected void onBindViewHolde(RecyclerView.ViewHolder holder, final int position) {
         ViewHolder viewHolder = (ViewHolder) holder;
         DataBean bean = listBean.get(position);
-
-        viewHolder.tv_locate.setText("存在人身攻击行为言论");
+        viewHolder.tv_locate.setText(bean.getSoName());
         viewHolder.iv_img.setVisibility(mPosition == position ? View.VISIBLE : View.GONE);
-        viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (listener != null){
-                    listener.onClick(position);
-                }
+        viewHolder.itemView.setOnClickListener(view -> {
+            if (listener != null){
+                listener.onClick(position);
             }
         });
     }

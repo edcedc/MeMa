@@ -76,7 +76,7 @@ public class InformationPresenter extends InformationContract.Presenter {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        String[] split = time.split(" ");
+        String[] split = time.split("-");
         mema = "M-" + split[0] + split[1] + split[2] + mema;
         userSaveUser(null, null, null, null, null, mema, "1");
     }
