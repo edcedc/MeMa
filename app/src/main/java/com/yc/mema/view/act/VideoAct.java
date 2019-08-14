@@ -15,7 +15,8 @@ import com.yc.mema.view.VideoFrg;
  */
 public class VideoAct extends BaseActivity {
 
-    private boolean isState;
+
+    private int isVideoType;
 
     @Override
     protected void initPresenter() {
@@ -29,7 +30,7 @@ public class VideoAct extends BaseActivity {
 
     @Override
     protected void initParms(Bundle bundle) {
-        isState = bundle.getBoolean("isState");
+        isVideoType = bundle.getInt("isVideoType");
     }
 
     @Override
@@ -37,7 +38,7 @@ public class VideoAct extends BaseActivity {
         if (findFragment(VideoFrg.class) == null) {
             VideoFrg frg = VideoFrg.newInstance();
             Bundle bundle = new Bundle();
-            bundle.putBoolean("isState", isState);
+            bundle.putInt("isVideoType", isVideoType);
             frg.setArguments(bundle);
             loadRootFragment(R.id.fl_container, frg);
         }

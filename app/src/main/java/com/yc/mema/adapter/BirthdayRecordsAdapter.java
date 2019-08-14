@@ -7,7 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.applikeysolutions.cosmocalendar.listeners.OnMonthChangeListener;
 import com.yc.mema.R;
 import com.yc.mema.base.BaseRecyclerviewAdapter;
 import com.yc.mema.bean.DataBean;
@@ -32,10 +31,13 @@ public class BirthdayRecordsAdapter extends BaseRecyclerviewAdapter<DataBean> {
         final ViewHolder viewHolder = (ViewHolder) holder;
         DataBean bean = listBean.get(position);
 
-        viewHolder.tv_name.setText("妈妈");
-        viewHolder.tv_age.setText("60周岁生日");
-        viewHolder.tv_time.setText("1965-10-07");
-        viewHolder.tv_content.setText("离下一次生日还有 365天");
+        viewHolder.tv_name.setText(bean.getNickName());
+        viewHolder.tv_age.setText(bean.getGoDay() +
+                "周岁生日");
+        viewHolder.tv_time.setText(bean.getBrithday());
+        viewHolder.tv_content.setText("离下一次生日还有 " +
+                bean.getInDay() +
+                "天");
 
         if (mPosition == position){
             viewHolder.itemView.setBackgroundColor(act.getColor(R.color.red_F67690));
@@ -51,11 +53,8 @@ public class BirthdayRecordsAdapter extends BaseRecyclerviewAdapter<DataBean> {
             viewHolder.tv_content.setTextColor(act.getColor(R.color.tab_gray));
         }
 
-        viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (listener != null)listener.onClick(position);
-            }
+        viewHolder.itemView.setOnClickListener(view -> {
+            if (listener != null)listener.onClick(position);
         });
     }
 

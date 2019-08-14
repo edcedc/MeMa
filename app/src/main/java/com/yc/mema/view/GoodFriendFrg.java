@@ -59,7 +59,7 @@ public class GoodFriendFrg extends BaseFragment<CollectionPresenter, FGoodFriend
     protected void initView(View view) {
         setSwipeBackEnable(false);
         if (adapter == null){
-            adapter = new CollectionAdapter(act, listBean, type, true);
+            adapter = new CollectionAdapter(act, listBean, type, VideoFrg.MY_VIDEO);
         }
         setRecyclerViewGridType(mB.recyclerView, 3, 10, 10, R.color.white);
         mB.recyclerView.setAdapter(adapter);

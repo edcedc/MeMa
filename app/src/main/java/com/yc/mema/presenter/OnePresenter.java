@@ -101,8 +101,8 @@ public class OnePresenter extends OneContract.Presenter {
     public void onGridView(BaseFragment root, WithScrollGridView recyclerView) {
         String[] str = {act.getString(R.string.all), act.getString(R.string.cake), act.getString(R.string.eat), act.getString(R.string.drink),
                 act.getString(R.string.play), act.getString(R.string.hHappy), act.getString(R.string.gift), act.getString(R.string.free)};
-        int[] img = {R.mipmap.ic_launcher, R.mipmap.ic_launcher, R.mipmap.ic_launcher, R.mipmap.ic_launcher,
-                R.mipmap.ic_launcher, R.mipmap.ic_launcher, R.mipmap.ic_launcher, R.mipmap.ic_launcher,};
+        int[] img = {R.mipmap.quan, R.mipmap.dan, R.mipmap.chi, R.mipmap.he,
+                R.mipmap.wan, R.mipmap.le, R.mipmap.li, R.mipmap.mianfei,};
 
         List<DataBean> list = new ArrayList<>();
         for (int i = 0; i < str.length; i++) {

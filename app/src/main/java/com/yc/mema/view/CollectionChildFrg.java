@@ -72,7 +72,7 @@ public class CollectionChildFrg extends BaseFragment<CollectionPresenter, FColle
         mB.tvDel.setOnClickListener(this);
         mB.cb.setOnClickListener(this);
         if (adapter == null) {
-            adapter = new CollectionAdapter(act, listBean, type, true);
+            adapter = new CollectionAdapter(act, listBean, type, VideoFrg.COLL_VIDEO);
         }
         switch (type) {
             case 0:

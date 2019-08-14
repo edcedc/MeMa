@@ -8,10 +8,6 @@ import android.os.StrictMode;
 
 import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.Utils;
-import com.dueeeke.videoplayer.BuildConfig;
-import com.dueeeke.videoplayer.ijk.IjkPlayerFactory;
-import com.dueeeke.videoplayer.player.VideoViewConfig;
-import com.dueeeke.videoplayer.player.VideoViewManager;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.cache.CacheEntity;
 import com.lzy.okgo.cache.CacheMode;
@@ -75,22 +71,6 @@ public class InitializeService extends IntentService {
         initAutoSizeConfig();
         initQbSdk();
         initShare();
-        //播放器配置，注意：此为全局配置，按需开启
-        VideoViewManager.setConfig(VideoViewConfig.newBuilder()
-                .setLogEnabled(BuildConfig.DEBUG)
-                .setPlayerFactory(IjkPlayerFactory.create(this))
-//                .setPlayerFactory(ExoMediaPlayerFactory.create(this))
-//                .setAutoRotate(true)
-//                .setEnableMediaCodec(true)
-//                .setUsingSurfaceView(true)
-//                .setEnableParallelPlay(true)
-//                .setEnableAudioFocus(false)
-//                .setScreenScale(VideoView.SCREEN_SCALE_MATCH_PARENT)
-                .build());
-        if (BuildConfig.DEBUG) {
-            StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder().detectAll().penaltyLog().build());
-            StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder().detectAll().penaltyLog().build());
-        }
 //        LogUtils.getConfig().setLogSwitch(false);
         // 设置崩溃后自动重启 APP
 //        UncaughtExceptionHandlerImpl.getInstance().init(this, BuildConfig.DEBUG, true, 0, MainActivity.class);
@@ -220,7 +200,7 @@ public class InitializeService extends IntentService {
 
         // 其他统一的配置
         // 详细说明看GitHub文档：https://github.com/jeasonlzy/
-        OkGo.getInstance().init(MyApplication.get(this))                           //必须调用初始化
+        OkGo.getInstance().init(MyApplication.getInstance())                           //必须调用初始化
                 .setOkHttpClient(builder.build())               //建议设置OkHttpClient，不设置会使用默认的
                 .setCacheMode(CacheMode.NO_CACHE)               //全局统一缓存模式，默认不使用缓存，可以不传
                 .setCacheTime(CacheEntity.CACHE_NEVER_EXPIRE)   //全局统一缓存时间，默认永不过期，可以不传

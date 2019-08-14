@@ -5,22 +5,17 @@ import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.Toast;
 
 import com.blankj.utilcode.util.LogUtils;
 import com.yc.mema.R;
 import com.yc.mema.adapter.SortAdapter;
 import com.yc.mema.base.BaseFragment;
-import com.yc.mema.base.BaseListContract;
-import com.yc.mema.base.BaseListPresenter;
 import com.yc.mema.bean.DataBean;
 import com.yc.mema.databinding.FSortListBinding;
 import com.yc.mema.impl.SortContract;
 import com.yc.mema.presenter.SortPresenter;
 import com.yc.mema.weight.sort.CharacterParser;
 import com.yc.mema.weight.sort.PinyinComparator;
-import com.yc.mema.weight.sort.SideBar;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -73,7 +68,7 @@ public class BlackListFrg extends BaseFragment<SortPresenter, FSortListBinding> 
         Collections.sort(listBean, pinyinComparator);
 
         if (adapter == null){
-            adapter = new SortAdapter(act, listBean);
+            adapter = new SortAdapter(act, listBean, SortAdapter.black);
         }
         mB.listView.setAdapter(adapter);
 

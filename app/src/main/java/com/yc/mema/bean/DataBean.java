@@ -66,7 +66,41 @@ public class DataBean implements Serializable {
     private String childId;
     private int pIsTrue;
     private int cIsTrue;
+    private int fIsTrue;
     private int isRead;//0未读 1已读
+    private int goDay;
+    private String brithday;
+    private int inDay;
+    private String video;
+    private String videoId;
+
+    public String getVideoId() {
+        return videoId;
+    }
+
+    public void setcIsTrue(int cIsTrue) {
+        this.cIsTrue = cIsTrue;
+    }
+
+    public int getfIsTrue() {
+        return fIsTrue;
+    }
+
+    public String getVideo() {
+        return video;
+    }
+
+    public int getInDay() {
+        return inDay;
+    }
+
+    public String getBrithday() {
+        return brithday;
+    }
+
+    public int getGoDay() {
+        return goDay;
+    }
 
     public int getIsRead() {
         return isRead;
@@ -110,6 +144,10 @@ public class DataBean implements Serializable {
 
     public void setIsTrue(int isTrue) {
         this.isTrue = isTrue;
+    }
+
+    public void setpIsTrue(int pIsTrue) {
+        this.pIsTrue = pIsTrue;
     }
 
     public String getUserId() {
@@ -158,6 +196,10 @@ public class DataBean implements Serializable {
 
     public int getDiscuss() {
         return discuss;
+    }
+
+    public void setDiscuss(int discuss) {
+        this.discuss = discuss;
     }
 
     public int getPraise() {

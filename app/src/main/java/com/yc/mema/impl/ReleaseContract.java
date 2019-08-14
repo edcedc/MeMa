@@ -1,5 +1,9 @@
 package com.yc.mema.impl;
 
+import android.widget.ImageView;
+import android.widget.ProgressBar;
+import android.widget.TextView;
+
 import com.yc.mema.base.BasePresenter;
 import com.yc.mema.base.IBaseView;
 
@@ -17,7 +21,9 @@ public interface ReleaseContract {
     abstract class Presenter extends BasePresenter<View> {
 
 
-        public abstract void onRelease(String text, String path);
+        public abstract void onRelease(String text, String path, String suolue);
+
+        public abstract void onDestroy();
     }
 
 }

@@ -396,3 +396,7 @@ public void onEventMainThread(**);
   public static **[] values();
   public static ** valueOf(java.lang.String);
 }
+# OSS
+-keep class com.alibaba.sdk.android.oss.** { *; }
+-dontwarn okio.**
+-dontwarn org.apache.commons.codec.binary.**

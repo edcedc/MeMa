@@ -2,17 +2,22 @@ package com.yc.mema.view;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
+import android.support.v4.view.ViewPager;
 import android.support.v7.widget.OrientationHelper;
+import android.util.SparseArray;
 import android.view.View;
 import android.view.ViewGroup;
-
-import com.applikeysolutions.cosmocalendar.listeners.OnMonthChangeListener;
-import com.applikeysolutions.cosmocalendar.model.Month;
-import com.applikeysolutions.cosmocalendar.settings.lists.connected_days.ConnectedDays;
-import com.applikeysolutions.cosmocalendar.utils.SelectionType;
-import com.applikeysolutions.cosmocalendar.view.CalendarView;
 import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.TimeUtils;
+import com.ldf.calendar.Utils;
+import com.ldf.calendar.component.CalendarAttr;
+import com.ldf.calendar.component.CalendarViewAdapter;
+import com.ldf.calendar.interf.OnSelectDateListener;
+import com.ldf.calendar.model.CalendarDate;
+import com.ldf.calendar.view.Calendar;
+import com.ldf.calendar.view.MonthPager;
+import com.yc.mema.CustomDayView;
 import com.yc.mema.R;
 import com.yc.mema.adapter.BirthdayRecordsAdapter;
 import com.yc.mema.base.BaseFragment;
@@ -23,11 +28,14 @@ import com.yc.mema.databinding.FBirthdayRecordsBinding;
 import com.yc.mema.impl.BirthdayRecordsContract;
 import com.yc.mema.listeners.OnAdapterClickListener;
 import com.yc.mema.presenter.BirthdayRecordsPresenter;
+import com.yc.mema.utils.DatePickerUtils;
 import com.yc.mema.utils.DigitalConversionUtils;
+import com.yc.mema.utils.TimeUtil;
 import com.zaaach.toprightmenu.MenuItem;
 import com.zaaach.toprightmenu.TopRightMenu;
 import com.zaaach.toprightmenu.TopRightMenuTool;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -40,12 +48,17 @@ import java.util.TreeSet;
  * Time: 13:26
  *  生日备忘录
  */
-public class BirthdayRecordsFrg extends BaseFragment<BirthdayRecordsPresenter, FBirthdayRecordsBinding> implements BirthdayRecordsContract.View {
+public class BirthdayRecordsFrg extends BaseFragment<BirthdayRecordsPresenter, FBirthdayRecordsBinding> implements BirthdayRecordsContract.View, View.OnClickListener {
 
     private List<DataBean> listBean = new ArrayList<>();
     private BirthdayRecordsAdapter adapter;
     private List<MenuItem> menuItems = new ArrayList<>();
     private View topRightFy;
+
+    private ArrayList<Calendar> currentCalendars = new ArrayList<>();
+    private CalendarViewAdapter calendarAdapter;
+    private OnSelectDateListener onSelectDateListener;
+    private String nowString;
 
     @Override
     public void initPresenter() {
@@ -68,52 +81,14 @@ public class BirthdayRecordsFrg extends BaseFragment<BirthdayRecordsPresenter, F
         topRightFy = view.findViewById(R.id.top_right_fy);
         view.findViewById(R.id.top_layout).setBackgroundColor(act.getColor(R.color.red_F67690));
         view.findViewById(R.id.title_bar).setBackgroundColor(act.getColor(R.color.red_F67690));
-        mB.calendarView.setCalendarOrientation(OrientationHelper.HORIZONTAL);
-        mB.calendarView.setSelectionType(SelectionType.SINGLE);
-        mB.calendarView.setShowDaysOfWeekTitle(false);
-
-//        ViewGroup.LayoutParams params = mB.fyLayout.getLayoutParams();
-//        params.height = params.height + 20;
-//        mB.fyLayout.setLayoutParams(params);
-
-        Set<Long> days = new TreeSet<>();
-//        days.add(calendar.getTimeInMillis());
-        days.add(TimeUtils.string2Millis("2019-07-27 00:00:00"));
-        days.add(TimeUtils.string2Millis("2019-07-28 00:00:00"));
-        days.add(TimeUtils.string2Millis("2019-08-01 00:00:00"));
-        //Define colors
-        int textColor = Color.parseColor("#ffffff");
-        int selectedTextColor = Color.parseColor("#ffffff");
-        int disabledTextColor = Color.parseColor("#ffffff");
-
-        ConnectedDays connectedDays = new ConnectedDays(days, textColor, selectedTextColor, disabledTextColor);
-        //Connect days to calendar
-        mB.calendarView.addConnectedDays(connectedDays);
-        mB.calendarView.setConnectedDayIconRes(R.drawable.ic_triangle_white);
-
-
-        mB.calendarView.setOnMonthChangeListener(new OnMonthChangeListener() {
-            @Override
-            public void onMonthChanged(Month month) {
-                String[] split = month.getMonthName().split("月");
-                String upper = DigitalConversionUtils.numeral(split[0]);
-                LogUtils.e(split[1] + "-" + upper);
-            }
-
-            @Override
-            public void onSelectChanged(Long time) {
-                String[] split = TimeUtils.millis2String(time).split(" ");
-                LogUtils.e(split[0]);
-            }
-        });
-
-
+        mB.tvDay.setOnClickListener(this);
         if (adapter == null){
             adapter = new BirthdayRecordsAdapter(act, listBean);
         }
         setRecyclerViewType(mB.recyclerView);
         mB.recyclerView.setAdapter(adapter);
-        mPresenter.onRequest(pagerNumber = 1);
+        nowString = TimeUtils.getNowString(new SimpleDateFormat("yyyy-MM"));
+        mPresenter.onRequest(nowString);
         adapter.setOnAdapterClickListener(position -> {
             adapter.setPosition(position);
             adapter.notifyDataSetChanged();
@@ -121,6 +96,73 @@ public class BirthdayRecordsFrg extends BaseFragment<BirthdayRecordsPresenter, F
 
         menuItems.add(new MenuItem(getString(R.string.add_records)));
         menuItems.add(new MenuItem(getString(R.string.recordbook)));
+
+        mB.tvDay.setText(TimeUtils.getNowString(new SimpleDateFormat("yyyy-MM")));
+
+        onSelectDateListener = new OnSelectDateListener() {
+            @Override
+            public void onSelectDate(CalendarDate date) {
+//                nowString = date.getYear() + "-" + date.getMonth();
+                LogUtils.e(nowString);
+//                new Handler().postDelayed(() -> mPresenter.onRequest(nowString), 200);
+            }
+
+            @Override
+            public void onSelectOtherMonth(int offset) {
+                //偏移量 -1表示刷新成上一个月数据 ， 1表示刷新成下一个月数据
+                mB.calendarView.selectOtherMonth(offset);
+            }
+        };
+        initCalendarView();
+    }
+
+    /**
+     * 初始化CustomDayView，并作为CalendarViewAdapter的参数传入
+     */
+    private void initCalendarView() {
+        CustomDayView customDayView = new CustomDayView(act, R.layout.custom_day);
+        calendarAdapter = new CalendarViewAdapter(
+                 act,
+                onSelectDateListener,
+                CalendarAttr.CalendarType.MONTH,
+                CalendarAttr.WeekArrayType.Monday,
+                customDayView);
+        initMonthPager();
+    }
+
+    /**
+     * 初始化monthPager，MonthPager继承自ViewPager
+     *
+     * @return void
+     */
+    private void initMonthPager() {
+        mB.calendarView.setAdapter(calendarAdapter);
+        mB.calendarView.setCurrentItem(MonthPager.CURRENT_DAY_INDEX);
+        mB.calendarView.setPageTransformer(false, (page, position) -> {
+            position = (float) Math.sqrt(1 - Math.abs(position));
+            page.setAlpha(position);
+        });
+        mB.calendarView.addOnPageChangeListener(new MonthPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                currentCalendars = calendarAdapter.getPagers();
+                if (currentCalendars.get(position % currentCalendars.size()) != null) {
+                    CalendarDate date = currentCalendars.get(position % currentCalendars.size()).getSeedDate();
+                    nowString = date.getYear() + "-" + date.getMonth();
+                    mB.tvDay.setText(nowString);
+                    new Handler().postDelayed(() -> mPresenter.onRequest(nowString), 200);
+                    LogUtils.e(nowString);
+                }
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+            }
+        });
     }
 
     @Override
@@ -140,9 +182,28 @@ public class BirthdayRecordsFrg extends BaseFragment<BirthdayRecordsPresenter, F
 
     @Override
     public void setData(List<DataBean> list) {
-        mB.tvTitle.setText("10月份生日记录");
+        mB.tvTitle.setText(nowString.split("-")[1] +
+                "月份生日记录");
+
         listBean.clear();
         listBean.addAll(list);
         adapter.notifyDataSetChanged();
     }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()){
+            case R.id.tv_day:
+                DatePickerUtils.onYearMonthPicker(act, "选择时间", (year, month, day) -> {
+                    nowString = year + "-" + month;
+                    CalendarDate today = new CalendarDate(Integer.valueOf(year), Integer.valueOf(month), 1);
+                    calendarAdapter.notifyDataChanged(today);
+                    new Handler().postDelayed(() -> mPresenter.onRequest(nowString), 200);
+                    mB.tvDay.setText(nowString);
+                    LogUtils.e(year + "-" + month);
+                });
+                break;
+        }
+    }
+
 }

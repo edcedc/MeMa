@@ -30,8 +30,15 @@ import java.util.List;
  * Time: 23:56
  */
 public class CommentAdapter extends BaseRecyclerviewAdapter<DataBean> {
+
     public CommentAdapter(Context act, BaseFragment root, List<DataBean> listBean) {
         super(act, root, listBean);
+    }
+
+    private int type = 0;//0 咨询评论  1 视频评论
+    public CommentAdapter(Context act, BaseFragment root, List<DataBean> listBean, int type) {
+        super(act, root, listBean);
+        this.type = type;
     }
 
     @Override
@@ -51,25 +58,27 @@ public class CommentAdapter extends BaseRecyclerviewAdapter<DataBean> {
             final CommentChildAdapter adapter = new CommentChildAdapter(act, list);
             viewHolder.listView.setAdapter(adapter);
             viewHolder.listView.setOnItemLongClickListener((adapterView, view, i, l) -> {
-                //View代表方法传入的控件
-                int[] viewLocation = new int[2];
-                view.getLocationInWindow(viewLocation);
-                int viewX = viewLocation[0]; // x 坐标
-                int viewY = viewLocation[1]; // y 坐标
-                PopupWindowTool.clickXY(view);
-                PopupWindowTool.createPopupWindow(act, view, new PopupWindowTool.OnGestureClickListener() {
-                    @Override
-                    public void copy() {
-                        // 得到剪贴板管理器
-                        ClipboardUtils.copyText(list.get(i).getContext());
-                        showToast("复制成功");
-                    }
+                if (type == 0){
+                    //View代表方法传入的控件
+                    int[] viewLocation = new int[2];
+                    view.getLocationInWindow(viewLocation);
+                    int viewX = viewLocation[0]; // x 坐标
+                    int viewY = viewLocation[1]; // y 坐标
+                    PopupWindowTool.clickXY(view);
+                    PopupWindowTool.createPopupWindow(act, view, new PopupWindowTool.OnGestureClickListener() {
+                        @Override
+                        public void copy() {
+                            // 得到剪贴板管理器
+                            ClipboardUtils.copyText(list.get(i).getContext());
+                            showToast("复制成功");
+                        }
 
-                    @Override
-                    public void report() {
-                        UIHelper.startReportNewsFrg(root, list.get(i).getDiscussId(), list.get(i).getInfoId(), Constants.COMMENT_CAUSES_COMPLAINTS);
-                    }
-                });
+                        @Override
+                        public void report() {
+                            UIHelper.startReportNewsFrg(root, list.get(i).getDiscussId(), list.get(i).getInfoId(), Constants.COMMENT_CAUSES_COMPLAINTS);
+                        }
+                    });
+                }
 
                 return false;
             });
@@ -112,7 +121,7 @@ public class CommentAdapter extends BaseRecyclerviewAdapter<DataBean> {
 
         viewHolder.itemView.setOnClickListener(view -> {
             if (listener != null){
-                listener.onSecondComment(position, bean.getInfoId(), bean.getDiscussId(), null);
+                listener.onSecondComment(position, type == 0 ? bean.getInfoId() : bean.getVideoId(), bean.getDiscussId(), null);
             }
         });
         viewHolder.tv_zan.setOnClickListener(view -> {

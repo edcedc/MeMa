@@ -11,11 +11,10 @@ import com.yc.mema.R;
 import com.yc.mema.adapter.SortAdapter;
 import com.yc.mema.base.BaseFragment;
 import com.yc.mema.bean.DataBean;
+import com.yc.mema.controller.UIHelper;
 import com.yc.mema.databinding.FSortListBinding;
 import com.yc.mema.impl.MemorandumContract;
-import com.yc.mema.impl.SortContract;
 import com.yc.mema.presenter.MemorandumPresenter;
-import com.yc.mema.presenter.SortPresenter;
 import com.yc.mema.weight.sort.CharacterParser;
 import com.yc.mema.weight.sort.PinyinComparator;
 
@@ -60,7 +59,7 @@ public class MemorandumFrg extends BaseFragment<MemorandumPresenter, FSortListBi
 
     @Override
     protected void initView(View view) {
-        setTitle(getString(R.string.blacklist));
+        setTitle(getString(R.string.recordbook), R.mipmap.tj01);
         mB.sidrbar.setTextView(mB.dialog);
 
         //实例化汉字转拼音类
@@ -70,11 +69,9 @@ public class MemorandumFrg extends BaseFragment<MemorandumPresenter, FSortListBi
         Collections.sort(listBean, pinyinComparator);
 
         if (adapter == null){
-            adapter = new SortAdapter(act, listBean);
+            adapter = new SortAdapter(act, listBean, SortAdapter.recordbook);
         }
         mB.listView.setAdapter(adapter);
-
-        mPresenter.onRequest();
 
         //设置右侧触摸监听
         mB.sidrbar.setOnTouchingLetterChangedListener(s -> {
@@ -107,15 +104,20 @@ public class MemorandumFrg extends BaseFragment<MemorandumPresenter, FSortListBi
             public void afterTextChanged(Editable s) {
             }
         });
+        mPresenter.onRequest(null);
+    }
 
-
+    @Override
+    protected void setOnRightClickListener() {
+        super.setOnRightClickListener();
+        UIHelper.startAddBirthdayRecordsFrg(this);
     }
 
     @Override
     public void setData(List<DataBean> list) {
         for (DataBean bean : list){
             //汉字转换成拼音
-            String pinyin = characterParser.getSelling(bean.getName());
+            String pinyin = characterParser.getSelling(bean.getNickName());
             String sortString = pinyin.substring(0, 1).toUpperCase();
             // 正则表达式，判断首字母是否是英文字母
             if(sortString.matches("[A-Z]")){
@@ -139,8 +141,8 @@ public class MemorandumFrg extends BaseFragment<MemorandumPresenter, FSortListBi
         }else{
             filterDateList.clear();
             for(DataBean sortModel : listBean){
-                String name = sortModel.getName();
-                if(name.indexOf(filterStr) != -1 || characterParser.getSelling(name).startsWith(filterStr.toString())){
+                String name = sortModel.getNickName();
+                if(name.indexOf(filterStr) != -1 || characterParser.getSelling(name).startsWith(filterStr)){
                     filterDateList.add(sortModel);
                 }
             }

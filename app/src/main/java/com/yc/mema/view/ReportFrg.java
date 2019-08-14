@@ -111,8 +111,7 @@ public class ReportFrg extends BaseFragment<ReportNewsPresenter, FReportBinding>
         switch (view.getId()) {
             case R.id.bt_submit:
                 switch (type){
-                    case Constants
-                            .CAUSES_WELFARE_COMPLAINTS:
+                    case Constants .CAUSES_WELFARE_COMPLAINTS:
                         mPresenter.onGiftReport(id, soId, localMediaList, mB.etText.getText().toString());
                         break;
                 }

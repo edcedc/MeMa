@@ -80,6 +80,9 @@ public class CollectionPresenter extends CollectionContract.Presenter {
         int type = 0;
         for (DataBean bean : list){
             switch (bean.getType()){
+                case 0:
+                    sb.append(bean.getVideoId()).append(",");
+                    break;
                 case 1:
                     sb.append(bean.getInfoId()).append(",");
                     break;

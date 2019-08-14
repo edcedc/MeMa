@@ -18,8 +18,11 @@ import com.yc.mema.base.BaseFragment;
 import com.yc.mema.base.BaseListContract;
 import com.yc.mema.base.BaseListPresenter;
 import com.yc.mema.bean.DataBean;
+import com.yc.mema.controller.CloudApi;
 import com.yc.mema.controller.UIHelper;
 import com.yc.mema.databinding.BRecyclerBinding;
+import com.yc.mema.impl.ProneContract;
+import com.yc.mema.presenter.PronePresenter;
 import com.yc.mema.weight.LinearDividerItemDecoration;
 import com.yc.mema.weight.PictureSelectorTool;
 
@@ -31,9 +34,9 @@ import java.util.List;
  * User: ${edison}
  * Date: 2019/7/30
  * Time: 19:47
+ *  我的生日趴
  */
-public class ProneFrg extends BaseFragment<BaseListPresenter, BRecyclerBinding> implements BaseListContract.View {
-
+public class ProneFrg extends BaseFragment<PronePresenter, BRecyclerBinding> implements ProneContract.View {
 
     private List<DataBean> listBean = new ArrayList<>();
     private CollectionAdapter adapter;
@@ -58,7 +61,7 @@ public class ProneFrg extends BaseFragment<BaseListPresenter, BRecyclerBinding> 
     protected void initView(View view) {
         setTitle(getString(R.string.my_prone), R.mipmap.y42);
         if (adapter == null){
-            adapter = new CollectionAdapter(act, listBean, type, false, true);
+            adapter = new CollectionAdapter(act, listBean, type, VideoFrg.MY_VIDEO);
         }
         setRecyclerViewGridType(mB.recyclerView, 3, 10, 10, R.color.white);
         mB.recyclerView.setAdapter(adapter);
@@ -70,13 +73,13 @@ public class ProneFrg extends BaseFragment<BaseListPresenter, BRecyclerBinding> 
         setRefreshLayout(mB.refreshLayout, new RefreshListenerAdapter() {
             @Override
             public void onRefresh(TwinklingRefreshLayout refreshLayout) {
-                mPresenter.onRequest("", pagerNumber = 1);
+                mPresenter.onRequest(pagerNumber = 1);
             }
 
             @Override
             public void onLoadMore(TwinklingRefreshLayout refreshLayout) {
                 super.onLoadMore(refreshLayout);
-                mPresenter.onRequest("", pagerNumber += 1);
+                mPresenter.onRequest(pagerNumber += 1);
             }
         });
     }

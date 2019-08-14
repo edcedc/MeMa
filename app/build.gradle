@@ -144,7 +144,8 @@ dependencies {
     //选中时间控件
     implementation 'com.github.addappcn:android-pickers:1.0.3'
 
-    //最新版本
+    //oss上传视频
+    implementation 'com.aliyun.dpa:oss-android-sdk:+'
 
     //MVP架构
     implementation 'com.hannesdorfmann.mosby:mvp:2.0.1'
@@ -159,6 +160,8 @@ dependencies {
     implementation 'com.readystatesoftware.chuck:library:1.0.4'
     implementation 'com.rengwuxian.materialedittext:library:2.1.4'
     implementation 'org.jsoup:jsoup:1.10.1'
+    //日历
+    implementation 'com.github.MagicMashRoom:SuperCalendar:1.6'
 
     //也是刷新 加载的
     implementation 'com.lcodecorex:tkrefreshlayout:1.0.7'
@@ -181,20 +184,11 @@ dependencies {
 
     //点击加载框
     implementation project(path: ':ToprightmenuLibrary')
-    implementation project(path: ':cosmocalendar')
     implementation files('libs/umeng-share-core-6.9.6.jar')
     implementation files('libs/umeng-share-QQ-simplify-6.9.6.jar')
     implementation files('libs/umeng-share-sina-simplify-6.9.6.jar')
     implementation files('libs/umeng-share-wechat-simplify-6.9.6.jar')
     implementation files('libs/umeng-sharetool-6.9.6.jar')
-    implementation project(':dkplayer-java')
-    implementation project(':dkplayer-ui')
-    implementation project(path: ':dkplayer-players:ijk')
-    implementation project(path: ':dkplayer-players:exo')
-    implementation project(path: ':dkplayer-players:ijk-armv5')
-    implementation project(path: ':dkplayer-players:ijk-x86')
-    implementation project(path: ':dkplayer-players:ijk-arm64')
-    implementation project(path: ':dkplayer-players:ijk-armv7a')
-    implementation project(path: ':dkplayer-players:ijk-x86_64')
+    implementation project(':LayoutManagerGroup')
     implementation files('libs/OpenInstall_v2.2.2.jar')
 }

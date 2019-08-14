@@ -13,6 +13,7 @@ import com.yc.mema.bean.DataBean;
 import com.yc.mema.databinding.FReportNewsBinding;
 import com.yc.mema.impl.ReportNewsContract;
 import com.yc.mema.presenter.ReportNewsPresenter;
+import com.yc.mema.utils.Constants;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,6 +33,7 @@ public class ReportNewsFrg extends BaseFragment<ReportNewsPresenter, FReportNews
     private String complainId;
     private String infoId;
     private String discussId;
+    private String videoId;
 
     @Override
     public void initPresenter() {
@@ -43,6 +45,7 @@ public class ReportNewsFrg extends BaseFragment<ReportNewsPresenter, FReportNews
         type = bundle.getInt("type");
         infoId = bundle.getString("infoId");
         discussId = bundle.getString("discussId");
+        videoId = bundle.getString("videoId");
     }
 
     @Override
@@ -84,7 +87,14 @@ public class ReportNewsFrg extends BaseFragment<ReportNewsPresenter, FReportNews
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.bt_submit:
-                mPresenter.onReport(discussId, soId, type, infoId);
+                switch (type){
+                    case Constants .COMMENT_CAUSES_COMPLAINTS:
+                        mPresenter.onReport(discussId, soId, type, infoId, videoId);
+                        break;
+                    case Constants.CAUSES_VIDEO_COMPLAINTS:
+                        mPresenter.onVideo(type, videoId, soId);
+                        break;
+                }
                 break;
         }
     }
@@ -99,10 +109,6 @@ public class ReportNewsFrg extends BaseFragment<ReportNewsPresenter, FReportNews
 
     @Override
     public void setReport() {
-        switch (type){
-            case 7:
-                pop();
-                break;
-        }
+        pop();
     }
 }

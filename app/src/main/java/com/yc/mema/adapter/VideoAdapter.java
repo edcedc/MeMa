@@ -7,12 +7,12 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CheckBox;
 
-import com.blankj.utilcode.util.LogUtils;
+import com.dingmouren.layoutmanagergroup.CustomVideoView;
 import com.yc.mema.R;
 import com.yc.mema.base.BaseRecyclerviewAdapter;
 import com.yc.mema.bean.DataBean;
+import com.yc.mema.controller.CloudApi;
 import com.yc.mema.utils.GlideLoadingUtils;
 import com.yc.mema.view.VideoFrg;
 import com.yc.mema.weight.CircleImageView;
@@ -35,41 +35,36 @@ public class VideoAdapter extends BaseRecyclerviewAdapter<DataBean> {
     protected void onBindViewHolde(RecyclerView.ViewHolder holder, int position) {
         ViewHolder viewHolder = (ViewHolder) holder;
         DataBean bean = listBean.get(position);
+        GlideLoadingUtils.load(act, CloudApi.SERVLET_IMG_URL + bean.getAttachId(), viewHolder.iv_img);
+        GlideLoadingUtils.load(act, bean.getHeadUrl(), viewHolder.iv_head);
+        viewHolder.tv_name.setText(bean.getNickName());
+        viewHolder.tv_moma.setText(bean.getMema());
+        viewHolder.tv_content.setText(bean.getContext());
+        viewHolder.tv_zan.setText(bean.getPraiseCount() + "");
+        viewHolder.tv_comment.setText(bean.getDiscuss() + "");
+        viewHolder.iv_follow.setBackgroundResource(bean.getfIsTrue() == 0 ? R.mipmap.tianjia_1 : R.mipmap.tianjia_1);
+        viewHolder.iv_zan.setBackgroundResource(bean.getpIsTrue() == 0 ? R.mipmap.xihuan_1 : R.mipmap.xihuan_2);
+        viewHolder.iv_coll.setBackgroundResource(bean.getcIsTrue() == 0 ? R.mipmap.shoucang_1 : R.mipmap.shoucan_2);
+        viewHolder.video_view.setVideoPath(bean.getVideo());
 
-        GlideLoadingUtils.load(act, "", viewHolder.iv_img);
-        GlideLoadingUtils.load(act, "", viewHolder.iv_head);
-        viewHolder.tv_name.setText("@Z繁浩");
-        viewHolder.tv_moma.setText("M-19951215ae4f");
-        viewHolder.tv_content.setText("也许不是每个人都能在城市生活中找到安宁，便不怪乎他要逆时光之流而行于是我逃离到了西藏。去纳木错看满天星，去阿里徒步岗仁波齐寻找");
-
-        viewHolder.fy_layout.setOnClickListener(view -> {
-            if (bean.isPlay()){
-                bean.setPlay(false);
-            }else {
-                bean.setPlay(true);
-            }
-            if (listener != null){
-                listener.play(bean.isPlay(), position);
-            }
-        });
-        viewHolder.cb_follow.setOnClickListener(view -> {
+        viewHolder.iv_follow.setOnClickListener(view -> {
             if (listener != null){
                 listener.follow("");
             }
         });
-        viewHolder.cb_zan.setOnClickListener(view -> {
+        viewHolder.iv_zan.setOnClickListener(view -> {
             if (listener != null){
-                listener.zan("");
+                listener.zan(bean.getVideoId(), bean.getpIsTrue());
             }
         });
-        viewHolder.tv_comment.setOnClickListener(view -> {
+        viewHolder.iv_comment.setOnClickListener(view -> {
             if (listener != null){
                 listener.comment();
             }
         });
-        viewHolder.cb_coll.setOnClickListener(view -> {
+        viewHolder.iv_coll.setOnClickListener(view -> {
             if (listener != null){
-                listener.collection("");
+                listener.collection(bean.getVideoId(), bean.getcIsTrue(), position);
             }
         });
     }
@@ -79,11 +74,10 @@ public class VideoAdapter extends BaseRecyclerviewAdapter<DataBean> {
         this.listener = listener;
     }
     public interface OnClickListener{
-        void play(boolean isPlay, int position);
-        void collection(String id);
+        void collection(String id, int i, int position);
         void follow(String id);
         void comment();
-        void zan(String id);
+        void zan(String id, int i);
     }
 
 
@@ -95,28 +89,34 @@ public class VideoAdapter extends BaseRecyclerviewAdapter<DataBean> {
     class ViewHolder extends RecyclerView.ViewHolder{
 
         AppCompatImageView iv_img;
-        View fy_layout;
+        AppCompatImageView iv_follow;
         AppCompatTextView tv_name;
+        AppCompatTextView tv_coll;
         AppCompatTextView tv_moma;
+        AppCompatTextView tv_zan;
         AppCompatTextView tv_content;
         CircleImageView iv_head;
-        CheckBox cb_coll;
         AppCompatTextView tv_comment;
-        CheckBox cb_zan;
-        CheckBox cb_follow;
+        CustomVideoView video_view;
+        AppCompatImageView iv_zan;
+        AppCompatImageView iv_comment;
+        AppCompatImageView iv_coll;
 
         public ViewHolder(View itemView) {
             super(itemView);
             iv_img = itemView.findViewById(R.id.iv_img);
-            fy_layout = itemView.findViewById(R.id.fy_layout);
             tv_name = itemView.findViewById(R.id.tv_name);
             tv_moma = itemView.findViewById(R.id.tv_moma);
             tv_content = itemView.findViewById(R.id.tv_content);
             iv_head = itemView.findViewById(R.id.iv_head);
-            cb_coll = itemView.findViewById(R.id.cb_coll);
+            tv_coll = itemView.findViewById(R.id.tv_coll);
             tv_comment = itemView.findViewById(R.id.tv_comment);
-            cb_zan = itemView.findViewById(R.id.cb_zan);
-            cb_follow = itemView.findViewById(R.id.cb_follow);
+            tv_zan = itemView.findViewById(R.id.tv_zan);
+            iv_follow = itemView.findViewById(R.id.iv_follow);
+            video_view = itemView.findViewById(R.id.video_view);
+            iv_coll = itemView.findViewById(R.id.iv_coll);
+            iv_comment = itemView.findViewById(R.id.iv_comment);
+            iv_zan = itemView.findViewById(R.id.iv_zan);
         }
     }
 

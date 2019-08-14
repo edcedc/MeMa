@@ -4,10 +4,8 @@ import java.util.List;
 
 
 import android.content.Context;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.SectionIndexer;
 import android.widget.TextView;
 
@@ -19,8 +17,13 @@ import com.yc.mema.weight.CircleImageView;
 
 public class SortAdapter extends BaseListViewAdapter<DataBean> implements SectionIndexer {
 
-    public SortAdapter(Context act, List listBean) {
+    public static final int recordbook = 0;//记事本
+    public static final int black = 1;//黑名单
+
+    private int type;
+    public SortAdapter(Context act, List listBean, int type) {
         super(act, listBean);
+        this.type = type;
     }
 
     @Override
@@ -45,7 +48,19 @@ public class SortAdapter extends BaseListViewAdapter<DataBean> implements Sectio
             viewHolder.tvLetter.setVisibility(View.GONE);
         }
         GlideLoadingUtils.load(act, "", viewHolder.iv_head, true);
-        viewHolder.tvTitle.setText(bean.getName());
+
+        switch (type){
+            case recordbook:
+                viewHolder.tvTitle.setText(bean.getNickName());
+                viewHolder.tv_huifu.setVisibility(View.GONE);
+                viewHolder.tv_time.setVisibility(View.VISIBLE);
+                break;
+            default:
+                viewHolder.tv_huifu.setVisibility(View.VISIBLE);
+                viewHolder.tv_time.setVisibility(View.GONE);
+                break;
+        }
+
         return convertView;
     }
 
@@ -54,6 +69,7 @@ public class SortAdapter extends BaseListViewAdapter<DataBean> implements Sectio
         TextView tvLetter;
         TextView tvTitle;
         TextView tv_huifu;
+        TextView tv_time;
         CircleImageView iv_head;
 
          public ViewHolder(View convertView) {
@@ -61,6 +77,7 @@ public class SortAdapter extends BaseListViewAdapter<DataBean> implements Sectio
              tvLetter = convertView.findViewById(R.id.catalog);
              iv_head = convertView.findViewById(R.id.iv_head);
              tv_huifu = convertView.findViewById(R.id.tv_huifu);
+             tv_time = convertView.findViewById(R.id.tv_time);
          }
      }
 

@@ -58,6 +58,7 @@ public class FourFrg extends BaseFragment<BasePresenter, FFourBinding> implement
         mFragments.add(VideoFrg.newInstance());
         mFragments.add(GoodFriendFrg.newInstance());
         String[] str = {"", ""};
+        mB.viewPager.setNoScroll(false);
         mB.viewPager.setAdapter(new MyPagerAdapter(getChildFragmentManager(), mFragments, str));
 //        mB.viewPager.setOffscreenPageLimit(1);
         mB.viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -69,10 +70,14 @@ public class FourFrg extends BaseFragment<BasePresenter, FFourBinding> implement
             @Override
             public void onPageSelected(int i) {
                 if (i == 0){
+                    mB.tvWorld.setTextColor(act.getColor(R.color.red_F67690));
+                    mB.tvFriend.setTextColor(act.getColor(R.color.black_333333));
                     mB.ivCamera.setBackgroundResource(R.mipmap.y40);
-                    mB.tvWorld.setAlpha((float) 0.8);
-                    mB.tvFriend.setAlpha((float) 0.8);
+                    mB.tvWorld.setAlpha((float) 0.7);
+                    mB.tvFriend.setAlpha((float) 0.7);
                 }else {
+                    mB.tvWorld.setTextColor(act.getColor(R.color.black_333333));
+                    mB.tvFriend.setTextColor(act.getColor(R.color.red_F67690));
                     mB.ivCamera.setBackgroundResource(R.mipmap.y42);
                     mB.tvWorld.setAlpha(1);
                     mB.tvFriend.setAlpha(1);

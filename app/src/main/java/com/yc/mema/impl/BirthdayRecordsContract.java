@@ -22,7 +22,7 @@ public interface BirthdayRecordsContract {
 
     abstract class Presenter extends BasePresenter<View> {
 
-        public abstract void onRequest(int pagetNumber);
+        public abstract void onRequest(String nowDay);
 
     }
 

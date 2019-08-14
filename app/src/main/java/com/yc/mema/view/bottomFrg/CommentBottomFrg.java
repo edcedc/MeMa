@@ -1,15 +1,21 @@
 package com.yc.mema.view.bottomFrg;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.widget.AppCompatEditText;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
 import android.widget.TextView;
 
+import com.blankj.utilcode.util.StringUtils;
 import com.yc.mema.R;
 import com.yc.mema.base.BaseBottomSheetFrag;
+
+import static android.content.Context.INPUT_METHOD_SERVICE;
 
 /**
  * Created by Android Studio.
@@ -39,6 +45,19 @@ public class CommentBottomFrg extends BaseBottomSheetFrag implements TextView.On
     public void initView(View view) {
         etText = view.findViewById(R.id.et_text);
         etText.setOnEditorActionListener(this);
+
+        new Handler().postDelayed(() -> showInput(etText), 200);
+    }
+
+    /**
+     * 显示键盘
+     *
+     * @param et 输入焦点
+     */
+    public void showInput(final EditText et) {
+        et.requestFocus();
+        InputMethodManager imm = (InputMethodManager) act.getSystemService(INPUT_METHOD_SERVICE);
+        imm.showSoftInput(et, InputMethodManager.SHOW_IMPLICIT);
     }
 
     @Override
@@ -46,18 +65,24 @@ public class CommentBottomFrg extends BaseBottomSheetFrag implements TextView.On
         super.onDestroy();
         close(false);
         etText.setText("");
+        type = 1;
     }
 
     @Override
     public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
         switch(i){
             case EditorInfo.IME_ACTION_SEND:
-                if (listener != null && type == 1){
-                    listener.onFirstComment(textView.getText().toString());
+                String s = textView.getText().toString();
+                if (StringUtils.isEmpty(s)){
                     dismiss();
-                }else if (listener != null && type == 2){
-                    listener.onSecondComment(position, infoId, discussId, textView.getText().toString(), pUserId);
-                    dismiss();
+                }else {
+                    if (listener != null && type == 1){
+                        listener.onFirstComment(s);
+                        dismiss();
+                    }else if (listener != null && type == 2){
+                        listener.onSecondComment(position, infoId, discussId, s, pUserId);
+                        dismiss();
+                    }
                 }
                 break;
         }

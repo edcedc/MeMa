@@ -58,11 +58,11 @@ public class MainFrg extends BaseFragment<BasePresenter, FMainBinding> implement
     @Override
     protected void initView(View view) {
        mB.bottomBar
-                .addItem(new BottomBarTab(_mActivity, R.mipmap.zw01, "生日礼"))
+                .addItem(new BottomBarTab(_mActivity, R.mipmap.zw01, "礼"))
 //                .addItem(new BottomBarTab(_mActivity, R.mipmap.zx01,"缘聊"))
-                .addItem(new BottomBarTab(_mActivity, R.mipmap.st01,"今天"))
-                .addItem(new BottomBarTab(_mActivity, R.mipmap.wd01,"生日趴"))
-                .addItem(new BottomBarTab(_mActivity, R.mipmap.wd01,"我的"));
+                .addItem(new BottomBarTab(_mActivity, R.mipmap.st01,"今"))
+                .addItem(new BottomBarTab(_mActivity, R.mipmap.wd01,"趴"))
+                .addItem(new BottomBarTab(_mActivity, R.mipmap.wd01,"君"));
         mB.bottomBar.setOnTabSelectedListener(new BottomBar.OnTabSelectedListener() {
             @Override
             public void onTabSelected(int position, int prePosition) {

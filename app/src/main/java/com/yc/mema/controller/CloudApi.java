@@ -20,6 +20,7 @@ import com.yc.mema.callback.JsonConvert;
 import com.yc.mema.callback.NewsCallback;
 import com.yc.mema.utils.Constants;
 import com.yc.mema.utils.cache.ShareSessionIdCache;
+import com.yc.mema.view.VideoFrg;
 
 import org.json.JSONObject;
 
@@ -37,9 +38,9 @@ import io.reactivex.schedulers.Schedulers;
 
 public class CloudApi {
 
-
     private static final String url =
             "192.168.1.132:8080";
+//            "119.23.111.246:8080";
 
 
     public static final String SERVLET_URL = "http://" +
@@ -277,6 +278,45 @@ public class CloudApi {
                 .adapt(new ObservableResponse<>())
                 .subscribeOn(Schedulers.io());
     }
+
+    /**
+     * 视频点赞
+     */
+    public static Observable<Response<BaseResponseBean>> videoVideoPraise(String videoId, int status) {
+        return OkGo.<BaseResponseBean>post(SERVLET_URL + "video/videoPraise")
+                .headers("token", ShareSessionIdCache.getInstance(Utils.getApp()).getSessionId())
+                .params("userId", ShareSessionIdCache.getInstance(Utils.getApp()).getUserId())
+                .params("videoId", videoId)
+                .params("status", status)
+                .converter(new JsonCallback<BaseResponseBean>() {
+                    @Override
+                    public void onSuccess(Response<BaseResponseBean> response) {
+
+                    }
+                })
+                .adapt(new ObservableResponse<>())
+                .subscribeOn(Schedulers.io());
+    }
+
+    /**
+     * 视频收藏
+     */
+    public static Observable<Response<BaseResponseBean>> videoVideoCollect(String videoId, int status) {
+        return OkGo.<BaseResponseBean>post(SERVLET_URL + "video/videoCollect")
+                .headers("token", ShareSessionIdCache.getInstance(Utils.getApp()).getSessionId())
+                .params("userId", ShareSessionIdCache.getInstance(Utils.getApp()).getUserId())
+                .params("ids", videoId)
+                .params("status", status)
+                .converter(new JsonCallback<BaseResponseBean>() {
+                    @Override
+                    public void onSuccess(Response<BaseResponseBean> response) {
+
+                    }
+                })
+                .adapt(new ObservableResponse<>())
+                .subscribeOn(Schedulers.io());
+    }
+
     /**
      * 福利收藏
      */
@@ -303,6 +343,25 @@ public class CloudApi {
      */
     public static Observable<Response<BaseResponseBean>> informationSaveInfoDispra(String discussId, int status) {
         return OkGo.<BaseResponseBean>post(SERVLET_URL + "information/saveInfoDispra")
+                .headers("token", ShareSessionIdCache.getInstance(Utils.getApp()).getSessionId())
+                .params("userId", ShareSessionIdCache.getInstance(Utils.getApp()).getUserId())
+                .params("discussId", discussId)
+                .params("status", status)
+                .converter(new JsonCallback<BaseResponseBean>() {
+                    @Override
+                    public void onSuccess(Response<BaseResponseBean> response) {
+
+                    }
+                })
+                .adapt(new ObservableResponse<>())
+                .subscribeOn(Schedulers.io());
+    }
+
+    /**
+     * 视频评论点赞
+     */
+    public static Observable<Response<BaseResponseBean>> videoSaveInfoDispra(String discussId, int status) {
+        return OkGo.<BaseResponseBean>post(SERVLET_URL + "video/saveInfoDispra")
                 .headers("token", ShareSessionIdCache.getInstance(Utils.getApp()).getSessionId())
                 .params("userId", ShareSessionIdCache.getInstance(Utils.getApp()).getUserId())
                 .params("discussId", discussId)
@@ -393,6 +452,26 @@ public class CloudApi {
     }
 
     /**
+     * 保存编辑视频评论
+     */
+    public static Observable<Response<BaseResponseBean<DataBean>>> videoSaveVideoDiscuss(String videoId, String context) {
+        return OkGo.<BaseResponseBean<DataBean>>post(SERVLET_URL + "video/saveVideoDiscuss")
+                .headers("token", ShareSessionIdCache.getInstance(Utils.getApp()).getSessionId())
+                .params("userId", ShareSessionIdCache.getInstance(Utils.getApp()).getUserId())
+                .params("videoId", videoId)
+                .params("context", context)
+                .params("ejContext", EncodeUtils.base64Encode2String(context.getBytes()))
+                .converter(new NewsCallback<BaseResponseBean<DataBean>>() {
+                    @Override
+                    public void onSuccess(Response<BaseResponseBean<DataBean>> response) {
+
+                    }
+                })
+                .adapt(new ObservableResponse<>())
+                .subscribeOn(Schedulers.io());
+    }
+
+    /**
      * 保存编辑子级评论
      */
     public static Observable<Response<BaseResponseBean<DataBean>>> informationSaveDiscussChild(String infoId, String discussId, String context, String pUserId) {
@@ -400,6 +479,28 @@ public class CloudApi {
                 .headers("token", ShareSessionIdCache.getInstance(Utils.getApp()).getSessionId())
                 .params("userId", ShareSessionIdCache.getInstance(Utils.getApp()).getUserId())
                 .params("infoId", infoId)
+                .params("discussId", discussId)
+                .params("puserId", pUserId)
+                .params("context", context)
+                .params("ejContext", EncodeUtils.base64Encode2String(context.getBytes()))
+                .converter(new NewsCallback<BaseResponseBean<DataBean>>() {
+                    @Override
+                    public void onSuccess(Response<BaseResponseBean<DataBean>> response) {
+
+                    }
+                })
+                .adapt(new ObservableResponse<>())
+                .subscribeOn(Schedulers.io());
+    }
+
+    /**
+     * 视频保存编辑子级评论
+     */
+    public static Observable<Response<BaseResponseBean<DataBean>>> videoSaveChildDis(String videoId, String discussId, String context, String pUserId) {
+        return OkGo.<BaseResponseBean<DataBean>>post(SERVLET_URL + "video/saveChildDis")
+                .headers("token", ShareSessionIdCache.getInstance(Utils.getApp()).getSessionId())
+                .params("userId", ShareSessionIdCache.getInstance(Utils.getApp()).getUserId())
+                .params("videoId", videoId)
                 .params("discussId", discussId)
                 .params("puserId", pUserId)
                 .params("context", context)
@@ -523,6 +624,23 @@ public class CloudApi {
     }
 
     /**
+     * 获取备忘录列表
+     */
+    public static Observable<Response<BaseResponseBean<List<DataBean>>>> bookGetBookList(String nowDay) {
+        return OkGo.<BaseResponseBean<List<DataBean>>>get(SERVLET_URL + "book/getBookList")
+                .headers("token", ShareSessionIdCache.getInstance(Utils.getApp()).getSessionId())
+                .params("userId", ShareSessionIdCache.getInstance(Utils.getApp()).getUserId())
+                .params("nowDay", nowDay.trim())
+                .converter(new NewsCallback<BaseResponseBean<List<DataBean>>>() {
+                    @Override
+                    public void onSuccess(Response<BaseResponseBean<List<DataBean>>> response) {
+                    }
+                })
+                .adapt(new ObservableResponse<>())
+                .subscribeOn(Schedulers.io());
+    }
+
+    /**
      * 获取一条投诉模块信息
      */
     public static Observable<Response<BaseResponseBean<DataBean>>> complainGetComplain(String complainId) {
@@ -536,6 +654,103 @@ public class CloudApi {
                 .adapt(new ObservableResponse<>())
                 .subscribeOn(Schedulers.io());
     }
+
+    /**
+     * 保存编辑视频
+     */
+    public static Observable<Response<BaseResponseBean>> videoSaveVideo(String video, String file, String context) {
+        return OkGo.<BaseResponseBean>post(SERVLET_URL + "video/saveVideo")
+                .headers("token", ShareSessionIdCache.getInstance(Utils.getApp()).getSessionId())
+                .params("userId", ShareSessionIdCache.getInstance(Utils.getApp()).getUserId())
+                .params("path", video)
+                .params("file", new File(file))
+                .params("context", context)
+                .converter(new JsonCallback<BaseResponseBean>() {
+                    @Override
+                    public void onSuccess(Response<BaseResponseBean> response) {
+                    }
+                })
+                .adapt(new ObservableResponse<>())
+                .subscribeOn(Schedulers.io());
+    }
+
+    /**
+     * 保存编辑视频反馈
+     */
+    public static Observable<Response<BaseResponseBean>> videoSaveVideoBack(String videoId, String soId) {
+        return OkGo.<BaseResponseBean>post(SERVLET_URL + "video/saveVideoBack")
+                .headers("token", ShareSessionIdCache.getInstance(Utils.getApp()).getSessionId())
+                .params("userId", ShareSessionIdCache.getInstance(Utils.getApp()).getUserId())
+                .params("soId", soId)
+                .params("videoId", videoId)
+                .params("handle", 1)
+                .converter(new JsonCallback<BaseResponseBean>() {
+                    @Override
+                    public void onSuccess(Response<BaseResponseBean> response) {
+                    }
+                })
+                .adapt(new ObservableResponse<>())
+                .subscribeOn(Schedulers.io());
+    }
+
+
+    /**
+     * 获取视频评论列表
+     */
+    public static Observable<Response<BaseResponseBean<BaseListBean<DataBean>>>> videoGetVideoDisList(String videoId, int pageNumber) {
+        return OkGo.<BaseResponseBean<BaseListBean<DataBean>>>get(SERVLET_URL + "video/getVideoDisList")
+                .headers("token", ShareSessionIdCache.getInstance(Utils.getApp()).getSessionId())
+                .params("userId", ShareSessionIdCache.getInstance(Utils.getApp()).getUserId())
+                .params("page", pageNumber)
+                .params("size", 200)
+                .params("videoId", videoId)
+                .converter(new NewsCallback<BaseResponseBean<BaseListBean<DataBean>>>() {
+                    @Override
+                    public void onSuccess(Response<BaseResponseBean<BaseListBean<DataBean>>> response) {
+
+                    }
+                })
+                .adapt(new ObservableResponse<>())
+                .subscribeOn(Schedulers.io());
+    }
+
+    /**
+     * 获取视频列表
+     */
+    public static final String videoGetVideoList = "video/getVideoList";
+
+    public static Observable<Response<BaseResponseBean<BaseListBean<DataBean>>>> videoGetVideoList(int pageNumber, int type) {
+        String url = "";
+        switch (type){
+            case VideoFrg.NORMAL_VIDEO:
+            case VideoFrg.MY_VIDEO:
+                url = videoGetVideoList;
+                break;
+            case VideoFrg.COLL_VIDEO:
+                url= videoGetVideoCollList;
+                break;
+        }
+        GetRequest<BaseResponseBean<BaseListBean<DataBean>>> request = OkGo.get(SERVLET_URL + url);
+        switch (type){
+            case VideoFrg.MY_VIDEO:
+                request.params("myId", ShareSessionIdCache.getInstance(Utils.getApp()).getUserId());
+                break;
+        }
+        return request
+                .headers("token", ShareSessionIdCache.getInstance(Utils.getApp()).getSessionId())
+                .params("userId", ShareSessionIdCache.getInstance(Utils.getApp()).getUserId())
+                .params("page", pageNumber)
+                .params("size", Constants.pageSize)
+                .converter(new NewsCallback<BaseResponseBean<BaseListBean<DataBean>>>() {
+                    @Override
+                    public void onSuccess(Response<BaseResponseBean<BaseListBean<DataBean>>> response) {
+
+                    }
+                })
+                .adapt(new ObservableResponse<>())
+                .subscribeOn(Schedulers.io());
+    }
+
 
     /**
      * 系统消息列表

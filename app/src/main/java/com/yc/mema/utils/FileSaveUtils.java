@@ -5,6 +5,7 @@ import android.app.NotificationManager;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.media.MediaMetadataRetriever;
 import android.media.MediaScannerConnection;
 import android.net.Uri;
 import android.support.v4.app.NotificationCompat;
@@ -24,6 +25,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.HashMap;
 
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
@@ -53,32 +55,54 @@ public class FileSaveUtils {
      * @param imgBitmap
      * @param name
      */
-    public static boolean save(final Context act, final Bitmap imgBitmap, String name){
+    public static String save(final Context act, final Bitmap imgBitmap, String name){
         boolean orExistsDir = FileUtils.createOrExistsDir(Constants.imgUrl);
-        if (orExistsDir){
-            String fileName = Constants.imgUrl + name + ".png";
-            if (imgBitmap != null && !imgBitmap.isRecycled()){
-                boolean save = com.blankj.utilcode.util.ImageUtils.save(imgBitmap, fileName, Bitmap.CompressFormat.PNG, true);
-                if (save){
-                    MediaScannerConnection.scanFile(act,
-                            new String[]{fileName},
-                            new String[]{"image/png"},
-                            new MediaScannerConnection.OnScanCompletedListener() {
-                                @Override
-                                public void onScanCompleted(String path, Uri uri) {
-                                    LogUtils.e(path);
-                                    Glide.get(act).getBitmapPool().put(imgBitmap);
-                                    ToastUtils.showShort("下载成功");
-                                }
-                            });
-                }
-            }else {
-                ToastUtils.showShort("下载成功");
+        String fileName = Constants.imgUrl + name + ".png";
+        if (imgBitmap != null && !imgBitmap.isRecycled()){
+            boolean save = com.blankj.utilcode.util.ImageUtils.save(imgBitmap, fileName, Bitmap.CompressFormat.PNG, true);
+            if (save){
+                MediaScannerConnection.scanFile(act,
+                        new String[]{fileName},
+                        new String[]{"image/png"},
+                        new MediaScannerConnection.OnScanCompletedListener() {
+                            @Override
+                            public void onScanCompleted(String path, Uri uri) {
+                                LogUtils.e(path);
+                                Glide.get(act).getBitmapPool().put(imgBitmap);
+                                ToastUtils.showShort("下载成功");
+                            }
+                        });
             }
+        }else {
+            ToastUtils.showShort("下载成功");
         }
-        return orExistsDir;
+        return fileName;
     }
 
+    /**
+     * 给出url，获取视频的第一帧
+     *
+     * @param url
+     * @return
+     */
+    public static Bitmap getVideoThumbnail(String url) {
+        Bitmap bitmap = null;
+        //MediaMetadataRetriever 是android中定义好的一个类，提供了统一
+        //的接口，用于从输入的媒体文件中取得帧和元数据；
+        MediaMetadataRetriever retriever = new MediaMetadataRetriever();
+        try {
+            //根据文件路径获取缩略图
+            LogUtils.e(url);
+            retriever.setDataSource(url);
+            //获得第一帧图片
+            bitmap = retriever.getFrameAtTime();
+        } catch (IllegalArgumentException e) {
+            e.printStackTrace();
+        } finally {
+            retriever.release();
+        }
+        return bitmap;
+    }
 
     public static void saveVideo(final Context act, final String fileUrl, final String name){
         boolean orExistsDir = FileUtils.createOrExistsDir(Constants.mainPath);

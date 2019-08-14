@@ -1,7 +1,6 @@
 package com.yc.mema.impl;
 
 import com.yc.mema.base.BasePresenter;
-import com.yc.mema.base.IBaseListView;
 import com.yc.mema.base.IBaseView;
 import com.yc.mema.bean.DataBean;
 
@@ -21,7 +20,7 @@ public interface MemorandumContract {
 
     abstract class Presenter extends BasePresenter<View> {
 
-        public abstract void onRequest();
+        public abstract void onRequest(String nowDay);
 
     }
 

@@ -102,9 +102,9 @@ public class PictureSelectorTool {
                 .compress(true)// 是否压缩 true or false
                 .synOrAsy(true)//同步true或异步false 压缩 默认同步
                 .videoQuality(1)// 视频录制质量 0 or 1 int
-                .videoMaxSecond(180)// 显示多少秒以内的视频or音频也可适用 int
+                .videoMaxSecond(15)// 显示多少秒以内的视频or音频也可适用 int
                 .videoMinSecond(5)// 显示多少秒以内的视频or音频也可适用 int
-                .recordVideoSecond(60)//视频秒数录制 默认60s int
+                .recordVideoSecond(15)//视频秒数录制 默认60s int
                 .forResult(request);//结果回调onActivityResult code
     }
 

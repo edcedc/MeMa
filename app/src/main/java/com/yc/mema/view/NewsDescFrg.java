@@ -4,14 +4,15 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.widget.DividerItemDecoration;
 import android.view.View;
-
+import android.webkit.JavascriptInterface;
+import android.webkit.WebChromeClient;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
+import android.widget.LinearLayout;
 import com.blankj.utilcode.util.ToastUtils;
 import com.google.gson.Gson;
 import com.lcodecore.tkrefreshlayout.RefreshListenerAdapter;
 import com.lcodecore.tkrefreshlayout.TwinklingRefreshLayout;
-import com.tencent.smtt.sdk.WebChromeClient;
-import com.tencent.smtt.sdk.WebView;
-import com.tencent.smtt.sdk.WebViewClient;
 import com.yc.mema.R;
 import com.yc.mema.adapter.CommentAdapter;
 import com.yc.mema.base.BaseActivity;
@@ -186,34 +187,17 @@ public class NewsDescFrg extends BaseFragment<NewsDescPresenter, FNewsDescBindin
         } else {
             mB.refreshLayout.finishLoadmore();
         }
-        listBean.add(0, topBean);
-        listBean.addAll(list);
-        adapter.notifyDataSetChanged();
-
         if (topBean != null && pagerNumber == 1) {
+            listBean.add(0, topBean);
             new Handler().postDelayed(() -> {
-                moveToPosition(0);
-                topBean = null;
+                mB.scrollView.post(() -> {
+                    mB.scrollView.scrollTo(0,  mB.recyclerView.getTop());
+                    topBean = null;
+                });
             }, 200);
         }
-    }
-
-    /**
-     * 缓慢滑动
-     * 当指定位置位于第一个可见位置之上时，可以滚动，利用smoothScrollToPosition实现
-     * 当指定位置位于可视位置之间时，得到距离顶部的距离，然后smoothScrollBy向上滚动固定的距离
-     * 当指定的位置位于最后一个可见位置之下时，可以滚动，利用利用smoothScrollToPosition实现实现
-     */
-    public void moveToPosition(int position) {
-        int firstItem = mB.recyclerView.getChildLayoutPosition(mB.recyclerView.getChildAt(0));
-        int lastItem = mB.recyclerView.getChildLayoutPosition(mB.recyclerView.getChildAt(mB.recyclerView.getChildCount() - 1));
-        if (position < firstItem || position > lastItem) {
-            mB.recyclerView.smoothScrollToPosition(position);
-        } else {
-            int movePosition = position - firstItem;
-            int top = mB.recyclerView.getChildAt(movePosition).getTop();
-            mB.recyclerView.smoothScrollBy(0, top);
-        }
+        listBean.addAll(list);
+        adapter.notifyDataSetChanged();
     }
 
     @Override

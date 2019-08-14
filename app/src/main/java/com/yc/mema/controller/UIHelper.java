@@ -423,6 +423,14 @@ public final class UIHelper {
         frg.setArguments(bundle);
         root.start(frg);
     }
+    public static void startReportNewsFrg(BaseFragment root, String videoId, int type) {
+        ReportNewsFrg frg = new ReportNewsFrg();
+        Bundle bundle = new Bundle();
+        bundle.putInt("type", type);
+        bundle.putString("videoId", videoId);
+        frg.setArguments(bundle);
+        root.start(frg);
+    }
 
     /**
      *  我的生日趴
@@ -460,9 +468,9 @@ public final class UIHelper {
     /**
      *  生日趴
      */
-    public static void startVideoAct(boolean isState) {
+    public static void startVideoAct(int isVideoType) {
         Bundle bundle = new Bundle();
-        bundle.putBoolean("isState", isState);
+        bundle.putInt("isVideoType", isVideoType);
         ActivityUtils.startActivity(bundle, VideoAct.class);
     }
 

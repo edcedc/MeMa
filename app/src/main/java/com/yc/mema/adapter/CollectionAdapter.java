@@ -17,6 +17,7 @@ import com.yc.mema.bean.DataBean;
 import com.yc.mema.controller.CloudApi;
 import com.yc.mema.controller.UIHelper;
 import com.yc.mema.utils.GlideLoadingUtils;
+import com.yc.mema.view.VideoFrg;
 import com.yc.mema.weight.CircleImageView;
 import com.yc.mema.weight.RoundImageView;
 import com.zhy.view.flowlayout.FlowLayout;
@@ -35,25 +36,17 @@ import java.util.List;
 public class CollectionAdapter extends BaseRecyclerviewAdapter<DataBean> {
 
     private int type;
-    private boolean isState = false;
-    private boolean isMe = false;
+    private int isVideoType;
 
     public CollectionAdapter(Context act, List<DataBean> listBean, int type) {
         super(act, listBean);
         this.type = type;
     }
 
-    public CollectionAdapter(Context act, List<DataBean> listBean, int type, boolean isState) {
+    public CollectionAdapter(Context act, List<DataBean> listBean, int type, int isVideoType) {
         super(act, listBean);
         this.type = type;
-        this.isState = isState;
-    }
-
-    public CollectionAdapter(Context act, List<DataBean> listBean, int type, boolean isState, boolean isMe) {
-        super(act, listBean);
-        this.type = type;
-        this.isState = isState;
-        this.isMe = isMe;
+        this.isVideoType = isVideoType;
     }
 
     private boolean isDel = false;
@@ -67,10 +60,12 @@ public class CollectionAdapter extends BaseRecyclerviewAdapter<DataBean> {
         final DataBean bean = listBean.get(position);
         if (holder instanceof ProneViewHolder){
             ProneViewHolder viewHolder = (ProneViewHolder) holder;
-            if (isMe){
+            if (isVideoType == VideoFrg.MY_VIDEO){
                 viewHolder.layout.setVisibility(View.GONE);
             }
-            viewHolder.tv_name.setText("番号");
+            viewHolder.tv_name.setText(bean.getNickName());
+            GlideLoadingUtils.load(act, CloudApi.SERVLET_IMG_URL + bean.getAttachId(), viewHolder.iv_img);
+            GlideLoadingUtils.load(act, bean.getHeadUrl(), viewHolder.iv_head);
             isDel(viewHolder.cb_submit);
             viewHolder.cb_submit.setChecked(bean.isSelect());
             viewHolder.cb_submit.setOnClickListener(view -> {
@@ -84,7 +79,7 @@ public class CollectionAdapter extends BaseRecyclerviewAdapter<DataBean> {
                     listener.click(position, bean.isSelect());
                 }
             });
-            viewHolder.itemView.setOnClickListener(view -> UIHelper.startVideoAct(isState));
+            viewHolder.itemView.setOnClickListener(view -> UIHelper.startVideoAct(isVideoType));
         }else if (holder instanceof ConsultViewHolder){
             ConsultViewHolder viewHolder = (ConsultViewHolder) holder;
             viewHolder.tv_title.setText(bean.getTitle());
@@ -127,25 +122,27 @@ public class CollectionAdapter extends BaseRecyclerviewAdapter<DataBean> {
             }
 
             List<DataBean> welfareImgs = bean.getWelfareImgs();
-            switch (welfareImgs.size()){
-                case 0:
-                    viewHolder.iv_img.setVisibility(View.VISIBLE);
-                    GlideLoadingUtils.load(act, CloudApi.SERVLET_IMG_URL + welfareImgs.get(0).getAttachId(), viewHolder.iv_img);
-                    break;
-                case 1:
-                    viewHolder.iv_img.setVisibility(View.VISIBLE);
-                    GlideLoadingUtils.load(act, CloudApi.SERVLET_IMG_URL + welfareImgs.get(0).getAttachId(), viewHolder.iv_img);
-                    viewHolder.iv_img1.setVisibility(View.VISIBLE);
-                    GlideLoadingUtils.load(act, CloudApi.SERVLET_IMG_URL + welfareImgs.get(1).getAttachId(), viewHolder.iv_img1);
-                    break;
-                default:
-                    viewHolder.iv_img.setVisibility(View.VISIBLE);
-                    GlideLoadingUtils.load(act, CloudApi.SERVLET_IMG_URL + welfareImgs.get(0).getAttachId(), viewHolder.iv_img);
-                    viewHolder.iv_img1.setVisibility(View.VISIBLE);
-                    GlideLoadingUtils.load(act, CloudApi.SERVLET_IMG_URL + welfareImgs.get(1).getAttachId(), viewHolder.iv_img1);
-                     viewHolder.iv_img2.setVisibility(View.VISIBLE);
-                    GlideLoadingUtils.load(act, CloudApi.SERVLET_IMG_URL + welfareImgs.get(2).getAttachId(), viewHolder.iv_img2);
-                    break;
+            if (welfareImgs != null && welfareImgs.size() != 0){
+                switch (welfareImgs.size()){
+                    case 1:
+                        viewHolder.iv_img.setVisibility(View.VISIBLE);
+                        GlideLoadingUtils.load(act, CloudApi.SERVLET_IMG_URL + welfareImgs.get(0).getAttachId(), viewHolder.iv_img);
+                        break;
+                    case 2:
+                        viewHolder.iv_img.setVisibility(View.VISIBLE);
+                        GlideLoadingUtils.load(act, CloudApi.SERVLET_IMG_URL + welfareImgs.get(0).getAttachId(), viewHolder.iv_img);
+                        viewHolder.iv_img1.setVisibility(View.VISIBLE);
+                        GlideLoadingUtils.load(act, CloudApi.SERVLET_IMG_URL + welfareImgs.get(1).getAttachId(), viewHolder.iv_img1);
+                        break;
+                    default:
+                        viewHolder.iv_img.setVisibility(View.VISIBLE);
+                        GlideLoadingUtils.load(act, CloudApi.SERVLET_IMG_URL + welfareImgs.get(0).getAttachId(), viewHolder.iv_img);
+                        viewHolder.iv_img1.setVisibility(View.VISIBLE);
+                        GlideLoadingUtils.load(act, CloudApi.SERVLET_IMG_URL + welfareImgs.get(1).getAttachId(), viewHolder.iv_img1);
+                        viewHolder.iv_img2.setVisibility(View.VISIBLE);
+                        GlideLoadingUtils.load(act, CloudApi.SERVLET_IMG_URL + welfareImgs.get(2).getAttachId(), viewHolder.iv_img2);
+                        break;
+                }
             }
 
             isDel(viewHolder.cb_submit);

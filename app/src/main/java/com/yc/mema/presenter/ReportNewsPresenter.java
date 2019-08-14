@@ -89,7 +89,7 @@ public class ReportNewsPresenter extends ReportNewsContract.Presenter{
     }
 
     @Override
-    public void onReport(String discussId, String soId, int type, String infoId) {
+    public void onReport(String discussId, String soId, int type, String infoId, String videoId) {
         CloudApi.informationSaveInfoBack(null, infoId, discussId, soId, null, null)
                 .doOnSubscribe(disposable -> {mView.showLoading();})
                 .observeOn(AndroidSchedulers.mainThread())
@@ -127,6 +127,37 @@ public class ReportNewsPresenter extends ReportNewsContract.Presenter{
     @Override
     public void onGiftReport(String id, String soId, List<LocalMedia> localMediaList, String content) {
         CloudApi.welfareSaveWelfareBack(localMediaList, null, null, soId, content, id)
+                .doOnSubscribe(disposable -> {mView.showLoading();})
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<Response<BaseResponseBean>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                        mView.addDisposable(d);
+                    }
+
+                    @Override
+                    public void onNext(Response<BaseResponseBean> baseResponseBeanResponse) {
+                        if (baseResponseBeanResponse.body().code == Code.CODE_SUCCESS){
+                            mView.setReport();
+                        }
+                        showToast(baseResponseBeanResponse.body().description);
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        mView.onError(e);
+                    }
+
+                    @Override
+                    public void onComplete() {
+                        mView.hideLoading();
+                    }
+                });
+    }
+
+    @Override
+    public void onVideo(int type, String videoId, String soId) {
+        CloudApi.videoSaveVideoBack(videoId, soId)
                 .doOnSubscribe(disposable -> {mView.showLoading();})
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<Response<BaseResponseBean>>() {

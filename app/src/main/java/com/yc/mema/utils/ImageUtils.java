@@ -69,7 +69,7 @@ public class ImageUtils {
 
         // 把一个View转换成图片
         Bitmap cachebmp = loadBitmapFromView(view);
-        boolean save = FileSaveUtils.save(act, cachebmp,  TimeUtils.getNowString());
+        String save = FileSaveUtils.save(act, cachebmp,  TimeUtils.getNowString());
 
 //        aaa.setImageBitmap(cachebmp);//直接展示转化的bitmap
 
@@ -100,7 +100,7 @@ public class ImageUtils {
         }*/
 
         view.destroyDrawingCache();
-        return save;
+        return save == null ? false : true;
     }
 
     private static Bitmap loadBitmapFromView(View v) {
