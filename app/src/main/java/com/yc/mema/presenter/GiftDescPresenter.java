@@ -57,7 +57,9 @@ public class GiftDescPresenter extends GiftDescContract.Presenter {
         type = type == 0 ? 1 : 0;
         int finalType = type;
         CloudApi.welfareWelPraise(id, type)
-                .doOnSubscribe(disposable -> {mView.showLoading();})
+                .doOnSubscribe(disposable -> {
+//                    mView.showLoading();
+                })
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<Response<BaseResponseBean>>() {
                     @Override
@@ -89,7 +91,9 @@ public class GiftDescPresenter extends GiftDescContract.Presenter {
         type = type == 0 ? 1 : 0;
         int finalType = type;
         CloudApi.welfareWelCollect(id, type)
-                .doOnSubscribe(disposable -> {mView.showLoading();})
+                .doOnSubscribe(disposable -> {
+//                    mView.showLoading();
+                })
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<Response<BaseResponseBean>>() {
                     @Override

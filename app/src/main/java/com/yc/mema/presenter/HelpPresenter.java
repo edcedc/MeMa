@@ -29,14 +29,14 @@ public class HelpPresenter extends HelpContract.Presenter {
         CloudApi.feedbackSaveFeedback(phone, text)
                 .doOnSubscribe(disposable -> {mView.showLoading();})
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<Response<BaseResponseBean<DataBean>>>() {
+                .subscribe(new Observer<Response<BaseResponseBean>>() {
                     @Override
                     public void onSubscribe(Disposable d) {
                         mView.addDisposable(d);
                     }
 
                     @Override
-                    public void onNext(Response<BaseResponseBean<DataBean>> baseResponseBeanResponse) {
+                    public void onNext(Response<BaseResponseBean> baseResponseBeanResponse) {
                         if (baseResponseBeanResponse.body().code == Code.CODE_SUCCESS){
                             mView.onFeed();
                         }

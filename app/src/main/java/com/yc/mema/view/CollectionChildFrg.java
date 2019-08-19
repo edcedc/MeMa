@@ -1,6 +1,8 @@
 package com.yc.mema.view;
 
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.support.v7.widget.DividerItemDecoration;
 import android.view.View;
 
@@ -12,6 +14,7 @@ import com.yc.mema.base.BaseFragment;
 import com.yc.mema.bean.DataBean;
 import com.yc.mema.databinding.FCollectChildBinding;
 import com.yc.mema.event.CollectionInEvent;
+import com.yc.mema.event.VideoDelInEvent;
 import com.yc.mema.impl.CollectionContract;
 import com.yc.mema.presenter.CollectionPresenter;
 import com.yc.mema.weight.LinearDividerItemDecoration;
@@ -76,7 +79,7 @@ public class CollectionChildFrg extends BaseFragment<CollectionPresenter, FColle
         }
         switch (type) {
             case 0:
-                mB.refreshLayout.setBackgroundColor(act.getColor(R.color.white));
+                mB.refreshLayout.setBackgroundColor(act.getResources().getColor(R.color.white));
                 setRecyclerViewGridType(mB.recyclerView, 3, 10, 10, R.color.white);
                 setMargins(mB.recyclerView, 30, 0, 30, 0);
                 break;
@@ -190,4 +193,13 @@ public class CollectionChildFrg extends BaseFragment<CollectionPresenter, FColle
             EventBus.getDefault().post(new CollectionInEvent(false, true));
         }
     }
+
+    @Subscribe
+    public void onMainVideoDelInEvent(VideoDelInEvent event){
+        if (type != 0)return;
+        listBean.remove(event.position);
+        adapter.notifyItemRemoved(event.position);
+        adapter.notifyItemChanged(event.position);
+    }
+
 }

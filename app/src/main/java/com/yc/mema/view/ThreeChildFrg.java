@@ -16,6 +16,7 @@ import com.yc.mema.impl.ThreeChildContract;
 import com.yc.mema.presenter.ThreeChildPresenter;
 import com.yc.mema.utils.GlideImageLoader;
 import com.yc.mema.utils.OneGlideImageLoader;
+import com.yc.mema.view.act.HtmlAct;
 import com.yc.mema.weight.LinearDividerItemDecoration;
 import com.youth.banner.listener.OnBannerListener;
 import com.youth.banner.transformer.DefaultTransformer;
@@ -124,5 +125,13 @@ public class ThreeChildFrg extends BaseFragment<ThreeChildPresenter, FThreeChild
     @Override
     public void OnBannerClick(int position) {
         DataBean bean = listBannerBean.get(position);
+        int type = bean.getType();
+        if (type == 2){
+            UIHelper.startHtmlAct(HtmlAct.ABOUT, bean.getAbort());
+        }else if (type == 3){
+            UIHelper.startNewsDescAct(bean.getAbort(), null);
+        }else {
+
+        }
     }
 }

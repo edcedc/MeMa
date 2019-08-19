@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.bumptech.glide.Glide;
 import com.dingmouren.layoutmanagergroup.CustomVideoView;
 import com.yc.mema.R;
 import com.yc.mema.base.BaseRecyclerviewAdapter;
@@ -35,7 +36,8 @@ public class VideoAdapter extends BaseRecyclerviewAdapter<DataBean> {
     protected void onBindViewHolde(RecyclerView.ViewHolder holder, int position) {
         ViewHolder viewHolder = (ViewHolder) holder;
         DataBean bean = listBean.get(position);
-        GlideLoadingUtils.load(act, CloudApi.SERVLET_IMG_URL + bean.getAttachId(), viewHolder.iv_img);
+//        GlideLoadingUtils.load(act, CloudApi.SERVLET_IMG_URL + bean.getAttachId(), viewHolder.iv_img);
+        Glide.with(act).load(CloudApi.SERVLET_IMG_URL + bean.getAttachId()).into(viewHolder.iv_img);
         GlideLoadingUtils.load(act, bean.getHeadUrl(), viewHolder.iv_head);
         viewHolder.tv_name.setText(bean.getNickName());
         viewHolder.tv_moma.setText(bean.getMema());
@@ -54,17 +56,17 @@ public class VideoAdapter extends BaseRecyclerviewAdapter<DataBean> {
         });
         viewHolder.iv_zan.setOnClickListener(view -> {
             if (listener != null){
-                listener.zan(bean.getVideoId(), bean.getpIsTrue());
+                listener.zan(bean.getVideoId(), bean.getpIsTrue(), viewHolder.iv_zan, viewHolder.tv_zan);
             }
         });
         viewHolder.iv_comment.setOnClickListener(view -> {
             if (listener != null){
-                listener.comment();
+                listener.comment(viewHolder.tv_comment);
             }
         });
         viewHolder.iv_coll.setOnClickListener(view -> {
             if (listener != null){
-                listener.collection(bean.getVideoId(), bean.getcIsTrue(), position);
+                listener.collection(bean.getVideoId(), bean.getcIsTrue(), position, viewHolder.iv_coll, viewHolder.tv_coll);
             }
         });
     }
@@ -74,10 +76,10 @@ public class VideoAdapter extends BaseRecyclerviewAdapter<DataBean> {
         this.listener = listener;
     }
     public interface OnClickListener{
-        void collection(String id, int i, int position);
+        void collection(String id, int i, int position, AppCompatImageView iv_coll, AppCompatTextView tv_coll);
         void follow(String id);
-        void comment();
-        void zan(String id, int i);
+        void comment(AppCompatTextView tv_comment);
+        void zan(String id, int i, AppCompatImageView iv_zan, AppCompatTextView tv_zan);
     }
 
 

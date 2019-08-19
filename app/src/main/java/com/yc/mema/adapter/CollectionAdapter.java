@@ -79,7 +79,7 @@ public class CollectionAdapter extends BaseRecyclerviewAdapter<DataBean> {
                     listener.click(position, bean.isSelect());
                 }
             });
-            viewHolder.itemView.setOnClickListener(view -> UIHelper.startVideoAct(isVideoType));
+            viewHolder.itemView.setOnClickListener(view -> UIHelper.startVideoAct(isVideoType, listBean, position));
         }else if (holder instanceof ConsultViewHolder){
             ConsultViewHolder viewHolder = (ConsultViewHolder) holder;
             viewHolder.tv_title.setText(bean.getTitle());

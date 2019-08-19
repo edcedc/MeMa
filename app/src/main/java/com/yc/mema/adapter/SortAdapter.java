@@ -54,6 +54,7 @@ public class SortAdapter extends BaseListViewAdapter<DataBean> implements Sectio
                 viewHolder.tvTitle.setText(bean.getNickName());
                 viewHolder.tv_huifu.setVisibility(View.GONE);
                 viewHolder.tv_time.setVisibility(View.VISIBLE);
+                viewHolder.tv_time.setText(bean.getBrithday());
                 break;
             default:
                 viewHolder.tv_huifu.setVisibility(View.VISIBLE);

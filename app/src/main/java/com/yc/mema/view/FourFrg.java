@@ -1,6 +1,8 @@
 package com.yc.mema.view;
 
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.view.View;
@@ -67,6 +69,7 @@ public class FourFrg extends BaseFragment<BasePresenter, FFourBinding> implement
 
             }
 
+            @RequiresApi(api = Build.VERSION_CODES.M)
             @Override
             public void onPageSelected(int i) {
                 if (i == 0){

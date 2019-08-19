@@ -49,15 +49,23 @@
             android:background="?actionBarItemBackground"
             android:layout_marginTop="@dimen/px40"
             android:layout_gravity="right"
+            android:padding="@dimen/px20"
             android:id="@+id/fy_layout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
 
             <android.support.v7.widget.AppCompatImageView
+                android:id="@+id/iv_sandian"
                 android:background="@mipmap/y17"
-                android:layout_margin="@dimen/px20"
+                android:visibility="gone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/tv_del"
+                android:visibility="gone"
+                android:text="@string/delete"
+                style="@style/Tv12white" />
 
         </FrameLayout>
 

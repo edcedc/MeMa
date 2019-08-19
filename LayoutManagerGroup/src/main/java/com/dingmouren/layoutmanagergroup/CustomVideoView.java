@@ -1,9 +1,14 @@
 package com.dingmouren.layoutmanagergroup;
 
 import android.content.Context;
+import android.media.MediaMetadataRetriever;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
+import android.view.WindowManager;
 import android.widget.VideoView;
+
+import java.util.HashMap;
 
 /**
  * Created by Android Studio.
@@ -55,17 +60,17 @@ public class CustomVideoView extends VideoView {
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         int width = getDefaultSize(0, widthMeasureSpec);
         int height = getDefaultSize(0, heightMeasureSpec);
-        if(height>width){
+        if(height > width){
             //竖屏
             if(videoRealH>videoRealW){
                 //如果视频资源是竖屏
                 //占满屏幕
-                mVideoHeight=height;
-                mVideoWidth=width;
+                mVideoHeight = height;
+                mVideoWidth = width;
             }else {
                 //如果视频资源是横屏
                 //宽度占满，高度保存比例
-                mVideoWidth=width;
+                mVideoWidth = width;
                 float r=videoRealH/(float)videoRealW;
                 mVideoHeight= (int) (mVideoWidth*r);
             }

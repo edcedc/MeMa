@@ -13,6 +13,7 @@ public class Constants {
    public static final int ITEMCOUNT = 10;
    public static final int pageSize = 20;
 
+   public static final String BAI_DU = "V5h6NjfSgukQbu55EB0zRQKY83ghiNak";
    public static final String ShareID = "5d22bec94ca357c136000062";
    public static final String WX_APPID = "wxed3971fb41174390";
    public static final String WX_SECRER = "2851fc3b2a10291c7ef6719e4999acdd";

@@ -159,7 +159,9 @@ public class NewsDescPresenter extends NewsDescContract.Presenter{
         type = type == 0 ? 1 : 0;
         int finalType = type;
         CloudApi.informationSaveInfoDispra(infoId, type)
-                .doOnSubscribe(disposable -> {mView.showLoading();})
+                .doOnSubscribe(disposable -> {
+//                    mView.showLoading();
+                })
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<Response<BaseResponseBean>>() {
                     @Override
@@ -191,7 +193,9 @@ public class NewsDescPresenter extends NewsDescContract.Presenter{
         isTrue = isTrue == 0 ? 1 : 0;
         int finalIsTrue = isTrue;
         CloudApi.informationInfoPraise(id, isTrue)
-                .doOnSubscribe(disposable -> {mView.showLoading();})
+                .doOnSubscribe(disposable -> {
+//                    mView.showLoading();
+                })
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<Response<BaseResponseBean>>() {
                     @Override

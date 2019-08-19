@@ -9,6 +9,7 @@ import com.yc.mema.base.BasePresenter;
 import com.yc.mema.base.User;
 import com.yc.mema.controller.UIHelper;
 import com.yc.mema.databinding.FInfoBinding;
+import com.yc.mema.event.AddressInEvent;
 import com.yc.mema.impl.InformationContract;
 import com.yc.mema.presenter.InformationPresenter;
 import com.yc.mema.utils.DatePickerUtils;
@@ -105,7 +106,7 @@ public class UserInfoFrg extends BaseFragment<InformationPresenter, FInfoBinding
                 UIHelper.startSexFrg(this);
                 break;
             case R.id.ly_address:
-                UIHelper.startAddressFrg(this, 1, true);
+                UIHelper.startAddressFrg(this, 1, AddressInEvent.USER_INFP_TYPE);
                 break;
             case R.id.ly_zking:
                 UIHelper.startZkingFrg(this);

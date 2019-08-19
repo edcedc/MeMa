@@ -13,7 +13,7 @@ android {
         versionName rootProject.ext.versionName as String
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         ndk {
-            abiFilters 'armeabi', 'armeabi-v7a'
+            abiFilters "armeabi", "armeabi-v7a", "arm64-v8a", "x86", "mips"
         }
         multiDexEnabled true
 
@@ -84,7 +84,9 @@ android {
             assets.srcDirs = ['src/main/assets']
             manifest.srcFile 'src/main/AndroidManifest.xml'
             jni.srcDirs = []
+            jniLibs.srcDir 'libs'
             jniLibs.srcDirs = ['src/main/libs']
+            jniLibs.srcDirs = ['src/main/jniLibs']
         }
     }
 
@@ -160,6 +162,7 @@ dependencies {
     implementation 'com.readystatesoftware.chuck:library:1.0.4'
     implementation 'com.rengwuxian.materialedittext:library:2.1.4'
     implementation 'org.jsoup:jsoup:1.10.1'
+
     //日历
     implementation 'com.github.MagicMashRoom:SuperCalendar:1.6'
 
@@ -177,7 +180,7 @@ dependencies {
     implementation 'com.umeng.umsdk:common:2.0.0'
 
     //腾讯X5webview
-    implementation files('libs/tbs_sdk_thirdapp_v3.6.0.1352_43618_sharewithdownload_withoutGame_obfs_20180918_120327.jar')
+    implementation 'com.tencent.tbs.tbssdk:sdk:43697'
 
     //加载样式
     implementation project(path: ':loadingLibrary')
@@ -191,4 +194,5 @@ dependencies {
     implementation files('libs/umeng-sharetool-6.9.6.jar')
     implementation project(':LayoutManagerGroup')
     implementation files('libs/OpenInstall_v2.2.2.jar')
+    implementation files('libs/BaiduLBS_Android.jar')
 }

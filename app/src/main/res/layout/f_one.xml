@@ -3,12 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <ezy.ui.layout.LoadingLayout
-        android:id="@+id/loadinglayout"
-        android:background="@color/white"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:ignore="MissingConstraints">
+
 
         <FrameLayout
             android:layout_width="match_parent"
@@ -80,7 +75,6 @@
                                 android:id="@+id/rv_label"
                                 android:background="@color/white"
                                 android:layout_marginTop="@dimen/px30"
-                                android:layout_marginBottom="@dimen/px30"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:numColumns="4"
@@ -91,12 +85,21 @@
                             <View
                                 style="@style/divider_2"/>
 
+                            <ezy.ui.layout.LoadingLayout
+                                android:id="@+id/loadinglayout"
+                                android:background="@color/white"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                tools:ignore="MissingConstraints">
+
                             <android.support.v7.widget.RecyclerView
                                 android:id="@+id/recyclerView"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:nestedScrollingEnabled="false"
                                 android:overScrollMode="never" />
+
+                            </ezy.ui.layout.LoadingLayout>
 
                         </LinearLayout>
 
@@ -108,7 +111,5 @@
             </LinearLayout>
 
         </FrameLayout>
-
-    </ezy.ui.layout.LoadingLayout>
 
 </layout>

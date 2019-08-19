@@ -1,5 +1,8 @@
 package com.yc.mema.impl;
 
+import android.support.v7.widget.AppCompatImageView;
+import android.support.v7.widget.AppCompatTextView;
+
 import com.yc.mema.base.BasePresenter;
 import com.yc.mema.base.IBaseListView;
 import com.yc.mema.bean.DataBean;
@@ -22,11 +25,13 @@ public interface VideoContract {
 
         void setFirstComment(DataBean result);
 
-        void setVideoZan(int position, int finalType);
+        void setVideoZan(int position, int finalType, AppCompatImageView iv_zan, AppCompatTextView tv_zan);
 
-        void setVideoColl(int position, int finalType);
+        void setVideoColl(int position, int finalType, AppCompatImageView iv_coll, AppCompatTextView tv_coll);
 
         void setSecondComment(int position, DataBean result);
+
+        void setDelVideo();
     }
 
     abstract class Presenter extends BasePresenter<View> {
@@ -39,11 +44,13 @@ public interface VideoContract {
 
         public abstract void onFirstComment(String videoId, String text);
 
-        public abstract void onVideoZan(String id, int type, int position);
+        public abstract void onVideoZan(String id, int type, int position, AppCompatImageView iv_zan, AppCompatTextView tv_zan);
 
-        public abstract void onVideoColl(String id, int i, int position);
+        public abstract void onVideoColl(String id, int type, int position, AppCompatImageView iv_coll, AppCompatTextView tv_coll);
 
         public abstract void onSecondComment(int position, String videoId, String discussId, String text, String pUserId);
+
+        public abstract void onDelVideo(String videoId);
     }
 
 }

@@ -3,6 +3,8 @@ package com.yc.mema;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Color;
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -68,7 +70,7 @@ public class CustomDayView extends DayView {
     private void renderSelect(State state) {
         if (state == State.SELECT) {
             selectedBackground.setVisibility(VISIBLE);
-            dateTv.setTextColor(context.getColor(R.color.red_EE3257));
+            dateTv.setTextColor(context.getResources().getColor(R.color.red_EE3257));
             dateTv.setTextSize(16);
         } else if (state == State.NEXT_MONTH || state == State.PAST_MONTH) {
             selectedBackground.setVisibility(GONE);
@@ -76,7 +78,7 @@ public class CustomDayView extends DayView {
             dateTv.setTextSize(14);
         } else {
             selectedBackground.setVisibility(GONE);
-            dateTv.setTextColor(context.getColor(R.color.white));
+            dateTv.setTextColor(context.getResources().getColor(R.color.white));
             dateTv.setTextSize(14);
         }
     }

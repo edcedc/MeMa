@@ -73,6 +73,43 @@ public class DataBean implements Serializable {
     private int inDay;
     private String video;
     private String videoId;
+    private String abort;
+    private String label;
+    private String value;
+    private String roleId;
+    private int handle;
+
+    public int getHandle() {
+        return handle;
+    }
+
+    public String getRoleId() {
+        return roleId;
+    }
+
+    public void setRoleId(String roleId) {
+        this.roleId = roleId;
+    }
+
+    public String getLabel() {
+        return label;
+    }
+
+    public void setValue(String value) {
+        this.value = value;
+    }
+
+    public void setLabel(String label) {
+        this.label = label;
+    }
+
+    public String getValue() {
+        return value;
+    }
+
+    public String getAbort() {
+        return abort;
+    }
 
     public String getVideoId() {
         return videoId;
@@ -226,12 +263,24 @@ public class DataBean implements Serializable {
         return regionId;
     }
 
+    public void setRegionId(String regionId) {
+        this.regionId = regionId;
+    }
+
     public int getRegionLevel() {
         return regionLevel;
     }
 
+    public void setRegionLevel(int regionLevel) {
+        this.regionLevel = regionLevel;
+    }
+
     public String getRegionName() {
         return regionName;
+    }
+
+    public void setRegionName(String regionName) {
+        this.regionName = regionName;
     }
 
     public String getAddress() {
@@ -433,5 +482,17 @@ public class DataBean implements Serializable {
 
     public DataBean getInfoDisList() {
         return infoDisList;
+    }
+
+    private DataBean bInfoDisList;
+
+    public DataBean getbInfoDisList() {
+        return bInfoDisList;
+    }
+
+    private DataBean infoList;
+
+    public DataBean getInfoList() {
+        return infoList;
     }
 }

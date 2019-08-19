@@ -25,8 +25,11 @@ import com.yc.mema.bean.BaseResponseBean;
 import com.yc.mema.bean.DataBean;
 import com.yc.mema.callback.Code;
 import com.yc.mema.controller.CloudApi;
+import com.yc.mema.event.ReleaseInEvent;
 import com.yc.mema.impl.ReleaseContract;
 import com.yc.mema.utils.FileSaveUtils;
+
+import org.greenrobot.eventbus.EventBus;
 
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -40,11 +43,11 @@ import io.reactivex.disposables.Disposable;
  */
 public class ReleasePresenter extends ReleaseContract.Presenter{
 
-     private final String bucketName = "mema-oss";
-     private final String stsServer = "https://mema-oss.oss-cn-beijing.aliyuncs.com/";//拼接地址查看的
-     private final String mRegion = "北京";
+     private final String bucketName = "memashejiao";
+     private final String stsServer = "https://memashejiao.oss-cn-shenzhen.aliyuncs.com/";//拼接地址查看的
+     private final String mRegion = "深圳";
      private final String STS_SERVER_URL = "http://*.*.*.*:*/sts/getsts";//STS 地址
-    private OSSAsyncTask task;
+     private OSSAsyncTask task;
 
     @Override
     public void onRelease(String text, String path, String suolue) {
@@ -130,18 +133,20 @@ public class ReleasePresenter extends ReleaseContract.Presenter{
     }
 
     private void videoSaveVideo(String video, String file, String context){
+        LogUtils.e(video);
         CloudApi.videoSaveVideo(video, file, context)
                 .doOnSubscribe(disposable -> {})
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<Response<BaseResponseBean>>() {
+                .subscribe(new Observer<Response<BaseResponseBean<DataBean>>>() {
                     @Override
                     public void onSubscribe(Disposable d) {
                         mView.addDisposable(d);
                     }
 
                     @Override
-                    public void onNext(Response<BaseResponseBean> baseResponseBeanResponse) {
+                    public void onNext(Response<BaseResponseBean<DataBean>> baseResponseBeanResponse) {
                         if (baseResponseBeanResponse.body().code == Code.CODE_SUCCESS){
+                            EventBus.getDefault().post(new ReleaseInEvent(baseResponseBeanResponse.body().result));
                             act.finish();
                         }
                         showToast(baseResponseBeanResponse.body().description);

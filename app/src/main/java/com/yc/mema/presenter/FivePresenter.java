@@ -1,12 +1,15 @@
 package com.yc.mema.presenter;
 
-import com.blankj.utilcode.util.StringUtils;
-import com.blankj.utilcode.util.Utils;
+import com.lzy.okgo.model.Response;
 import com.yc.mema.base.User;
+import com.yc.mema.bean.BaseResponseBean;
+import com.yc.mema.bean.DataBean;
 import com.yc.mema.callback.Code;
 import com.yc.mema.controller.CloudApi;
+import com.yc.mema.controller.UIHelper;
 import com.yc.mema.impl.FiveContract;
 import com.yc.mema.utils.cache.ShareSessionIdCache;
+import com.yc.mema.view.FiveFrg;
 
 import org.json.JSONObject;
 
@@ -40,6 +43,10 @@ public class FivePresenter extends FiveContract.Presenter{
                             User.getInstance().setUserObj(data);
                             User.getInstance().setLogin(true);
                             mView.setData(User.getInstance().getUserObj());
+                        }else {
+                            User.getInstance().setLogin(false);
+                            ShareSessionIdCache.getInstance(act).remove();
+                            mView.setDateError();
                         }
                     }
 
@@ -51,6 +58,41 @@ public class FivePresenter extends FiveContract.Presenter{
                     @Override
                     public void onComplete() {
                         mView.hideLoading();
+                    }
+                });
+    }
+
+    @Override
+    public void onaUserAgent(FiveFrg fiveFrg) {
+        CloudApi.agentGetUserAgent()
+                .doOnSubscribe(disposable -> {})
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<Response<BaseResponseBean<DataBean>>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                        mView.addDisposable(d);
+                    }
+
+                    @Override
+                    public void onNext(Response<BaseResponseBean<DataBean>> baseResponseBeanResponse) {
+                        if (baseResponseBeanResponse.body().code == Code.CODE_SUCCESS){
+                            int handle = baseResponseBeanResponse.body().result.getHandle();
+                            if (handle == 3){
+                                UIHelper.startApplyFrg(fiveFrg);
+                            }else {
+                               showToast(handle == 1 ? "你已提交申请 正在审核" : "你已成为代理人");
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        mView.onError(e);
+                    }
+
+                    @Override
+                    public void onComplete() {
+
                     }
                 });
     }

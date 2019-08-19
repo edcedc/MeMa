@@ -62,19 +62,20 @@
 
             <android.support.v7.widget.AppCompatTextView
                 android:id="@+id/tv_name"
-                android:layout_gravity="center"
                 style="@style/Tv15white"
-                android:layout_marginLeft="@dimen/px30"
-                android:layout_marginRight="@dimen/px40" />
+                android:layout_gravity="center"
+                android:layout_marginLeft="@dimen/px10"
+                android:layout_marginRight="@dimen/px40"
+                android:maxLines="1" />
 
         </com.flyco.roundview.RoundLinearLayout>
 
         <com.flyco.roundview.RoundFrameLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginRight="@dimen/px20"
             android:alpha="0.2"
             android:orientation="horizontal"
-            android:layout_marginRight="@dimen/px20"
             app:rv_backgroundColor="@color/black_333333"
             app:rv_cornerRadius="@dimen/px60" />
 

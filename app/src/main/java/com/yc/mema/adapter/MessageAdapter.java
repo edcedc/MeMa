@@ -13,13 +13,16 @@ import com.yc.mema.R;
 import com.yc.mema.base.BaseFragment;
 import com.yc.mema.base.BaseRecyclerviewAdapter;
 import com.yc.mema.bean.DataBean;
+import com.yc.mema.controller.CloudApi;
 import com.yc.mema.controller.UIHelper;
 import com.yc.mema.utils.GlideLoadingUtils;
 import com.yc.mema.utils.TimeUtil;
+import com.yc.mema.view.VideoFrg;
 import com.yc.mema.view.act.HtmlAct;
 import com.yc.mema.weight.CircleImageView;
 import com.yc.mema.weight.RoundImageView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -58,28 +61,67 @@ public class MessageAdapter extends BaseRecyclerviewAdapter<DataBean> {
 
                     break;
                 case 4://回复资讯评论
-
+                    DataBean userList4 = bean.getUserList();
+                    GlideLoadingUtils.load(act, userList4.getHeadUrl(), viewHolder.iv_head, true);
+                    DataBean binfoDisList4 = bean.getbInfoDisList();
+                    viewHolder.tv_content.setText(binfoDisList4.getContext());
+                    DataBean infoDisList4 = bean.getInfoDisList();
+                    viewHolder.layout.setVisibility(View.VISIBLE);
+                    viewHolder.iv_img1.setVisibility(View.GONE);
+                    viewHolder.tv_comment.setText(infoDisList4.getContext());
+                    viewHolder.tv_title.setText(infoDisList4.getNickName() +
+                            " 回复了你的评论");
                     break;
                 case 8://点赞视频
-
-                    break;
-                case 16://评论视频
-
-                    break;
-                case 32://评论视频评论
-
-                    break;
-                case 64://资讯评论点赞
                     DataBean userList = bean.getUserList();
                     GlideLoadingUtils.load(act, userList.getHeadUrl(), viewHolder.iv_head, true);
                     viewHolder.tv_title.setText(userList.getNickName() +
+                            " 点赞了你的视频");
+                    viewHolder.layout.setVisibility(View.GONE);
+                    DataBean infoList8 = bean.getInfoList();
+                    viewHolder.tv_content.setText(infoList8.getContext());
+                    break;
+                case 16://评论视频
+                    DataBean userList16 = bean.getUserList();
+                    GlideLoadingUtils.load(act, userList16.getHeadUrl(), viewHolder.iv_head, true);
+                    viewHolder.tv_title.setText(userList16.getNickName() +
+                            " 评论了你的视频");
+                    viewHolder.layout.setVisibility(View.VISIBLE);
+                    DataBean infoDisList16 = bean.getInfoDisList();
+                    viewHolder.tv_content.setText(infoDisList16.getContext());
+                    DataBean infoList16 = bean.getInfoList();
+                    GlideLoadingUtils.load(act, CloudApi.SERVLET_IMG_URL + infoList16.getAttachId(), viewHolder.iv_img1);
+                    viewHolder.tv_comment.setText(infoList16.getContext());
+                    break;
+                case 32://评论视频评论
+                    DataBean userList32 = bean.getUserList();
+                    GlideLoadingUtils.load(act, userList32.getHeadUrl(), viewHolder.iv_head, true);
+                    viewHolder.tv_title.setText(userList32.getNickName() +
+                            " 回复了你视频的评论");
+                    viewHolder.layout.setVisibility(View.VISIBLE);
+                    viewHolder.iv_img1.setVisibility(View.GONE);
+                    DataBean infoDisList32 = bean.getInfoDisList();
+                    viewHolder.tv_content.setText(infoDisList32.getContext());
+                    viewHolder.tv_comment.setText(infoDisList32.getContext());
+                    break;
+                case 64://资讯评论点赞
+                    DataBean userList64 = bean.getUserList();
+                    GlideLoadingUtils.load(act, userList64.getHeadUrl(), viewHolder.iv_head, true);
+                    viewHolder.tv_title.setText(userList64.getNickName() +
                             " 点赞了你的评论");
-                    DataBean infoDisList = bean.getInfoDisList();
+                    DataBean infoDisList = bean.getbInfoDisList();
                     viewHolder.tv_content.setText(infoDisList.getContext());
                     viewHolder.layout.setVisibility(View.GONE);
                     break;
                 case 128://视频评论点赞
-
+                    DataBean userList128 = bean.getUserList();
+                    GlideLoadingUtils.load(act, userList128.getHeadUrl(), viewHolder.iv_head, true);
+                    viewHolder.tv_title.setText(userList128.getNickName() +
+                            " 点赞了你的视频评论");
+                    viewHolder.layout.setVisibility(View.GONE);
+                    viewHolder.iv_img1.setVisibility(View.GONE);
+                    DataBean infoList128 = bean.getInfoList();
+                    viewHolder.tv_content.setText(infoList128.getContext());
                     break;
             }
             viewHolder.tv_time.setText(TimeUtil.getTimeFormatText(bean.getCreateTime()));
@@ -92,24 +134,23 @@ public class MessageAdapter extends BaseRecyclerviewAdapter<DataBean> {
 
                         break;
                     case 4://回复资讯评论
-
+                        DataBean infoDisList4 = bean.getbInfoDisList();
+                        UIHelper.startNewsDescAct(infoDisList4.getInfoId(), infoDisList4);
                         break;
                     case 8://点赞视频
-
-                        break;
                     case 16://评论视频
-
-                        break;
                     case 32://评论视频评论
-
+                    case 128://视频评论点赞
+                        DataBean infoList = bean.getInfoList();
+                        List<DataBean> list = new ArrayList<>();
+                        list.add(infoList);
+                        UIHelper.startVideoAct(VideoFrg.MSG_VIDEO, list, 0);
                         break;
                     case 64://资讯评论点赞
-                        DataBean infoDisList = bean.getInfoDisList();
+                        DataBean infoDisList = bean.getbInfoDisList();
                         UIHelper.startNewsDescAct(infoDisList.getInfoId(), infoDisList);
                         break;
-                    case 128://视频评论点赞
 
-                        break;
                 }
             });
         }

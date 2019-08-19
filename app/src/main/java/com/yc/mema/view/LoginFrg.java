@@ -114,7 +114,7 @@ public class LoginFrg extends BaseFragment<LoginPresenter, FLoginBinding> implem
                 break;
             case R.id.tv_agreement:
             case R.id.tv_agreement1:
-                UIHelper.startHtmlAct(HtmlAct.REGISTER);
+                UIHelper.startHtmlAct(HtmlAct.REGISTER, null);
                 break;
         }
     }
@@ -138,8 +138,15 @@ public class LoginFrg extends BaseFragment<LoginPresenter, FLoginBinding> implem
         if (user.optString("headUrl").equals("null") || user.optString("nickName").equals("null") || user.optString("birthday").equals("null")){
             UIHelper.startInformationFrg(this);
         }else {
+            UIHelper.startMainAct();
             act.finish();
         }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+//        UIHelper.startMainAct();
     }
 
     @Override

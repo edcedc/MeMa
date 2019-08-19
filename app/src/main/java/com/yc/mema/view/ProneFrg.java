@@ -2,8 +2,10 @@ package com.yc.mema.view;
 
 import android.Manifest;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.RequiresApi;
 import android.support.v7.widget.DividerItemDecoration;
 import android.view.View;
 
@@ -21,10 +23,15 @@ import com.yc.mema.bean.DataBean;
 import com.yc.mema.controller.CloudApi;
 import com.yc.mema.controller.UIHelper;
 import com.yc.mema.databinding.BRecyclerBinding;
+import com.yc.mema.event.ReleaseInEvent;
+import com.yc.mema.event.VideoDelInEvent;
 import com.yc.mema.impl.ProneContract;
 import com.yc.mema.presenter.PronePresenter;
 import com.yc.mema.weight.LinearDividerItemDecoration;
 import com.yc.mema.weight.PictureSelectorTool;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -65,7 +72,7 @@ public class ProneFrg extends BaseFragment<PronePresenter, BRecyclerBinding> imp
         }
         setRecyclerViewGridType(mB.recyclerView, 3, 10, 10, R.color.white);
         mB.recyclerView.setAdapter(adapter);
-        mB.refreshLayout.setBackgroundColor(act.getColor(R.color.white));
+        mB.refreshLayout.setBackgroundColor(act.getResources().getColor(R.color.white));
         setMargins(mB.recyclerView, 30, 30, 30, 0);
 
         showLoadDataing();
@@ -82,6 +89,7 @@ public class ProneFrg extends BaseFragment<PronePresenter, BRecyclerBinding> imp
                 mPresenter.onRequest(pagerNumber += 1);
             }
         });
+        EventBus.getDefault().register(this);
     }
 
     @Override
@@ -112,6 +120,27 @@ public class ProneFrg extends BaseFragment<PronePresenter, BRecyclerBinding> imp
     protected void setOnRightClickListener() {
         super.setOnRightClickListener();
         UIHelper.startReleaseAct();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
+    }
+
+    @Subscribe
+    public void onMainVideoDelInEvent(VideoDelInEvent event){
+        listBean.remove(event.position);
+        adapter.notifyItemRemoved(event.position);
+        adapter.notifyItemChanged(event.position);
+        if (listBean.size() == 0)showLoadEmpty();
+    }
+
+    @Subscribe
+    public void onMainReleaseInEvent(ReleaseInEvent event){
+        listBean.add(event.bean);
+        adapter.notifyDataSetChanged();
+        hideLoading();
     }
 
 }

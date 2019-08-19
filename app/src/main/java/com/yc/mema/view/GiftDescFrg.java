@@ -9,6 +9,7 @@ import com.flyco.roundview.RoundTextView;
 import com.flyco.roundview.RoundViewDelegate;
 import com.yc.mema.R;
 import com.yc.mema.adapter.GiftDescAdapter;
+import com.yc.mema.base.BaseActivity;
 import com.yc.mema.base.BaseFragment;
 import com.yc.mema.bean.DataBean;
 import com.yc.mema.controller.UIHelper;
@@ -81,7 +82,14 @@ public class GiftDescFrg extends BaseFragment<GiftDescPresenter, FGiftBinding> i
     }
 
     @Override
+    public void onSupportVisible() {
+        super.onSupportVisible();
+        ReportFrg.isFinish = false;
+    }
+
+    @Override
     public void onClick(View view) {
+        if (!((BaseActivity)act).isLogin())return;
         switch (view.getId()){
             case R.id.tv_like:
                 mPresenter.onZan(id, getpIsTrue);
@@ -98,13 +106,13 @@ public class GiftDescFrg extends BaseFragment<GiftDescPresenter, FGiftBinding> i
         mB.tvLike.setText(bean.getPraiseCount() + "");
         mB.tvColl.setText(bean.getCollectCount() + "");
         mB.tvLock.setText(bean.getBrowseCount() + "");
-        mB.tvTime.setText(bean.getBusinessTime());
+        mB.tvTime.setText("营业时间：" + bean.getBusinessTime());
         mB.tvPhone.setText(bean.getIphone());
         mB.tvAddress.setText("商家地址：" +
                 bean.getPcyAdd() + bean.getAddress());
         String discount = bean.getDiscount();
         if (!StringUtils.isEmpty(discount)){
-            String[] split = discount.split(",");
+            String[] split = discount.split("，");
             mB.flLabel.removeAllViews();
             mB.flLabel.setAdapter(new TagAdapter<String>(split){
                 @Override

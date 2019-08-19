@@ -131,7 +131,7 @@ public abstract class BaseFragment<P extends BasePresenter, VB extends ViewDataB
         if (!isFullScreen){
             ImmersionBar.with(this).transparentStatusBar().statusBarDarkFont(true).init();
         }else {
-
+            ImmersionBar.with(this).transparentBar();
         }
     }
 
@@ -380,25 +380,22 @@ public abstract class BaseFragment<P extends BasePresenter, VB extends ViewDataB
         LogUtils.d("onDetach");
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.M)
     protected void setRecyclerViewType(RecyclerView recyclerView){
         recyclerView.setLayoutManager(new LinearLayoutManager(act));
         setRecyclerView(recyclerView, R.color.white);
     }
-    @RequiresApi(api = Build.VERSION_CODES.M)
+
     protected void setRecyclerViewType(RecyclerView recyclerView, int baColor){
         recyclerView.setLayoutManager(new LinearLayoutManager(act));
         setRecyclerView(recyclerView, baColor);
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.M)
     protected void setRecyclerViewGridType(RecyclerView recyclerView, int spanCount, int width, int height, int color){
         recyclerView.setLayoutManager(new GridLayoutManager(act, spanCount));
         recyclerView.addItemDecoration(new GridDividerItemDecoration(width, height, ContextCompat.getColor(act,color)));
         setRecyclerView(recyclerView, R.color.white);
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.M)
     protected void setRecyclerViewGridType(RecyclerView recyclerView, int spanCount, int width, int height){
         recyclerView.setLayoutManager(new GridLayoutManager(act, spanCount));
         recyclerView.addItemDecoration(new GridDividerItemDecoration(width, height, ContextCompat.getColor(act,R.color.white)));
@@ -429,12 +426,12 @@ public abstract class BaseFragment<P extends BasePresenter, VB extends ViewDataB
     protected void setTitleTransparent(String title, boolean back){
         setTitle(title);
         view.findViewById(R.id.top_view).setVisibility(View.GONE);
-        view.findViewById(R.id.title_bar).setBackgroundColor(act.getColor(R.color.transparent));
+        view.findViewById(R.id.title_bar).setBackgroundColor(act.getResources().getColor(R.color.transparent));
         Toolbar toolbar = view.findViewById(R.id.toolbar);
         if (back){
             toolbar.setNavigationIcon(null);
         }
-        toolbar.setBackgroundColor(act.getColor(R.color.transparent));
+        toolbar.setBackgroundColor(act.getResources().getColor(R.color.transparent));
     }
 
     private void title(String title, String rightText, int img, boolean isBack) {
@@ -445,16 +442,12 @@ public abstract class BaseFragment<P extends BasePresenter, VB extends ViewDataB
         RoundTextView topRight = view.findViewById(R.id.top_right);
         ImageView topRightImg = view.findViewById(R.id.top_right_img);
         FrameLayout topRightFy = view.findViewById(R.id.top_right_fy);
+        view.findViewById(R.id.top_view).setVisibility(View.GONE);
         //需要调用该函数才能设置toolbar的信息
         mAppCompatActivity.setSupportActionBar(toolbar);
         mAppCompatActivity.getSupportActionBar().setTitle("");
         if (isBack){
-            toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    act.onBackPressed();
-                }
-            });
+            toolbar.setNavigationOnClickListener(v -> act.onBackPressed());
         }else {
             toolbar.setNavigationIcon(null);
         }
@@ -470,12 +463,7 @@ public abstract class BaseFragment<P extends BasePresenter, VB extends ViewDataB
         }else {
 
         }
-        topRightFy.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                setOnRightClickListener();
-            }
-        });
+        topRightFy.setOnClickListener(view -> setOnRightClickListener());
     }
 
     public static void setMargins (View v, int l, int t, int r, int b) {

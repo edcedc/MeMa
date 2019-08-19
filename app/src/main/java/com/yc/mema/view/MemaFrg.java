@@ -5,10 +5,13 @@ import android.view.View;
 
 import com.yc.mema.R;
 import com.yc.mema.base.BaseFragment;
+import com.yc.mema.base.User;
 import com.yc.mema.databinding.FMemaBinding;
 import com.yc.mema.impl.InformationContract;
 import com.yc.mema.presenter.InformationPresenter;
 import com.yc.mema.utils.DatePickerUtils;
+
+import org.json.JSONObject;
 
 /**
  * Created by Android Studio.
@@ -38,6 +41,12 @@ public class MemaFrg extends BaseFragment<InformationPresenter, FMemaBinding> im
     protected void initView(View view) {
         setTitle(getString(R.string.set_mema), getString(R.string.submit1));
         mB.tvTime.setOnClickListener(this);
+        JSONObject userObj = User.getInstance().getUserObj();
+        String mema = userObj.optString("mema");
+        if (!mema.equals("null")){
+            mB.tvTime.setHint(mema.substring(2, mema.length() - 4));
+            mB.etText.setHint(mema.substring(mema.length() - 4, mema.length()));
+        }
     }
 
     @Override

@@ -46,7 +46,6 @@ public class OnePresenter extends OneContract.Presenter {
                                 if (list != null) {
                                     mView.setData(list);
                                 }
-                                mView.hideLoading();
                                 mView.setRefreshLayoutMode(data.getTotalCount());
                             }
                         }
@@ -59,7 +58,7 @@ public class OnePresenter extends OneContract.Presenter {
 
                     @Override
                     public void onComplete() {
-
+                        mView.hideLoading();
                     }
                 });
     }

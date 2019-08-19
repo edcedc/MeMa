@@ -141,12 +141,7 @@ public abstract class BaseActivity<P extends BasePresenter, VB extends ViewDataB
         mAppCompatActivity.getSupportActionBar().setTitle("");
         if (isBack){
             toolbar.setNavigationIcon(R.mipmap.close);
-            toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    act.onBackPressed();
-                }
-            });
+            toolbar.setNavigationOnClickListener(v -> act.onBackPressed());
         }else {
             toolbar.setNavigationIcon(null);
         }
@@ -160,12 +155,7 @@ public abstract class BaseActivity<P extends BasePresenter, VB extends ViewDataB
         }else {
 
         }
-        topRightFy.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                setOnRightClickListener();
-            }
-        });
+        topRightFy.setOnClickListener(view -> setOnRightClickListener());
     }
 
     protected void setOnRightClickListener() {

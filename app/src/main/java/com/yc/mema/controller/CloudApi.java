@@ -1,6 +1,7 @@
 package com.yc.mema.controller;
 
 import com.blankj.utilcode.util.EncodeUtils;
+import com.blankj.utilcode.util.EncryptUtils;
 import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.StringUtils;
 import com.blankj.utilcode.util.Utils;
@@ -39,8 +40,9 @@ import io.reactivex.schedulers.Schedulers;
 public class CloudApi {
 
     private static final String url =
-            "192.168.1.132:8080";
+//            "192.168.1.143:8080";
 //            "119.23.111.246:8080";
+            "47.106.179.240:8080";
 
 
     public static final String SERVLET_URL = "http://" +
@@ -129,8 +131,31 @@ public class CloudApi {
         return OkGo.<BaseResponseBean>post(SERVLET_URL + "book/saveBook")
                 .headers("token", ShareSessionIdCache.getInstance(Utils.getApp()).getSessionId())
                 .params("userId", ShareSessionIdCache.getInstance(Utils.getApp()).getUserId())
-                .params("brithday", brithday)
+                .params("brithday", brithday.split("-")[1])
                 .params("frendName", frendName)
+                .converter(new JsonCallback<BaseResponseBean>() {
+                    @Override
+                    public void onSuccess(Response<BaseResponseBean> response) {
+
+                    }
+                })
+                .adapt(new ObservableResponse<>())
+                .subscribeOn(Schedulers.io());
+    }
+
+    /**
+     * 保存编辑申请信息
+     */
+    public static Observable<Response<BaseResponseBean>> agentSaveAgent(String name, String phone, String roleId, String county, String text) {
+        return OkGo.<BaseResponseBean>post(SERVLET_URL + "agent/saveAgent")
+                .headers("token", ShareSessionIdCache.getInstance(Utils.getApp()).getSessionId())
+                .params("userId", ShareSessionIdCache.getInstance(Utils.getApp()).getUserId())
+                .params("userName", name)
+                .params("iphone", phone)
+                .params("roleId", roleId)
+                .params("county", county)
+                .params("remark", text)
+                .params("handle", 1)
                 .converter(new JsonCallback<BaseResponseBean>() {
                     @Override
                     public void onSuccess(Response<BaseResponseBean> response) {
@@ -161,6 +186,24 @@ public class CloudApi {
     }
 
     /**
+     * 判断是否处理过审核信息
+     *  1审核中  2同意  3拒绝
+     */
+    public static Observable<Response<BaseResponseBean<DataBean>>> agentGetUserAgent() {
+        return OkGo.<BaseResponseBean<DataBean>>get(SERVLET_URL + "agent/getUserAgent")
+                .headers("token", ShareSessionIdCache.getInstance(Utils.getApp()).getSessionId())
+                .params("userId", ShareSessionIdCache.getInstance(Utils.getApp()).getUserId())
+                .converter(new JsonCallback<BaseResponseBean<DataBean>>() {
+                    @Override
+                    public void onSuccess(Response<BaseResponseBean<DataBean>> response) {
+
+                    }
+                })
+                .adapt(new ObservableResponse<>())
+                .subscribeOn(Schedulers.io());
+    }
+
+    /**
      * 重置密码
      */
     public static Observable<Response<BaseResponseBean>> userResetPwd(String iphone, String password, String vercoed) {
@@ -169,7 +212,7 @@ public class CloudApi {
                 .params("userId", ShareSessionIdCache.getInstance(Utils.getApp()).getUserId())
                 .params("iphone", iphone)
                 .params("vercoed", vercoed)
-                .params("password", password)
+                .params("password", EncryptUtils.encryptMD5ToString(password).toLowerCase())
                 .converter(new JsonCallback<BaseResponseBean>() {
                     @Override
                     public void onSuccess(Response<BaseResponseBean> response) {
@@ -201,15 +244,15 @@ public class CloudApi {
     /**
      * 保存编辑意见反馈信息
      */
-    public static Observable<Response<BaseResponseBean<DataBean>>> feedbackSaveFeedback(String iphone, String context) {
-        return OkGo.<BaseResponseBean<DataBean>>post(SERVLET_URL + "feedback/saveFeedback")
+    public static Observable<Response<BaseResponseBean>> feedbackSaveFeedback(String iphone, String context) {
+        return OkGo.<BaseResponseBean>post(SERVLET_URL + "feedback/saveFeedback")
                 .headers("token", ShareSessionIdCache.getInstance(Utils.getApp()).getSessionId())
                 .params("userId", ShareSessionIdCache.getInstance(Utils.getApp()).getUserId())
                 .params("iphone", iphone)
                 .params("context", context)
-                .converter(new JsonCallback<BaseResponseBean<DataBean>>() {
+                .converter(new JsonCallback<BaseResponseBean>() {
                     @Override
-                    public void onSuccess(Response<BaseResponseBean<DataBean>> response) {
+                    public void onSuccess(Response<BaseResponseBean> response) {
 
                     }
                 })
@@ -223,7 +266,18 @@ public class CloudApi {
     public static Observable<JSONObject> userLogin(String mobile, String password) {
         return OkGo.<JSONObject>post(SERVLET_URL + "user/pLogin")
                 .params("userName", mobile)
-                .params("password", password)
+                .params("password", EncryptUtils.encryptMD5ToString(password).toLowerCase())
+                .converter(new JsonConvert<JSONObject>() {
+                })
+                .adapt(new ObservableBody<>())
+                .subscribeOn(Schedulers.io());
+    }
+
+    /**
+     * 角色下拉框
+     */
+    public static Observable<JSONObject> roleGetRoleSelect() {
+        return OkGo.<JSONObject>get(SERVLET_URL + "role/getAgentSelect")
                 .converter(new JsonConvert<JSONObject>() {
                 })
                 .adapt(new ObservableBody<>())
@@ -516,6 +570,24 @@ public class CloudApi {
     }
 
     /**
+     * 删除视频
+     */
+    public static Observable<Response<BaseResponseBean>> videoDelVideo(String videoId) {
+        return OkGo.<BaseResponseBean>get(SERVLET_URL + "video/delVideo")
+                .headers("token", ShareSessionIdCache.getInstance(Utils.getApp()).getSessionId())
+                .params("userId", ShareSessionIdCache.getInstance(Utils.getApp()).getUserId())
+                .params("ids", videoId)
+                .converter(new JsonCallback<BaseResponseBean>() {
+                    @Override
+                    public void onSuccess(Response<BaseResponseBean> response) {
+
+                    }
+                })
+                .adapt(new ObservableResponse<>())
+                .subscribeOn(Schedulers.io());
+    }
+
+    /**
      * 获取资讯信息列表
      */
     public static Observable<Response<BaseResponseBean<BaseListBean<DataBean>>>> informationGetInformationList(int pageNumber, String sortId, String like) {
@@ -565,7 +637,7 @@ public class CloudApi {
             request.params("like", itemize);
         }
         return request
-                .params("county", county)
+                .params("ids", county)
                 .params("page", pageNumber)
                 .params("size", Constants.pageSize)
                 .converter(new NewsCallback<BaseResponseBean<BaseListBean<DataBean>>>() {
@@ -630,7 +702,7 @@ public class CloudApi {
         return OkGo.<BaseResponseBean<List<DataBean>>>get(SERVLET_URL + "book/getBookList")
                 .headers("token", ShareSessionIdCache.getInstance(Utils.getApp()).getSessionId())
                 .params("userId", ShareSessionIdCache.getInstance(Utils.getApp()).getUserId())
-                .params("nowDay", nowDay.trim())
+                .params("nowDay", nowDay == null ? null : nowDay.trim())
                 .converter(new NewsCallback<BaseResponseBean<List<DataBean>>>() {
                     @Override
                     public void onSuccess(Response<BaseResponseBean<List<DataBean>>> response) {
@@ -658,16 +730,16 @@ public class CloudApi {
     /**
      * 保存编辑视频
      */
-    public static Observable<Response<BaseResponseBean>> videoSaveVideo(String video, String file, String context) {
-        return OkGo.<BaseResponseBean>post(SERVLET_URL + "video/saveVideo")
+    public static Observable<Response<BaseResponseBean<DataBean>>> videoSaveVideo(String video, String file, String context) {
+        return OkGo.<BaseResponseBean<DataBean>>post(SERVLET_URL + "video/saveVideo")
                 .headers("token", ShareSessionIdCache.getInstance(Utils.getApp()).getSessionId())
                 .params("userId", ShareSessionIdCache.getInstance(Utils.getApp()).getUserId())
                 .params("path", video)
                 .params("file", new File(file))
                 .params("context", context)
-                .converter(new JsonCallback<BaseResponseBean>() {
+                .converter(new JsonCallback<BaseResponseBean<DataBean>>() {
                     @Override
-                    public void onSuccess(Response<BaseResponseBean> response) {
+                    public void onSuccess(Response<BaseResponseBean<DataBean>> response) {
                     }
                 })
                 .adapt(new ObservableResponse<>())

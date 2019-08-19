@@ -17,6 +17,8 @@ public class VideoAct extends BaseActivity {
 
 
     private int isVideoType;
+    private String list;
+    private int position;
 
     @Override
     protected void initPresenter() {
@@ -31,6 +33,8 @@ public class VideoAct extends BaseActivity {
     @Override
     protected void initParms(Bundle bundle) {
         isVideoType = bundle.getInt("isVideoType");
+        list = bundle.getString("list");
+        position = bundle.getInt("position");
     }
 
     @Override
@@ -39,6 +43,8 @@ public class VideoAct extends BaseActivity {
             VideoFrg frg = VideoFrg.newInstance();
             Bundle bundle = new Bundle();
             bundle.putInt("isVideoType", isVideoType);
+            bundle.putString("list", list);
+            bundle.putInt("position", position);
             frg.setArguments(bundle);
             loadRootFragment(R.id.fl_container, frg);
         }

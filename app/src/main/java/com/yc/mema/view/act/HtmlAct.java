@@ -30,6 +30,7 @@ public class HtmlAct extends BaseActivity<BasePresenter, AHtmlBinding> {
 
     public static final int REGISTER = 4;//隐私协议
     public static final int SYSTEM = 1;//系统通知
+    public static final int ABOUT = 99;
 
 
     @Override
@@ -61,7 +62,7 @@ public class HtmlAct extends BaseActivity<BasePresenter, AHtmlBinding> {
                 setTitle("详情");
                 break;
         }
-        mB.webView.loadUrl("https://www.baidu.com/");
+        mB.webView.loadUrl(url);
         mB.webView.setWebViewClient(new WebViewClient() {
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {

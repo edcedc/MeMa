@@ -43,7 +43,7 @@ public class ReportFrg extends BaseFragment<ReportNewsPresenter, FReportBinding>
     private int type;
     private String soId;
     private String soName;
-    public static boolean isFinish = false;
+    public static boolean isFinish = false;//记录是否提交成功 是的话关闭2页面  要还原
 
     @Override
     public void initPresenter() {
@@ -98,7 +98,7 @@ public class ReportFrg extends BaseFragment<ReportNewsPresenter, FReportBinding>
 
             @Override
             public void afterTextChanged(Editable editable) {
-                if (editable.length() >= 200) {
+                if (editable.length() > 200) {
                     return;
                 }
                 mB.tvContent.setText(editable.length() + "/200");

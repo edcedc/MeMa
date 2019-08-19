@@ -13,6 +13,7 @@ import com.yc.mema.base.User;
 import com.yc.mema.controller.UIHelper;
 import com.yc.mema.databinding.FSetBinding;
 import com.yc.mema.utils.PopupWindowTool;
+import com.yc.mema.utils.cache.ShareSessionIdCache;
 import com.yc.mema.utils.cache.SharedAccount;
 
 /**
@@ -84,7 +85,8 @@ public class SetFrg extends BaseFragment<BasePresenter, FSetBinding> implements 
                 break;
             case R.id.bt_submit:
                 UIHelper.startLoginAct();
-                SharedAccount.getInstance(act).remove();
+//                SharedAccount.getInstance(act).remove();
+                ShareSessionIdCache.getInstance(act).remove();
                 User.getInstance().setLogin(false);
                 User.getInstance().setUserObj(null);
                 ActivityUtils.finishAllActivities();

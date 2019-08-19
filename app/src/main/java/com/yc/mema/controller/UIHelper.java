@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import com.blankj.utilcode.util.ActivityUtils;
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.yc.mema.MainActivity;
 import com.yc.mema.base.BaseFragment;
 import com.yc.mema.bean.DataBean;
@@ -12,12 +13,14 @@ import com.yc.mema.view.AboutFrg;
 import com.yc.mema.view.AccountFrg;
 import com.yc.mema.view.AddBirthdayRecordsFrg;
 import com.yc.mema.view.AddressFrg;
+import com.yc.mema.view.ApplyFrg;
 import com.yc.mema.view.BingPhoneFrg;
 import com.yc.mema.view.BirthdayRecordsFrg;
 import com.yc.mema.view.BlackListFrg;
 import com.yc.mema.view.ChangePwdFrg;
 import com.yc.mema.view.CollectionFrg;
 import com.yc.mema.view.ComplaintFrg;
+import com.yc.mema.view.FiveFrg;
 import com.yc.mema.view.ForgetFrg;
 import com.yc.mema.view.HeadFrg;
 import com.yc.mema.view.HelpFrg;
@@ -34,6 +37,7 @@ import com.yc.mema.view.ReportNewsFrg;
 import com.yc.mema.view.SearchGiftFrg;
 import com.yc.mema.view.SearchNewsFrg;
 import com.yc.mema.view.SexFrg;
+import com.yc.mema.view.ShareFrg;
 import com.yc.mema.view.SystemDescFrg;
 import com.yc.mema.view.UpdateNameFrg;
 import com.yc.mema.view.UserInfoFrg;
@@ -46,6 +50,10 @@ import com.yc.mema.view.act.ReleaseAct;
 import com.yc.mema.view.act.VideoAct;
 import com.yc.mema.view.act.SetAct;
 import com.yc.mema.view.act.UserInfoAct;
+
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -94,9 +102,10 @@ public final class UIHelper {
     /**
      * html
      */
-    public static void startHtmlAct(int type) {
+    public static void startHtmlAct(int type, String url) {
         Bundle bundle = new Bundle();
         bundle.putInt("type", type);
+        bundle.putString("url", url);
         ActivityUtils.startActivity(bundle, HtmlAct.class);
     }
 
@@ -203,20 +212,10 @@ public final class UIHelper {
      *  设置地址
      * @param root
      */
-    public static void startAddressFrg(BaseFragment root, int type) {
+    public static void startAddressFrg(BaseFragment root, int type, int startType) {
         AddressFrg frg = new AddressFrg();
         Bundle bundle = new Bundle();
-        frg.setArguments(bundle);
-        if (type == 0){
-            ((MainFrg) root.getParentFragment()).startBrotherFragment(frg);
-        }else {
-            root.start(frg);
-        }
-    }
-    public static void startAddressFrg(BaseFragment root, int type, boolean isUpdate) {
-        AddressFrg frg = new AddressFrg();
-        Bundle bundle = new Bundle();
-        bundle.putBoolean("isUpdate", isUpdate);
+        bundle.putInt("type", startType);
         frg.setArguments(bundle);
         if (type == 0){
             ((MainFrg) root.getParentFragment()).startBrotherFragment(frg);
@@ -468,9 +467,13 @@ public final class UIHelper {
     /**
      *  生日趴
      */
-    public static void startVideoAct(int isVideoType) {
+    public static void startVideoAct(int isVideoType, List<DataBean> listBean, int position) {
+        Type type = new TypeToken<ArrayList<DataBean>>() {}.getType();
+        String json = new Gson().toJson(listBean, type);
         Bundle bundle = new Bundle();
+        bundle.putString("list", json);
         bundle.putInt("isVideoType", isVideoType);
+        bundle.putInt("position", position);
         ActivityUtils.startActivity(bundle, VideoAct.class);
     }
 
@@ -487,6 +490,27 @@ public final class UIHelper {
      */
     public static void startReleaseAct(){
         ActivityUtils.startActivity(ReleaseAct.class);
+    }
+
+    /**
+     *  推广分析
+     * @param root
+     */
+    public static void startShareFrg(BaseFragment root) {
+        ShareFrg frg = new ShareFrg();
+        Bundle bundle = new Bundle();
+        frg.setArguments(bundle);
+        ((MainFrg) root.getParentFragment()).startBrotherFragment(frg);
+    }
+
+    /**
+     *  申请代理人城市
+     */
+    public static void startApplyFrg(BaseFragment root) {
+        ApplyFrg frg = new ApplyFrg();
+        Bundle bundle = new Bundle();
+        frg.setArguments(bundle);
+        ((MainFrg) root.getParentFragment()).startBrotherFragment(frg);
     }
 
 }

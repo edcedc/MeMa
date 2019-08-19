@@ -21,6 +21,21 @@
     <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
     <!-- 获取应用市场-->
     <!--<category android:name="android.intent.category.APP_MARKET" />-->
+    <!-- 以下两个权限用于Demo中定位功能展示，如果开发者实际不需要百度定位功能，可不申请 -->
+    <!-- 这个权限用于进行网络定位 -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <!-- 这个权限用于访问GPS定位 -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
+    <supports-screens
+        android:anyDensity="true"
+        android:largeScreens="true"
+        android:normalScreens="false"
+        android:resizeable="true"
+        android:smallScreens="true" />
+
+    <!-- OpenGLES 2.0 -->
+    <uses-feature android:glEsVersion="0x00020000" android:required="true" />
 
     <application
         android:name=".mar.MyApplication"
@@ -52,7 +67,9 @@
         <activity
             android:name=".MainActivity"
             android:resizeableActivity="true"
+            android:launchMode="singleTop"
             android:screenOrientation="portrait"/>
+
         <activity
             android:name=".view.act.LoginAct"
             android:resizeableActivity="true"
@@ -167,6 +184,18 @@
             android:name="com.tencent.connect.common.AssistActivity"
             android:theme="@android:style/Theme.Translucent.NoTitleBar"
             android:configChanges="orientation|keyboardHidden|screenSize"/>
+        <!--百度地图-->
+        <meta-data
+            android:name="com.baidu.lbsapi.API_KEY"
+            android:value="V5h6NjfSgukQbu55EB0zRQKY83ghiNak" />
+
+        <meta-data android:name="android.max_aspect"
+            android:value="2.1"/>
+        <service
+            android:name="com.baidu.location.f"
+            android:enabled="true"
+            android:process=":remote" >
+        </service>
 
 
     </application>

@@ -1,16 +1,20 @@
 package com.yc.mema.adapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.luck.picture.lib.entity.LocalMedia;
 import com.yc.mema.R;
 import com.yc.mema.base.BaseListViewAdapter;
 import com.yc.mema.bean.DataBean;
 import com.yc.mema.controller.CloudApi;
 import com.yc.mema.utils.GlideLoadingUtils;
+import com.yc.mema.weight.PictureSelectorTool;
 import com.yc.mema.weight.RoundImageView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -36,6 +40,15 @@ public class GiftDescAdapter extends BaseListViewAdapter<DataBean> {
         }
         final DataBean bean = listBean.get(position);
         GlideLoadingUtils.load(act, CloudApi.SERVLET_IMG_URL + bean.getAttachId(), viewHolder.iv_img);
+        convertView.setOnClickListener(view -> {
+            List<LocalMedia> list = new ArrayList<>();
+            for (DataBean dataBean : listBean){
+                LocalMedia media = new LocalMedia();
+                media.setPath(CloudApi.SERVLET_IMG_URL + dataBean.getAttachId());
+                list.add(media);
+            }
+            PictureSelectorTool.PictureMediaType((Activity) act, list, position);
+        });
         return convertView;
     }
 

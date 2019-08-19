@@ -1,8 +1,10 @@
 package com.yc.mema.view;
 
 import android.content.Context;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.annotation.RequiresApi;
 import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.DividerItemDecoration;
 import android.text.Editable;
@@ -64,7 +66,7 @@ public class SearchNewsFrg extends BaseFragment<SearchNewsPresenter, FSearchNews
         setSofia(false);
         etSearch = view.findViewById(R.id.et_search);
         RoundLinearLayout lySearch = view.findViewById(R.id.ly_search);
-        lySearch.getDelegate().setBackgroundColor(act.getColor(R.color.white_f4f4f4));
+        lySearch.getDelegate().setBackgroundColor(act.getResources().getColor(R.color.white_f4f4f4));
         mB.tvSearch.setOnClickListener(this);
         etSearch.setFocusable(true);
         etSearch.setFocusableInTouchMode(true);
@@ -77,7 +79,7 @@ public class SearchNewsFrg extends BaseFragment<SearchNewsPresenter, FSearchNews
         mB.recyclerView.addItemDecoration(new LinearDividerItemDecoration(act, DividerItemDecoration.VERTICAL,  20));
         mB.recyclerView.setAdapter(adapter);
 
-        mB.refreshLayout.startRefresh();
+//        mB.refreshLayout.startRefresh();
         setRefreshLayout(mB.refreshLayout, new RefreshListenerAdapter() {
             @Override
             public void onRefresh(TwinklingRefreshLayout refreshLayout) {
@@ -107,45 +109,13 @@ public class SearchNewsFrg extends BaseFragment<SearchNewsPresenter, FSearchNews
             }
             return false;
         });
-        etSearch.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void afterTextChanged(final Editable editable) {
-                new Handler().postDelayed(() -> {
-                    if (editable.length() == 0){
-                        mB.tvSearch.setText(getText(R.string.search));
-                    }else {
-                        mB.tvSearch.setText(getText(R.string.cancel));
-                    }
-                }, 300);
-            }
-        });
     }
 
     @Override
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.tv_search:
-                if (mB.tvSearch.getText().toString().equals(getText(R.string.cancel))){
-                    mB.tvSearch.setText(getText(R.string.search));
-                    etSearch.setText("");
-                }else {
-                    if (StringUtils.isEmpty(etSearch.getText().toString())){
-                        showToast(act.getString(R.string.mema8));
-                        return;
-                    }
-                    mB.refreshLayout.startRefresh();
-                    mB.tvSearch.setText(getText(R.string.cancel));
-                }
+                pop();
                 break;
         }
     }

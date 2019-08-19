@@ -1,7 +1,9 @@
 package com.yc.mema.presenter;
 
+import com.blankj.utilcode.util.StringUtils;
 import com.luck.picture.lib.entity.LocalMedia;
 import com.lzy.okgo.model.Response;
+import com.yc.mema.R;
 import com.yc.mema.bean.BaseResponseBean;
 import com.yc.mema.bean.DataBean;
 import com.yc.mema.callback.Code;
@@ -126,6 +128,10 @@ public class ReportNewsPresenter extends ReportNewsContract.Presenter{
 
     @Override
     public void onGiftReport(String id, String soId, List<LocalMedia> localMediaList, String content) {
+        if (localMediaList.size() == 0 || StringUtils.isEmpty(content)){
+            showToast(act.getString(R.string.error_));
+            return;
+        }
         CloudApi.welfareSaveWelfareBack(localMediaList, null, null, soId, content, id)
                 .doOnSubscribe(disposable -> {mView.showLoading();})
                 .observeOn(AndroidSchedulers.mainThread())

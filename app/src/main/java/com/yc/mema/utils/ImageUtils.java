@@ -103,19 +103,10 @@ public class ImageUtils {
         return save == null ? false : true;
     }
 
-    private static Bitmap loadBitmapFromView(View v) {
-        int w = v.getWidth();
-        int h = v.getHeight();
-        Bitmap bmp = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888);
-        Canvas c = new Canvas(bmp);
-
-        /** 如果不设置canvas画布为白色，则生成透明 */
-//        c.drawColor(Color.WHITE);
-
-        v.layout(0, 0, w, h);
-        v.draw(c);
-
-        return bmp;
+    private static Bitmap loadBitmapFromView(View view) {
+        Bitmap bm = Bitmap.createBitmap(view.getWidth(), view.getHeight(), Bitmap.Config.ARGB_8888);
+        view.draw(new Canvas(bm));
+        return bm;
     }
 
     //保存在本地并一键分享

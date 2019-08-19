@@ -1,6 +1,8 @@
 package com.yc.mema.adapter;
 
 import android.content.Context;
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -26,6 +28,7 @@ public class BirthdayRecordsAdapter extends BaseRecyclerviewAdapter<DataBean> {
         super(act, listBean);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     protected void onBindViewHolde(RecyclerView.ViewHolder holder, final int position) {
         final ViewHolder viewHolder = (ViewHolder) holder;

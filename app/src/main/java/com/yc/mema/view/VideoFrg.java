@@ -2,8 +2,10 @@ package com.yc.mema.view;
 
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomSheetBehavior;
+import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.OrientationHelper;
@@ -18,22 +20,30 @@ import com.blankj.utilcode.util.ScreenUtils;
 import com.dingmouren.layoutmanagergroup.CustomVideoView;
 import com.dingmouren.layoutmanagergroup.viewpager.OnViewPagerListener;
 import com.dingmouren.layoutmanagergroup.viewpager.ViewPagerLayoutManager;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.lcodecore.tkrefreshlayout.RefreshListenerAdapter;
 import com.lcodecore.tkrefreshlayout.TwinklingRefreshLayout;
 import com.yc.mema.R;
 import com.yc.mema.adapter.CommentAdapter;
 import com.yc.mema.adapter.VideoAdapter;
+import com.yc.mema.base.BaseActivity;
 import com.yc.mema.base.BaseFragment;
 import com.yc.mema.bean.DataBean;
 import com.yc.mema.controller.UIHelper;
 import com.yc.mema.databinding.FVideoBinding;
+import com.yc.mema.event.VideoDelInEvent;
 import com.yc.mema.impl.VideoContract;
 import com.yc.mema.presenter.VideoPresenter;
 import com.yc.mema.utils.Constants;
 import com.yc.mema.view.bottomFrg.CommentBottomFrg;
+import com.yc.mema.view.bottomFrg.DelBottomFrg;
 import com.yc.mema.view.bottomFrg.ReportBottomFrg;
 import com.yc.mema.weight.LinearDividerItemDecoration;
 
+import org.greenrobot.eventbus.EventBus;
+
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -49,10 +59,13 @@ public class VideoFrg extends BaseFragment<VideoPresenter, FVideoBinding> implem
     private BottomSheetBehavior behavior;
     private CustomVideoView videoView;
     private AppCompatTextView tvCommentTitle;
-    private int type;//0 正常视频 1收藏 2我的生日趴
+    private int type = 0;//0 正常视频 1收藏 2我的生日趴 3消息进来
     public static final int NORMAL_VIDEO = 0;
     public static final int COLL_VIDEO = 1;
     public static final int MY_VIDEO = 2;
+    public static final int MSG_VIDEO = 3;
+    private int position;//收藏，我的生日趴要索引的地方
+    private AppCompatTextView tvAdaComment;
 
     public static VideoFrg newInstance() {
         Bundle args = new Bundle();
@@ -72,6 +85,7 @@ public class VideoFrg extends BaseFragment<VideoPresenter, FVideoBinding> implem
     private int pagerNumberComment = 1;
     private CommentBottomFrg commentBottomFrg;
     private ReportBottomFrg reportBottomFrg;
+    private DelBottomFrg delBottomFrg;
 
     @Override
     public void initPresenter() {
@@ -81,6 +95,11 @@ public class VideoFrg extends BaseFragment<VideoPresenter, FVideoBinding> implem
     @Override
     protected void initParms(Bundle bundle) {
         type = bundle.getInt("isVideoType");
+        Type type = new TypeToken<ArrayList<DataBean>>() {}.getType();
+        if (this.type != NORMAL_VIDEO){
+            listBean = new Gson().fromJson(bundle.getString("list"), type);
+        }
+        position = bundle.getInt("position");
     }
 
     @Override
@@ -91,6 +110,7 @@ public class VideoFrg extends BaseFragment<VideoPresenter, FVideoBinding> implem
     @Override
     protected void initView(View view) {
         setSwipeBackEnable(false);
+        setSofia(false);
         setVideoReport();
         LinearLayout bottomSheet = view.findViewById(R.id.bottom_sheet);
         rvComment = view.findViewById(R.id.rv_comment);
@@ -98,6 +118,12 @@ public class VideoFrg extends BaseFragment<VideoPresenter, FVideoBinding> implem
         view.findViewById(R.id.tv_points).setOnClickListener(this);
         tvCommentTitle = view.findViewById(R.id.tv_comment_title);
         tvCommentTitle.setOnClickListener(this);
+        setBottomSheet(bottomSheet);
+        initComment();
+        initVideo();
+    }
+
+    private void setBottomSheet(LinearLayout bottomSheet) {
         ViewGroup.LayoutParams params = bottomSheet.getLayoutParams();
         params.height = ScreenUtils.getScreenHeight() - ScreenUtils.getScreenHeight() / 3;
         bottomSheet.setLayoutParams(params);
@@ -113,20 +139,23 @@ public class VideoFrg extends BaseFragment<VideoPresenter, FVideoBinding> implem
                 //这里是拖拽中的回调，根据slideOffset可以做一些动画
             }
         });
-
-        initComment();
-        initVideo();
     }
 
     private void setVideoReport() {
-        if (type == COLL_VIDEO){
-            setSofia(false);
+        if (type != NORMAL_VIDEO && type != MSG_VIDEO){
             mB.fyClose.setOnClickListener(this);
             mB.fyLayout.setOnClickListener(this);
             mB.fyClose.setVisibility(View.VISIBLE);
             mB.fyLayout.setVisibility(View.VISIBLE);
+            if (type == COLL_VIDEO){
+                mB.ivSandian.setVisibility(View.VISIBLE);
+            }else {
+                mB.tvDel.setVisibility(View.VISIBLE);
+            }
             reportBottomFrg = new ReportBottomFrg();
             reportBottomFrg.setComplaintListener(() -> UIHelper.startReportNewsFrg(VideoFrg.this, listBean.get(mPosition).getVideoId(), Constants.CAUSES_VIDEO_COMPLAINTS));
+            delBottomFrg = new DelBottomFrg();
+            delBottomFrg.setComplaintListener(() -> mPresenter.onDelVideo(listBean.get(mPosition).getVideoId()));
         }
     }
 
@@ -163,26 +192,30 @@ public class VideoFrg extends BaseFragment<VideoPresenter, FVideoBinding> implem
             }
         });
 
-
         showLoadDataing();
-        mB.refreshLayout.startRefresh();
-        setRefreshLayout(mB.refreshLayout, new RefreshListenerAdapter() {
-            @Override
-            public void onRefresh(TwinklingRefreshLayout refreshLayout) {
-                mPresenter.onRequest(pagerNumber = 1, type);
-                mB.refreshLayout.setEnableRefresh(false);
-            }
+        if (type == NORMAL_VIDEO){
+            mB.refreshLayout.startRefresh();
+            setRefreshLayout(mB.refreshLayout, new RefreshListenerAdapter() {
+                @Override
+                public void onRefresh(TwinklingRefreshLayout refreshLayout) {
+                    mPresenter.onRequest(pagerNumber = 1, type);
+//                mB.refreshLayout.setEnableRefresh(false);
+                }
 
-            @Override
-            public void onLoadMore(TwinklingRefreshLayout refreshLayout) {
-                super.onLoadMore(refreshLayout);
-                mPresenter.onRequest(pagerNumber += 1, type);
-            }
-        });
+                @Override
+                public void onLoadMore(TwinklingRefreshLayout refreshLayout) {
+                    super.onLoadMore(refreshLayout);
+                    mPresenter.onRequest(pagerNumber += 1, type);
+                }
+            });
+        }else {
+            setData(listBean);
+        }
+
         adapter.setOnClickListener(new VideoAdapter.OnClickListener() {
             @Override
-            public void collection(String id, int i, int position) {
-                mPresenter.onVideoColl(id, i, position);
+            public void collection(String id, int i, int position, AppCompatImageView iv_coll, AppCompatTextView tv_coll) {
+                mPresenter.onVideoColl(id, i, position, iv_coll, tv_coll);
             }
 
             @Override
@@ -191,7 +224,8 @@ public class VideoFrg extends BaseFragment<VideoPresenter, FVideoBinding> implem
             }
 
             @Override
-            public void comment() {
+            public void comment(AppCompatTextView tv_comment) {
+                tvAdaComment = tv_comment;
                 if(behavior.getState() == BottomSheetBehavior.STATE_EXPANDED) {
                     behavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
                 }else {
@@ -204,8 +238,8 @@ public class VideoFrg extends BaseFragment<VideoPresenter, FVideoBinding> implem
             }
 
             @Override
-            public void zan(String id, int i) {
-                mPresenter.onVideoZan(id, i, mPosition);
+            public void zan(String id, int i, AppCompatImageView iv_zan, AppCompatTextView tv_zan) {
+                mPresenter.onVideoZan(id, i, mPosition, iv_zan, tv_zan);
             }
         });
     }
@@ -266,16 +300,21 @@ public class VideoFrg extends BaseFragment<VideoPresenter, FVideoBinding> implem
 
     @Override
     public void setData(Object data) {
-        List<DataBean> list = (List<DataBean>) data;
-        if (pagerNumber == 1) {
-            listBean.clear();
-            mB.refreshLayout.finishRefreshing();
-        } else {
-            mB.refreshLayout.finishLoadmore();
+        if (type == NORMAL_VIDEO){
+            List<DataBean> list = (List<DataBean>) data;
+            if (pagerNumber == 1) {
+                listBean.clear();
+                mB.refreshLayout.finishRefreshing();
+            } else {
+                mB.refreshLayout.finishLoadmore();
+            }
+            listBean.addAll(list);
+            adapter.notifyDataSetChanged();
+        }else {
+            adapter.notifyDataSetChanged();
+            mB.recyclerView.smoothScrollToPosition(position);
+            new Handler().postDelayed(() -> hideLoading(), 500);
         }
-        listBean.addAll(list);
-        adapter.notifyDataSetChanged();
-
     }
 
     @Override
@@ -329,22 +368,26 @@ public class VideoFrg extends BaseFragment<VideoPresenter, FVideoBinding> implem
 
         DataBean dataBean = listBean.get(mPosition);
         dataBean.setDiscuss(dataBean.getDiscuss() + 1);
-        adapter.notifyItemChanged(mPosition);
+//        adapter.notifyItemChanged(mPosition);
+        tvAdaComment.setText(listComment.size() + "");
     }
 
     @Override
-    public void setVideoZan(int position, int type) {
+    public void setVideoZan(int position, int type, AppCompatImageView ivZan, AppCompatTextView tvZan) {
         DataBean bean = listBean.get(position);
         bean.setPraiseCount(type == 0 ? bean.getPraiseCount() - 1 : bean.getPraiseCount() + 1);
         bean.setpIsTrue(type);
-        adapter.notifyItemChanged(position);
+//        adapter.notifyItemChanged(position);
+        tvZan.setText(bean.getPraiseCount() + "");
+        ivZan.setBackgroundResource(bean.getpIsTrue() == 0 ? R.mipmap.xihuan_1 : R.mipmap.xihuan_2);
     }
 
     @Override
-    public void setVideoColl(int position, int type) {
+    public void setVideoColl(int position, int type, AppCompatImageView iv_coll, AppCompatTextView tv_coll) {
         DataBean bean = listBean.get(position);
         bean.setcIsTrue(type);
-        adapter.notifyItemChanged(position);
+//        adapter.notifyItemChanged(position);
+        iv_coll.setBackgroundResource(bean.getcIsTrue() == 0 ? R.mipmap.shoucang_1 : R.mipmap.shoucan_2);
     }
 
     @Override
@@ -359,7 +402,20 @@ public class VideoFrg extends BaseFragment<VideoPresenter, FVideoBinding> implem
     }
 
     @Override
+    public void setDelVideo() {
+        listBean.remove(mPosition);
+        adapter.notifyItemRemoved(mPosition);
+        adapter.notifyItemChanged(mPosition);
+        EventBus.getDefault().post(new VideoDelInEvent(mPosition));
+        mPosition = 0;
+        if (listBean.size() == 0){
+            act.finish();
+        }
+    }
+
+    @Override
     public void onClick(View view) {
+        if (!((BaseActivity)act).isLogin())return;
         switch (view.getId()){
             case R.id.tv_comment_title:
                 behavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
@@ -371,7 +427,11 @@ public class VideoFrg extends BaseFragment<VideoPresenter, FVideoBinding> implem
                 act.finish();
                 break;
             case R.id.fy_layout:
-                reportBottomFrg.show(getChildFragmentManager(), "dialog");
+                if (type == COLL_VIDEO){
+                    reportBottomFrg.show(getChildFragmentManager(), "dialog");
+                }else {
+                    delBottomFrg.show(getChildFragmentManager(), "dialog");
+                }
                 break;
         }
     }

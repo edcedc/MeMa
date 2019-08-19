@@ -79,8 +79,8 @@ public class BirthdayRecordsFrg extends BaseFragment<BirthdayRecordsPresenter, F
     protected void initView(View view) {
         setTitle(getString(R.string.birthday_memorandum), R.mipmap.y21);
         topRightFy = view.findViewById(R.id.top_right_fy);
-        view.findViewById(R.id.top_layout).setBackgroundColor(act.getColor(R.color.red_F67690));
-        view.findViewById(R.id.title_bar).setBackgroundColor(act.getColor(R.color.red_F67690));
+        view.findViewById(R.id.top_layout).setBackgroundColor(act.getResources().getColor(R.color.red_F67690));
+        view.findViewById(R.id.title_bar).setBackgroundColor(act.getResources().getColor(R.color.red_F67690));
         mB.tvDay.setOnClickListener(this);
         if (adapter == null){
             adapter = new BirthdayRecordsAdapter(act, listBean);

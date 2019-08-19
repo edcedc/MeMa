@@ -49,7 +49,6 @@ public class FiveFrg extends BaseFragment<FivePresenter, FFiveBinding> implement
         super.onSupportVisible();
         if (isRequest) {
             if (!((BaseActivity)act).isLogin())return;
-            isRequest = false;
             mB.refreshLayout.startRefresh();
         }
         setData(User.getInstance().getUserObj());
@@ -74,6 +73,8 @@ public class FiveFrg extends BaseFragment<FivePresenter, FFiveBinding> implement
         mB.tvBr.setOnClickListener(this);
         mB.tvBm.setOnClickListener(this);
         mB.tvSet.setOnClickListener(this);
+        mB.tvShare.setOnClickListener(this);
+        mB.tvApply.setOnClickListener(this);
 
         mB.refreshLayout.setEnableLoadmore(false);
         setRefreshLayout(mB.refreshLayout, new RefreshListenerAdapter() {
@@ -86,28 +87,31 @@ public class FiveFrg extends BaseFragment<FivePresenter, FFiveBinding> implement
 
     @Override
     public void onClick(View view) {
+        if (isRequest)return;
         switch (view.getId()) {
             case R.id.iv_col:
-                if (!((BaseActivity) act).isLogin()) return;
                 UIHelper.startCollectionFrg(this);
                 break;
             case R.id.iv_head:
-                if (!((BaseActivity) act).isLogin()) return;
                 UIHelper.startUserInfoAct();
                 break;
             case R.id.iv_msg:
                 UIHelper.startMessageFrg(this);
                 break;
             case R.id.tv_br:
-                if (!((BaseActivity) act).isLogin()) return;
                 UIHelper.startProneFrg(this);
                 break;
             case R.id.tv_bm:
-                if (!((BaseActivity) act).isLogin()) return;
                 UIHelper.startBirthdayRecordsFrg(this);
                 break;
             case R.id.tv_set:
                 UIHelper.startSetAct();
+                break;
+            case R.id.tv_share:
+                UIHelper.startShareFrg(this);
+                break;
+            case R.id.tv_apply:
+                mPresenter.onaUserAgent(this);
                 break;
         }
     }
@@ -120,12 +124,19 @@ public class FiveFrg extends BaseFragment<FivePresenter, FFiveBinding> implement
 
     @Override
     public void setData(JSONObject userObj) {
+        isRequest = false;
         if (userObj == null)return;
         mB.refreshLayout.finishRefreshing();
         GlideLoadingUtils.load(act, userObj.optString("headUrl"), mB.ivHead, true);
         mB.tvName.setText(userObj.optString("nickName"));
         mB.tvId.setText("么马号：" + userObj.optString("mema"));
         mB.tvHp.setText("生日：" + userObj.optString("birthday"));
+    }
+
+    @Override
+    public void setDateError() {
+        UIHelper.startLoginAct();
+        showToast("请登录");
     }
 
 }

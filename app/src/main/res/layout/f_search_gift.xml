@@ -36,7 +36,7 @@
             <android.support.v7.widget.AppCompatTextView
                 android:id="@+id/tv_search"
                 android:padding="@dimen/px20"
-                android:text="@string/search"
+                android:text="@string/cancel"
                 style="@style/Tv15black" />
 
         </LinearLayout>

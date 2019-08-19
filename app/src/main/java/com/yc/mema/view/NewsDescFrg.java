@@ -160,7 +160,7 @@ public class NewsDescFrg extends BaseFragment<NewsDescPresenter, FNewsDescBindin
                 break;
             case R.id.tv_screen:
                 type = type == 1 ? 2 : 1;
-                mB.tvScreen.setText(type == 1 ? "最多评论" : "最多点赞");
+                mB.tvScreen.setText(type == 1 ? getString(R.string.praise_most) : "最多点赞");
                 pagerNumber = 1;
                 mB.refreshLayout.startRefresh();
                 break;

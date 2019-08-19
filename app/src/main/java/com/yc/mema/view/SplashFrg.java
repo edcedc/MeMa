@@ -89,6 +89,7 @@ public class SplashFrg extends BaseFragment<BasePresenter, FSplashBinding> imple
     @Override
     protected void initView(View view) {
         setSwipeBackEnable(false);
+        setSofia(true);
         act = getActivity();
         if (!ShareIsLoginCache.getInstance(act).getIsLogin()) {
             getDuideList();
@@ -186,7 +187,8 @@ public class SplashFrg extends BaseFragment<BasePresenter, FSplashBinding> imple
                 .permission(
                         Manifest.permission.READ_EXTERNAL_STORAGE,
                         Manifest.permission.WRITE_EXTERNAL_STORAGE,//写入外部存储, 允许程序写入外部存储，如SD卡
-                        Manifest.permission.CAMERA//拍照权限, 允许访问摄像头进行拍照
+                        Manifest.permission.CAMERA,//拍照权限, 允许访问摄像头进行拍照
+                        Manifest.permission.ACCESS_FINE_LOCATION
                 )
                 .rationale(new RuntimeRationale())
                 .onGranted(permissions -> setPermissionOk())

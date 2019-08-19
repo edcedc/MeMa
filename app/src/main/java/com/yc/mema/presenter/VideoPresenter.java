@@ -1,5 +1,8 @@
 package com.yc.mema.presenter;
 
+import android.support.v7.widget.AppCompatImageView;
+import android.support.v7.widget.AppCompatTextView;
+
 import com.lzy.okgo.model.Response;
 import com.yc.mema.bean.BaseListBean;
 import com.yc.mema.bean.BaseResponseBean;
@@ -101,7 +104,9 @@ public class VideoPresenter extends VideoContract.Presenter{
         type = type == 0 ? 1 : 0;
         int finalType = type;
         CloudApi.videoSaveInfoDispra(discussId, type)
-                .doOnSubscribe(disposable -> {mView.showLoading();})
+                .doOnSubscribe(disposable -> {
+//                    mView.showLoading();
+                })
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<Response<BaseResponseBean>>() {
                     @Override
@@ -160,11 +165,13 @@ public class VideoPresenter extends VideoContract.Presenter{
     }
 
     @Override
-    public void onVideoZan(String id, int type, int position) {
+    public void onVideoZan(String id, int type, int position, AppCompatImageView iv_zan, AppCompatTextView tv_zan) {
         type = type == 0 ? 1 : 0;
         int finalType = type;
         CloudApi.videoVideoPraise(id, type)
-                .doOnSubscribe(disposable -> {mView.showLoading();})
+                .doOnSubscribe(disposable -> {
+//                    mView.showLoading();
+                })
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<Response<BaseResponseBean>>() {
                     @Override
@@ -175,7 +182,7 @@ public class VideoPresenter extends VideoContract.Presenter{
                     @Override
                     public void onNext(Response<BaseResponseBean> baseResponseBeanResponse) {
                         if (baseResponseBeanResponse.body().code == Code.CODE_SUCCESS){
-                            mView.setVideoZan(position, finalType);
+                            mView.setVideoZan(position, finalType, iv_zan, tv_zan);
                         }
                     }
 
@@ -192,11 +199,13 @@ public class VideoPresenter extends VideoContract.Presenter{
     }
 
     @Override
-    public void onVideoColl(String id, int type, int position) {
+    public void onVideoColl(String id, int type, int position, AppCompatImageView iv_coll, AppCompatTextView tv_coll) {
         type = type == 0 ? 1 : 0;
         int finalType = type;
         CloudApi.videoVideoCollect(id, type)
-                .doOnSubscribe(disposable -> {mView.showLoading();})
+                .doOnSubscribe(disposable -> {
+//                    mView.showLoading();
+                })
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<Response<BaseResponseBean>>() {
                     @Override
@@ -207,7 +216,7 @@ public class VideoPresenter extends VideoContract.Presenter{
                     @Override
                     public void onNext(Response<BaseResponseBean> baseResponseBeanResponse) {
                         if (baseResponseBeanResponse.body().code == Code.CODE_SUCCESS){
-                            mView.setVideoColl(position, finalType);
+                            mView.setVideoColl(position, finalType, iv_coll, tv_coll);
                         }
                     }
 
@@ -226,7 +235,9 @@ public class VideoPresenter extends VideoContract.Presenter{
     @Override
     public void onSecondComment(int position, String videoId, String discussId, String text, String pUserId) {
         CloudApi.videoSaveChildDis(videoId, discussId, text, pUserId)
-                .doOnSubscribe(disposable -> {mView.showLoading();})
+                .doOnSubscribe(disposable -> {
+//                    mView.showLoading();
+                })
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<Response<BaseResponseBean<DataBean>>>() {
                     @Override
@@ -240,6 +251,39 @@ public class VideoPresenter extends VideoContract.Presenter{
                             mView.setSecondComment(position, baseResponseBeanResponse.body().result);
                         }
 //                        showToast(baseResponseBeanResponse.body().description);
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        mView.onError(e);
+                    }
+
+                    @Override
+                    public void onComplete() {
+                        mView.hideLoading();
+                    }
+                });
+    }
+
+    @Override
+    public void onDelVideo(String videoId) {
+        CloudApi.videoDelVideo(videoId)
+                .doOnSubscribe(disposable -> {
+                    mView.showLoading();
+                })
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<Response<BaseResponseBean>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                        mView.addDisposable(d);
+                    }
+
+                    @Override
+                    public void onNext(Response<BaseResponseBean> baseResponseBeanResponse) {
+                        if (baseResponseBeanResponse.body().code == Code.CODE_SUCCESS){
+                            mView.setDelVideo();
+                        }
+                        showToast(baseResponseBeanResponse.body().description);
                     }
 
                     @Override

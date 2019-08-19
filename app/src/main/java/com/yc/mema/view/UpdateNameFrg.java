@@ -5,9 +5,12 @@ import android.view.View;
 
 import com.yc.mema.R;
 import com.yc.mema.base.BaseFragment;
+import com.yc.mema.base.User;
 import com.yc.mema.databinding.FNameBinding;
 import com.yc.mema.impl.InformationContract;
 import com.yc.mema.presenter.InformationPresenter;
+
+import org.json.JSONObject;
 
 /**
  * Created by Android Studio.
@@ -36,6 +39,11 @@ public class UpdateNameFrg extends BaseFragment<InformationPresenter, FNameBindi
     @Override
     protected void initView(View view) {
         setTitle(getString(R.string.set_name), getString(R.string.submit1));
+        JSONObject userObj = User.getInstance().getUserObj();
+        String nickName = userObj.optString("nickName");
+        if (!nickName.equals("null")){
+            mB.etText.setHint(nickName);
+        }
     }
 
     @Override

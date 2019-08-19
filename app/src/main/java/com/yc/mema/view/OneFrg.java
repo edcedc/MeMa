@@ -9,13 +9,16 @@ import com.lcodecore.tkrefreshlayout.TwinklingRefreshLayout;
 import com.yc.mema.R;
 import com.yc.mema.adapter.CollectionAdapter;
 import com.yc.mema.base.BaseFragment;
+import com.yc.mema.bean.AddressBean;
 import com.yc.mema.bean.DataBean;
 import com.yc.mema.controller.UIHelper;
 import com.yc.mema.databinding.FOneBinding;
 import com.yc.mema.event.AddressInEvent;
+import com.yc.mema.event.LocationInEvent;
 import com.yc.mema.impl.OneContract;
 import com.yc.mema.presenter.OnePresenter;
 import com.yc.mema.utils.OneGlideImageLoader;
+import com.yc.mema.view.act.HtmlAct;
 import com.yc.mema.weight.LinearDividerItemDecoration;
 import com.youth.banner.listener.OnBannerListener;
 import com.youth.banner.transformer.DefaultTransformer;
@@ -105,7 +108,7 @@ public class OneFrg extends BaseFragment<OnePresenter, FOneBinding> implements O
                 UIHelper.startSearchGiftFrg(this, parentId, mB.tvLocation.getText().toString());
                 break;
             case R.id.tv_location:
-                UIHelper.startAddressFrg(this, 0);
+                UIHelper.startAddressFrg(this, 0, AddressInEvent.GIFT_TYPE);
                 break;
         }
     }
@@ -147,7 +150,12 @@ public class OneFrg extends BaseFragment<OnePresenter, FOneBinding> implements O
     @Override
     public void OnBannerClick(int position) {
         DataBean bean = listBannerBean.get(position);
-
+        int type = bean.getType();
+        if (type == 2){
+            UIHelper.startHtmlAct(HtmlAct.ABOUT, bean.getAbort());
+        }else if (type == 3){
+            UIHelper.startGiftAct(bean.getAbort());
+        }
     }
 
     @Override
@@ -163,9 +171,17 @@ public class OneFrg extends BaseFragment<OnePresenter, FOneBinding> implements O
     }
 
     @Subscribe
-    public void AddressInEvent(AddressInEvent event){
-        parentId = event.getParentId();
-        mB.tvLocation.setText(event.getAddress());
+    public void onMainAddressInEvent(AddressInEvent event){
+        if (event.type != AddressInEvent.GIFT_TYPE)return;
+        parentId = event.parentId;
+        mB.tvLocation.setText(event.address);
+        mB.refreshLayout.startRefresh();
+    }
+
+    @Subscribe
+    public void onMainLocationInEvent(LocationInEvent event){
+        String city = AddressBean.getInstance().getAddress().city;
+        mB.tvLocation.setText(city);
     }
 
     @Override

@@ -1,6 +1,8 @@
 package com.yc.mema.view;
 
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
 import android.view.View;
 
@@ -68,7 +70,7 @@ public class ThreeFrg extends BaseFragment<BaseListPresenter, FThreeBinding> imp
         setSwipeBackEnable(false);
         view.findViewById(R.id.et_search).setOnClickListener(this);
         RoundLinearLayout lySearch = view.findViewById(R.id.ly_search);
-        lySearch.getDelegate().setBackgroundColor(act.getColor(R.color.white_f4f4f4));
+        lySearch.getDelegate().setBackgroundColor(act.getResources().getColor(R.color.white_f4f4f4));
     }
 
     @Override
