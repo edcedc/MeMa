@@ -88,6 +88,7 @@ public class ReleaseAct extends BaseActivity<ReleasePresenter, FReleaseBinding> 
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.bt_submit:
+                if (localMediaList.size() == 0)return;
                 mPresenter.onRelease(mB.etText.getText().toString(), localMediaList.get(0).getPath(), localMediaList.get(0).getCompressPath());
                 break;
         }

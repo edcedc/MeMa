@@ -30,7 +30,7 @@ public class ClearEditText extends android.support.v7.widget.AppCompatEditText i
         // 获取EditText的DrawableRight,假如没有设置我们就使用默认的图片,2是获得右边的图片  顺序是左上右下（0,1,2,3,）
         mClearDrawable = getCompoundDrawables()[2];
         if (mClearDrawable == null) {
-            mClearDrawable = getResources().getDrawable(R.mipmap.cd01);
+            mClearDrawable = getResources().getDrawable(R.mipmap.y48);
         }
         mClearDrawable.setBounds(0, 0, mClearDrawable.getIntrinsicWidth(), mClearDrawable.getIntrinsicHeight());
         // 默认设置隐藏图标

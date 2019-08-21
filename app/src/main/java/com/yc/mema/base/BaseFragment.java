@@ -257,7 +257,7 @@ public abstract class BaseFragment<P extends BasePresenter, VB extends ViewDataB
                     break;
                 case handler_loadData:
                     if (vLoading != null) {
-                        vLoading.showLoading();
+//                        vLoading.showLoading();
                     }
                     break;
             }

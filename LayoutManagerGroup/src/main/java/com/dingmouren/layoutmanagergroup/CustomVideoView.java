@@ -99,6 +99,12 @@ public class CustomVideoView extends VideoView {
     @Override
     public boolean onTouchEvent(MotionEvent ev) {
         //屏蔽触摸点击事件
+        Log.e("tap", "onTouchEvent");
         return true;
     }
+
+    private void init(){
+
+    }
+
 }

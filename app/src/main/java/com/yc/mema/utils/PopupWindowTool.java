@@ -29,6 +29,7 @@ import com.yc.mema.weight.WPopupWindow;
 public class PopupWindowTool {
 
     public static final int clear = 1; //清除缓存
+    public static final int clear_br = 2; //删除生日趴
 
     public static void showLitItemDialog(final Context act, View view, int viewX, int viewY, final DialogListener listener) {
         View wh = LayoutInflater.from(act).inflate(R.layout.p_report_copy, null);
@@ -44,30 +45,20 @@ public class PopupWindowTool {
         TextView btCancel = wh.findViewById(R.id.bt_cancel);
         TextView btSubmit = wh.findViewById(R.id.bt_submit);
         View view = wh.findViewById(R.id.view);
-        wh.findViewById(R.id.layout).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                popupWindow.dismiss();
-            }
-        });
+        wh.findViewById(R.id.layout).setOnClickListener(view13 -> popupWindow.dismiss());
         switch (type){
             case clear:
                 tvTitle.setText("确定清除缓存吗？");
                 break;
+            case clear_br:
+                tvTitle.setText("确定删除吗？");
+                break;
         }
-        btCancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        btCancel.setOnClickListener(view1 -> popupWindow.dismiss());
+        btSubmit.setOnClickListener(view12 -> {
+            if (listener != null){
+                listener.onClick();
                 popupWindow.dismiss();
-            }
-        });
-        btSubmit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (listener != null){
-                    listener.onClick();
-                    popupWindow.dismiss();
-                }
             }
         });
     }

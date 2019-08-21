@@ -128,7 +128,7 @@ public class ReportNewsPresenter extends ReportNewsContract.Presenter{
 
     @Override
     public void onGiftReport(String id, String soId, List<LocalMedia> localMediaList, String content) {
-        if (localMediaList.size() == 0 || StringUtils.isEmpty(content)){
+        if (StringUtils.isEmpty(content)){
             showToast(act.getString(R.string.error_));
             return;
         }

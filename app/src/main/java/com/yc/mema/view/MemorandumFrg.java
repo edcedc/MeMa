@@ -5,6 +5,7 @@ import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.View;
+import android.widget.AdapterView;
 
 import com.blankj.utilcode.util.LogUtils;
 import com.yc.mema.R;
@@ -15,6 +16,7 @@ import com.yc.mema.controller.UIHelper;
 import com.yc.mema.databinding.FSortListBinding;
 import com.yc.mema.impl.MemorandumContract;
 import com.yc.mema.presenter.MemorandumPresenter;
+import com.yc.mema.utils.PopupWindowTool;
 import com.yc.mema.weight.sort.CharacterParser;
 import com.yc.mema.weight.sort.PinyinComparator;
 
@@ -72,6 +74,10 @@ public class MemorandumFrg extends BaseFragment<MemorandumPresenter, FSortListBi
             adapter = new SortAdapter(act, listBean, SortAdapter.recordbook);
         }
         mB.listView.setAdapter(adapter);
+        mB.listView.setOnItemLongClickListener((adapterView, view12, i, l) -> {
+            PopupWindowTool.showDialog(act, PopupWindowTool.clear_br, () -> mPresenter.onDelBr(i, listBean.get(i).getBookId()));
+            return false;
+        });
 
         //设置右侧触摸监听
         mB.sidrbar.setOnTouchingLetterChangedListener(s -> {
@@ -127,6 +133,12 @@ public class MemorandumFrg extends BaseFragment<MemorandumPresenter, FSortListBi
             }
         }
         listBean.addAll(list);
+        adapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void setDelBr(int position) {
+        listBean.remove(position);
         adapter.notifyDataSetChanged();
     }
 

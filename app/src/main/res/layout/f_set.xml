@@ -31,7 +31,9 @@
                 android:padding="@dimen/px30"
                 android:text="@string/account" />
 
-            <View style="@style/divider_2" />
+            <View
+                style="@style/divider_2"
+                android:visibility="gone" />
 
             <android.support.v7.widget.AppCompatTextView
                 android:id="@+id/tv_message"
@@ -41,9 +43,12 @@
                 android:drawableRight="@mipmap/y16"
                 android:drawablePadding="@dimen/px20"
                 android:padding="@dimen/px30"
-                android:text="@string/message" />
+                android:text="@string/message"
+                android:visibility="gone" />
 
-            <View style="@style/divider_3" />
+            <View
+                style="@style/divider_3"
+                android:visibility="gone" />
 
             <android.support.v7.widget.AppCompatTextView
                 android:id="@+id/tv_privacy"
@@ -53,7 +58,8 @@
                 android:drawableRight="@mipmap/y16"
                 android:drawablePadding="@dimen/px20"
                 android:padding="@dimen/px30"
-                android:text="@string/privacy" />
+                android:text="@string/privacy"
+                android:visibility="gone" />
 
             <View style="@style/divider_2" />
 
@@ -105,8 +111,8 @@
             android:layout_marginRight="@dimen/px30"
             android:layout_marginBottom="@dimen/px50"
             android:text="@string/out"
-            app:rv_cornerRadius="@dimen/px10"
-            app:rv_backgroundColor="@color/red_F67690" />
+            app:rv_backgroundColor="@color/red_F67690"
+            app:rv_cornerRadius="@dimen/px10" />
 
     </LinearLayout>
 

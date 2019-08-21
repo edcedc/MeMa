@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.support.v7.widget.DividerItemDecoration;
 import android.view.View;
 
+import com.baidu.location.Address;
+import com.blankj.utilcode.util.LogUtils;
 import com.lcodecore.tkrefreshlayout.RefreshListenerAdapter;
 import com.lcodecore.tkrefreshlayout.TwinklingRefreshLayout;
 import com.yc.mema.R;
@@ -162,6 +164,11 @@ public class OneFrg extends BaseFragment<OnePresenter, FOneBinding> implements O
     public void onSupportVisible() {
         super.onSupportVisible();
         mB.banner.startAutoPlay();
+        String city = AddressBean.getInstance().getCity();
+        if (city != null && !city.equals(mB.tvLocation.getText().toString())){
+            mB.tvLocation.setText(city);
+            mB.refreshLayout.startRefresh();
+        }
     }
 
     @Override
@@ -176,12 +183,12 @@ public class OneFrg extends BaseFragment<OnePresenter, FOneBinding> implements O
         parentId = event.parentId;
         mB.tvLocation.setText(event.address);
         mB.refreshLayout.startRefresh();
+        AddressBean.getInstance().setCity(event.address);
     }
 
     @Subscribe
     public void onMainLocationInEvent(LocationInEvent event){
-        String city = AddressBean.getInstance().getAddress().city;
-        mB.tvLocation.setText(city);
+        mB.tvLocation.setText(AddressBean.getInstance().getDistrict());
     }
 
     @Override

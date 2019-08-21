@@ -12,6 +12,7 @@ import com.lzy.okgo.request.GetRequest;
 import com.lzy.okgo.request.PostRequest;
 import com.lzy.okrx2.adapter.ObservableBody;
 import com.lzy.okrx2.adapter.ObservableResponse;
+import com.yc.mema.base.User;
 import com.yc.mema.bean.BaseListBean;
 import com.yc.mema.bean.BaseResponseBean;
 import com.yc.mema.bean.BaseResponseSuccessBean;
@@ -106,8 +107,8 @@ public class CloudApi {
             post.params("file", new File(head));
         }
         return post
-                .headers("token", ShareSessionIdCache.getInstance(Utils.getApp()).getSessionId())
-                .params("userId", ShareSessionIdCache.getInstance(Utils.getApp()).getUserId())
+//                .headers("token", ShareSessionIdCache.getInstance(Utils.getApp()).getSessionId())
+                .params("userId", User.getInstance().getUserId())
                 .params("nickName", nickName)
                 .params("birthday", birthday)
                 .params("sex", sex)
@@ -131,7 +132,7 @@ public class CloudApi {
         return OkGo.<BaseResponseBean>post(SERVLET_URL + "book/saveBook")
                 .headers("token", ShareSessionIdCache.getInstance(Utils.getApp()).getSessionId())
                 .params("userId", ShareSessionIdCache.getInstance(Utils.getApp()).getUserId())
-                .params("brithday", brithday.split("-")[1])
+                .params("brithday", brithday)
                 .params("frendName", frendName)
                 .converter(new JsonCallback<BaseResponseBean>() {
                     @Override
@@ -301,7 +302,7 @@ public class CloudApi {
      */
     public static Observable<Response<BaseResponseBean>> userResgist(String phone, String password, String code) {
         return OkGo.<BaseResponseBean>post(SERVLET_URL + "user/pResgist")
-                .params("password", password)
+                .params("password", EncryptUtils.encryptMD5ToString(password).toLowerCase())
                 .params("userName", phone)
                 .params("vercoed", code)
                 .converter(new JsonCallback<BaseResponseBean>() {
@@ -588,6 +589,24 @@ public class CloudApi {
     }
 
     /**
+     * 删除备忘录
+     */
+    public static Observable<Response<BaseResponseBean>> bookDelBook(String ids) {
+        return OkGo.<BaseResponseBean>get(SERVLET_URL + "book/delBook")
+                .headers("token", ShareSessionIdCache.getInstance(Utils.getApp()).getSessionId())
+                .params("userId", ShareSessionIdCache.getInstance(Utils.getApp()).getUserId())
+                .params("ids", ids)
+                .converter(new JsonCallback<BaseResponseBean>() {
+                    @Override
+                    public void onSuccess(Response<BaseResponseBean> response) {
+
+                    }
+                })
+                .adapt(new ObservableResponse<>())
+                .subscribeOn(Schedulers.io());
+    }
+
+    /**
      * 获取资讯信息列表
      */
     public static Observable<Response<BaseResponseBean<BaseListBean<DataBean>>>> informationGetInformationList(int pageNumber, String sortId, String like) {
@@ -634,7 +653,7 @@ public class CloudApi {
             request.params("itemize", itemize);
         }
         if (!StringUtils.isEmpty(search)){
-            request.params("like", itemize);
+            request.params("like", search);
         }
         return request
                 .params("ids", county)
@@ -702,7 +721,7 @@ public class CloudApi {
         return OkGo.<BaseResponseBean<List<DataBean>>>get(SERVLET_URL + "book/getBookList")
                 .headers("token", ShareSessionIdCache.getInstance(Utils.getApp()).getSessionId())
                 .params("userId", ShareSessionIdCache.getInstance(Utils.getApp()).getUserId())
-                .params("nowDay", nowDay == null ? null : nowDay.trim())
+                .params("nowDay", nowDay == null ? null : nowDay.trim().split("-")[1])
                 .converter(new NewsCallback<BaseResponseBean<List<DataBean>>>() {
                     @Override
                     public void onSuccess(Response<BaseResponseBean<List<DataBean>>> response) {

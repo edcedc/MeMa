@@ -1,5 +1,6 @@
 package com.yc.mema.view;
 
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.widget.DividerItemDecoration;
@@ -9,6 +10,8 @@ import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.LinearLayout;
+import android.widget.Toast;
+
 import com.blankj.utilcode.util.ToastUtils;
 import com.google.gson.Gson;
 import com.lcodecore.tkrefreshlayout.RefreshListenerAdapter;
@@ -22,6 +25,7 @@ import com.yc.mema.controller.CloudApi;
 import com.yc.mema.databinding.FNewsDescBinding;
 import com.yc.mema.impl.NewsDescContract;
 import com.yc.mema.presenter.NewsDescPresenter;
+import com.yc.mema.utils.DrawableUtil;
 import com.yc.mema.utils.GlideLoadingUtils;
 import com.yc.mema.view.bottomFrg.CommentBottomFrg;
 import com.yc.mema.weight.LinearDividerItemDecoration;
@@ -75,6 +79,7 @@ public class NewsDescFrg extends BaseFragment<NewsDescPresenter, FNewsDescBindin
         mB.tvPoints.setOnClickListener(this);
         mB.tvLike.setOnClickListener(this);
         mB.tvScreen.setOnClickListener(this);
+        mB.fyClose.setOnClickListener(this);
         commentBottomFrg = new CommentBottomFrg();
         commentBottomFrg.setOnCommentListener(new CommentBottomFrg.onCommentListener() {
             @Override
@@ -146,6 +151,8 @@ public class NewsDescFrg extends BaseFragment<NewsDescPresenter, FNewsDescBindin
                 mPresenter.onZan(position, discussId, type);
             }
         });
+
+
     }
 
     @Override
@@ -163,6 +170,9 @@ public class NewsDescFrg extends BaseFragment<NewsDescPresenter, FNewsDescBindin
                 mB.tvScreen.setText(type == 1 ? getString(R.string.praise_most) : "最多点赞");
                 pagerNumber = 1;
                 mB.refreshLayout.startRefresh();
+                break;
+            case R.id.fy_close:
+                act.finish();
                 break;
         }
     }

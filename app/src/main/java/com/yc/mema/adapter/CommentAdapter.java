@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import com.blankj.utilcode.util.LogUtils;
 import com.flyco.roundview.RoundLinearLayout;
 import com.yc.mema.R;
+import com.yc.mema.base.BaseActivity;
 import com.yc.mema.base.BaseFragment;
 import com.yc.mema.base.BaseRecyclerviewAdapter;
 import com.yc.mema.bean.DataBean;
@@ -58,6 +59,7 @@ public class CommentAdapter extends BaseRecyclerviewAdapter<DataBean> {
             final CommentChildAdapter adapter = new CommentChildAdapter(act, list);
             viewHolder.listView.setAdapter(adapter);
             viewHolder.listView.setOnItemLongClickListener((adapterView, view, i, l) -> {
+                if (!((BaseActivity)act).isLogin())return false;
                 if (type == 0){
                     //View代表方法传入的控件
                     int[] viewLocation = new int[2];
@@ -120,11 +122,13 @@ public class CommentAdapter extends BaseRecyclerviewAdapter<DataBean> {
         }
 
         viewHolder.itemView.setOnClickListener(view -> {
+            if (!((BaseActivity)act).isLogin())return;
             if (listener != null){
                 listener.onSecondComment(position, type == 0 ? bean.getInfoId() : bean.getVideoId(), bean.getDiscussId(), null);
             }
         });
         viewHolder.tv_zan.setOnClickListener(view -> {
+            if (!((BaseActivity)act).isLogin())return;
             if (listener != null){
                 listener.onZan(position, bean.getDiscussId(), bean.getIsTrue());
             }

@@ -119,8 +119,7 @@ public class SearchGiftFrg extends BaseFragment<SearchGiftPresenter, FSearchGift
             }
             return false;
         });
-        String city = AddressBean.getInstance().getAddress().city;
-        mB.tvLocation.setText(city);
+        mB.tvLocation.setText(AddressBean.getInstance().getCity());
     }
 
     @Override
@@ -141,6 +140,7 @@ public class SearchGiftFrg extends BaseFragment<SearchGiftPresenter, FSearchGift
         parentId = event.parentId;
         location = event.address;
         mB.tvLocation.setText(event.address);
+        AddressBean.getInstance().setCity(event.address);
         mB.refreshLayout.startRefresh();
     }
 

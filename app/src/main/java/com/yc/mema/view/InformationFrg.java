@@ -5,23 +5,28 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.blankj.utilcode.util.LogUtils;
+import com.blankj.utilcode.util.Utils;
 import com.bumptech.glide.Glide;
 import com.luck.picture.lib.PictureSelector;
 import com.luck.picture.lib.entity.LocalMedia;
 import com.yc.mema.R;
 import com.yc.mema.base.BaseFragment;
+import com.yc.mema.base.User;
 import com.yc.mema.controller.UIHelper;
 import com.yc.mema.databinding.FInformationBinding;
 import com.yc.mema.event.CameraInEvent;
 import com.yc.mema.impl.InformationContract;
 import com.yc.mema.presenter.InformationPresenter;
 import com.yc.mema.utils.DatePickerUtils;
+import com.yc.mema.utils.cache.ShareSessionIdCache;
 import com.yc.mema.view.bottomFrg.CameraBottomFrg;
 import com.yc.mema.weight.PictureSelectorTool;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,6 +43,7 @@ public class InformationFrg extends BaseFragment<InformationPresenter, FInformat
     private CameraBottomFrg cameraBottomFrg;
     private List<LocalMedia> localMediaList = new ArrayList<>();
     private String headPath;
+    private JSONObject data;
 
     @Override
     public void initPresenter() {
@@ -46,7 +52,11 @@ public class InformationFrg extends BaseFragment<InformationPresenter, FInformat
 
     @Override
     protected void initParms(Bundle bundle) {
-
+        try {
+            data = new JSONObject(bundle.getString("data"));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -130,6 +140,12 @@ public class InformationFrg extends BaseFragment<InformationPresenter, FInformat
 
     @Override
     public void onSaveUser() {
+        JSONObject user = data.optJSONObject("user");
+        User.getInstance().setUserObj(user);
+        User.getInstance().setLogin(true);
+        ShareSessionIdCache.getInstance(Utils.getApp()).save(data.optString("token"));
+        ShareSessionIdCache.getInstance(Utils.getApp()).saveUserId(user.optString("userId"));
+        UIHelper.startMainAct();
         act.finish();
     }
 }

@@ -51,6 +51,8 @@ import com.yc.mema.view.act.VideoAct;
 import com.yc.mema.view.act.SetAct;
 import com.yc.mema.view.act.UserInfoAct;
 
+import org.json.JSONObject;
+
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
@@ -91,10 +93,12 @@ public final class UIHelper {
     /**
      *  完善信息
      * @param root
+     * @param data
      */
-    public static void startInformationFrg(BaseFragment root) {
+    public static void startInformationFrg(BaseFragment root, JSONObject data) {
         InformationFrg frg = new InformationFrg();
         Bundle bundle = new Bundle();
+        bundle.putString("data", data.toString());
         frg.setArguments(bundle);
         root.start(frg);
     }

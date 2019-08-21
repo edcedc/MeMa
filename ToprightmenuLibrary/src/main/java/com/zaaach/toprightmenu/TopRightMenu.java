@@ -31,13 +31,13 @@ public class TopRightMenu {
     private int popHeight = DEFAULT_HEIGHT;
     private int popWidth = RecyclerView.LayoutParams.WRAP_CONTENT;
     private boolean showIcon = true;
-    private boolean dimBackground = true;
+    private boolean dimBackground = false;
     private boolean needAnimationStyle = true;
 
     private static final int DEFAULT_ANIM_STYLE = R.style.TRM_ANIM_STYLE;
     private int animationStyle;
 
-    private float alpha = 0.75f;
+    private float alpha = 0f;
 
     public TopRightMenu(Activity context) {
         this.mContext = context;
@@ -80,6 +80,18 @@ public class TopRightMenu {
         mAdapter.setShowIcon(showIcon);
         mRecyclerView.setAdapter(mAdapter);
         return mPopupWindow;
+    }
+
+    public void setWindowFilter(boolean isBgAlpha,float alpha) {
+        if (isBgAlpha) {
+            WindowManager.LayoutParams lp = ((Activity) mContext).getWindow().getAttributes();
+            lp.alpha = alpha;
+            //保证华为honor颜色变暗
+            lp.dimAmount=alpha;
+            ((Activity) mContext).getWindow().setFlags(WindowManager.LayoutParams.FLAG_BLUR_BEHIND,WindowManager.LayoutParams.FLAG_BLUR_BEHIND);
+            ((Activity) mContext).getWindow().addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
+            ((Activity) mContext).getWindow().setAttributes(lp);
+        }
     }
 
     public TopRightMenu setHeight(int height){

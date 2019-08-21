@@ -48,7 +48,6 @@ public class DataBean implements Serializable {
     private int praise;//点赞数量
     private int discuss;//评论数量
     private String context;
-    private String birthday;
     private String nickName;
     private String headUrl;
     private String mema;
@@ -78,6 +77,16 @@ public class DataBean implements Serializable {
     private String value;
     private String roleId;
     private int handle;
+    private String tips;
+    private String bookId;
+
+    public String getBookId() {
+        return bookId;
+    }
+
+    public String getTips() {
+        return tips;
+    }
 
     public int getHandle() {
         return handle;
@@ -205,10 +214,6 @@ public class DataBean implements Serializable {
 
     public String getParentId() {
         return parentId;
-    }
-
-    public String getBirthday() {
-        return birthday;
     }
 
     public String getNickName() {

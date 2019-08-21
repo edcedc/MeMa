@@ -17,6 +17,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.yc.mema.R;
+import com.yc.mema.base.BaseActivity;
 
 
 /**

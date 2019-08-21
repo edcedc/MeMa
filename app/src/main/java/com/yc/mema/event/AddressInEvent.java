@@ -16,7 +16,6 @@ public class AddressInEvent {
 
     public String parentId, address;
 
-
     public AddressInEvent(String parentId, String address, int type) {
         this.parentId = parentId;
         this.address = address;

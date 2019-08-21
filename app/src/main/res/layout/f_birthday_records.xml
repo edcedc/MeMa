@@ -36,72 +36,79 @@
                     android:textStyle="bold" />
 
                 <LinearLayout
-                    android:background="@color/red_F67690"
-                    android:orientation="horizontal"
                     android:layout_width="match_parent"
-                    android:layout_height="28dp">
+                    android:layout_height="28dp"
+                    android:background="@color/red_F67690"
+                    android:orientation="horizontal">
+
                     <TextView
+                        style="@style/Tv15white"
                         android:layout_width="0dp"
                         android:layout_weight="1"
                         android:gravity="center"
-                        style="@style/Tv15white"
                         android:text="一" />
+
                     <TextView
+                        style="@style/Tv15white"
                         android:layout_width="0dp"
                         android:layout_weight="1"
                         android:gravity="center"
-                        style="@style/Tv15white"
-                        android:text="二"/>
+                        android:text="二" />
+
                     <TextView
+                        style="@style/Tv15white"
                         android:layout_width="0dp"
                         android:layout_weight="1"
                         android:gravity="center"
-                        style="@style/Tv15white"
                         android:text="三" />
+
                     <TextView
+                        style="@style/Tv15white"
                         android:layout_width="0dp"
                         android:layout_weight="1"
                         android:gravity="center"
-                        style="@style/Tv15white"
                         android:text="四" />
+
                     <TextView
 
+                        style="@style/Tv15white"
                         android:layout_width="0dp"
                         android:layout_weight="1"
                         android:gravity="center"
-                        style="@style/Tv15white"
                         android:text="五" />
+
                     <TextView
+                        style="@style/Tv15white"
                         android:layout_width="0dp"
                         android:layout_weight="1"
                         android:gravity="center"
-                        style="@style/Tv15white"
                         android:text="六" />
+
                     <TextView
+                        style="@style/Tv15white"
                         android:layout_width="0dp"
                         android:layout_weight="1"
                         android:gravity="center"
-                        style="@style/Tv15white"
                         android:text="日" />
                 </LinearLayout>
 
                 <FrameLayout
-                    android:background="@mipmap/y22"
                     android:layout_width="match_parent"
-                    android:layout_height="300dp">
+                    android:layout_height="300dp"
+                    android:background="@mipmap/y22">
 
                     <com.ldf.calendar.view.MonthPager
                         android:id="@+id/calendar_view"
                         android:layout_width="match_parent"
-                        android:layout_height="270dp"/>
+                        android:layout_height="270dp" />
 
                 </FrameLayout>
 
                 <android.support.v7.widget.AppCompatTextView
                     android:id="@+id/tv_title"
-                    android:layout_marginTop="@dimen/px100"
                     style="@style/Tv15black"
                     android:layout_marginLeft="@dimen/px20"
+                    android:layout_marginTop="@dimen/px100"
                     android:textColor="@color/red_EE3257"
                     android:textSize="20sp" />
 
@@ -116,6 +123,7 @@
             </LinearLayout>
 
         </android.support.v4.widget.NestedScrollView>
+
 
     </LinearLayout>
 

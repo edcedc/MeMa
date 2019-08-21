@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import com.bumptech.glide.Glide;
 import com.dingmouren.layoutmanagergroup.CustomVideoView;
 import com.yc.mema.R;
+import com.yc.mema.base.BaseActivity;
 import com.yc.mema.base.BaseRecyclerviewAdapter;
 import com.yc.mema.bean.DataBean;
 import com.yc.mema.controller.CloudApi;
@@ -36,7 +37,6 @@ public class VideoAdapter extends BaseRecyclerviewAdapter<DataBean> {
     protected void onBindViewHolde(RecyclerView.ViewHolder holder, int position) {
         ViewHolder viewHolder = (ViewHolder) holder;
         DataBean bean = listBean.get(position);
-//        GlideLoadingUtils.load(act, CloudApi.SERVLET_IMG_URL + bean.getAttachId(), viewHolder.iv_img);
         Glide.with(act).load(CloudApi.SERVLET_IMG_URL + bean.getAttachId()).into(viewHolder.iv_img);
         GlideLoadingUtils.load(act, bean.getHeadUrl(), viewHolder.iv_head);
         viewHolder.tv_name.setText(bean.getNickName());
@@ -50,11 +50,15 @@ public class VideoAdapter extends BaseRecyclerviewAdapter<DataBean> {
         viewHolder.video_view.setVideoPath(bean.getVideo());
 
         viewHolder.iv_follow.setOnClickListener(view -> {
+            if (!((BaseActivity)act).isLogin())return;
+
             if (listener != null){
                 listener.follow("");
             }
         });
         viewHolder.iv_zan.setOnClickListener(view -> {
+            if (!((BaseActivity)act).isLogin())return;
+
             if (listener != null){
                 listener.zan(bean.getVideoId(), bean.getpIsTrue(), viewHolder.iv_zan, viewHolder.tv_zan);
             }
@@ -65,8 +69,14 @@ public class VideoAdapter extends BaseRecyclerviewAdapter<DataBean> {
             }
         });
         viewHolder.iv_coll.setOnClickListener(view -> {
+            if (!((BaseActivity)act).isLogin())return;
             if (listener != null){
                 listener.collection(bean.getVideoId(), bean.getcIsTrue(), position, viewHolder.iv_coll, viewHolder.tv_coll);
+            }
+        });
+        viewHolder.layout.setOnClickListener(view -> {
+            if (listener != null){
+                listener.onClick(viewHolder.iv_img);
             }
         });
     }
@@ -80,6 +90,7 @@ public class VideoAdapter extends BaseRecyclerviewAdapter<DataBean> {
         void follow(String id);
         void comment(AppCompatTextView tv_comment);
         void zan(String id, int i, AppCompatImageView iv_zan, AppCompatTextView tv_zan);
+        void onClick(AppCompatImageView iv_img);
     }
 
 
@@ -103,6 +114,9 @@ public class VideoAdapter extends BaseRecyclerviewAdapter<DataBean> {
         AppCompatImageView iv_zan;
         AppCompatImageView iv_comment;
         AppCompatImageView iv_coll;
+        View layout;
+
+
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -119,6 +133,7 @@ public class VideoAdapter extends BaseRecyclerviewAdapter<DataBean> {
             iv_coll = itemView.findViewById(R.id.iv_coll);
             iv_comment = itemView.findViewById(R.id.iv_comment);
             iv_zan = itemView.findViewById(R.id.iv_zan);
+            layout = itemView.findViewById(R.id.layout);
         }
     }
 

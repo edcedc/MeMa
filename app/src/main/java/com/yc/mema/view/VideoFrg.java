@@ -10,8 +10,12 @@ import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.RecyclerView;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AccelerateDecelerateInterpolator;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
@@ -32,6 +36,7 @@ import com.yc.mema.base.BaseFragment;
 import com.yc.mema.bean.DataBean;
 import com.yc.mema.controller.UIHelper;
 import com.yc.mema.databinding.FVideoBinding;
+import com.yc.mema.event.CollectionDelInEvent;
 import com.yc.mema.event.VideoDelInEvent;
 import com.yc.mema.impl.VideoContract;
 import com.yc.mema.presenter.VideoPresenter;
@@ -42,6 +47,7 @@ import com.yc.mema.view.bottomFrg.ReportBottomFrg;
 import com.yc.mema.weight.LinearDividerItemDecoration;
 
 import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -66,6 +72,8 @@ public class VideoFrg extends BaseFragment<VideoPresenter, FVideoBinding> implem
     public static final int MSG_VIDEO = 3;
     private int position;//收藏，我的生日趴要索引的地方
     private AppCompatTextView tvAdaComment;
+    private AppCompatImageView ivPlayImg;
+    private ImageView imgPlay;
 
     public static VideoFrg newInstance() {
         Bundle args = new Bundle();
@@ -95,8 +103,9 @@ public class VideoFrg extends BaseFragment<VideoPresenter, FVideoBinding> implem
     @Override
     protected void initParms(Bundle bundle) {
         type = bundle.getInt("isVideoType");
-        Type type = new TypeToken<ArrayList<DataBean>>() {}.getType();
-        if (this.type != NORMAL_VIDEO){
+        Type type = new TypeToken<ArrayList<DataBean>>() {
+        }.getType();
+        if (this.type != NORMAL_VIDEO) {
             listBean = new Gson().fromJson(bundle.getString("list"), type);
         }
         position = bundle.getInt("position");
@@ -121,6 +130,7 @@ public class VideoFrg extends BaseFragment<VideoPresenter, FVideoBinding> implem
         setBottomSheet(bottomSheet);
         initComment();
         initVideo();
+        EventBus.getDefault().register(this);
     }
 
     private void setBottomSheet(LinearLayout bottomSheet) {
@@ -142,14 +152,14 @@ public class VideoFrg extends BaseFragment<VideoPresenter, FVideoBinding> implem
     }
 
     private void setVideoReport() {
-        if (type != NORMAL_VIDEO && type != MSG_VIDEO){
+        if (type != NORMAL_VIDEO && type != MSG_VIDEO) {
             mB.fyClose.setOnClickListener(this);
             mB.fyLayout.setOnClickListener(this);
             mB.fyClose.setVisibility(View.VISIBLE);
             mB.fyLayout.setVisibility(View.VISIBLE);
-            if (type == COLL_VIDEO){
+            if (type == COLL_VIDEO) {
                 mB.ivSandian.setVisibility(View.VISIBLE);
-            }else {
+            } else {
                 mB.tvDel.setVisibility(View.VISIBLE);
             }
             reportBottomFrg = new ReportBottomFrg();
@@ -173,19 +183,19 @@ public class VideoFrg extends BaseFragment<VideoPresenter, FVideoBinding> implem
             }
 
             @Override
-            public void onPageRelease(boolean isNext,int position) {
+            public void onPageRelease(boolean isNext, int position) {
                 int index = 0;
-                if (isNext){
+                if (isNext) {
                     index = 0;
-                }else {
+                } else {
                     index = 1;
                 }
                 releaseVideo(index);
             }
 
             @Override
-            public void onPageSelected(int position,boolean isBottom) {
-                LogUtils.e(position);
+            public void onPageSelected(int position, boolean isBottom) {
+//                LogUtils.e(position);
                 listComment.clear();
                 mPosition = position;
                 playVideo(0);
@@ -193,7 +203,7 @@ public class VideoFrg extends BaseFragment<VideoPresenter, FVideoBinding> implem
         });
 
         showLoadDataing();
-        if (type == NORMAL_VIDEO){
+        if (type == NORMAL_VIDEO) {
             mB.refreshLayout.startRefresh();
             setRefreshLayout(mB.refreshLayout, new RefreshListenerAdapter() {
                 @Override
@@ -208,7 +218,7 @@ public class VideoFrg extends BaseFragment<VideoPresenter, FVideoBinding> implem
                     mPresenter.onRequest(pagerNumber += 1, type);
                 }
             });
-        }else {
+        } else {
             setData(listBean);
         }
 
@@ -226,12 +236,12 @@ public class VideoFrg extends BaseFragment<VideoPresenter, FVideoBinding> implem
             @Override
             public void comment(AppCompatTextView tv_comment) {
                 tvAdaComment = tv_comment;
-                if(behavior.getState() == BottomSheetBehavior.STATE_EXPANDED) {
+                if (behavior.getState() == BottomSheetBehavior.STATE_EXPANDED) {
                     behavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
-                }else {
-                    if (listComment.size() == 0){
+                } else {
+                    if (listComment.size() == 0) {
                         mPresenter.onComment(listBean.get(mPosition).getVideoId(), pagerNumberComment = 1);
-                    }else {
+                    } else {
                         behavior.setState(BottomSheetBehavior.STATE_EXPANDED);
                     }
                 }
@@ -241,15 +251,26 @@ public class VideoFrg extends BaseFragment<VideoPresenter, FVideoBinding> implem
             public void zan(String id, int i, AppCompatImageView iv_zan, AppCompatTextView tv_zan) {
                 mPresenter.onVideoZan(id, i, mPosition, iv_zan, tv_zan);
             }
+
+            @Override
+            public void onClick(AppCompatImageView iv_img) {
+                if (videoView.isPlaying()){
+                    videoView.pause();
+                    iv_img.setVisibility(View.VISIBLE);
+                }else {
+                    videoView.start();
+                    iv_img.setVisibility(View.INVISIBLE);
+                }
+            }
         });
     }
 
     private void initComment() {
-        if (commentAdapter == null){
+        if (commentAdapter == null) {
             commentAdapter = new CommentAdapter(act, this, listComment, 1);
         }
         setRecyclerViewType(rvComment);
-        rvComment.addItemDecoration(new LinearDividerItemDecoration(act, DividerItemDecoration.VERTICAL,  2));
+        rvComment.addItemDecoration(new LinearDividerItemDecoration(act, DividerItemDecoration.VERTICAL, 2));
         rvComment.setAdapter(commentAdapter);
 //        refreshLayoutComment.setEnableRefresh(false);
 //        setRefreshLayout(refreshLayoutComment, new RefreshListenerAdapter() {
@@ -300,7 +321,7 @@ public class VideoFrg extends BaseFragment<VideoPresenter, FVideoBinding> implem
 
     @Override
     public void setData(Object data) {
-        if (type == NORMAL_VIDEO){
+        if (type == NORMAL_VIDEO) {
             List<DataBean> list = (List<DataBean>) data;
             if (pagerNumber == 1) {
                 listBean.clear();
@@ -310,7 +331,7 @@ public class VideoFrg extends BaseFragment<VideoPresenter, FVideoBinding> implem
             }
             listBean.addAll(list);
             adapter.notifyDataSetChanged();
-        }else {
+        } else {
             adapter.notifyDataSetChanged();
             mB.recyclerView.smoothScrollToPosition(position);
             new Handler().postDelayed(() -> hideLoading(), 500);
@@ -320,7 +341,7 @@ public class VideoFrg extends BaseFragment<VideoPresenter, FVideoBinding> implem
     @Override
     public void onSupportInvisible() {
         super.onSupportInvisible();
-        if (videoView != null && videoView.isPlaying()){
+        if (videoView != null && videoView.isPlaying()) {
             videoView.pause();
         }
     }
@@ -328,14 +349,17 @@ public class VideoFrg extends BaseFragment<VideoPresenter, FVideoBinding> implem
     @Override
     public void onSupportVisible() {
         super.onSupportVisible();
-        if (videoView != null){
-            videoView.start();
+        if (videoView != null) {
+//            videoView.start();
+            imgPlay.animate().alpha(1f).start();
+            imgPlay.setVisibility(View.VISIBLE);
         }
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
+        EventBus.getDefault().unregister(this);
     }
 
     @Override
@@ -408,28 +432,28 @@ public class VideoFrg extends BaseFragment<VideoPresenter, FVideoBinding> implem
         adapter.notifyItemChanged(mPosition);
         EventBus.getDefault().post(new VideoDelInEvent(mPosition));
         mPosition = 0;
-        if (listBean.size() == 0){
+        if (listBean.size() == 0) {
             act.finish();
         }
     }
 
     @Override
     public void onClick(View view) {
-        if (!((BaseActivity)act).isLogin())return;
-        switch (view.getId()){
+        switch (view.getId()) {
             case R.id.tv_comment_title:
                 behavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
                 break;
             case R.id.tv_points:
+                if (!((BaseActivity) act).isLogin()) return;
                 commentBottomFrg.show(getChildFragmentManager(), "dialog");
                 break;
             case R.id.fy_close:
                 act.finish();
                 break;
             case R.id.fy_layout:
-                if (type == COLL_VIDEO){
+                if (type == COLL_VIDEO) {
                     reportBottomFrg.show(getChildFragmentManager(), "dialog");
-                }else {
+                } else {
                     delBottomFrg.show(getChildFragmentManager(), "dialog");
                 }
                 break;
@@ -439,7 +463,7 @@ public class VideoFrg extends BaseFragment<VideoPresenter, FVideoBinding> implem
     private void playVideo(int position) {
         View itemView = mB.recyclerView.getChildAt(0);
         videoView = itemView.findViewById(R.id.video_view);
-        final ImageView imgPlay = itemView.findViewById(R.id.iv_play);
+        imgPlay = itemView.findViewById(R.id.iv_play);
         final ImageView imgThumb = itemView.findViewById(R.id.iv_img);
         final MediaPlayer[] mediaPlayer = new MediaPlayer[1];
         videoView.start();
@@ -449,19 +473,37 @@ public class VideoFrg extends BaseFragment<VideoPresenter, FVideoBinding> implem
             imgThumb.animate().alpha(0).setDuration(200).start();
             return false;
         });
-        videoView.setOnPreparedListener(mp -> {
-
+        videoView.setOnPreparedListener(mediaPlayer1 -> {
+            if (!isSupportVisible()){
+                videoView.pause();
+            }
+            LogUtils.e("setOnPreparedListener");
         });
 
         imgPlay.setOnClickListener(new View.OnClickListener() {
             boolean isPlaying = true;
             @Override
             public void onClick(View v) {
-                if (videoView.isPlaying()){
+                if (videoView.isPlaying()) {
                     imgPlay.animate().alpha(1f).start();
                     videoView.pause();
                     isPlaying = false;
-                }else {
+                } else {
+                    imgPlay.animate().alpha(0f).start();
+                    videoView.start();
+                    isPlaying = true;
+                }
+            }
+        });
+        itemView.findViewById(R.id.layout).setOnClickListener(new View.OnClickListener() {
+            boolean isPlaying = true;
+            @Override
+            public void onClick(View view) {
+                if (videoView.isPlaying()) {
+                    imgPlay.animate().alpha(1f).start();
+                    videoView.pause();
+                    isPlaying = false;
+                } else {
                     imgPlay.animate().alpha(0f).start();
                     videoView.start();
                     isPlaying = true;
@@ -470,7 +512,7 @@ public class VideoFrg extends BaseFragment<VideoPresenter, FVideoBinding> implem
         });
     }
 
-    private void releaseVideo(int index){
+    private void releaseVideo(int index) {
         View itemView = mB.recyclerView.getChildAt(index);
         final CustomVideoView videoView = itemView.findViewById(R.id.video_view);
         final ImageView imgThumb = itemView.findViewById(R.id.iv_img);
@@ -478,6 +520,18 @@ public class VideoFrg extends BaseFragment<VideoPresenter, FVideoBinding> implem
         videoView.stopPlayback();
         imgThumb.animate().alpha(1).start();
         imgPlay.animate().alpha(0f).start();
+    }
+
+    @Subscribe
+    public void onMainCollectionDelInEvent(CollectionDelInEvent event) {
+        for (String id : event.ids.split(",")) {
+            for (DataBean bean : listBean) {
+                if (id.equals(bean.getVideoId())) {
+                    bean.setcIsTrue(0);
+                }
+            }
+        }
+        adapter.notifyDataSetChanged();
     }
 
 }

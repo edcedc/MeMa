@@ -15,8 +15,8 @@ public class Constants {
 
    public static final String BAI_DU = "V5h6NjfSgukQbu55EB0zRQKY83ghiNak";
    public static final String ShareID = "5d22bec94ca357c136000062";
-   public static final String WX_APPID = "wxed3971fb41174390";
-   public static final String WX_SECRER = "2851fc3b2a10291c7ef6719e4999acdd";
+   public static final String WX_APPID = "wx1644830a681606ec";
+   public static final String WX_SECRER = "f5d895afba34897355e2c2a10bd102ca";
    public static final String QQ_APPID = "1106499610";
    public static final String QQ_SECRET = "mB4XpdFO6laSsV4j";
    public static final String WB_APPID = "761285940";

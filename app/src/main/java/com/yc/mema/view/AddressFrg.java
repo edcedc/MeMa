@@ -3,6 +3,11 @@ package com.yc.mema.view;
 import android.os.Bundle;
 import android.view.View;
 
+import com.baidu.location.Address;
+import com.baidu.location.BDAbstractLocationListener;
+import com.baidu.location.BDLocation;
+import com.baidu.location.LocationClient;
+import com.baidu.location.LocationClientOption;
 import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.StringUtils;
 import com.yc.mema.R;
@@ -12,6 +17,7 @@ import com.yc.mema.bean.AddressBean;
 import com.yc.mema.bean.DataBean;
 import com.yc.mema.databinding.FAddressBinding;
 import com.yc.mema.event.AddressInEvent;
+import com.yc.mema.event.LocationInEvent;
 import com.yc.mema.impl.InformationContract;
 import com.yc.mema.presenter.InformationPresenter;
 
@@ -27,7 +33,7 @@ import java.util.List;
  * Time: 12:01
  *  设置地址
  */
-public class AddressFrg extends BaseFragment<InformationPresenter, FAddressBinding> implements InformationContract.View {
+public class AddressFrg extends BaseFragment<InformationPresenter, FAddressBinding> implements InformationContract.View, View.OnClickListener {
 
     private List<DataBean> listBean = new ArrayList<>();
     private AddressAdapter adapter;
@@ -38,6 +44,9 @@ public class AddressFrg extends BaseFragment<InformationPresenter, FAddressBindi
     private boolean isUpdate = false;
     private int regionLevel;
     private int type;
+    private MyLocationListenner myListener = new MyLocationListenner();
+    private LocationClient mLocClient;
+    private boolean isLocation = false;
 
     @Override
     public void initPresenter() {
@@ -58,7 +67,17 @@ public class AddressFrg extends BaseFragment<InformationPresenter, FAddressBindi
     @Override
     protected void initView(View view) {
         setTitle(getString(R.string.set_address), getString(R.string.submit1));
-        mB.tvLocation.setText(AddressBean.getInstance().getAddress().city);
+        // 定位初始化
+        mLocClient = new LocationClient(act);
+        mLocClient.registerLocationListener(myListener);
+        LocationClientOption option = new LocationClientOption();
+        option.setOpenGps(true); // 打开gps
+        option.setCoorType("bd09ll"); // 设置坐标类型
+        option.setScanSpan(1000);
+        option.setIsNeedAddress(true);//反编译获得具体位置，只有网络定位才可以
+        mLocClient.setLocOption(option);
+        mLocClient.start();
+        mB.tvLocation.setOnClickListener(this);
         if (adapter == null){
             adapter = new AddressAdapter(act, this, listBean);
         }
@@ -67,6 +86,7 @@ public class AddressFrg extends BaseFragment<InformationPresenter, FAddressBindi
         showLoadDataing();
         mPresenter.onRequest(null);
         adapter.setOnClickListener((parentId, address, regionLevel, position) -> {
+            isLocation = false;
             mB.gpLocate.setVisibility(View.GONE);
             mB.tvAll.setText(sb.toString());
             this.regionLevel = regionLevel;
@@ -88,19 +108,27 @@ public class AddressFrg extends BaseFragment<InformationPresenter, FAddressBindi
     @Override
     protected void setOnRightClickListener() {
         super.setOnRightClickListener();
-        if (StringUtils.isEmpty(addressEnd))return;
-        if (!isUpdate){
-            sb.append(addressEnd);
-            sbId.append(parentId);
-            if (sbId.toString().indexOf("edison") != -1){
-                sbId = sbId.delete(sbId.toString().length() - 7, sbId.toString().length());
-                addressEnd = sb.toString().split(" ")[1];
-            }
-            LogUtils.e(sbId.toString());
-            EventBus.getDefault().post(new AddressInEvent(sbId.toString(), addressEnd, type));
+        if (StringUtils.isEmpty(addressEnd) && !isLocation)return;
+        if (isLocation){
+            String location = mB.tvLocation.getText().toString();
+            addressEnd = location.split(" ")[1];
+            LogUtils.e(addressEnd);
+            EventBus.getDefault().post(new AddressInEvent(null, addressEnd, type));
             pop();
         }else {
-            mPresenter.address(parentId);
+            if (!isUpdate){
+                sb.append(addressEnd);
+                sbId.append(parentId);
+                if (sbId.toString().indexOf("edison") != -1){
+                    sbId = sbId.delete(sbId.toString().length() - 7, sbId.toString().length());
+                    addressEnd = sb.toString().split(" ")[1];
+                }
+                LogUtils.e(sbId.toString());
+                EventBus.getDefault().post(new AddressInEvent(sbId.toString(), addressEnd, type));
+                pop();
+            }else {
+                mPresenter.address(parentId);
+            }
         }
     }
 
@@ -128,4 +156,51 @@ public class AddressFrg extends BaseFragment<InformationPresenter, FAddressBindi
     public void onSaveUser() {
         pop();
     }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()){
+            case R.id.tv_location:
+                if (!isLocation){
+                    mB.tvLocation.setCompoundDrawablesWithIntrinsicBounds(act.getResources().getDrawable(R.mipmap.y19, null),null,
+                            act.getResources().getDrawable(R.mipmap.y18, null), null);
+                }else {
+                    mB.tvLocation.setCompoundDrawablesWithIntrinsicBounds(act.getResources().getDrawable(R.mipmap.y19, null),null,
+                            null, null);
+                }
+                isLocation = !isLocation;
+                break;
+        }
+    }
+
+    /**
+     * 定位SDK监听函数
+     */
+    public class MyLocationListenner extends BDAbstractLocationListener {
+
+        @Override
+        public void onReceiveLocation(BDLocation location) {
+            // map view 销毁后不在处理新接收的位置
+            if (location == null) {
+                return;
+            }
+            LogUtils.e(location.getLatitude(), location.getLongitude(),
+                    location.getProvince(),  location.getCity(),
+                    location.getAddrStr());
+            Address address = location.getAddress();
+           /* AddressBean.getInstance().setLocation(location.getLongitude());
+            AddressBean.getInstance().setLatitude(location.getLatitude());
+            AddressBean.getInstance().setCountry(address.country);
+            AddressBean.getInstance().setProvince(address.province);
+            AddressBean.getInstance().setCity(address.city);
+            AddressBean.getInstance().setDistrict(address.district);
+            EventBus.getDefault().post(new LocationInEvent());*/
+
+            mB.tvLocation.setText(address.city + " " + address.district);
+            if (address != null){
+                mLocClient.stop();
+            }
+        }
+    }
+
 }

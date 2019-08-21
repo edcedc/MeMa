@@ -30,6 +30,7 @@ import com.yc.mema.listeners.OnAdapterClickListener;
 import com.yc.mema.presenter.BirthdayRecordsPresenter;
 import com.yc.mema.utils.DatePickerUtils;
 import com.yc.mema.utils.DigitalConversionUtils;
+import com.yc.mema.utils.PopupWindowTool;
 import com.yc.mema.utils.TimeUtil;
 import com.zaaach.toprightmenu.MenuItem;
 import com.zaaach.toprightmenu.TopRightMenu;
@@ -37,6 +38,7 @@ import com.zaaach.toprightmenu.TopRightMenuTool;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
@@ -89,9 +91,17 @@ public class BirthdayRecordsFrg extends BaseFragment<BirthdayRecordsPresenter, F
         mB.recyclerView.setAdapter(adapter);
         nowString = TimeUtils.getNowString(new SimpleDateFormat("yyyy-MM"));
         mPresenter.onRequest(nowString);
-        adapter.setOnAdapterClickListener(position -> {
-            adapter.setPosition(position);
-            adapter.notifyDataSetChanged();
+        adapter.setOnAdapterClickListener(new OnAdapterClickListener() {
+            @Override
+            public void onClick(int position) {
+                adapter.setPosition(position);
+                adapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onLongClick(int position, String bookId) {
+                PopupWindowTool.showDialog(act, PopupWindowTool.clear_br, () -> mPresenter.onDelBr(position, bookId));
+            }
         });
 
         menuItems.add(new MenuItem(getString(R.string.add_records)));
@@ -184,10 +194,31 @@ public class BirthdayRecordsFrg extends BaseFragment<BirthdayRecordsPresenter, F
     public void setData(List<DataBean> list) {
         mB.tvTitle.setText(nowString.split("-")[1] +
                 "月份生日记录");
-
         listBean.clear();
         listBean.addAll(list);
         adapter.notifyDataSetChanged();
+        HashMap markData = new HashMap<>();
+        for (DataBean bean : list){
+            String brithday = bean.getBrithday();
+            String month = brithday.split("-")[1];
+            if (month.startsWith("0")){
+                month = month.replace("0", "");
+            }
+            String day = brithday.split("-")[2];
+            if (day.startsWith("0")){
+                day = day.replace("0", "");
+            }
+            markData.put(brithday.split("-")[0] + "-" + month + "-" + day, "1");
+        }
+        calendarAdapter.setMarkData(markData);
+        calendarAdapter.notifyDataChanged();
+    }
+
+    @Override
+    public void setDelBr(int position) {
+        listBean.remove(position);
+        adapter.notifyItemRemoved(position);
+        adapter.notifyItemChanged(position);
     }
 
     @Override

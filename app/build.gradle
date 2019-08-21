@@ -193,6 +193,7 @@ dependencies {
     implementation files('libs/umeng-share-wechat-simplify-6.9.6.jar')
     implementation files('libs/umeng-sharetool-6.9.6.jar')
     implementation project(':LayoutManagerGroup')
+    implementation project(':dkplayer-java')
     implementation files('libs/OpenInstall_v2.2.2.jar')
     implementation files('libs/BaiduLBS_Android.jar')
 }

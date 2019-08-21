@@ -32,11 +32,23 @@ public class InformationPresenter extends InformationContract.Presenter {
 
     @Override
     public void submit(String head, String name, String time) {
-        if (StringUtils.isEmpty(head) || StringUtils.isEmpty(name) || StringUtils.isEmpty(time)){
-            showToast(act.getString(R.string.error_));
+        if (StringUtils.isEmpty(head)){
+            showToast(act.getString(R.string.error_head));
             return;
         }
-        userSaveUser(head, name, time, null, null, null, null);
+        if (StringUtils.isEmpty(name)){
+            showToast(act.getString(R.string.error_nickname));
+            return;
+        }
+        if (StringUtils.isEmpty(time)){
+            showToast(act.getString(R.string.please_hp));
+            return;
+        }
+        JSONObject userObj = User.getInstance().getUserObj();
+        String mema = userObj.optString("mema");
+        mema = mema.substring(mema.length() - 4, mema.length());
+        mema = time + mema;
+        userSaveUser(head, name, time, null, null, "M-" + mema.replaceAll("-", ""), null);
     }
 
     @Override
@@ -108,6 +120,12 @@ public class InformationPresenter extends InformationContract.Presenter {
                         if (baseResponseBeanResponse.body().code == Code.CODE_SUCCESS){
                             List<DataBean> list = baseResponseBeanResponse.body().result;
                             if (list != null && list.size() != 0){
+                                for (DataBean bean : list){
+                                    if (bean.getRegionId().equals("100")){
+                                        list.remove(bean);
+                                        break;
+                                    }
+                                }
                                 mView.setData(list);
                             }
                         }

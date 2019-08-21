@@ -11,6 +11,7 @@ import com.flyco.tablayout.listener.CustomTabEntity;
 import com.flyco.tablayout.listener.OnTabSelectListener;
 import com.yc.mema.R;
 import com.yc.mema.adapter.MyPagerAdapter;
+import com.yc.mema.base.BaseActivity;
 import com.yc.mema.base.BaseFragment;
 import com.yc.mema.base.BaseListContract;
 import com.yc.mema.base.BasePresenter;
@@ -60,7 +61,7 @@ public class FourFrg extends BaseFragment<BasePresenter, FFourBinding> implement
         mFragments.add(VideoFrg.newInstance());
         mFragments.add(GoodFriendFrg.newInstance());
         String[] str = {"", ""};
-        mB.viewPager.setNoScroll(false);
+        mB.viewPager.setNoScroll(true);
         mB.viewPager.setAdapter(new MyPagerAdapter(getChildFragmentManager(), mFragments, str));
 //        mB.viewPager.setOffscreenPageLimit(1);
         mB.viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -104,6 +105,7 @@ public class FourFrg extends BaseFragment<BasePresenter, FFourBinding> implement
                 mB.viewPager.setCurrentItem(1);
                 break;
             case R.id.iv_camera:
+                if (!((BaseActivity)act).isLogin())return;
                 UIHelper.startReleaseAct();
                 break;
         }

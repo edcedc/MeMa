@@ -3,6 +3,7 @@ package com.yc.mema.view;
 import android.os.Bundle;
 import android.view.View;
 
+import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.StringUtils;
 import com.lcodecore.tkrefreshlayout.RefreshListenerAdapter;
 import com.lcodecore.tkrefreshlayout.TwinklingRefreshLayout;
@@ -16,6 +17,7 @@ import com.yc.mema.impl.FiveContract;
 import com.yc.mema.presenter.FivePresenter;
 import com.yc.mema.utils.GlideLoadingUtils;
 import com.yc.mema.utils.cache.ShareSessionIdCache;
+import com.yc.mema.view.act.ShareAct;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -108,7 +110,8 @@ public class FiveFrg extends BaseFragment<FivePresenter, FFiveBinding> implement
                 UIHelper.startSetAct();
                 break;
             case R.id.tv_share:
-                UIHelper.startShareFrg(this);
+//                UIHelper.startShareFrg(this);
+                ActivityUtils.startActivity(ShareAct.class);
                 break;
             case R.id.tv_apply:
                 mPresenter.onaUserAgent(this);

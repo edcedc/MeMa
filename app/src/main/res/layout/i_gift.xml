@@ -19,6 +19,8 @@
         app:layout_constraintLeft_toLeftOf="parent"
         android:layout_marginLeft="@dimen/px30"
         android:id="@+id/tv_title"
+        android:layout_width="0dp"
+        app:layout_constraintRight_toRightOf="parent"
         android:textStyle="bold"
         android:textSize="22sp"
         style="@style/Tv15black" />

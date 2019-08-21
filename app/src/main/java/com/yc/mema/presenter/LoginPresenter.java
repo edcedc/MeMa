@@ -95,12 +95,7 @@ public class LoginPresenter extends LoginContract.Presenter{
                         public void onNext(JSONObject jsonObject) {
                             if (jsonObject.optInt("code") == Code.CODE_SUCCESS){
                                 JSONObject data = jsonObject.optJSONObject("result");
-                                JSONObject user = data.optJSONObject("user");
-                                User.getInstance().setUserObj(user);
-                                User.getInstance().setLogin(true);
-                                ShareSessionIdCache.getInstance(Utils.getApp()).save(data.optString("token"));
-                                ShareSessionIdCache.getInstance(Utils.getApp()).saveUserId(user.optString("userId"));
-                                mView.onLogin(user);
+                                mView.onLogin(data);
                             }
                             showToast(jsonObject.optString("description"));
                         }

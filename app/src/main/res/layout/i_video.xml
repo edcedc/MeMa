@@ -8,6 +8,26 @@
     android:background="@color/black"
     tools:ignore="MissingConstraints">
 
+    <FrameLayout
+        android:visibility="gone"
+        android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/thumb"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"/>
+
+    </FrameLayout>
+
+    <View
+        android:id="@+id/layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+
     <com.dingmouren.layoutmanagergroup.CustomVideoView
         android:id="@+id/video_view"
         android:layout_width="match_parent"
@@ -147,5 +167,7 @@
         android:layout_gravity="center"
         android:alpha="0"
         android:background="@mipmap/y43"  />
+
+
 
 </FrameLayout>

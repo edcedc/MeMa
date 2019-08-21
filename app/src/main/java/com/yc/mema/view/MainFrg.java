@@ -13,6 +13,7 @@ import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.LogUtils;
 import com.yc.mema.MainActivity;
 import com.yc.mema.R;
+import com.yc.mema.base.BaseActivity;
 import com.yc.mema.base.BaseFragment;
 import com.yc.mema.base.BasePresenter;
 import com.yc.mema.base.IBaseView;
@@ -44,7 +45,6 @@ public class MainFrg extends BaseFragment<BasePresenter, FMainBinding> implement
     private final int FIVE = 4;
 
     private SupportFragment[] mFragments = new SupportFragment[4];
-
 
     @Override
     public void initPresenter() {

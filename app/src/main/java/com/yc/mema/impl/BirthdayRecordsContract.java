@@ -18,12 +18,15 @@ public interface BirthdayRecordsContract {
     interface View extends IBaseView {
 
         void setData(List<DataBean> list);
+
+        void setDelBr(int position);
     }
 
     abstract class Presenter extends BasePresenter<View> {
 
         public abstract void onRequest(String nowDay);
 
+        public abstract void onDelBr(int position, String bookId);
     }
 
 

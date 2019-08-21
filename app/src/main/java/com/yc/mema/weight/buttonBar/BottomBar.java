@@ -13,6 +13,10 @@ import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.Interpolator;
 import android.widget.LinearLayout;
 
+import com.blankj.utilcode.util.ActivityUtils;
+import com.yc.mema.base.User;
+import com.yc.mema.view.act.LoginAct;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -70,10 +74,10 @@ public class BottomBar extends LinearLayout {
                 if (mListener == null) return;
                 int pos = tab.getTabPosition();
 
-                /*if (pos == 2 && !User.getInstance().isLogin()){
+                if (pos == 3 && !User.getInstance().isLogin()){
                     ActivityUtils.startActivity(LoginAct.class);
                     return;
-                }*/
+                }
 
                 if (mCurrentPosition == pos) {
                     mListener.onTabReselected(pos);

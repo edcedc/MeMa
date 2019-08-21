@@ -1,16 +1,16 @@
 package com.yc.mema.presenter;
 
-import android.os.Handler;
-
 import com.lzy.okgo.model.Response;
 import com.yc.mema.bean.BaseListBean;
 import com.yc.mema.bean.BaseResponseBean;
 import com.yc.mema.bean.DataBean;
 import com.yc.mema.callback.Code;
 import com.yc.mema.controller.CloudApi;
+import com.yc.mema.event.CollectionDelInEvent;
 import com.yc.mema.impl.CollectionContract;
 
-import java.util.ArrayList;
+import org.greenrobot.eventbus.EventBus;
+
 import java.util.List;
 
 import io.reactivex.Observer;
@@ -93,6 +93,9 @@ public class CollectionPresenter extends CollectionContract.Presenter {
             type = bean.getType();
         }
         switch (type){
+            case 0:
+                setColl(sb.toString(), list);
+                break;
             case 1:
                 setInfo(sb.toString(), list);
                 break;
@@ -144,6 +147,38 @@ public class CollectionPresenter extends CollectionContract.Presenter {
                     @Override
                     public void onNext(Response<BaseResponseBean> baseResponseBeanResponse) {
                         if (baseResponseBeanResponse.body().code == Code.CODE_SUCCESS){
+                            mView.setDel(list);
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        mView.onError(e);
+                    }
+
+                    @Override
+                    public void onComplete() {
+                        mView.hideLoading();
+                    }
+                });
+    }
+
+    private void setColl(String ids, List<DataBean> list){
+        CloudApi.videoVideoCollect(ids, 0)
+                .doOnSubscribe(disposable -> {
+                    mView.showLoading();
+                })
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<Response<BaseResponseBean>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                        mView.addDisposable(d);
+                    }
+
+                    @Override
+                    public void onNext(Response<BaseResponseBean> baseResponseBeanResponse) {
+                        if (baseResponseBeanResponse.body().code == Code.CODE_SUCCESS){
+                            EventBus.getDefault().post(new CollectionDelInEvent(ids));
                             mView.setDel(list);
                         }
                     }

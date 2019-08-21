@@ -111,6 +111,7 @@
             android:theme="@style/AppTheme.NoActionBar.SwipeBack"
             android:screenOrientation="portrait"/>
 
+
         <service android:name=".service.InitializeService"
             android:exported="false"/>
 
@@ -197,6 +198,24 @@
             android:process=":remote" >
         </service>
 
+        <!--第三方分享集成-->
+        <meta-data
+            android:name="com.openinstall.APP_KEY"
+            android:value="u52vwi"/>
+
+        <activity
+            android:name=".view.act.ShareAct"
+            android:resizeableActivity="true"
+            android:launchMode="singleTask"
+            android:theme="@style/AppTheme.NoActionBar.SwipeBack"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+                <data android:scheme="u52vwi"  />
+            </intent-filter>
+        </activity>
 
     </application>
 

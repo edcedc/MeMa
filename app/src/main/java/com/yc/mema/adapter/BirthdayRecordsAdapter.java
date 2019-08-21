@@ -9,11 +9,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.blankj.utilcode.util.LogUtils;
+import com.blankj.utilcode.util.TimeUtils;
 import com.yc.mema.R;
 import com.yc.mema.base.BaseRecyclerviewAdapter;
 import com.yc.mema.bean.DataBean;
 import com.yc.mema.listeners.OnAdapterClickListener;
+import com.yc.mema.weight.DayCompare;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 /**
@@ -28,7 +32,6 @@ public class BirthdayRecordsAdapter extends BaseRecyclerviewAdapter<DataBean> {
         super(act, listBean);
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     protected void onBindViewHolde(RecyclerView.ViewHolder holder, final int position) {
         final ViewHolder viewHolder = (ViewHolder) holder;
@@ -38,26 +41,48 @@ public class BirthdayRecordsAdapter extends BaseRecyclerviewAdapter<DataBean> {
         viewHolder.tv_age.setText(bean.getGoDay() +
                 "周岁生日");
         viewHolder.tv_time.setText(bean.getBrithday());
-        viewHolder.tv_content.setText("离下一次生日还有 " +
-                bean.getInDay() +
-                "天");
+        int inDay = bean.getInDay();
 
-        if (mPosition == position){
-            viewHolder.itemView.setBackgroundColor(act.getColor(R.color.red_F67690));
-            viewHolder.tv_name.setTextColor(act.getColor(R.color.white));
-            viewHolder.tv_age.setTextColor(act.getColor(R.color.white));
-            viewHolder.tv_time.setTextColor(act.getColor(R.color.white));
-            viewHolder.tv_content.setTextColor(act.getColor(R.color.white));
+        String[] split = bean.getBrithday().split("-");
+        int year = Integer.valueOf(split[0]);
+        int month = Integer.valueOf(split[1]);
+        int day = Integer.valueOf(split[2]);
+
+        String[] thisYear = TimeUtils.getNowString(new SimpleDateFormat("yyyy-MM-dd")).split("-");
+        int tTear = Integer.valueOf(thisYear[0]);
+        int tMonth = Integer.valueOf(thisYear[1]);
+        int tDay = Integer.valueOf(thisYear[2]);
+        if (inDay == 0){
+            viewHolder.tv_content.setText("今天生日");
+        }else if (month >= tMonth && day > tDay){
+            viewHolder.tv_content.setText("离今年生日还有 " +
+                    inDay +
+                    "天");
         }else {
-            viewHolder.itemView.setBackgroundColor(act.getColor(R.color.white));
-            viewHolder.tv_name.setTextColor(act.getColor(R.color.black_333333));
-            viewHolder.tv_age.setTextColor(act.getColor(R.color.black_333333));
-            viewHolder.tv_time.setTextColor(act.getColor(R.color.tab_gray));
-            viewHolder.tv_content.setTextColor(act.getColor(R.color.tab_gray));
+            viewHolder.tv_content.setText("离明年生日还有 " +
+                    inDay +
+                    "天");
+        }
+        if (mPosition == position){
+            viewHolder.itemView.setBackgroundColor(act.getResources().getColor(R.color.red_F67690));
+            viewHolder.tv_name.setTextColor(act.getResources().getColor(R.color.white));
+            viewHolder.tv_age.setTextColor(act.getResources().getColor(R.color.white));
+            viewHolder.tv_time.setTextColor(act.getResources().getColor(R.color.white));
+            viewHolder.tv_content.setTextColor(act.getResources().getColor(R.color.white));
+        }else {
+            viewHolder.itemView.setBackgroundColor(act.getResources().getColor(R.color.white));
+            viewHolder.tv_name.setTextColor(act.getResources().getColor(R.color.black_333333));
+            viewHolder.tv_age.setTextColor(act.getResources().getColor(R.color.black_333333));
+            viewHolder.tv_time.setTextColor(act.getResources().getColor(R.color.tab_gray));
+            viewHolder.tv_content.setTextColor(act.getResources().getColor(R.color.tab_gray));
         }
 
         viewHolder.itemView.setOnClickListener(view -> {
             if (listener != null)listener.onClick(position);
+        });
+        viewHolder.itemView.setOnLongClickListener(view -> {
+            if (listener != null)listener.onLongClick(position, bean.getBookId());
+            return false;
         });
     }
 

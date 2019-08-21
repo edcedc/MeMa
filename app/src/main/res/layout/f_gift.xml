@@ -106,6 +106,16 @@
                             android:text="0" />
 
                         <android.support.v7.widget.AppCompatTextView
+                            android:id="@+id/tv_cozy"
+                            android:visibility="gone"
+                            style="@style/Tv12gray"
+                            android:layout_marginLeft="@dimen/px30"
+                            android:layout_marginBottom="@dimen/px30"
+                            android:drawableLeft="@mipmap/y27"
+                            android:drawablePadding="@dimen/px10"
+                            android:text="0" />
+
+                        <android.support.v7.widget.AppCompatTextView
                             style="@style/Tv15black"
                             android:layout_marginLeft="@dimen/px30"
                             android:text="@string/concessions" />

@@ -51,4 +51,34 @@ public class BirthdayRecordsPresenter extends BirthdayRecordsContract.Presenter{
                     }
                 });
     }
+
+    @Override
+    public void onDelBr(int position, String bookId) {
+        CloudApi.bookDelBook(bookId)
+                .doOnSubscribe(disposable -> {mView.showLoading();})
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<Response<BaseResponseBean>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                        mView.addDisposable(d);
+                    }
+
+                    @Override
+                    public void onNext(Response<BaseResponseBean> baseResponseBeanResponse) {
+                        if (baseResponseBeanResponse.body().code == Code.CODE_SUCCESS){
+                            mView.setDelBr(position);
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        mView.onError(e);
+                    }
+
+                    @Override
+                    public void onComplete() {
+                        mView.hideLoading();
+                    }
+                });
+    }
 }

@@ -77,10 +77,17 @@ public class FivePresenter extends FiveContract.Presenter{
                     public void onNext(Response<BaseResponseBean<DataBean>> baseResponseBeanResponse) {
                         if (baseResponseBeanResponse.body().code == Code.CODE_SUCCESS){
                             int handle = baseResponseBeanResponse.body().result.getHandle();
-                            if (handle == 3){
-                                UIHelper.startApplyFrg(fiveFrg);
-                            }else {
-                               showToast(handle == 1 ? "你已提交申请 正在审核" : "你已成为代理人");
+                            switch (handle){
+                                case 0:
+                                case 3:
+                                    UIHelper.startApplyFrg(fiveFrg);
+                                    break;
+                                case 1:
+                                    showToast("你已提交申请 正在审核");
+                                    break;
+                                case 2:
+                                    showToast("你已成为代理人");
+                                    break;
                             }
                         }
                     }

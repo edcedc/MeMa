@@ -28,7 +28,10 @@ import com.blankj.utilcode.util.LogUtils;
 import com.umeng.socialize.UMShareAPI;
 import com.yc.mema.base.BaseActivity;
 import com.yc.mema.bean.AddressBean;
+import com.yc.mema.event.LocationInEvent;
 import com.yc.mema.view.MainFrg;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 
@@ -38,7 +41,6 @@ public class MainActivity extends BaseActivity {
     private SDKReceiver mReceiver;
     private MyLocationListenner myListener = new MyLocationListenner();
     private LocationClient mLocClient;
-    private boolean isLocation = false;
 
     @Override
     protected void initPresenter() {
@@ -175,10 +177,16 @@ public class MainActivity extends BaseActivity {
                     location.getProvince(),  location.getCity(),
                     location.getAddrStr());
             Address address = location.getAddress();
-            AddressBean.getInstance().setAddress(address);
             AddressBean.getInstance().setLocation(location.getLongitude());
             AddressBean.getInstance().setLatitude(location.getLatitude());
-            mLocClient.stop();
+            AddressBean.getInstance().setCountry(address.country);
+            AddressBean.getInstance().setProvince(address.province);
+            AddressBean.getInstance().setCity(address.city);
+            AddressBean.getInstance().setDistrict(address.district);
+            EventBus.getDefault().post(new LocationInEvent());
+            if (address != null){
+                mLocClient.stop();
+            }
         }
     }
 }

@@ -1,11 +1,13 @@
 package com.yc.mema.mar;
 
+import android.app.ActivityManager;
 import android.app.Application;
 import android.content.Context;
 
 import com.baidu.mapapi.CoordType;
 import com.baidu.mapapi.SDKInitializer;
 import com.bumptech.glide.request.target.ViewTarget;
+import com.fm.openinstall.OpenInstall;
 import com.nanchen.crashmanager.CrashApplication;
 import com.yc.mema.R;
 import com.yc.mema.service.InitializeService;
@@ -32,6 +34,5 @@ public class MyApplication extends CrashApplication {
     public static Application getInstance(){
         return sApplication;
     }
-
 
 }

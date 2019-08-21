@@ -1,1 +1,1 @@
-include ':app','ToprightmenuLibrary','loadingLibrary','LayoutManagerGroup'
+include ':app','ToprightmenuLibrary','loadingLibrary','LayoutManagerGroup','dkplayer-java'

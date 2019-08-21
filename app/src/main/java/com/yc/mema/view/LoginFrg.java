@@ -7,17 +7,22 @@ import android.text.Spanned;
 import android.text.style.ForegroundColorSpan;
 import android.view.View;
 
+import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.StringUtils;
+import com.blankj.utilcode.util.Utils;
 import com.flyco.tablayout.listener.CustomTabEntity;
 import com.flyco.tablayout.listener.OnTabSelectListener;
+import com.fm.openinstall.OpenInstall;
 import com.gyf.immersionbar.ImmersionBar;
 import com.yc.mema.R;
 import com.yc.mema.base.BaseFragment;
+import com.yc.mema.base.User;
 import com.yc.mema.controller.UIHelper;
 import com.yc.mema.databinding.FLoginBinding;
 import com.yc.mema.impl.LoginContract;
 import com.yc.mema.presenter.LoginPresenter;
 import com.yc.mema.utils.CountDownTimerUtils;
+import com.yc.mema.utils.cache.ShareSessionIdCache;
 import com.yc.mema.utils.cache.SharedAccount;
 import com.yc.mema.view.act.HtmlAct;
 import com.yc.mema.weight.TabEntity;
@@ -61,6 +66,7 @@ public class LoginFrg extends BaseFragment<LoginPresenter, FLoginBinding> implem
 
     @Override
     protected void initView(View view) {
+        setSwipeBackEnable(false);
         ImmersionBar.with(this).navigationBarColor(R.color.white).statusBarDarkFont(true).init();
         mB.tvCode.setOnClickListener(this);
         mB.btSubmit.setOnClickListener(this);
@@ -126,6 +132,8 @@ public class LoginFrg extends BaseFragment<LoginPresenter, FLoginBinding> implem
 
     @Override
     public void onResgist(String phone, String pwd) {
+        //用户注册成功后调用
+        OpenInstall.reportRegister();
         mB.tbLayout.setCurrentTab(0);
         mPosition = 0;
         mB.btSubmit.setText(getString(R.string.login));
@@ -134,10 +142,15 @@ public class LoginFrg extends BaseFragment<LoginPresenter, FLoginBinding> implem
     }
 
     @Override
-    public void onLogin(JSONObject user) {
+    public void onLogin(JSONObject data) {
+        JSONObject user = data.optJSONObject("user");
+        User.getInstance().setUserObj(user);
         if (user.optString("headUrl").equals("null") || user.optString("nickName").equals("null") || user.optString("birthday").equals("null")){
-            UIHelper.startInformationFrg(this);
+            UIHelper.startInformationFrg(this, data);
         }else {
+            User.getInstance().setLogin(true);
+            ShareSessionIdCache.getInstance(Utils.getApp()).save(data.optString("token"));
+            ShareSessionIdCache.getInstance(Utils.getApp()).saveUserId(user.optString("userId"));
             UIHelper.startMainAct();
             act.finish();
         }
@@ -160,4 +173,12 @@ public class LoginFrg extends BaseFragment<LoginPresenter, FLoginBinding> implem
             mB.etPwd.setText(pwd);
         }
     }
+
+   /* @Override
+    public boolean onBackPressedSupport() {
+        UIHelper.startMainAct();
+        ActivityUtils.finishAllActivities();
+        return true;
+    }*/
+
 }

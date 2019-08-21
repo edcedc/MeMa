@@ -110,6 +110,10 @@ public class GiftDescFrg extends BaseFragment<GiftDescPresenter, FGiftBinding> i
         mB.tvPhone.setText(bean.getIphone());
         mB.tvAddress.setText("商家地址：" +
                 bean.getPcyAdd() + bean.getAddress());
+        String tips = bean.getTips();
+        mB.tvCozy.setVisibility(tips == null ? View.GONE : View.VISIBLE);
+        mB.tvCozy.setText(tips == null ? "" : tips);
+
         String discount = bean.getDiscount();
         if (!StringUtils.isEmpty(discount)){
             String[] split = discount.split("，");
