@@ -26,7 +26,7 @@ public interface OneContract {
         public abstract void onRequest(String county, String search, int itemize, int pagetNumber);
         public abstract void onBanner();
         public abstract void onGridView(BaseFragment root, WithScrollGridView recyclerView);
-
+        public abstract void onLabel();
     }
 
 }

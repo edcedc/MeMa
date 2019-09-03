@@ -17,6 +17,7 @@ import com.yc.mema.view.ApplyFrg;
 import com.yc.mema.view.BingPhoneFrg;
 import com.yc.mema.view.BirthdayRecordsFrg;
 import com.yc.mema.view.BlackListFrg;
+import com.yc.mema.view.CategoryFrg;
 import com.yc.mema.view.ChangePwdFrg;
 import com.yc.mema.view.CollectionFrg;
 import com.yc.mema.view.ComplaintFrg;
@@ -24,6 +25,7 @@ import com.yc.mema.view.FiveFrg;
 import com.yc.mema.view.ForgetFrg;
 import com.yc.mema.view.HeadFrg;
 import com.yc.mema.view.HelpFrg;
+import com.yc.mema.view.ImmediatelyFrg;
 import com.yc.mema.view.InformationFrg;
 import com.yc.mema.view.MainFrg;
 import com.yc.mema.view.MemaFrg;
@@ -36,9 +38,13 @@ import com.yc.mema.view.ReportFrg;
 import com.yc.mema.view.ReportNewsFrg;
 import com.yc.mema.view.SearchGiftFrg;
 import com.yc.mema.view.SearchNewsFrg;
+import com.yc.mema.view.SearchShopFrg;
 import com.yc.mema.view.SexFrg;
 import com.yc.mema.view.ShareFrg;
+import com.yc.mema.view.ShopCommentFrg;
+import com.yc.mema.view.ShopDescFrg;
 import com.yc.mema.view.SystemDescFrg;
+import com.yc.mema.view.TwoFrg;
 import com.yc.mema.view.UpdateNameFrg;
 import com.yc.mema.view.UserInfoFrg;
 import com.yc.mema.view.ZkingFrg;
@@ -47,6 +53,7 @@ import com.yc.mema.view.act.HtmlAct;
 import com.yc.mema.view.act.LoginAct;
 import com.yc.mema.view.act.NewsDescAct;
 import com.yc.mema.view.act.ReleaseAct;
+import com.yc.mema.view.act.ShopDescAct;
 import com.yc.mema.view.act.VideoAct;
 import com.yc.mema.view.act.SetAct;
 import com.yc.mema.view.act.UserInfoAct;
@@ -517,4 +524,59 @@ public final class UIHelper {
         ((MainFrg) root.getParentFragment()).startBrotherFragment(frg);
     }
 
+    /**
+     *  获取商品分类推荐
+     * @param root
+     */
+    public static void startCategoryFrg(BaseFragment root) {
+        CategoryFrg frg = new CategoryFrg();
+        Bundle bundle = new Bundle();
+        frg.setArguments(bundle);
+        ((MainFrg) root.getParentFragment()).startBrotherFragment(frg);
+    }
+
+    /**
+     *  搜索商品
+     * @param root
+     */
+    public static void startSearchShopFrg(BaseFragment root) {
+        SearchShopFrg frg = new SearchShopFrg();
+        Bundle bundle = new Bundle();
+        frg.setArguments(bundle);
+        ((MainFrg) root.getParentFragment()).startBrotherFragment(frg);
+    }
+
+    /**
+     *  商品详情
+     * @param goodId
+     */
+    public static void startShopDescAct(String goodId){
+        Bundle bundle = new Bundle();
+        bundle.putString("id", goodId);
+        ActivityUtils.startActivity(bundle, ShopDescAct.class);
+    }
+
+    /**
+     *  立即购买
+     * @param shopDescFrg
+     */
+    public static void startImmediatelyFrg(BaseFragment root) {
+        ImmediatelyFrg frg = new ImmediatelyFrg();
+        Bundle bundle = new Bundle();
+        frg.setArguments(bundle);
+        root.start(frg);
+    }
+
+    /**
+     *  查看商品全部评论
+     * @param root
+     * @param id
+     */
+    public static void startShopCommentFrg(BaseFragment root, String id) {
+        ShopCommentFrg frg = new ShopCommentFrg();
+        Bundle bundle = new Bundle();
+        bundle.putString("id", id);
+        frg.setArguments(bundle);
+        root.start(frg);
+    }
 }

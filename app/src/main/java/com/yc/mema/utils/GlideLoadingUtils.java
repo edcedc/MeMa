@@ -54,7 +54,7 @@ public class GlideLoadingUtils {
         if (isUser){
             options.placeholder(R.mipmap.place_holder_user);
         }else {
-            options.placeholder(R.mipmap.place_holder);
+            options.placeholder(R.drawable.no_banner);
         }
         Glide.with(act).load(url).apply(options).into(imageView);
     }

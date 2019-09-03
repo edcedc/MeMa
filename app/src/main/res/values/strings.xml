@@ -44,6 +44,7 @@
     <string name="gift_desc" translatable="false">礼包详情</string>
     <string name="birthday_memorandum" translatable="false">生日备忘录</string>
     <string name="set" translatable="false">设置</string>
+    <string name="user_evaluate" translatable="false">用户评价</string>
     <string name="collection" translatable="false">收藏</string>
     <string name="manage" translatable="false">管理</string>
     <string name="election" translatable="false">全选</string>
@@ -56,6 +57,8 @@
     <string name="sex" translatable="false">性别</string>
     <string name="set_sex" translatable="false">设置性别</string>
     <string name="address" translatable="false">地区</string>
+    <string name="customer" translatable="false">客服</string>
+    <string name="immediately" translatable="false">立即购买</string>
     <string name="set_address" translatable="false">地区设置</string>
     <string name="me_zking" translatable="false">我的二维码</string>
     <string name="name" translatable="false">名字</string>
@@ -64,8 +67,11 @@
     <string name="set_name" translatable="false">设置名字</string>
     <string name="nan" translatable="false">男</string>
     <string name="nv" translatable="false">女</string>
+    <string name="more" translatable="false">更多</string>
+    <string name="please_sku" translatable="false">请选择规格</string>
     <string name="locate" translatable="false">定位到到位置</string>
     <string name="all" translatable="false">全部</string>
+    <string name="lock_all" translatable="false">查看全部</string>
     <string name="mema1" translatable="false">扫喵二维码图案，加我么马</string>
     <string name="account" translatable="false">账号与安全</string>
     <string name="message" translatable="false">新消息通知</string>
@@ -97,7 +103,9 @@
     <string name="name_relationship" translatable="false">输入朋友的姓名/关系</string>
     <string name="choose_birthday" translatable="false">选择他的生日</string>
     <string name="search" translatable="false">搜索</string>
+    <string name="shop_category" translatable="false">商品分类</string>
     <string name="cake" translatable="false">蛋糕</string>
+    <string name="shop_desc" translatable="false">-----   商品详情   -----</string>
     <string name="eat" translatable="false">吃</string>
     <string name="drink" translatable="false">喝</string>
     <string name="play" translatable="false">玩</string>
@@ -135,6 +143,9 @@
     <string name="address_application" translatable="false">申请地区</string>
     <string name="something" translatable="false">写点什么</string>
     <string name="submission" translatable="false">提交申请</string>
+    <string name="popular" translatable="false">热门推荐</string>
+    <string name="sales" translatable="false">销量最高</string>
+    <string name="arrivals" translatable="false">新品上架</string>
 
 
 </resources>

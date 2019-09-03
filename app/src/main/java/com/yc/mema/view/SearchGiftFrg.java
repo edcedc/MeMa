@@ -119,7 +119,7 @@ public class SearchGiftFrg extends BaseFragment<SearchGiftPresenter, FSearchGift
             }
             return false;
         });
-        mB.tvLocation.setText(AddressBean.getInstance().getCity());
+        mB.tvLocation.setText(AddressBean.getInstance().getDistrict());
     }
 
     @Override

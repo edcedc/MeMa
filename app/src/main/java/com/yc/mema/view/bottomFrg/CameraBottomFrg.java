@@ -28,6 +28,11 @@ public class CameraBottomFrg extends BaseBottomSheetFrag implements View.OnClick
     }
 
     @Override
+    protected void initParms(Bundle bundle) {
+
+    }
+
+    @Override
     public int bindLayout() {
         return R.layout.p_camera;
     }

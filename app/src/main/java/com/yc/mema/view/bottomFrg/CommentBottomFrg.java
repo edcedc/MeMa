@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.widget.AppCompatEditText;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -45,7 +47,25 @@ public class CommentBottomFrg extends BaseBottomSheetFrag implements TextView.On
     public void initView(View view) {
         etText = view.findViewById(R.id.et_text);
         etText.setOnEditorActionListener(this);
+        etText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                /*if (editable.length() > 100){
+                    showToast("字数过长可能无法显示");
+                    return;
+                }*/
+            }
+        });
         new Handler().postDelayed(() -> showInput(etText), 200);
     }
 
@@ -66,6 +86,11 @@ public class CommentBottomFrg extends BaseBottomSheetFrag implements TextView.On
         close(false);
         etText.setText("");
         type = 1;
+    }
+
+    @Override
+    protected void initParms(Bundle bundle) {
+
     }
 
     @Override

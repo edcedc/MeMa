@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.flyco.roundview.RoundLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    app:rv_backgroundColor="@color/white"
+    app:rv_cornerRadius_TL="@dimen/px20"
+    app:rv_cornerRadius_TR="@dimen/px20"
+    tools:ignore="MissingConstraints">
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/px20"
+        android:orientation="vertical">
+
+        <android.support.v7.widget.AppCompatImageView
+            android:id="@+id/iv_img"
+            android:layout_width="@dimen/px200"
+            android:layout_height="@dimen/px200"
+            android:scaleType="fitXY"
+            android:src="@mipmap/place_holder" />
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/tv_sku"
+            style="@style/Tv12gray"
+            android:layout_marginLeft="@dimen/px20"
+            android:text="已选："
+            android:textColor="@color/black_333333"
+            app:layout_constraintBottom_toBottomOf="@id/iv_img"
+            app:layout_constraintLeft_toRightOf="@id/iv_img" />
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/tv_sales"
+            style="@style/Tv12gray"
+            android:layout_marginLeft="@dimen/px20"
+            android:text="库存0件"
+            app:layout_constraintBottom_toTopOf="@id/tv_sku"
+            app:layout_constraintLeft_toRightOf="@id/iv_img" />
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/tv_price"
+            style="@style/Tv15black"
+            android:layout_marginLeft="@dimen/px20"
+            android:textColor="@color/red_EC5B44"
+            app:layout_constraintBottom_toTopOf="@id/tv_sales"
+            app:layout_constraintLeft_toRightOf="@id/iv_img" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/px30"
+            android:nestedScrollingEnabled="false"
+            android:overScrollMode="never"
+            app:layout_constraintTop_toBottomOf="@id/iv_img" />
+
+        <View
+            android:id="@+id/view"
+            style="@style/divider_3"
+            app:layout_constraintTop_toBottomOf="@id/recyclerView" />
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/tv_text"
+            style="@style/Tv12gray"
+            android:layout_marginTop="@dimen/px30"
+            android:text="选择数量"
+            android:textColor="@color/black_333333"
+            app:layout_constraintTop_toBottomOf="@id/view" />
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/tv_jia"
+            style="@style/Tv12gray"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:background="@color/white_f4f4f4"
+            android:gravity="center"
+            android:text="+"
+            app:layout_constraintBottom_toBottomOf="@id/tv_text"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="@id/tv_text" />
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/tv_num"
+            style="@style/Tv12gray"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_marginRight="@dimen/px10"
+            android:background="@color/white_f4f4f4"
+            android:gravity="center"
+            android:text="1"
+            app:layout_constraintBottom_toBottomOf="@id/tv_text"
+            app:layout_constraintRight_toLeftOf="@id/tv_jia"
+            app:layout_constraintTop_toTopOf="@id/tv_text" />
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/tv_jian"
+            style="@style/Tv12gray"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_marginRight="@dimen/px10"
+            android:background="@color/white_f4f4f4"
+            android:gravity="center"
+            android:text="-"
+            app:layout_constraintBottom_toBottomOf="@id/tv_text"
+            app:layout_constraintRight_toLeftOf="@id/tv_num"
+            app:layout_constraintTop_toTopOf="@id/tv_text" />
+
+    </android.support.constraint.ConstraintLayout>
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/bt_submit"
+        android:layout_marginTop="@dimen/px150"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/red_EC5B44"
+        android:gravity="center"
+        android:padding="@dimen/px20"
+        android:text="@string/submit"
+        android:textColor="@color/white" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="10dp" />
+
+</com.flyco.roundview.RoundLinearLayout>

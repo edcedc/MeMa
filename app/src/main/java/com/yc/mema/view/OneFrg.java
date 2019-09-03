@@ -48,6 +48,7 @@ public class OneFrg extends BaseFragment<OnePresenter, FOneBinding> implements O
     private String parentId;
 
     private int itemize;
+    int[] item = {2 ,3 ,4, 5, 6, 7, 1, 0};
 
     @Override
     public void initPresenter() {
@@ -83,8 +84,9 @@ public class OneFrg extends BaseFragment<OnePresenter, FOneBinding> implements O
         mB.refreshLayout.startRefresh();
         mPresenter.onBanner();
         mPresenter.onGridView(this, mB.rvLabel);
+//        mPresenter.onLabel();
         mB.rvLabel.setOnItemClickListener((adapterView, view1, i, l) -> {
-            this.itemize = i;
+            this.itemize = item[i];
             mB.refreshLayout.startRefresh();
         });
         setRefreshLayout(mB.refreshLayout, new RefreshListenerAdapter() {
@@ -164,10 +166,10 @@ public class OneFrg extends BaseFragment<OnePresenter, FOneBinding> implements O
     public void onSupportVisible() {
         super.onSupportVisible();
         mB.banner.startAutoPlay();
-        String city = AddressBean.getInstance().getCity();
+        String city = AddressBean.getInstance().getDistrict();
         if (city != null && !city.equals(mB.tvLocation.getText().toString())){
-            mB.tvLocation.setText(city);
-            mB.refreshLayout.startRefresh();
+//            mB.tvLocation.setText(city);
+//            mB.refreshLayout.startRefresh();
         }
     }
 

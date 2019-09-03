@@ -10,6 +10,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.TimeUtils;
+import com.lcodecore.tkrefreshlayout.RefreshListenerAdapter;
+import com.lcodecore.tkrefreshlayout.TwinklingRefreshLayout;
 import com.ldf.calendar.Utils;
 import com.ldf.calendar.component.CalendarAttr;
 import com.ldf.calendar.component.CalendarViewAdapter;
@@ -124,6 +126,20 @@ public class BirthdayRecordsFrg extends BaseFragment<BirthdayRecordsPresenter, F
             }
         };
         initCalendarView();
+
+        mB.refreshLayout.setEnableLoadmore(false);
+        setRefreshLayout(mB.refreshLayout, new RefreshListenerAdapter() {
+            @Override
+            public void onRefresh(TwinklingRefreshLayout refreshLayout) {
+                mPresenter.onRequest(nowString);
+            }
+        });
+    }
+
+    @Override
+    public void hideLoading() {
+        super.hideLoading();
+        super.setRefreshLayout(pagerNumber, mB.refreshLayout);
     }
 
     /**

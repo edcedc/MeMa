@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:ignore="MissingConstraints"
+    android:padding="@dimen/px30"
+    android:background="?actionBarItemBackground"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <com.yc.mema.weight.CircleImageView
+        android:id="@+id/iv_head"
+        android:layout_width="27dp"
+        android:layout_height="27dp"
+        android:src="@mipmap/place_holder_user"
+        app:layout_constraintLeft_toLeftOf="parent"/>
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/tv_name"
+        style="@style/Tv12gray"
+        android:textColor="@color/black_333333"
+        android:layout_marginLeft="@dimen/px30"
+        android:textSize="@dimen/size22"
+        app:layout_constraintBottom_toTopOf="@id/tv_time"
+        app:layout_constraintLeft_toRightOf="@+id/iv_head"
+        app:layout_constraintTop_toTopOf="@id/iv_head" />
+
+    <RatingBar
+        android:id="@+id/ratingbar"
+        android:layout_marginLeft="@dimen/px20"
+        app:layout_constraintLeft_toRightOf="@id/tv_name"
+        app:layout_constraintTop_toTopOf="@id/tv_name"
+        app:layout_constraintBottom_toBottomOf="@id/tv_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:maxHeight="12dp"
+        android:minHeight="12dp"
+        android:progressDrawable="@drawable/rb_evaluate"
+        android:isIndicator="true"
+        android:numStars="5"
+        android:rating="0"
+        android:stepSize="0.5"/>
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/tv_time"
+        style="@style/Tv12gray"
+        android:layout_marginLeft="@dimen/px30"
+        android:textSize="@dimen/size22"
+        app:layout_constraintTop_toBottomOf="@id/tv_name"
+        app:layout_constraintBottom_toBottomOf="@id/iv_head"
+        app:layout_constraintLeft_toRightOf="@+id/iv_head"/>
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/tv_content"
+        style="@style/Tv12gray"
+        android:layout_marginTop="@dimen/px20"
+        android:textColor="@color/black_333333"
+        app:layout_constraintLeft_toLeftOf="@id/tv_time"
+        app:layout_constraintTop_toBottomOf="@id/tv_time" />
+
+    <GridView
+        android:visibility="gone"
+        android:id="@+id/gridView"
+        app:layout_constraintLeft_toLeftOf="@id/tv_content"
+        app:layout_constraintTop_toBottomOf="@id/tv_content"
+        android:numColumns="3"
+        android:layout_marginTop="@dimen/px20"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+</android.support.constraint.ConstraintLayout>

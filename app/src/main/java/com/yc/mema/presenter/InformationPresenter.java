@@ -121,7 +121,7 @@ public class InformationPresenter extends InformationContract.Presenter {
                             List<DataBean> list = baseResponseBeanResponse.body().result;
                             if (list != null && list.size() != 0){
                                 for (DataBean bean : list){
-                                    if (bean.getRegionId().equals("100")){
+                                    if (bean.getRegionName().equals("中国")){
                                         list.remove(bean);
                                         break;
                                     }

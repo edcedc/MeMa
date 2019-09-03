@@ -108,7 +108,7 @@ public class NewsDescPresenter extends NewsDescContract.Presenter{
                         if (baseResponseBeanResponse.body().code == Code.CODE_SUCCESS){
                             mView.firstComment(baseResponseBeanResponse.body().result);
                         }
-                        showToast(baseResponseBeanResponse.body().description);
+//                        showToast(baseResponseBeanResponse.body().description);
                     }
 
                     @Override
@@ -139,7 +139,7 @@ public class NewsDescPresenter extends NewsDescContract.Presenter{
                         if (baseResponseBeanResponse.body().code == Code.CODE_SUCCESS){
                             mView.secondComment(position, baseResponseBeanResponse.body().result);
                         }
-                        showToast(baseResponseBeanResponse.body().description);
+//                        showToast(baseResponseBeanResponse.body().description);
                     }
 
                     @Override

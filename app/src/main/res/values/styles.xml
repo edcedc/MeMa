@@ -115,7 +115,10 @@
         <item name="android:windowSoftInputMode">adjustResize</item>
     </style>
 
-
+    <style name="Tv13red" parent="TextStyle">
+        <item name="android:textColor">@color/red_F67690</item>
+        <item name="android:textSize">@dimen/size26</item>
+    </style>
 
     <style name="Tv12white" parent="TextStyle">
         <item name="android:textColor">@color/white</item>
@@ -138,6 +141,11 @@
     </style>
 
     <style name="Tv15black" parent="TextStyle">
+        <item name="android:textColor">@color/black_333333</item>
+        <item name="android:textSize">@dimen/size30</item>
+    </style>
+
+    <style name="Tv13black" parent="TextStyle">
         <item name="android:textColor">@color/black_333333</item>
         <item name="android:textSize">@dimen/size30</item>
     </style>

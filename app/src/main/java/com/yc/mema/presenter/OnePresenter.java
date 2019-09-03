@@ -98,19 +98,52 @@ public class OnePresenter extends OneContract.Presenter {
 
     @Override
     public void onGridView(BaseFragment root, WithScrollGridView recyclerView) {
-        String[] str = {act.getString(R.string.all), act.getString(R.string.cake), act.getString(R.string.eat), act.getString(R.string.drink),
-                act.getString(R.string.play), act.getString(R.string.hHappy), act.getString(R.string.gift), act.getString(R.string.free)};
-        int[] img = {R.mipmap.quan, R.mipmap.dan, R.mipmap.chi, R.mipmap.he,
-                R.mipmap.wan, R.mipmap.le, R.mipmap.li, R.mipmap.mianfei,};
+        String[] str = {act.getString(R.string.eat), act.getString(R.string.drink), act.getString(R.string.play), act.getString(R.string.hHappy),
+                act.getString(R.string.gift),act.getString(R.string.free),
+                act.getString(R.string.cake), act.getString(R.string.all)};
+        int[] img = {R.drawable.s_chi, R.drawable.s_he, R.drawable.s_wan, R.drawable.s_le,
+                R.drawable.s_li, R.drawable.s_mian, R.drawable.s_dan,R.drawable.s_quan};
+        int[] item = {2 ,3 ,4, 5, 6, 7, 1, 0};
 
         List<DataBean> list = new ArrayList<>();
-        for (int i = 0; i < str.length; i++) {
+        for (int i = 0; i < img.length; i++) {
             DataBean bean = new DataBean();
             bean.setImg(img[i]);
             bean.setTitle(str[i]);
+            bean.setType(item[i]);
             list.add(bean);
         }
         LabelAdapter adapter = new LabelAdapter(act, list);
         recyclerView.setAdapter(adapter);
+    }
+
+    @Override
+    public void onLabel() {
+        CloudApi.welfareGetWelfareClassifys()
+                .doOnSubscribe(disposable -> {})
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<Response<BaseResponseBean<List<DataBean>>>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                        mView.addDisposable(d);
+                    }
+
+                    @Override
+                    public void onNext(Response<BaseResponseBean<List<DataBean>>> baseResponseBeanResponse) {
+                        if (baseResponseBeanResponse.body().code == Code.CODE_SUCCESS){
+
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        mView.onError(e);
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
     }
 }

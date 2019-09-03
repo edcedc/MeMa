@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <ezy.ui.layout.LoadingLayout
+        android:id="@+id/loadinglayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
+            <android.support.v4.widget.NestedScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <android.support.constraint.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    tools:ignore="MissingConstraints">
+
+                    <com.youth.banner.Banner
+                        android:id="@+id/banner"
+                        android:layout_width="match_parent"
+                        android:layout_height="375dp"
+                        app:image_scale_type="fit_xy"
+                        app:indicator_drawable_selected="@color/red_F67690"
+                        app:indicator_drawable_unselected="@android:color/white"
+                        app:indicator_height="4dp"
+                        app:indicator_margin="4dp"
+                        app:indicator_width="20dp"
+                        app:is_auto_play="true" />
+
+                    <FrameLayout
+                        android:id="@+id/fy_close"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/px40">
+
+                        <android.support.v7.widget.AppCompatImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@mipmap/y49" />
+
+                    </FrameLayout>
+
+
+                    <android.support.v7.widget.AppCompatTextView
+                        android:id="@+id/tv_price"
+                        style="@style/Tv15black"
+                        android:layout_margin="@dimen/px30"
+                        android:textColor="@color/red_EC5B44"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/banner" />
+
+                    <android.support.v7.widget.AppCompatTextView
+                        android:id="@+id/tv_title"
+                        style="@style/Tv15black"
+                        android:layout_marginLeft="@dimen/px30"
+                        android:layout_marginTop="@dimen/px20"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/tv_price" />
+
+                    <android.support.v7.widget.AppCompatTextView
+                        android:id="@+id/tv_sales"
+                        style="@style/Tv12gray"
+                        android:layout_marginLeft="@dimen/px30"
+                        android:layout_marginTop="@dimen/px20"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/tv_title" />
+
+                    <View
+                        android:id="@+id/view"
+                        style="@style/divider_2"
+                        android:layout_marginTop="@dimen/px30"
+                        app:layout_constraintTop_toBottomOf="@id/tv_sales" />
+
+                    <android.support.v7.widget.AppCompatTextView
+                        android:id="@+id/tv_sku"
+                        style="@style/Tv12gray"
+                        android:layout_width="match_parent"
+                        android:drawableRight="@mipmap/fan1"
+                        android:padding="@dimen/px30"
+                        android:text="@string/please_sku"
+                        android:textColor="@color/black_333333"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/view" />
+
+                    <View
+                        android:id="@+id/view1"
+                        style="@style/divider_2"
+                        app:layout_constraintTop_toBottomOf="@id/tv_sku" />
+
+                    <android.support.v7.widget.AppCompatTextView
+                        android:id="@+id/tv_evaluate"
+                        style="@style/Tv12gray"
+                        android:layout_marginLeft="@dimen/px30"
+                        android:layout_marginTop="@dimen/px20"
+                        android:text="宝贝评价（0）"
+                        android:textColor="@color/black_333333"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/view1" />
+
+                    <android.support.v7.widget.AppCompatTextView
+                        android:id="@+id/tv_look"
+                        style="@style/Tv12gray"
+                        android:layout_marginLeft="@dimen/px30"
+                        android:layout_marginTop="@dimen/px20"
+                        android:layout_marginRight="@dimen/px30"
+                        android:drawableRight="@mipmap/fan2"
+                        android:drawablePadding="@dimen/px20"
+                        android:text="@string/lock_all"
+                        android:textColor="@color/red_EC5B44"
+                        app:layout_constraintBottom_toBottomOf="@id/tv_evaluate"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="@id/tv_evaluate" />
+
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/recyclerView"
+                        android:visibility="gone"
+                        app:layout_constraintTop_toBottomOf="@id/tv_look"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:nestedScrollingEnabled="false"
+                        android:overScrollMode="never" />
+
+                    <android.support.v7.widget.AppCompatTextView
+                        android:id="@+id/tv_desc"
+                        style="@style/Tv12gray"
+                        android:layout_width="match_parent"
+                        android:layout_marginTop="@dimen/px20"
+                        android:background="@color/white_f4f4f4"
+                        android:gravity="center"
+                        android:padding="@dimen/px10"
+                        android:text="@string/shop_desc"
+                        android:textColor="@color/black_333333"
+                        android:textSize="@dimen/size16"
+                        app:layout_constraintTop_toBottomOf="@id/recyclerView"
+                        app:layout_constraintLeft_toLeftOf="parent" />
+
+                    <ProgressBar
+                        android:id="@+id/progressBar"
+                        style="?android:attr/progressBarStyleHorizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="2dp"
+                        android:max="100"
+                        android:progress="0"
+                        app:layout_constraintTop_toBottomOf="@id/tv_desc" />
+
+                    <com.yc.mema.weight.X5WebView
+                        android:id="@+id/webView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintTop_toBottomOf="@id/progressBar" />
+
+                </android.support.constraint.ConstraintLayout>
+
+            </android.support.v4.widget.NestedScrollView>
+
+            <LinearLayout
+                android:background="@color/white"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:orientation="horizontal"
+                android:paddingLeft="@dimen/px30"
+                android:paddingTop="@dimen/px10"
+                android:paddingRight="@dimen/px30"
+                android:paddingBottom="@dimen/px10">
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/tv_customer"
+                    style="@style/Tv12gray"
+                    android:drawableTop="@mipmap/chatbubble1"
+                    android:drawablePadding="@dimen/px10"
+                    android:gravity="center"
+                    android:text="@string/customer" />
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/tv_collection"
+                    style="@style/Tv12gray"
+                    android:layout_marginLeft="@dimen/px50"
+                    android:drawableTop="@mipmap/staroutline"
+                    android:drawablePadding="@dimen/px10"
+                    android:gravity="center"
+                    android:text="@string/collection" />
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_weight="1" />
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/tv_immediately"
+                    style="@style/Tv12gray"
+                    android:layout_gravity="right|center"
+                    android:background="@mipmap/y50"
+                    android:gravity="center"
+                    android:text="@string/immediately"
+                    android:textColor="@color/white" />
+
+            </LinearLayout>
+
+
+        </FrameLayout>
+
+    </ezy.ui.layout.LoadingLayout>
+
+</layout>

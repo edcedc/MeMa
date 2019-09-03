@@ -141,6 +141,7 @@
             <android.support.v7.widget.AppCompatTextView
                 android:id="@+id/tv_share"
                 style="@style/Tv15black"
+                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:background="?actionBarItemBackground"
                 android:drawableRight="@mipmap/y16"

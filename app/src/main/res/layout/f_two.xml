@@ -1,10 +1,124 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <android.support.constraint.ConstraintLayout
+
+    <FrameLayout
+        android:background="@color/white"
         android:layout_width="match_parent"
-        android:background="#cc3"
         android:layout_height="match_parent">
 
-    </android.support.constraint.ConstraintLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="186dp"
+            android:background="@color/red_F67690" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/px40"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:padding="@dimen/px30"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <com.yc.mema.weight.DrawableLeftCenterTextView
+                    android:id="@+id/tv_location"
+                    android:visibility="gone"
+                    style="@style/Tv15white"
+                    android:layout_marginRight="@dimen/px20"
+                    android:drawableRight="@mipmap/y23"
+                    android:drawablePadding="@dimen/px20"
+                    android:gravity="center_vertical" />
+
+                <include layout="@layout/include_search" />
+
+            </LinearLayout>
+
+
+            <com.lcodecore.tkrefreshlayout.TwinklingRefreshLayout
+                android:id="@+id/refreshLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <android.support.v4.widget.NestedScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:descendantFocusability="blocksDescendants"
+                        android:orientation="vertical">
+
+                        <com.youth.banner.Banner
+                            android:id="@+id/banner"
+                            android:layout_width="match_parent"
+                            android:layout_height="160dp"
+                            android:layout_marginLeft="@dimen/px30"
+                            android:layout_marginRight="@dimen/px30"
+                            app:image_scale_type="fit_xy"
+                            app:indicator_drawable_selected="@color/red_F67690"
+                            app:indicator_drawable_unselected="@android:color/white"
+                            app:indicator_height="4dp"
+                            app:indicator_margin="4dp"
+                            app:indicator_width="20dp"
+                            app:is_auto_play="true" />
+
+                        <com.yc.mema.weight.WithScrollGridView
+                            android:id="@+id/rv_label"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/px30"
+                            android:layout_marginLeft="@dimen/px60"
+                            android:layout_marginRight="@dimen/px60"
+                            android:background="@color/white"
+                            android:nestedScrollingEnabled="false"
+                            android:horizontalSpacing="@dimen/px20"
+                            android:numColumns="5"
+                            android:overScrollMode="never"
+                            android:verticalSpacing="@dimen/px20" />
+
+                       <LinearLayout
+                           android:layout_marginTop="@dimen/px20"
+                           android:padding="@dimen/px20"
+                           android:background="@color/white_f4f4f4"
+                           android:layout_width="match_parent"
+                           android:layout_height="wrap_content"
+                           android:orientation="vertical">
+
+                           <com.zhy.view.flowlayout.TagFlowLayout
+                               android:id="@+id/fl_label"
+                               android:layout_width="match_parent"
+                               android:layout_height="wrap_content"
+                               app:max_select="1" />
+
+                           <android.support.v7.widget.RecyclerView
+                               android:id="@+id/recyclerView"
+                               android:layout_marginTop="@dimen/px20"
+                               android:layout_width="match_parent"
+                               android:layout_height="wrap_content"
+                               android:nestedScrollingEnabled="false"
+                               android:overScrollMode="never" />
+
+                       </LinearLayout>
+
+                    </LinearLayout>
+
+                </android.support.v4.widget.NestedScrollView>
+
+
+            </com.lcodecore.tkrefreshlayout.TwinklingRefreshLayout>
+
+        </LinearLayout>
+
+    </FrameLayout>
+
 </layout>

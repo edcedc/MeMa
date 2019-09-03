@@ -81,16 +81,19 @@ public abstract class BaseBottomSheetFrag extends BottomSheetDialogFragment {
         mBehavior.setHideable(true);
         //圆角边的关键
         ((View) rootView.getParent()).setBackgroundColor(Color.TRANSPARENT);
-        rootView.post(new Runnable() {
-            @Override
-            public void run() {
-                /**
-                 * PeekHeight默认高度256dp 会在该高度上悬浮
-                 * 设置等于view的高 就不会卡住
-                 */
-                mBehavior.setPeekHeight(rootView.getHeight());
-            }
+        rootView.post(() -> {
+            /**
+             * PeekHeight默认高度256dp 会在该高度上悬浮
+             * 设置等于view的高 就不会卡住
+             */
+            mBehavior.setPeekHeight(rootView.getHeight());
         });
+        // 初始化参数
+        Bundle bundle = getArguments();
+        if (bundle == null) {
+            bundle = new Bundle();
+        }
+        initParms(bundle);
         initView(rootView);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             dialog.getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
@@ -98,6 +101,7 @@ public abstract class BaseBottomSheetFrag extends BottomSheetDialogFragment {
         return dialog;
     }
 
+    protected abstract void initParms(Bundle bundle);
 
     public abstract int bindLayout();
 

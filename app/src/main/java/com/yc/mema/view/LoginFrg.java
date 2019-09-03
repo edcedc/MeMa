@@ -110,7 +110,7 @@ public class LoginFrg extends BaseFragment<LoginPresenter, FLoginBinding> implem
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.bt_submit:
-                mPresenter.login(mB.etPhone.getText().toString(), mB.etCode.getText().toString(), mB.etPwd.getText().toString(), mB.cbSubmit.isChecked(), mPosition);
+                mPresenter.login    (mB.etPhone.getText().toString(), mB.etCode.getText().toString(), mB.etPwd.getText().toString(), mB.cbSubmit.isChecked(), mPosition);
                 break;
             case R.id.tv_code:
                 mPresenter.code(mB.etPhone.getText().toString());

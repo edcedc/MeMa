@@ -78,7 +78,10 @@ public class GiftDescFrg extends BaseFragment<GiftDescPresenter, FGiftBinding> i
         mB.recyclerView.setAdapter(adapter);
         mPresenter.onRequest(id);
         complaintBottomFrg = new ComplaintBottomFrg();
-        complaintBottomFrg.setComplaintListener(() -> UIHelper.startComplaintFrg(GiftDescFrg.this, id, Constants.CAUSES_WELFARE_COMPLAINTS));
+        complaintBottomFrg.setComplaintListener(() -> {
+            if (!((BaseActivity)act).isLogin())return;
+            UIHelper.startComplaintFrg(GiftDescFrg.this, id, Constants.CAUSES_WELFARE_COMPLAINTS);
+        });
     }
 
     @Override

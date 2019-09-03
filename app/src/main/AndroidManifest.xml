@@ -67,7 +67,7 @@
         <activity
             android:name=".MainActivity"
             android:resizeableActivity="true"
-            android:launchMode="singleTop"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait"/>
 
         <activity
@@ -107,6 +107,12 @@
             android:screenOrientation="portrait"/>
         <activity
             android:name=".view.act.ReleaseAct"
+            android:resizeableActivity="true"
+            android:theme="@style/AppTheme.NoActionBar.SwipeBack"
+            android:screenOrientation="portrait"/>
+
+        <activity
+            android:name=".view.act.ShopDescAct"
             android:resizeableActivity="true"
             android:theme="@style/AppTheme.NoActionBar.SwipeBack"
             android:screenOrientation="portrait"/>

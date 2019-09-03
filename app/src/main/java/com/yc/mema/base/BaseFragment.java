@@ -382,18 +382,19 @@ public abstract class BaseFragment<P extends BasePresenter, VB extends ViewDataB
 
     protected void setRecyclerViewType(RecyclerView recyclerView){
         recyclerView.setLayoutManager(new LinearLayoutManager(act));
-        setRecyclerView(recyclerView, R.color.white);
+        setRecyclerView(recyclerView);
     }
 
     protected void setRecyclerViewType(RecyclerView recyclerView, int baColor){
         recyclerView.setLayoutManager(new LinearLayoutManager(act));
-        setRecyclerView(recyclerView, baColor);
+        setRecyclerView(recyclerView);
+        recyclerView.setBackgroundColor(ContextCompat.getColor(act,baColor));
     }
 
-    protected void setRecyclerViewGridType(RecyclerView recyclerView, int spanCount, int width, int height, int color){
+    protected void setRecyclerViewGridType(RecyclerView recyclerView, int spanCount, int width, int height, int colorm){
         recyclerView.setLayoutManager(new GridLayoutManager(act, spanCount));
-        recyclerView.addItemDecoration(new GridDividerItemDecoration(width, height, ContextCompat.getColor(act,color)));
-        setRecyclerView(recyclerView, R.color.white);
+        recyclerView.addItemDecoration(new GridDividerItemDecoration(width, height, ContextCompat.getColor(act,colorm)));
+        setRecyclerView(recyclerView);
     }
 
     protected void setRecyclerViewGridType(RecyclerView recyclerView, int spanCount, int width, int height){
@@ -401,10 +402,10 @@ public abstract class BaseFragment<P extends BasePresenter, VB extends ViewDataB
         recyclerView.addItemDecoration(new GridDividerItemDecoration(width, height, ContextCompat.getColor(act,R.color.white)));
     }
 
-    private void setRecyclerView(RecyclerView recyclerView, int baColor){
+    private void setRecyclerView(RecyclerView recyclerView){
         recyclerView.setHasFixedSize(true);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recyclerView.setBackgroundColor(ContextCompat.getColor(act,baColor));
+//        recyclerView.setBackgroundColor(ContextCompat.getColor(act,baColor));
     }
 
     protected void setTitle(String title) {

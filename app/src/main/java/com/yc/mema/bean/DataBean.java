@@ -79,6 +79,65 @@ public class DataBean implements Serializable {
     private int handle;
     private String tips;
     private String bookId;
+    private String categoryName;
+    private String categoryId;
+    private String goodName;
+    private int sales;
+    private String goodId;
+    private String remark;
+    private double starLevel;
+    private String specName;
+    private String specValue;
+    private String valueId;
+    private String specSku;
+
+    public String getSpecSku() {
+        return specSku;
+    }
+
+    public String getValueId() {
+        return valueId;
+    }
+
+    public String getSpecValue() {
+        return specValue;
+    }
+
+    public String getSpecName() {
+        return specName;
+    }
+
+    public double getStarLevel() {
+        return starLevel;
+    }
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public String getGoodId() {
+        return goodId;
+    }
+
+    public int getSales() {
+        return sales;
+    }
+
+    public String getGoodName() {
+        return goodName;
+    }
+
+    public String getCategoryId() {
+        return categoryId;
+    }
+
+    public String getCategoryName() {
+        return categoryName;
+    }
+
+    public void setAttachId(String attachId) {
+        this.attachId = attachId;
+    }
 
     public String getBookId() {
         return bookId;
@@ -454,6 +513,17 @@ public class DataBean implements Serializable {
         this.allSelected = allSelected;
     }
 
+    private List<DataBean> specValues;
+
+    public List<DataBean> getSpecValues() {
+        return specValues;
+    }
+
+    private List<DataBean> specList;
+
+    public List<DataBean> getSpecList() {
+        return specList;
+    }
 
     private List<DataBean> welfareImgs;
 
@@ -465,6 +535,12 @@ public class DataBean implements Serializable {
 
     public List<DataBean> getInformationImg() {
         return informationImg;
+    }
+
+    private List<DataBean> goodSupImgs;
+
+    public List<DataBean> getGoodSupImgs() {
+        return goodSupImgs;
     }
 
     private List<DataBean> list = new ArrayList<>();

@@ -49,7 +49,7 @@ public class CloudApi {
     public static final String SERVLET_URL = "http://" +
             url + "/brithday/";
 
-     public static final String SERVLET_IMG_URL = SERVLET_URL + "attach/showPic?attachId=";
+    public static final String SERVLET_IMG_URL = SERVLET_URL + "attach/showPic?attachId=";
 
     public static final String TEST_URL = ""; //测试
 
@@ -61,39 +61,45 @@ public class CloudApi {
 
 
     /**
-     *  获取引导页列表
+     * 获取引导页列表
      */
     public static final String guideGetDuideList = "guide/getDuideList";
 
     /**
-     *  获取福利轮播图
+     * 获取福利轮播图
      */
     public static final String welfareGetWelfareLunList = "welfare/getAdvertList";
 
+
     /**
-     *  获取资讯广告列表
+     * 获取商城轮播图列表
+     */
+    public static final String goodSpuGetGoodsCarouselList = "goodSpu/getGoodsCarouselList";
+
+    /**
+     * 获取资讯广告列表
      */
     public static final String informationGetInfoAdvertList = "information/getInfoAdvertList";
 
 
     /**
-     *  获取资讯分类信息列表
+     * 获取资讯分类信息列表
      */
     public static final String informationGetInfoSortList = "information/getInfoSortList";
 
     /**
-     *  获取我的福利收藏
+     * 获取我的福利收藏
      */
     public static final String welfareGetWelCollectList = "welfare/getWelCollectList";
 
 
     /**
-     *  获取我的资讯收藏
+     * 获取我的资讯收藏
      */
     public static final String informationGetInfoPraList = "information/getInfoPraList";
 
     /**
-     *  获取我的视频收藏
+     * 获取我的视频收藏
      */
     public static final String videoGetVideoCollList = "video/getVideoCollList";
 
@@ -103,7 +109,7 @@ public class CloudApi {
      */
     public static Observable<Response<BaseResponseBean<DataBean>>> userSaveUser(String head, String nickName, String birthday, String sex, String parentId, String mema, String updataMema) {
         PostRequest<BaseResponseBean<DataBean>> post = OkGo.post(SERVLET_URL + "user/saveUser");
-        if (!StringUtils.isEmpty(head)){
+        if (!StringUtils.isEmpty(head)) {
             post.params("file", new File(head));
         }
         return post
@@ -188,12 +194,30 @@ public class CloudApi {
 
     /**
      * 判断是否处理过审核信息
-     *  1审核中  2同意  3拒绝
+     * 1审核中  2同意  3拒绝
      */
     public static Observable<Response<BaseResponseBean<DataBean>>> agentGetUserAgent() {
         return OkGo.<BaseResponseBean<DataBean>>get(SERVLET_URL + "agent/getUserAgent")
                 .headers("token", ShareSessionIdCache.getInstance(Utils.getApp()).getSessionId())
                 .params("userId", ShareSessionIdCache.getInstance(Utils.getApp()).getUserId())
+                .converter(new JsonCallback<BaseResponseBean<DataBean>>() {
+                    @Override
+                    public void onSuccess(Response<BaseResponseBean<DataBean>> response) {
+
+                    }
+                })
+                .adapt(new ObservableResponse<>())
+                .subscribeOn(Schedulers.io());
+    }
+
+    /**
+     * 获取一条商品信息
+     */
+    public static Observable<Response<BaseResponseBean<DataBean>>> goodSpuGetGoodsSpu(String id) {
+        return OkGo.<BaseResponseBean<DataBean>>get(SERVLET_URL + "goodSpu/getGoodsSpu")
+                .headers("token", ShareSessionIdCache.getInstance(Utils.getApp()).getSessionId())
+                .params("userId", ShareSessionIdCache.getInstance(Utils.getApp()).getUserId())
+                .params("id", id)
                 .converter(new JsonCallback<BaseResponseBean<DataBean>>() {
                     @Override
                     public void onSuccess(Response<BaseResponseBean<DataBean>> response) {
@@ -292,7 +316,8 @@ public class CloudApi {
         return OkGo.<JSONObject>get(SERVLET_URL + "user/findByUser")
                 .headers("token", ShareSessionIdCache.getInstance(Utils.getApp()).getSessionId())
                 .params("userId", ShareSessionIdCache.getInstance(Utils.getApp()).getUserId())
-                .converter(new JsonConvert<JSONObject>() {})
+                .converter(new JsonConvert<JSONObject>() {
+                })
                 .adapt(new ObservableBody<>())
                 .subscribeOn(Schedulers.io());
     }
@@ -373,6 +398,25 @@ public class CloudApi {
     }
 
     /**
+     * 商品收藏
+     */
+    public static Observable<Response<BaseResponseBean>> goodSpuGoodCollect(String ids, int status) {
+        return OkGo.<BaseResponseBean>post(SERVLET_URL + "goodSpu/GoodCollect")
+                .headers("token", ShareSessionIdCache.getInstance(Utils.getApp()).getSessionId())
+                .params("userId", ShareSessionIdCache.getInstance(Utils.getApp()).getUserId())
+                .params("ids", ids)
+                .params("status", status)
+                .converter(new JsonCallback<BaseResponseBean>() {
+                    @Override
+                    public void onSuccess(Response<BaseResponseBean> response) {
+
+                    }
+                })
+                .adapt(new ObservableResponse<>())
+                .subscribeOn(Schedulers.io());
+    }
+
+    /**
      * 福利收藏
      */
     public static Observable<Response<BaseResponseBean>> welfareWelCollect(String welId, int status) {
@@ -390,7 +434,6 @@ public class CloudApi {
                 .adapt(new ObservableResponse<>())
                 .subscribeOn(Schedulers.io());
     }
-
 
 
     /**
@@ -452,7 +495,7 @@ public class CloudApi {
 
     /**
      * 获取验证码
-     *  验证码类型（1注册 4找回密码 8绑定手机）
+     * 验证码类型（1注册 4找回密码 8绑定手机）
      */
     public static Observable<Response<BaseResponseBean>> userSendVcode(String iphone, int vcodeType) {
         return OkGo.<BaseResponseBean>post(SERVLET_URL + "user/sendVcode")
@@ -645,14 +688,32 @@ public class CloudApi {
     }
 
     /**
+     * 获取商品评论列表
+     */
+    public static Observable<Response<BaseResponseBean<BaseListBean<DataBean>>>> goodSpuGetGoodsDiscussList(int pageNumber, String id) {
+        return OkGo.<BaseResponseBean<BaseListBean<DataBean>>>get(SERVLET_URL + "goodSpu/getGoodsDiscussList")
+                .params("page", pageNumber)
+                .params("size", Constants.pageSize)
+                .params("goodId", id)
+                .converter(new NewsCallback<BaseResponseBean<BaseListBean<DataBean>>>() {
+                    @Override
+                    public void onSuccess(Response<BaseResponseBean<BaseListBean<DataBean>>> response) {
+
+                    }
+                })
+                .adapt(new ObservableResponse<>())
+                .subscribeOn(Schedulers.io());
+    }
+
+    /**
      * 获取福利信息列表
      */
     public static Observable<Response<BaseResponseBean<BaseListBean<DataBean>>>> welfareGetWelfareList(String county, String search, int itemize, int pageNumber) {
         GetRequest<BaseResponseBean<BaseListBean<DataBean>>> request = OkGo.get(SERVLET_URL + "welfare/getWelfareList");
-        if (itemize != 0){
+        if (itemize != 0) {
             request.params("itemize", itemize);
         }
-        if (!StringUtils.isEmpty(search)){
+        if (!StringUtils.isEmpty(search)) {
             request.params("like", search);
         }
         return request
@@ -670,13 +731,14 @@ public class CloudApi {
     }
 
     /**
-     *  获取微信登陆返回值
+     * 获取微信登陆返回值
      */
-    public static Observable<JSONObject> wxLogin(String openid, String access_token){
+    public static Observable<JSONObject> wxLogin(String openid, String access_token) {
         return OkGo.<JSONObject>get("https://api.weixin.qq.com/sns/userinfo")
                 .params("access_token", access_token)
                 .params("openid", openid)
-                .converter(new JsonConvert<JSONObject>() {})
+                .converter(new JsonConvert<JSONObject>() {
+                })
                 .adapt(new ObservableBody<>())
                 .subscribeOn(Schedulers.io());
     }
@@ -812,17 +874,17 @@ public class CloudApi {
 
     public static Observable<Response<BaseResponseBean<BaseListBean<DataBean>>>> videoGetVideoList(int pageNumber, int type) {
         String url = "";
-        switch (type){
+        switch (type) {
             case VideoFrg.NORMAL_VIDEO:
             case VideoFrg.MY_VIDEO:
                 url = videoGetVideoList;
                 break;
             case VideoFrg.COLL_VIDEO:
-                url= videoGetVideoCollList;
+                url = videoGetVideoCollList;
                 break;
         }
         GetRequest<BaseResponseBean<BaseListBean<DataBean>>> request = OkGo.get(SERVLET_URL + url);
-        switch (type){
+        switch (type) {
             case VideoFrg.MY_VIDEO:
                 request.params("myId", ShareSessionIdCache.getInstance(Utils.getApp()).getUserId());
                 break;
@@ -864,8 +926,8 @@ public class CloudApi {
      */
     public static Observable<Response<BaseResponseBean>> informationSaveInfoBack(List<LocalMedia> localMediaList, String infoId, String discussId, String soId, String content, String welId) {
         PostRequest<BaseResponseBean> post = OkGo.post(SERVLET_URL + "information/saveInfoBack");
-        if (localMediaList != null && localMediaList.size() != 0){
-            for (LocalMedia media : localMediaList){
+        if (localMediaList != null && localMediaList.size() != 0) {
+            for (LocalMedia media : localMediaList) {
                 post.params("files", new File(media.getPath()));
             }
         }
@@ -892,8 +954,8 @@ public class CloudApi {
      */
     public static Observable<Response<BaseResponseBean>> welfareSaveWelfareBack(List<LocalMedia> localMediaList, String infoId, String discussId, String soId, String content, String welId) {
         PostRequest<BaseResponseBean> post = OkGo.post(SERVLET_URL + "welfare/saveWelfareBack");
-        if (localMediaList != null && localMediaList.size() != 0){
-            for (LocalMedia media : localMediaList){
+        if (localMediaList != null && localMediaList.size() != 0) {
+            for (LocalMedia media : localMediaList) {
                 post.params("files", new File(media.getPath()));
             }
         }
@@ -931,6 +993,69 @@ public class CloudApi {
     }
 
     /**
+     * 获取商品分类列表
+     */
+    public static Observable<Response<BaseResponseBean<List<DataBean>>>> goodSpuGetGoodsCategoryList(String parentId) {
+        return OkGo.<BaseResponseBean<List<DataBean>>>get(SERVLET_URL + "goodSpu/getGoodsCategoryList")
+                .params("parentId", parentId)
+                .converter(new NewsCallback<BaseResponseBean<List<DataBean>>>() {
+                    @Override
+                    public void onSuccess(Response<BaseResponseBean<List<DataBean>>> response) {
+                    }
+                })
+                .adapt(new ObservableResponse<>())
+                .subscribeOn(Schedulers.io());
+    }
+
+    /**
+     * 获取商品分类推荐
+     */
+    public static Observable<Response<BaseResponseBean<List<DataBean>>>> goodSpuGetNineGoodsCategory(String id) {
+        return OkGo.<BaseResponseBean<List<DataBean>>>get(SERVLET_URL + "goodSpu/getNineGoodsCategory")
+                .params("parentId", id)
+                .converter(new NewsCallback<BaseResponseBean<List<DataBean>>>() {
+                    @Override
+                    public void onSuccess(Response<BaseResponseBean<List<DataBean>>> response) {
+                    }
+                })
+                .adapt(new ObservableResponse<>())
+                .subscribeOn(Schedulers.io());
+    }
+
+    /**
+     * 首页分类
+     */
+    public static Observable<Response<BaseResponseBean<List<DataBean>>>> welfareGetWelfareClassifys() {
+        return OkGo.<BaseResponseBean<List<DataBean>>>get(SERVLET_URL + "welfare/getWelfareClassifys")
+                .converter(new NewsCallback<BaseResponseBean<List<DataBean>>>() {
+                    @Override
+                    public void onSuccess(Response<BaseResponseBean<List<DataBean>>> response) {
+                    }
+                })
+                .adapt(new ObservableResponse<>())
+                .subscribeOn(Schedulers.io());
+    }
+
+    /**
+     * 获取商品列表信息
+     */
+    public static Observable<Response<BaseResponseBean<BaseListBean<DataBean>>>> goodSpuGetGoodsSpuList(int pageNumber, int type) {
+        return OkGo.<BaseResponseBean<BaseListBean<DataBean>>>get(SERVLET_URL + "goodSpu/getGoodsSpuList")
+                .headers("token", ShareSessionIdCache.getInstance(Utils.getApp()).getSessionId())
+                .params("userId", ShareSessionIdCache.getInstance(Utils.getApp()).getUserId())
+                .params("type", type)
+                .params("page", pageNumber)
+                .params("size", Constants.pageSize)
+                .converter(new NewsCallback<BaseResponseBean<BaseListBean<DataBean>>>() {
+                    @Override
+                    public void onSuccess(Response<BaseResponseBean<BaseListBean<DataBean>>> response) {
+
+                    }
+                })
+                .adapt(new ObservableResponse<>())
+                .subscribeOn(Schedulers.io());
+    }
+    /**
      * 通用list数据
      */
     public static Observable<Response<BaseResponseBean<BaseListBean<DataBean>>>> list(int pageNumber, String url) {
@@ -948,6 +1073,7 @@ public class CloudApi {
                 .adapt(new ObservableResponse<>())
                 .subscribeOn(Schedulers.io());
     }
+
     /**
      * 通用list 2
      */

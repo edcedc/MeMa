@@ -1,5 +1,6 @@
 package com.yc.mema.view.bottomFrg;
 
+import android.os.Bundle;
 import android.view.View;
 
 import com.yc.mema.R;
@@ -35,6 +36,11 @@ public class DelBottomFrg extends BaseBottomSheetFrag implements View.OnClickLis
 
     public interface onComplaintListener{
         void onComplaint();
+    }
+
+    @Override
+    protected void initParms(Bundle bundle) {
+
     }
 
     @Override

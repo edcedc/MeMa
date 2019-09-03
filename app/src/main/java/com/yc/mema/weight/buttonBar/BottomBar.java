@@ -74,7 +74,7 @@ public class BottomBar extends LinearLayout {
                 if (mListener == null) return;
                 int pos = tab.getTabPosition();
 
-                if (pos == 3 && !User.getInstance().isLogin()){
+                if (pos == 4 && !User.getInstance().isLogin()){
                     ActivityUtils.startActivity(LoginAct.class);
                     return;
                 }

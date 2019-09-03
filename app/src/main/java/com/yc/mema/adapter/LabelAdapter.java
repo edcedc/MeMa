@@ -35,7 +35,7 @@ public class LabelAdapter extends BaseListViewAdapter<DataBean> {
             viewHolder = (ViewHolder) convertView.getTag();
         }
         final DataBean bean = listBean.get(position);
-        viewHolder.iv_img.setBackgroundResource(bean.getImg());
+        viewHolder.iv_img.setBackground(act.getDrawable(bean.getImg()));
         viewHolder.tv_title.setText(bean.getTitle());
         return convertView;
     }
