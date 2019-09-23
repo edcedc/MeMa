@@ -101,20 +101,17 @@ public class BottomBarTab extends FrameLayout {
         super.setSelected(selected);
         switch (mTabPosition){
             case 0:
-                mIcon.setImageResource(selected? R.mipmap.dibudaohan_shengrili_1 : R.mipmap.dibudaohan_shengrili_2);
+                mIcon.setImageResource(selected? R.mipmap.home_press : R.mipmap.home_normal);
                 break;
             case 1:
-                mIcon.setImageResource(selected? R.mipmap.dibudaohan_yuanliao_1 : R.mipmap.dibudaohan_yuanliao_2);
+                mIcon.setImageResource(selected? R.mipmap.news_press : R.mipmap.news_normal);
                 break;
             case 2:
-                mIcon.setImageResource(selected? R.mipmap.dibudaohan_jintian_1 : R.mipmap.dibudaohan_jintian_2);
+                mIcon.setImageResource(selected? R.mipmap.video_press : R.mipmap.video_normal);
                 break;
             case 3:
-                mIcon.setImageResource(selected? R.mipmap.dibudaohan_shenripa_1 : R.mipmap.dibudaohan_shenripa_2);
+                mIcon.setImageResource(selected? R.mipmap.user_press : R.mipmap.user_normal);
                 break;
-            case 4:
-                mIcon.setImageResource(selected? R.mipmap.dibudaohan_wode_1 : R.mipmap.dibudaohan_wode_2);
-               break;
         }
         if (selected) {
 //            mIcon.setColorFilter(ContextCompat.getColor(mContext, R.color.red_EF402C));

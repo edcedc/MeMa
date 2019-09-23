@@ -10,7 +10,11 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.MotionEvent;
@@ -335,7 +339,7 @@ public abstract class BaseActivity<P extends BasePresenter, VB extends ViewDataB
 
 
     //支付宝支付
-    public void pay(final String info){
+    public void zfbPay(final String info){
 //        new Thread(new Runnable() {
 //            @Override
 //            public void run() {
@@ -351,17 +355,18 @@ public abstract class BaseActivity<P extends BasePresenter, VB extends ViewDataB
 
     //微信支付
     protected IWXAPI api;
-    protected void wxPay(final JSONObject data){
+    public void wxPay(final JSONObject data){
         new Thread(() -> {
             if (api.getWXAppSupportAPI() >= com.tencent.mm.opensdk.constants.Build.PAY_SUPPORTED_SDK_INT) {
                 PayReq req = new PayReq();
-                req.appId = data.optString("appid");
-                req.partnerId = data.optString("partnerid");
-                req.prepayId = data.optString("prepayid");
-                req.nonceStr = data.optString("noncestr");
-                req.timeStamp = data.optString("timestamp");
-                req.packageValue = data.optString("package");
-                req.sign = data.optString("sign");
+                req.appId = Constants.WX_APPID;
+                req.partnerId = Constants.WX_PARTNERID;
+                String aPackage = data.optString("package");
+                req.prepayId = aPackage.split("=")[1];
+                req.nonceStr = data.optString("nonceStr");
+                req.timeStamp = data.optString("timeStamp");
+                req.packageValue = aPackage;
+                req.sign = data.optString("signType");
                 req.extData = "app data"; // optional
                 api.sendReq(req);
             }else {
@@ -373,6 +378,17 @@ public abstract class BaseActivity<P extends BasePresenter, VB extends ViewDataB
     private static final int SDK_PAY_FLAG = 99;
     private static final int SDK_AUTH_FLAG = 98;
 
+    protected void setRecyclerViewType(RecyclerView recyclerView, int baColor){
+        recyclerView.setLayoutManager(new LinearLayoutManager(act));
+        setRecyclerView(recyclerView);
+        recyclerView.setBackgroundColor(ContextCompat.getColor(act,baColor));
+    }
+
+    private void setRecyclerView(RecyclerView recyclerView){
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
+//        recyclerView.setBackgroundColor(ContextCompat.getColor(act,baColor));
+    }
 
     /**
      * Android 点击EditText文本框之外任何地方隐藏键盘

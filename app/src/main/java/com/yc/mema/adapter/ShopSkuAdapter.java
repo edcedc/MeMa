@@ -40,7 +40,6 @@ public class ShopSkuAdapter extends BaseRecyclerviewAdapter<DataBean> {
         viewHolder.tv_name.setText(bean.getSpecName());
         List<DataBean> list = bean.getSpecValues();
         TagAdapter<DataBean> adapter = new TagAdapter<DataBean>(list) {
-
             @Override
             public View getView(FlowLayout parent, int position, DataBean bean) {
                 View view = View.inflate(act, R.layout.i_sku, null);
@@ -58,7 +57,6 @@ public class ShopSkuAdapter extends BaseRecyclerviewAdapter<DataBean> {
                 RoundViewDelegate delegate = tvText.getDelegate();
                 delegate.setStrokeColor(act.getResources().getColor(R.color.red_EC5B44));
                 tvText.setTextColor(act.getResources().getColor(R.color.red_EC5B44));
-                Set<Integer> selectedList = viewHolder.fl_label.getSelectedList();
                 if (listener != null)listener.onClick(list, bean.getValueId(), true);
             }
 
@@ -75,14 +73,12 @@ public class ShopSkuAdapter extends BaseRecyclerviewAdapter<DataBean> {
             }
         };
         viewHolder.fl_label.setAdapter(adapter);
-        viewHolder.fl_label.setOnSelectListener(new TagFlowLayout.OnSelectListener() {
-            @Override
-            public void onSelected(Set<Integer> selectPosSet) {
-                for (Integer integer : selectPosSet){
-                    LogUtils.e(integer);
-                }
+        for (int i = 0;i < list.size();i++){
+            DataBean bean1 = list.get(i);
+            if (bean1.isSelect()){
+                adapter.setSelectedList(i);
             }
-        });
+        }
     }
 
     private onClickListener listener;

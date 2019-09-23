@@ -107,7 +107,7 @@ public class WithScrollGridView extends GridView {
      * updates the "numColumns" variable
      */
     private void updateColumns() {
-        this.numColumns = getContext().getResources().getInteger(numColumnsID);
+//        this.numColumns = getContext().getResources().getInteger(numColumnsID);
     }
 
     @Override
@@ -146,7 +146,6 @@ public class WithScrollGridView extends GridView {
 
     /**
      * Sets the height of each view in a row equal to the height of the tallest view in this row.
-     * @param firstVisible The first visible position (adapter order)
      */
     private void setHeights() {
         ListAdapter adapter = getAdapter();

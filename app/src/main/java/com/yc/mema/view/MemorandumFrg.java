@@ -75,7 +75,15 @@ public class MemorandumFrg extends BaseFragment<MemorandumPresenter, FSortListBi
         }
         mB.listView.setAdapter(adapter);
         mB.listView.setOnItemLongClickListener((adapterView, view12, i, l) -> {
-            PopupWindowTool.showDialog(act, PopupWindowTool.clear_br, () -> mPresenter.onDelBr(i, listBean.get(i).getBookId()));
+//            PopupWindowTool.showDialog(act, PopupWindowTool.clear_br, () -> mPresenter.onDelBr(i, listBean.get(i).getBookId()));
+            PopupWindowTool.showDialog(act)
+                    .asConfirm("确定删除吗？", "",
+                            "取消", "确定",
+                            () -> {
+                                mPresenter.onDelBr(i, listBean.get(i).getBookId());
+                            }, null, false)
+                    .bindLayout(R.layout.p_dialog) //绑定已有布局
+                    .show();;
             return false;
         });
 

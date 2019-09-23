@@ -28,6 +28,7 @@ import com.blankj.utilcode.util.LogUtils;
 import com.umeng.socialize.UMShareAPI;
 import com.yc.mema.base.BaseActivity;
 import com.yc.mema.bean.AddressBean;
+import com.yc.mema.event.CameraInEvent;
 import com.yc.mema.event.LocationInEvent;
 import com.yc.mema.view.MainFrg;
 
@@ -134,6 +135,9 @@ public class MainActivity extends BaseActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         UMShareAPI.get(this).onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            EventBus.getDefault().post(new CameraInEvent(requestCode, data));
+        }
     }
 
     /**

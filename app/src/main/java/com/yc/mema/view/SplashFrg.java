@@ -44,6 +44,8 @@ import com.youth.banner.BannerConfig;
 import com.youth.banner.listener.OnBannerListener;
 import com.youth.banner.transformer.DefaultTransformer;
 
+import org.json.JSONObject;
+
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
@@ -246,12 +248,46 @@ public class SplashFrg extends BaseFragment<BasePresenter, FSplashBinding> imple
         String sessionId = ShareSessionIdCache.getInstance(act).getSessionId();
         String userId = ShareSessionIdCache.getInstance(act).getUserId();
         if (!StringUtils.isEmpty(sessionId) && !StringUtils.isEmpty(userId)) {
-            User.getInstance().setLogin(true);
+            info();
         } else {
-
+            startNext();
         }
-        startNext();
         ShareIsLoginCache.getInstance(act).save(true);
+    }
+
+    private void info(){
+        CloudApi.userFindByUser()
+                .doOnSubscribe(disposable -> {})
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<JSONObject>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                        SplashFrg.this.addDisposable(d);
+                    }
+
+                    @Override
+                    public void onNext(JSONObject jsonObject) {
+                        if (jsonObject.optInt("code") == Code.CODE_SUCCESS){
+                            JSONObject data = jsonObject.optJSONObject("result");
+                            User.getInstance().setUserObj(data);
+                            User.getInstance().setLogin(true);
+                        }else {
+                            ShareSessionIdCache.getInstance(act).remove();
+                        }
+                        startNext();
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        SplashFrg.this.onError(e);
+                        ShareSessionIdCache.getInstance(act).remove();
+                        startNext();
+                    }
+
+                    @Override
+                    public void onComplete() {
+                    }
+                });
     }
 
     private void startNext() {

@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <ezy.ui.layout.LoadingLayout
-        android:id="@+id/loadinglayout"
+    <com.lcodecore.tkrefreshlayout.TwinklingRefreshLayout
+        android:id="@+id/refreshLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/white_f4f4f4">
 
-        <com.lcodecore.tkrefreshlayout.TwinklingRefreshLayout
-            android:id="@+id/refreshLayout"
+        <ezy.ui.layout.LoadingLayout
+            android:id="@+id/loadinglayout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/white_f4f4f4">
+            android:layout_height="match_parent">
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/recyclerView"
@@ -19,8 +19,8 @@
                 android:nestedScrollingEnabled="false"
                 android:overScrollMode="never" />
 
-        </com.lcodecore.tkrefreshlayout.TwinklingRefreshLayout>
+        </ezy.ui.layout.LoadingLayout>
 
-    </ezy.ui.layout.LoadingLayout>
+    </com.lcodecore.tkrefreshlayout.TwinklingRefreshLayout>
 
 </layout>

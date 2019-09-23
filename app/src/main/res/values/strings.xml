@@ -18,7 +18,7 @@
     <string name="error_nickname1" translatable="false">请输入您的姓名</string>
     <string name="error_pwd_length" translatable="false">密码位于6~16位</string>
     <string name="error_head" translatable="false">请上传您的头像</string>
-    <string name="please_phone" translatable="false">请输入手机号</string>
+    <string name="please_phone" translatable="false">请输入手机号码</string>
     <string name="please_phone1" translatable="false">输入您的联系方式</string>
     <string name="please_code" translatable="false">请输入验证码</string>
     <string name="please_pwd1" translatable="false">请再次输入密码</string>
@@ -26,10 +26,16 @@
     <string name="please_pwd3" translatable="false">请输入密码</string>
     <string name="error_1" translatable="false">请阅读协议</string>
     <string name="please_name" translatable="false">输入昵称</string>
+    <string name="order_desc" translatable="false">订单详情</string>
+    <string name="please_receiving_name" translatable="false">请输入收货人姓名</string>
+    <string name="please_evaluation" translatable="false">请输入评价信息</string>
+    <string name="location" translatable="false">所在地区</string>
+    <string name="please_invitation_code" translatable="false">请输入邀请码</string>
 
     <string name="submit" translatable="false">确定</string>
     <string name="submit2" translatable="false">提交</string>
     <string name="submit1" translatable="false">完成</string>
+    <string name="submit3" translatable="false">保存</string>
     <string name="cancel" translatable="false">取消</string>
     <string name="login" translatable="false">登录</string>
     <string name="register" translatable="false">注册</string>
@@ -46,10 +52,18 @@
     <string name="set" translatable="false">设置</string>
     <string name="user_evaluate" translatable="false">用户评价</string>
     <string name="collection" translatable="false">收藏</string>
+    <string name="my_order" translatable="false">我的订单</string>
     <string name="manage" translatable="false">管理</string>
     <string name="election" translatable="false">全选</string>
+    <string name="freight" translatable="false">运费</string>
+    <string name="add_address1" translatable="false"> 添加新地址</string>
+    <string name="add_address" translatable="false">新增收货地址</string>
+    <string name="add_address2" translatable="false">我的收货地址</string>
     <string name="delete" translatable="false">删除</string>
     <string name="head" translatable="false">头像</string>
+    <string name="edit" translatable="false">编辑</string>
+    <string name="pay" translatable="false">支付</string>
+    <string name="total" translatable="false">总计:</string>
     <string name="user_head" translatable="false">个人头像</string>
     <string name="mema" translatable="false">么马号</string>
     <string name="set_mema" translatable="false">设置么马号</string>
@@ -68,9 +82,15 @@
     <string name="nan" translatable="false">男</string>
     <string name="nv" translatable="false">女</string>
     <string name="more" translatable="false">更多</string>
+    <string name="new_arrival" translatable="false">最新上架</string>
     <string name="please_sku" translatable="false">请选择规格</string>
+    <string name="choose" translatable="false">请选择</string>
+    <string name="direct" translatable="false">直属团队人数</string>
+    <string name="mailbox" translatable="false">邮箱</string>
+    <string name="direct1" translatable="false">请输入0~10000的数字</string>
     <string name="locate" translatable="false">定位到到位置</string>
     <string name="all" translatable="false">全部</string>
+    <string name="confirmation_orders" translatable="false">确认订单</string>
     <string name="lock_all" translatable="false">查看全部</string>
     <string name="mema1" translatable="false">扫喵二维码图案，加我么马</string>
     <string name="account" translatable="false">账号与安全</string>
@@ -94,7 +114,20 @@
     <string name="mema3" translatable="false">请详细描述您遇到的问题</string>
     <string name="mema4" translatable="false">可留下您的联系方式</string>
     <string name="scoring" translatable="false">去评分</string>
+    <string name="pay_success" translatable="false">支付成功</string>
+    <string name="wx" translatable="false">微信</string>
+    <string name="zfb" translatable="false">支付宝</string>
     <string name="complaint" translatable="false">投诉</string>
+    <string name="order_evaluation" translatable="false">订单评价</string>
+    <string name="price" translatable="false">价格</string>
+    <string name="screen" translatable="false">筛选</string>
+    <string name="info" translatable="false">基本信息</string>
+    <string name="hui" translatable="false">惠</string>
+    <string name="merchant_information" translatable="false">商家信息</string>
+    <string name="get_code" translatable="false">获取验证码</string>
+    <string name="code" translatable="false">验证码</string>
+    <string name="registration" translatable="false">预定登记</string>
+    <string name="invitation_code" translatable="false">邀请码</string>
     <string name="version_update" translatable="false">版本更新</string>
     <string name="mema5" translatable="false">程诺科技 版权所有 \n Copyright © 2019 chengnuokeji. All Rights Reserved.</string>
     <string name="add_records" translatable="false">添加新记录</string>
@@ -103,6 +136,8 @@
     <string name="name_relationship" translatable="false">输入朋友的姓名/关系</string>
     <string name="choose_birthday" translatable="false">选择他的生日</string>
     <string name="search" translatable="false">搜索</string>
+    <string name="weixin" translatable="false">微信号</string>
+    <string name="weixin1" translatable="false">请输入微信号</string>
     <string name="shop_category" translatable="false">商品分类</string>
     <string name="cake" translatable="false">蛋糕</string>
     <string name="shop_desc" translatable="false">-----   商品详情   -----</string>
@@ -123,9 +158,18 @@
     <string name="copy" translatable="false">复制</string>
     <string name="report" translatable="false">举报</string>
     <string name="world" translatable="false">世界</string>
+    <string name="to_pay" translatable="false">去付款</string>
+    <string name="call_order" translatable="false">取消订单</string>
+    <string name="apply_refund" translatable="false">申请退款</string>
+    <string name="look_wuliu" translatable="false">查看物流</string>
+    <string name="confirm_receipt" translatable="false">确认收货</string>
+    <string name="to_evaluate" translatable="false">去评价</string>
+    <string name="evaluate" translatable="false">评价</string>
     <string name="good_friend" translatable="false">好友</string>
     <string name="my_prone" translatable="false">我的生日趴</string>
     <string name="release" translatable="false">发布</string>
+    <string name="look_order" translatable="false">查看订单</string>
+    <string name="continue_shopping" translatable="false">继续购物</string>
     <string name="msg" translatable="false">通知</string>
     <string name="mema12" translatable="false">么马号四位数并且包含数字和英文</string>
     <string name="evidence" translatable="false">图片证据</string>
@@ -140,12 +184,54 @@
     <string name="mema15" translatable="false">邀请好友</string>
     <string name="mema16" translatable="false">长按图片，保存到手机</string>
     <string name="type_application" translatable="false">申请类型</string>
+    <string name="type_application1" translatable="false">类型</string>
+    <string name="type_application2" translatable="false">请选择合作意向</string>
     <string name="address_application" translatable="false">申请地区</string>
     <string name="something" translatable="false">写点什么</string>
     <string name="submission" translatable="false">提交申请</string>
+    <string name="industry" translatable="false">行业</string>
     <string name="popular" translatable="false">热门推荐</string>
     <string name="sales" translatable="false">销量最高</string>
     <string name="arrivals" translatable="false">新品上架</string>
+    <string name="mema17" translatable="false"> 输入详细地址：如道路、小区、门牌号</string>
+    <string name="mema18" translatable="false">请选择规格</string>
+    <string name="mema19" translatable="false">设置为默认地址</string>
+    <string name="mema20" translatable="false">请选择收获地址</string>
+    <string name="mema21" translatable="false">请选择支付方式</string>
+    <string name="mema22" translatable="false"> 去支付</string>
+    <string name="mema23" translatable="false">请忽重复提交订单</string>
+    <string name="mema24" translatable="false">吃喝玩乐</string>
+    <string name="pending_payment" translatable="false">待付款</string>
+    <string name="to_shipped" translatable="false">待发货</string>
+    <string name="goods_received" translatable="false">待收货</string>
+    <string name="completed" translatable="false">已完成</string>
+    <string name="transaction_completed" translatable="false">交易完成</string>
+    <string name="to_evaluated" translatable="false">待评价</string>
+    <string name="delicacies" translatable="false">美食佳肴</string>
+    <string name="entertainment" translatable="false">休闲娱乐</string>
+    <string name="hotel_boom" translatable="false">酒店轰趴</string>
+    <string name="rong_yue" translatable="false">理容悦已</string>
+    <string name="present" translatable="false">生日礼物</string>
+    <string name="experience" translatable="false">免费体验</string>
+    <string name="look_more" translatable="false">查看更多</string>
+    <string name="region" translatable="false">地区</string>
+    <string name="admission" translatable="false">免费</string>
+    <string name="cake_shop" translatable="false">蛋糕坊</string>
+    <string name="please_industry" translatable="false">请输入行业</string>
+    <string name="please_email" translatable="false">请输入邮箱地址</string>
+    <string name="customized" translatable="false">为你定制</string>
+    <string name="sorting" translatable="false">综合排序</string>
+    <string name="upload_card" translatable="false">上传身份证</string>
+    <string name="upload_card2" translatable="false">请填写身份证号码</string>
+    <string name="upload_card1" translatable="false">1、请上传本人身份证照片 \n2、拍照时请确认身份证边框完整、图像清晰、光线均匀</string>
+    <string name="distance" translatable="false">距离</string>
+    <string name="volume" translatable="false">销量</string>
+    <string name="look_more_order" translatable="false">查看更多订单</string>
+    <string name="baby_evaluation" translatable="false">宝贝评价</string>
+    <string name="mema25" translatable="false">写下你的评价吧:</string>
+    <string name="name1" translatable="false">姓名</string>
+    <string name="name2" translatable="false">请输入姓名</string>
+    <string name="phone" translatable="false">手机号</string>
 
 
 </resources>

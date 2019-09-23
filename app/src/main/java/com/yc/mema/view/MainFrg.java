@@ -44,7 +44,7 @@ public class MainFrg extends BaseFragment<BasePresenter, FMainBinding> implement
     private final int FOUR = 3;
     private final int FIVE = 4;
 
-    private SupportFragment[] mFragments = new SupportFragment[5];
+    private SupportFragment[] mFragments = new SupportFragment[4];
 
     @Override
     public void initPresenter() {
@@ -64,11 +64,11 @@ public class MainFrg extends BaseFragment<BasePresenter, FMainBinding> implement
     @Override
     protected void initView(View view) {
        mB.bottomBar
-                .addItem(new BottomBarTab(_mActivity, R.mipmap.dibudaohan_shengrili_2, "礼"))
-                .addItem(new BottomBarTab(_mActivity, R.mipmap.dibudaohan_yuanliao_2,"商"))
-                .addItem(new BottomBarTab(_mActivity, R.mipmap.dibudaohan_jintian_2,"今"))
-                .addItem(new BottomBarTab(_mActivity, R.mipmap.dibudaohan_shenripa_2,"趴"))
-                .addItem(new BottomBarTab(_mActivity, R.mipmap.dibudaohan_wode_2,"君"));
+                .addItem(new BottomBarTab(_mActivity, R.mipmap.home_normal, "礼"))
+//                .addItem(new BottomBarTab(_mActivity, R.mipmap.dibudaohan_yuanliao_2,"商"))
+                .addItem(new BottomBarTab(_mActivity, R.mipmap.news_normal,"今"))
+                .addItem(new BottomBarTab(_mActivity, R.mipmap.video_normal,"趴"))
+                .addItem(new BottomBarTab(_mActivity, R.mipmap.user_normal,"君"));
         mB.bottomBar.setOnTabSelectedListener(new BottomBar.OnTabSelectedListener() {
             @Override
             public void onTabSelected(int position, int prePosition) {
@@ -92,30 +92,27 @@ public class MainFrg extends BaseFragment<BasePresenter, FMainBinding> implement
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        SupportFragment firstFragment = findChildFragment(OneFrg.class);
+        SupportFragment firstFragment = findChildFragment(SixFrg.class);
         if (firstFragment == null) {
-            mFragments[FIRST] = OneFrg.newInstance();
-            mFragments[SECOND] = TwoFrg.newInstance();
-            mFragments[THIRD] = ThreeFrg.newInstance();
-            mFragments[FOUR] = FourFrg.newInstance();
-            mFragments[FIVE] = FiveFrg.newInstance();
+            mFragments[FIRST] = SixFrg.newInstance();
+            mFragments[SECOND] = ThreeFrg.newInstance();
+            mFragments[THIRD] = FourFrg.newInstance();
+            mFragments[FOUR] = FiveFrg.newInstance();
 
             loadMultipleRootFragment(R.id.fl_container,
                     FIRST,
                     mFragments[FIRST],
                     mFragments[SECOND],
                     mFragments[THIRD],
-                    mFragments[FOUR],
-                    mFragments[FIVE]);
+                    mFragments[FOUR]);
         } else {
             // 这里库已经做了Fragment恢复,所有不需要额外的处理了, 不会出现重叠问题
 
             // 这里我们需要拿到mFragments的引用
             mFragments[FIRST] = firstFragment;
-            mFragments[SECOND] = findChildFragment(TwoFrg.class);
-            mFragments[THIRD] = findChildFragment(ThreeFrg.class);
-            mFragments[FOUR] = findChildFragment(FourFrg.class);
-            mFragments[FIVE] = findChildFragment(FiveFrg.class);
+            mFragments[SECOND] = findChildFragment(ThreeFrg.class);
+            mFragments[THIRD] = findChildFragment(FourFrg.class);
+            mFragments[FOUR] = findChildFragment(FiveFrg.class);
         }
         setSwipeBackEnable(false);
     }

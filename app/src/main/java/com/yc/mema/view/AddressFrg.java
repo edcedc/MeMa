@@ -10,6 +10,7 @@ import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
 import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.StringUtils;
+import com.yc.mema.BR;
 import com.yc.mema.R;
 import com.yc.mema.adapter.AddressAdapter;
 import com.yc.mema.base.BaseFragment;
@@ -41,7 +42,6 @@ public class AddressFrg extends BaseFragment<InformationPresenter, FAddressBindi
     private StringBuffer sbId = new StringBuffer();
     private String addressEnd = "";
     private String parentId;
-    private boolean isUpdate = false;
     private int regionLevel;
     private int type;
     private MyLocationListenner myListener = new MyLocationListenner();
@@ -55,7 +55,6 @@ public class AddressFrg extends BaseFragment<InformationPresenter, FAddressBindi
 
     @Override
     protected void initParms(Bundle bundle) {
-        isUpdate = bundle.getBoolean("isUpdate");
         type = bundle.getInt("type");
     }
 
@@ -67,6 +66,18 @@ public class AddressFrg extends BaseFragment<InformationPresenter, FAddressBindi
     @Override
     protected void initView(View view) {
         setTitle(getString(R.string.set_address), getString(R.string.submit1));
+        switch (type){
+            case AddressInEvent.GIFT_TYPE:
+
+                break;
+            case AddressInEvent.USER_INFP_TYPE:
+            case AddressInEvent.HARVEST_ADDRESS:
+                mB.gpLocate.setVisibility(View.GONE);
+                break;
+            case AddressInEvent.APPLY_TYPE:
+
+                break;
+        }
         // 定位初始化
         mLocClient = new LocationClient(act);
         mLocClient.registerLocationListener(myListener);
@@ -109,27 +120,36 @@ public class AddressFrg extends BaseFragment<InformationPresenter, FAddressBindi
     protected void setOnRightClickListener() {
         super.setOnRightClickListener();
         if (StringUtils.isEmpty(addressEnd) && !isLocation)return;
+        switch (type){
+            case AddressInEvent.GIFT_TYPE:
+
+                break;
+            case AddressInEvent.USER_INFP_TYPE:
+
+                break;
+            case AddressInEvent.APPLY_TYPE:
+
+                break;
+            case AddressInEvent.HARVEST_ADDRESS:
+
+                break;
+        }
         if (isLocation){
             String location = mB.tvLocation.getText().toString();
             addressEnd = location.split(" ")[1];
             LogUtils.e(addressEnd);
-            EventBus.getDefault().post(new AddressInEvent(null, addressEnd, type));
-            pop();
+            EventBus.getDefault().post(new AddressInEvent(null, addressEnd, type, location));
         }else {
-            if (!isUpdate){
-                sb.append(addressEnd);
-                sbId.append(parentId);
-                if (sbId.toString().indexOf("edison") != -1){
-                    sbId = sbId.delete(sbId.toString().length() - 7, sbId.toString().length());
-                    addressEnd = sb.toString().split(" ")[1];
-                }
-                LogUtils.e(sbId.toString());
-                EventBus.getDefault().post(new AddressInEvent(sbId.toString(), addressEnd, type));
-                pop();
-            }else {
-                mPresenter.address(parentId);
+            sb.append(addressEnd);
+            sbId.append(parentId);
+            if (sbId.toString().indexOf("edison") != -1){
+                sbId = sbId.delete(sbId.toString().length() - 7, sbId.toString().length());
+                addressEnd = sb.toString().split(" ")[1];
             }
+            LogUtils.e(sbId.toString());
+            EventBus.getDefault().post(new AddressInEvent(sbId.toString(), addressEnd, type, mB.tvAll.getText().toString()));
         }
+        pop();
     }
 
     @Override

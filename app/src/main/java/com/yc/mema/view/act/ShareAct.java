@@ -18,6 +18,7 @@ import com.umeng.socialize.UMShareAPI;
 import com.yc.mema.R;
 import com.yc.mema.base.BaseActivity;
 import com.yc.mema.base.BasePresenter;
+import com.yc.mema.controller.CloudApi;
 import com.yc.mema.databinding.FShareBinding;
 import com.yc.mema.utils.ImageUtils;
 import com.yc.mema.utils.ShareTool;
@@ -31,7 +32,7 @@ import com.yc.mema.weight.ZXingUtils;
  */
 public class ShareAct extends BaseActivity<BasePresenter, FShareBinding> implements View.OnClickListener {
 
-    private String shareUrl = "https://app-u52vwi.openinstall.io/js-test/android/8339877980916172211?testKey=testValue";
+//    private String shareUrl = "https://app-u52vwi.openinstall.io/js-test/android/8339877980916172211?testKey=testValue";
     private ShareAction shareAction;
 
     @Override
@@ -64,7 +65,7 @@ public class ShareAct extends BaseActivity<BasePresenter, FShareBinding> impleme
                 mB.ivZking.getViewTreeObserver().removeGlobalOnLayoutListener(this);
                 Bitmap bitmap = null;
                 try {
-                    bitmap = ZXingUtils.creatBarcode(shareUrl, 100);
+                    bitmap = ZXingUtils.creatBarcode(CloudApi.SHARE_URL, 100);
                     if (bitmap != null) {
                         mB.ivZking.setImageBitmap(bitmap);
                     }
@@ -81,7 +82,7 @@ public class ShareAct extends BaseActivity<BasePresenter, FShareBinding> impleme
         });
         //获取唤醒参数
         OpenInstall.getWakeUp(getIntent(), wakeUpAdapter);
-        shareAction = ShareTool.getInstance(act).shareAction(shareUrl);
+        shareAction = ShareTool.getInstance(act).shareAction(CloudApi.SHARE_URL);
     }
 
     @Override

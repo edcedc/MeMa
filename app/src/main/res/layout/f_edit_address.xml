@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+    </data>
+
+    <LinearLayout
+        android:background="@color/white_f4f4f4"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:ignore="MissingConstraints"
+        android:orientation="vertical">
+
+        <include layout="@layout/include_top_gray"/>
+
+        <android.support.constraint.ConstraintLayout
+            android:background="@color/white"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <android.support.v7.widget.AppCompatEditText
+                android:id="@+id/et_name"
+                android:hint="@string/please_receiving_name"
+                android:background="@null"
+                android:maxLines="1"
+                android:padding="@dimen/px30"
+                android:textSize="@dimen/size30"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <View
+                app:layout_constraintTop_toBottomOf="@id/et_name"
+                style="@style/divider_3"/>
+
+            <android.support.v7.widget.AppCompatEditText
+                android:id="@+id/et_phone"
+                app:layout_constraintTop_toBottomOf="@id/et_name"
+                android:hint="@string/please_phone"
+                android:background="@null"
+                android:maxLength="11"
+                android:inputType="phone"
+                android:padding="@dimen/px30"
+                android:textSize="@dimen/size30"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <View
+                app:layout_constraintTop_toBottomOf="@id/et_phone"
+                style="@style/divider_3"/>
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/tv_location"
+                app:layout_constraintTop_toBottomOf="@id/et_phone"
+                android:hint="@string/location"
+                android:background="@null"
+                android:drawableRight="@mipmap/y16"
+                android:padding="@dimen/px30"
+                android:textSize="@dimen/size30"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <View
+                app:layout_constraintTop_toBottomOf="@id/tv_location"
+                style="@style/divider_3"/>
+
+            <android.support.v7.widget.AppCompatEditText
+                android:id="@+id/et_text"
+                app:layout_constraintTop_toBottomOf="@id/tv_location"
+                android:hint="@string/mema17"
+                android:background="@null"
+                android:minLines="2"
+                android:gravity="top"
+                android:padding="@dimen/px30"
+                android:textSize="@dimen/size30"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+        </android.support.constraint.ConstraintLayout>
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1"/>
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/bt_submit"
+            android:layout_width="match_parent"
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:padding="@dimen/px30"
+            android:background="@color/red_EC5B44"
+            android:text="@string/submit3"
+            style="@style/Tv13gray" />
+
+    </LinearLayout>
+</layout>

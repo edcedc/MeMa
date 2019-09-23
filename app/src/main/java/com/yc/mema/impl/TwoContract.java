@@ -25,7 +25,7 @@ public interface TwoContract {
 
     abstract class Presenter extends BasePresenter<View> {
 
-        public abstract void onRequest(int pagetNumber, int type);
+        public abstract void onRequest(int pagetNumber, int type, String categoryId, int di, int gao, String like);
         public abstract void onBanner();
         public abstract void onLabel();
 

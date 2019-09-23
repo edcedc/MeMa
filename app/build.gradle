@@ -146,6 +146,9 @@ dependencies {
     //选中时间控件
     implementation 'com.github.addappcn:android-pickers:1.0.3'
 
+    //跟上面一起选择地址要
+    implementation 'com.alibaba:fastjson:1.1.56.android'
+
     //oss上传视频
     implementation 'com.aliyun.dpa:oss-android-sdk:+'
 
@@ -185,6 +188,9 @@ dependencies {
     //加载样式
     implementation project(path: ':loadingLibrary')
 
+    //XPopup
+    implementation 'com.lxj:xpopup:1.8.9'
+
     //点击加载框
     implementation project(path: ':ToprightmenuLibrary')
     implementation files('libs/umeng-share-core-6.9.6.jar')
@@ -196,4 +202,5 @@ dependencies {
     implementation project(':dkplayer-java')
     implementation files('libs/OpenInstall_v2.2.2.jar')
     implementation files('libs/BaiduLBS_Android.jar')
+
 }

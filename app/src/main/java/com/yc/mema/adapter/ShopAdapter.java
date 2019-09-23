@@ -38,7 +38,7 @@ public class ShopAdapter extends BaseRecyclerviewAdapter<DataBean> {
     protected void onBindViewHolde(RecyclerView.ViewHolder holder, int position) {
         ViewHolder viewHolder = (ViewHolder) holder;
         DataBean bean = listBean.get(position);
-        List<DataBean> imgs = bean.getGoodSupImgs();
+        List<DataBean> imgs = bean.getGoodSpuImgs();
         if (imgs != null && imgs.size() != 0){
             GlideLoadingUtils.load(act, CloudApi.SERVLET_IMG_URL + imgs.get(0).getAttachId(), viewHolder.iv_img);
         }

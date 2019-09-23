@@ -1,5 +1,6 @@
 package com.yc.mema.presenter;
 
+import com.blankj.utilcode.util.RegexUtils;
 import com.blankj.utilcode.util.StringUtils;
 import com.lzy.okgo.model.Response;
 import com.yc.mema.R;
@@ -71,13 +72,54 @@ public class ApplyPresenter extends ApplyContract.Presenter{
                 });
     }
 
+
+
     @Override
-    public void onSaveAgent(String name, String phone, String roleId, String county, String text) {
-        if (StringUtils.isEmpty(name) || StringUtils.isEmpty(phone) || StringUtils.isEmpty(roleId) || StringUtils.isEmpty(county) || StringUtils.isEmpty(text)){
+    public void onCode(String phone) {
+        if (StringUtils.isEmpty(phone)) {
+            showToast(act.getString(R.string.error_phone1));
+            return;
+        }
+        if (!RegexUtils.isMobileExact(phone)) {
+            showToast(act.getString(R.string.error_phone));
+            return;
+        }
+        CloudApi.userSendVcode(phone,1)
+                .doOnSubscribe(disposable -> {mView.showLoading();})
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<Response<BaseResponseBean>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                        mView.addDisposable(d);
+                    }
+
+                    @Override
+                    public void onNext(Response<BaseResponseBean> baseResponseBeanResponse) {
+                        if (baseResponseBeanResponse.body().code == Code.CODE_SUCCESS){
+                            mView.onCode();
+                        }
+                        showToast(baseResponseBeanResponse.body().description);
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        mView.onError(e);
+                    }
+
+                    @Override
+                    public void onComplete() {
+                        mView.hideLoading();
+                    }
+                });
+    }
+
+    @Override
+    public void onSave(String userName, String wechatNum, String iphone, String vercoed, String inviteCode, String roleId, String industry, String county, String directTeam, String mailbox, String imgZheng, String imgFan, String imgShou, String cardId) {
+        if (StringUtils.isEmpty(userName) || StringUtils.isEmpty(iphone) || StringUtils.isEmpty(roleId) || StringUtils.isEmpty(county) || StringUtils.isEmpty(vercoed)){
             showToast(act.getString(R.string.error_));
             return;
         }
-        CloudApi.agentSaveAgent(name, phone, roleId, county, text)
+        CloudApi.agentSaveAgent(userName, wechatNum, iphone, vercoed, inviteCode, roleId, industry, county, directTeam, mailbox, imgZheng, imgFan, imgShou, cardId)
                 .doOnSubscribe(disposable -> {})
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<Response<BaseResponseBean>>() {

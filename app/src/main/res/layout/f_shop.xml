@@ -43,7 +43,7 @@
                         android:id="@+id/fy_close"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:padding="@dimen/px40">
+                        android:padding="@dimen/px60">
 
                         <android.support.v7.widget.AppCompatImageView
                             android:layout_width="wrap_content"
@@ -56,6 +56,7 @@
                     <android.support.v7.widget.AppCompatTextView
                         android:id="@+id/tv_price"
                         style="@style/Tv15black"
+                        android:textSize="@dimen/size32"
                         android:layout_margin="@dimen/px30"
                         android:textColor="@color/red_EC5B44"
                         app:layout_constraintLeft_toLeftOf="parent"

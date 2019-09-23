@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="165dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:ignore="MissingConstraints"
+    android:background="?actionBarItemBackground"
+    android:layout_height="wrap_content">
+
+    <com.yc.mema.weight.RoundImageView
+        android:id="@+id/iv_img"
+        android:src="@drawable/no_banner"
+        android:layout_width="match_parent"
+        android:layout_height="120dp"/>
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/tv_title"
+        android:layout_marginTop="@dimen/px10"
+        app:layout_constraintTop_toBottomOf="@id/iv_img"
+        android:textSize="@dimen/size28"
+        style="@style/Tv15black" />
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/tv_admission"
+        android:layout_marginTop="@dimen/px10"
+        app:layout_constraintTop_toBottomOf="@id/tv_title"
+        android:text="@string/admission"
+        android:textSize="@dimen/size28"
+        android:paddingRight="@dimen/px20"
+        app:layout_constraintRight_toLeftOf="@id/tv_price"
+        android:textColor="@color/red_EC5B44"
+        style="@style/Tv15black" />
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/tv_price"
+        android:layout_marginTop="@dimen/px10"
+        app:layout_constraintTop_toBottomOf="@id/tv_title"
+        app:layout_constraintLeft_toRightOf="@id/tv_admission"
+        android:textSize="@dimen/size28"
+        style="@style/Tv15gray" />
+
+</android.support.constraint.ConstraintLayout>

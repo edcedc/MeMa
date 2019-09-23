@@ -23,6 +23,20 @@
             android:scaleType="fitXY"
             android:src="@mipmap/place_holder" />
 
+        <FrameLayout
+            android:id="@+id/fy_close"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <android.support.v7.widget.AppCompatImageView
+                android:layout_margin="@dimen/px20"
+                android:layout_width="wrap_content"
+                android:background="@mipmap/x1"
+                android:layout_height="wrap_content" />
+
+        </FrameLayout>
+
         <android.support.v7.widget.AppCompatTextView
             android:id="@+id/tv_sku"
             style="@style/Tv12gray"
@@ -43,6 +57,7 @@
         <android.support.v7.widget.AppCompatTextView
             android:id="@+id/tv_price"
             style="@style/Tv15black"
+            android:textSize="@dimen/size32"
             android:layout_marginLeft="@dimen/px20"
             android:textColor="@color/red_EC5B44"
             app:layout_constraintBottom_toTopOf="@id/tv_sales"

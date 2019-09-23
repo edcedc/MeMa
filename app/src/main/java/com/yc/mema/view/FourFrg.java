@@ -57,6 +57,8 @@ public class FourFrg extends BaseFragment<BasePresenter, FFourBinding> implement
         mB.tvWorld.setOnClickListener(this);
         mB.tvFriend.setOnClickListener(this);
         mB.ivCamera.setOnClickListener(this);
+        mB.ivCamera.setOnClickListener(this);
+        mB.ivCamera.setOnClickListener(this);
         ArrayList<Fragment> mFragments = new ArrayList<>();
         mFragments.add(VideoFrg.newInstance());
         mFragments.add(GoodFriendFrg.newInstance());

@@ -1,0 +1,329 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tl="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:ignore="MissingConstraints">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#FF4459"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/px30"
+            android:paddingTop="@dimen/px60"
+            android:paddingRight="@dimen/px30"
+            android:paddingBottom="@dimen/px30">
+
+            <android.support.v7.widget.AppCompatTextView
+                style="@style/Tv15white"
+                android:layout_marginRight="@dimen/px20"
+                android:drawableRight="@mipmap/icon_arrow_down"
+                android:drawablePadding="@dimen/px10"
+                android:text="广州" />
+
+            <com.flyco.roundview.RoundFrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/px20"
+                app:rv_backgroundColor="@color/white"
+                app:rv_cornerRadius="@dimen/px60">
+
+                <android.support.v7.widget.AppCompatTextView
+                    style="@style/Tv13gray"
+                    android:layout_gravity="center"
+                    android:drawableLeft="@mipmap/home_icon_search"
+                    android:drawablePadding="@dimen/px10"
+                    android:text="@string/mema24"
+                    android:textSize="@dimen/size24" />
+
+            </com.flyco.roundview.RoundFrameLayout>
+
+        </LinearLayout>
+
+        <android.support.design.widget.CoordinatorLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <android.support.design.widget.AppBarLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                app:elevation="0dp"
+                app:layout_behavior=".weight.FlingBehavior">
+
+                <android.support.constraint.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_collapseMode="parallax"
+                    app:layout_scrollFlags="scroll">
+
+                    <android.support.v7.widget.AppCompatImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="150dp"
+                        android:background="@mipmap/jianbian1" />
+
+                    <com.youth.banner.Banner
+                        android:id="@+id/banner"
+                        android:layout_width="match_parent"
+                        android:layout_height="160dp"
+                        android:layout_margin="@dimen/px30"
+                        app:image_scale_type="fit_xy"
+                        app:indicator_drawable_selected="@color/red_F67690"
+                        app:indicator_drawable_unselected="@android:color/white"
+                        app:indicator_height="4dp"
+                        app:indicator_margin="4dp"
+                        app:indicator_width="20dp"
+                        app:is_auto_play="true"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent" />
+
+                    <android.support.v7.widget.AppCompatTextView
+                        android:id="@+id/tv_delicacies"
+                        style="@style/Tv12black"
+                        android:layout_width="0dp"
+                        android:layout_marginTop="@dimen/px30"
+                        android:layout_weight="1"
+                        android:drawableTop="@mipmap/food"
+                        android:drawablePadding="@dimen/px20"
+                        android:gravity="center"
+                        android:padding="@dimen/px10"
+                        android:text="@string/delicacies"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toLeftOf="@id/tv_entertainment"
+                        app:layout_constraintTop_toBottomOf="@id/banner" />
+
+                    <android.support.v7.widget.AppCompatTextView
+                        android:id="@+id/tv_entertainment"
+                        style="@style/Tv12black"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:drawableTop="@mipmap/entertainment"
+                        android:drawablePadding="@dimen/px20"
+                        android:gravity="center"
+                        android:padding="@dimen/px10"
+                        android:text="@string/entertainment"
+                        app:layout_constraintBottom_toBottomOf="@id/tv_delicacies"
+                        app:layout_constraintLeft_toRightOf="@id/tv_delicacies"
+                        app:layout_constraintRight_toLeftOf="@id/tv_hotel_boom"
+                        app:layout_constraintTop_toTopOf="@id/tv_delicacies" />
+
+                    <android.support.v7.widget.AppCompatTextView
+                        android:id="@+id/tv_hotel_boom"
+                        style="@style/Tv12black"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:drawableTop="@mipmap/hotel"
+                        android:drawablePadding="@dimen/px20"
+                        android:gravity="center"
+                        android:padding="@dimen/px10"
+                        android:text="@string/hotel_boom"
+                        app:layout_constraintBottom_toBottomOf="@id/tv_entertainment"
+                        app:layout_constraintLeft_toRightOf="@id/tv_entertainment"
+                        app:layout_constraintRight_toLeftOf="@id/tv_rong_yue"
+                        app:layout_constraintTop_toTopOf="@id/tv_entertainment" />
+
+                    <android.support.v7.widget.AppCompatTextView
+                        android:id="@+id/tv_rong_yue"
+                        style="@style/Tv12black"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:drawableTop="@mipmap/beauty"
+                        android:drawablePadding="@dimen/px20"
+                        android:gravity="center"
+                        android:padding="@dimen/px10"
+                        android:text="@string/rong_yue"
+                        app:layout_constraintBottom_toBottomOf="@id/tv_hotel_boom"
+                        app:layout_constraintLeft_toRightOf="@id/tv_hotel_boom"
+                        app:layout_constraintRight_toLeftOf="@id/tv_present"
+                        app:layout_constraintTop_toTopOf="@id/tv_hotel_boom" />
+
+                    <android.support.v7.widget.AppCompatTextView
+                        android:id="@+id/tv_present"
+                        style="@style/Tv12black"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:drawableTop="@mipmap/gift"
+                        android:drawablePadding="@dimen/px20"
+                        android:gravity="center"
+                        android:padding="@dimen/px10"
+                        android:text="@string/present"
+                        app:layout_constraintBottom_toBottomOf="@id/tv_rong_yue"
+                        app:layout_constraintLeft_toRightOf="@id/tv_rong_yue"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="@id/tv_rong_yue" />
+
+                    <android.support.v7.widget.AppCompatTextView
+                        style="@style/Tv15black"
+                        android:layout_weight="1"
+                        android:padding="@dimen/px30"
+                        android:text="@string/experience"
+                        android:textSize="@dimen/size32"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="@id/tv_free_more"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toTopOf="@id/tv_free_more" />
+
+                    <android.support.v7.widget.AppCompatTextView
+                        android:id="@+id/tv_free_more"
+                        style="@style/Tv12gray"
+                        android:padding="@dimen/px30"
+                        android:text="@string/look_more"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/tv_delicacies" />
+
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/rv_tea"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        android:layout_marginLeft="@dimen/px30"
+                        android:layout_marginRight="@dimen/px30"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:nestedScrollingEnabled="false"
+                        android:overScrollMode="never"
+                        app:layout_constraintTop_toBottomOf="@id/tv_free_more" />
+
+                    <com.yc.mema.weight.RoundImageView
+                        android:id="@+id/iv_img"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        android:layout_marginLeft="@dimen/px30"
+                        android:layout_marginRight="@dimen/px30"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/px200"
+                        android:layout_marginTop="@dimen/px50"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/no_banner"
+                        app:layout_constraintTop_toBottomOf="@id/rv_tea" />
+
+                    <android.support.v7.widget.AppCompatTextView
+                        style="@style/Tv15black"
+                        android:padding="@dimen/px30"
+                        android:text="@string/cake_shop"
+                        android:textSize="@dimen/size32"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="@id/tv_tea_more"
+                        app:layout_constraintTop_toTopOf="@id/tv_tea_more" />
+
+                    <android.support.v7.widget.AppCompatTextView
+                        android:id="@+id/tv_tea_more"
+                        style="@style/Tv12gray"
+                        android:padding="@dimen/px30"
+                        android:text="@string/look_more"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/iv_img" />
+
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/rv_cake"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        android:layout_marginLeft="@dimen/px30"
+                        android:layout_marginRight="@dimen/px30"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:nestedScrollingEnabled="false"
+                        android:overScrollMode="never"
+                        app:layout_constraintTop_toBottomOf="@id/tv_tea_more" />
+
+                    <android.support.v7.widget.AppCompatTextView
+                        style="@style/Tv15black"
+                        android:layout_marginTop="@dimen/px20"
+                        android:layout_weight="1"
+                        android:padding="@dimen/px30"
+                        android:text="@string/customized"
+                        android:textSize="@dimen/size32"
+                        android:textStyle="bold"
+                        app:layout_constraintTop_toBottomOf="@id/rv_cake" />
+
+                </android.support.constraint.ConstraintLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <android.support.v7.widget.AppCompatTextView
+                        style="@style/Tv12black"
+                        android:drawableRight="@mipmap/icon_arrow_down_black"
+                        android:padding="@dimen/px30"
+                        android:text="@string/sorting" />
+
+                    <android.support.v7.widget.AppCompatTextView
+                        style="@style/Tv12black"
+                        android:padding="@dimen/px30"
+                        android:text="@string/distance" />
+
+                    <android.support.v7.widget.AppCompatTextView
+                        style="@style/Tv12black"
+                        android:padding="@dimen/px30"
+                        android:text="@string/volume" />
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:layout_weight="1" />
+
+                    <android.support.v7.widget.AppCompatTextView
+                        style="@style/Tv12black"
+                        android:drawableRight="@mipmap/icon_filter"
+                        android:drawablePadding="@dimen/px10"
+                        android:padding="@dimen/px30"
+                        android:text="@string/screen" />
+
+                </LinearLayout>
+
+                <View style="@style/divider_3" />
+
+                <com.flyco.tablayout.SlidingTabLayout
+                    android:id="@+id/tb_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    tl:tl_indicator_color="@color/transparent"
+                    tl:tl_tab_padding="15dp"
+                    tl:tl_tab_space_equal="false"
+                    tl:tl_textSelectColor="@color/black_333333"
+                    tl:tl_textUnselectColor="@color/tab_gray"
+                    tl:tl_textsize="14sp" />
+
+            </android.support.design.widget.AppBarLayout>
+
+            <android.support.v4.widget.NestedScrollView
+                android:layout_width="match_parent"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior"
+                android:layout_height="wrap_content">
+
+                <com.lcodecore.tkrefreshlayout.TwinklingRefreshLayout
+                    android:id="@+id/refreshLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/white_f4f4f4">
+
+                    <com.yc.mema.weight.WithScrollListView
+                        android:id="@+id/listView"
+                        android:background="@color/white"
+                        android:divider="@null"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+
+                </com.lcodecore.tkrefreshlayout.TwinklingRefreshLayout>
+
+            </android.support.v4.widget.NestedScrollView>
+
+        </android.support.design.widget.CoordinatorLayout>
+
+    </LinearLayout>
+
+
+</layout>

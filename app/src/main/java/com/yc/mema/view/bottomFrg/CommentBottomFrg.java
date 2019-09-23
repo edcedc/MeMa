@@ -15,7 +15,7 @@ import android.widget.TextView;
 
 import com.blankj.utilcode.util.StringUtils;
 import com.yc.mema.R;
-import com.yc.mema.base.BaseBottomSheetFrag;
+import com.yc.mema.base.BaseBottomSheetFrg;
 
 import static android.content.Context.INPUT_METHOD_SERVICE;
 
@@ -25,7 +25,7 @@ import static android.content.Context.INPUT_METHOD_SERVICE;
  * Date: 2019/7/29
  * Time: 14:23
  */
-public class CommentBottomFrg extends BaseBottomSheetFrag implements TextView.OnEditorActionListener {
+public class CommentBottomFrg extends BaseBottomSheetFrg implements TextView.OnEditorActionListener {
 
     private AppCompatEditText etText;
     private int type = 1;

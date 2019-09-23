@@ -30,6 +30,7 @@ public class HtmlAct extends BaseActivity<BasePresenter, AHtmlBinding> {
 
     public static final int REGISTER = 4;//隐私协议
     public static final int SYSTEM = 1;//系统通知
+    public static final int LOOK_WULIU = 2;//查看物流
     public static final int ABOUT = 99;
 
 
@@ -57,6 +58,9 @@ public class HtmlAct extends BaseActivity<BasePresenter, AHtmlBinding> {
                 break;
             case REGISTER:
                 setTitle("隐私协议");
+                break;
+            case LOOK_WULIU:
+                setTitle("物流信息");
                 break;
             default:
                 setTitle("详情");

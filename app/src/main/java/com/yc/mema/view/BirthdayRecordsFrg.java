@@ -102,7 +102,15 @@ public class BirthdayRecordsFrg extends BaseFragment<BirthdayRecordsPresenter, F
 
             @Override
             public void onLongClick(int position, String bookId) {
-                PopupWindowTool.showDialog(act, PopupWindowTool.clear_br, () -> mPresenter.onDelBr(position, bookId));
+                PopupWindowTool.showDialog(act)
+                        .asConfirm("确定删除吗？", "",
+                                "取消", "确定",
+                                () -> {
+                                    mPresenter.onDelBr(position, bookId);
+                                }, null, false)
+                        .bindLayout(R.layout.p_dialog) //绑定已有布局
+                        .show();;
+//                PopupWindowTool.showDialog(act, PopupWindowTool.clear_br, () -> mPresenter.onDelBr(position, bookId));
             }
         });
 

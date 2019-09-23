@@ -25,8 +25,8 @@ import io.reactivex.disposables.Disposable;
 public class TwoPresenter extends TwoContract.Presenter {
 
     @Override
-    public void onRequest(int pagetNumber, int type) {
-        CloudApi.goodSpuGetGoodsSpuList(pagetNumber, type)
+    public void onRequest(int pagetNumber, int type, String categoryId, int di, int gao, String like) {
+        CloudApi.goodSpuGetGoodsSpuList(pagetNumber, type, categoryId, di, gao, like)
                 .doOnSubscribe(disposable -> {
                 })
                 .observeOn(AndroidSchedulers.mainThread())
@@ -57,7 +57,6 @@ public class TwoPresenter extends TwoContract.Presenter {
 
                     @Override
                     public void onComplete() {
-                        mView.hideLoading();
                     }
                 });
     }
@@ -98,7 +97,7 @@ public class TwoPresenter extends TwoContract.Presenter {
 
     @Override
     public void onLabel() {
-        CloudApi.goodSpuGetGoodsCategoryList("0")
+        CloudApi.goodSpuGetNineGoodsCategory("0")
                 .doOnSubscribe(disposable -> {
                 })
                 .observeOn(AndroidSchedulers.mainThread())
@@ -140,7 +139,7 @@ public class TwoPresenter extends TwoContract.Presenter {
 
     @Override
     public void onWeight() {
-        String[] str = {act.getString(R.string.popular), act.getString(R.string.popular), act.getString(R.string.arrivals)};
+        String[] str = {act.getString(R.string.popular), act.getString(R.string.sales), act.getString(R.string.arrivals)};
         List<DataBean> list = new ArrayList<>();
         for (int i = 0; i < str.length; i++) {
             DataBean bean = new DataBean();

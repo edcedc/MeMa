@@ -1,6 +1,7 @@
 package com.yc.mema.view;
 
 import android.os.Bundle;
+import android.support.annotation.UiThread;
 import android.view.View;
 
 import com.blankj.utilcode.util.ActivityUtils;
@@ -69,15 +70,20 @@ public class FiveFrg extends BaseFragment<FivePresenter, FFiveBinding> implement
 
     @Override
     protected void initView(View view) {
-        mB.ivCol.setOnClickListener(this);
+        mB.tvCollection.setOnClickListener(this);
         mB.ivHead.setOnClickListener(this);
-        mB.ivMsg.setOnClickListener(this);
+        mB.ivZking.setOnClickListener(this);
+        mB.tvMsg.setOnClickListener(this);
         mB.tvBr.setOnClickListener(this);
         mB.tvBm.setOnClickListener(this);
         mB.tvSet.setOnClickListener(this);
         mB.tvShare.setOnClickListener(this);
         mB.tvApply.setOnClickListener(this);
-
+        mB.tvLock.setOnClickListener(this);
+        mB.tvPayment.setOnClickListener(this);
+        mB.tvShipped.setOnClickListener(this);
+        mB.tvReceived.setOnClickListener(this);
+        mB.tvEvaluate.setOnClickListener(this);
         mB.refreshLayout.setEnableLoadmore(false);
         setRefreshLayout(mB.refreshLayout, new RefreshListenerAdapter() {
             @Override
@@ -91,13 +97,13 @@ public class FiveFrg extends BaseFragment<FivePresenter, FFiveBinding> implement
     public void onClick(View view) {
         if (isRequest)return;
         switch (view.getId()) {
-            case R.id.iv_col:
+            case R.id.tv_collection:
                 UIHelper.startCollectionFrg(this);
                 break;
             case R.id.iv_head:
                 UIHelper.startUserInfoAct();
                 break;
-            case R.id.iv_msg:
+            case R.id.tv_msg:
                 UIHelper.startMessageFrg(this);
                 break;
             case R.id.tv_br:
@@ -115,6 +121,25 @@ public class FiveFrg extends BaseFragment<FivePresenter, FFiveBinding> implement
                 break;
             case R.id.tv_apply:
                 mPresenter.onaUserAgent(this);
+                break;
+            case R.id.tv_address:
+                UIHelper.startShopAddressFrg(this);
+                break;
+            case R.id.tv_lock:
+            case R.id.tv_payment:
+                UIHelper.startOrderListAct(0);
+                break;
+            case R.id.tv_shipped:
+                UIHelper.startOrderListAct(1);
+                break;
+            case R.id.tv_received:
+                UIHelper.startOrderListAct(2);
+                break;
+            case R.id.tv_evaluate:
+                UIHelper.startOrderListAct(3);
+                break;
+            case R.id.iv_zking:
+                UIHelper.startZkingFrg(this);
                 break;
         }
     }

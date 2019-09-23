@@ -165,8 +165,6 @@
 
                 </com.flyco.roundview.RoundLinearLayout>
 
-
-
             </com.lcodecore.tkrefreshlayout.TwinklingRefreshLayout>
 
         </ezy.ui.layout.LoadingLayout>

@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="?actionBarItemBackground"
+    android:padding="@dimen/px30"
+    tools:ignore="MissingConstraints">
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/tv_order_num"
+        style="@style/Tv13black"
+        android:layout_marginBottom="@dimen/px20"
+        android:textSize="@dimen/size24"
+        app:layout_constraintBottom_toTopOf="@id/iv_img"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/tv_state"
+        style="@style/Tv13black"
+        android:textColor="@color/red_EC5B44"
+        app:layout_constraintBottom_toBottomOf="@id/tv_order_num"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@id/tv_order_num" />
+
+    <View
+        android:id="@+id/v1"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/px30"
+        app:layout_constraintTop_toBottomOf="@id/tv_order_num" />
+
+    <android.support.v7.widget.AppCompatImageView
+        android:id="@+id/iv_img"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/no_banner"
+        app:layout_constraintTop_toBottomOf="@id/v1" />
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/tv_title"
+        style="@style/Tv13black"
+        android:layout_width="0dp"
+        android:layout_marginLeft="@dimen/px30"
+        android:textSize="@dimen/size28"
+        app:layout_constraintBottom_toTopOf="@id/tv_content"
+        app:layout_constraintLeft_toRightOf="@id/iv_img"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@id/iv_img" />
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/tv_content"
+        style="@style/Tv12gray"
+        android:layout_marginLeft="@dimen/px30"
+        app:layout_constraintBottom_toTopOf="@id/tv_price"
+        app:layout_constraintLeft_toRightOf="@id/iv_img"
+        app:layout_constraintTop_toBottomOf="@id/tv_title" />
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/tv_price"
+        style="@style/Tv13black"
+        android:layout_marginLeft="@dimen/px30"
+        app:layout_constraintBottom_toBottomOf="@id/iv_img"
+        app:layout_constraintLeft_toRightOf="@id/iv_img"
+        app:layout_constraintTop_toBottomOf="@id/tv_content" />
+
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/tv_num"
+        style="@style/Tv12gray"
+        android:layout_marginLeft="@dimen/px30"
+        app:layout_constraintBottom_toBottomOf="@id/tv_price"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@id/tv_price" />
+
+    <View
+        android:id="@+id/v2"
+        style="@style/divider_3"
+        android:layout_marginTop="@dimen/px30"
+        app:layout_constraintTop_toBottomOf="@id/iv_img" />
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/tv_freight"
+        style="@style/Tv13gray"
+        android:layout_marginTop="@dimen/px30"
+        android:text="0.00"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/v2" />
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/tv_all_price"
+        style="@style/Tv13red"
+        android:layout_marginRight="@dimen/px10"
+        android:text="0.00"
+        android:textSize="@dimen/size24"
+        app:layout_constraintBottom_toBottomOf="@id/tv_freight"
+        app:layout_constraintRight_toLeftOf="@id/tv_freight"
+        app:layout_constraintTop_toTopOf="@id/tv_freight" />
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/tv_size"
+        style="@style/Tv13black"
+        android:layout_marginRight="@dimen/px10"
+        android:textSize="@dimen/size24"
+        app:layout_constraintBottom_toBottomOf="@id/tv_all_price"
+        app:layout_constraintRight_toLeftOf="@id/tv_all_price"
+        app:layout_constraintTop_toTopOf="@id/tv_all_price" />
+
+    <LinearLayout
+        android:id="@+id/layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/px50"
+        android:gravity="right"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@id/tv_size">
+
+        <com.flyco.roundview.RoundTextView
+            android:id="@+id/tv_apply_refund"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="5"
+            android:gravity="center"
+            android:padding="@dimen/px10"
+            android:text="@string/apply_refund"
+            android:textColor="@color/tab_unselect"
+            android:textSize="@dimen/size26"
+            android:visibility="gone"
+            app:rv_cornerRadius="@dimen/px60"
+            app:rv_strokeColor="@color/tab_unselect"
+            app:rv_strokeWidth="@dimen/px2" />
+
+        <com.flyco.roundview.RoundTextView
+            android:id="@+id/tv_look_wuliu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/px30"
+            android:ems="5"
+            android:gravity="center"
+            android:padding="@dimen/px10"
+            android:text="@string/look_wuliu"
+            android:textColor="@color/tab_unselect"
+            android:textSize="@dimen/size26"
+            android:visibility="gone"
+            app:rv_cornerRadius="@dimen/px60"
+            app:rv_strokeColor="@color/tab_unselect"
+            app:rv_strokeWidth="@dimen/px2" />
+
+        <com.flyco.roundview.RoundTextView
+            android:id="@+id/tv_evaluate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/px30"
+            android:ems="5"
+            android:gravity="center"
+            android:padding="@dimen/px10"
+            android:text="@string/to_evaluate"
+            android:textColor="@color/red_EC5B44"
+            android:textSize="@dimen/size26"
+            android:visibility="gone"
+            app:rv_cornerRadius="@dimen/px60"
+            app:rv_strokeColor="@color/red_EC5B44"
+            app:rv_strokeWidth="@dimen/px2" />
+
+
+        <com.flyco.roundview.RoundTextView
+            android:id="@+id/tv_confirm"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/px30"
+            android:ems="5"
+            android:gravity="center"
+            android:padding="@dimen/px10"
+            android:text="@string/confirm_receipt"
+            android:textColor="@color/white"
+            android:textSize="@dimen/size26"
+            android:visibility="gone"
+            app:layout_constraintRight_toRightOf="parent"
+            app:rv_backgroundColor="@color/red_EC5B44"
+            app:rv_cornerRadius="@dimen/px60"
+            app:rv_strokeWidth="@dimen/px2" />
+
+        <com.flyco.roundview.RoundTextView
+            android:id="@+id/tv_call_order"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="5"
+            android:gravity="center"
+            android:padding="@dimen/px10"
+            android:text="@string/call_order"
+            android:textColor="@color/tab_unselect"
+            android:textSize="@dimen/size26"
+            android:visibility="gone"
+            app:rv_cornerRadius="@dimen/px60"
+            app:rv_strokeColor="@color/tab_unselect"
+            app:rv_strokeWidth="@dimen/px2" />
+
+        <com.flyco.roundview.RoundTextView
+            android:id="@+id/tv_pay"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/px30"
+            android:ems="5"
+            android:gravity="center"
+            android:padding="@dimen/px10"
+            android:text="@string/to_pay"
+            android:textColor="@color/red_EC5B44"
+            android:textSize="@dimen/size26"
+            android:visibility="gone"
+            app:rv_cornerRadius="@dimen/px60"
+            app:rv_strokeColor="@color/red_EC5B44"
+            app:rv_strokeWidth="@dimen/px2" />
+
+    </LinearLayout>
+
+    <android.support.constraint.Group
+        android:id="@+id/gp_order_num"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:constraint_referenced_ids="tv_order_num, tv_state" />
+
+    <android.support.constraint.Group
+        android:id="@+id/gp_order_bottom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:constraint_referenced_ids="v1, layout" />
+
+</android.support.constraint.ConstraintLayout>

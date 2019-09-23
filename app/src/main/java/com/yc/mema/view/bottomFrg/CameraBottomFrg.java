@@ -5,7 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.yc.mema.R;
-import com.yc.mema.base.BaseBottomSheetFrag;
+import com.yc.mema.base.BaseBottomSheetFrg;
 
 
 /**
@@ -15,7 +15,7 @@ import com.yc.mema.base.BaseBottomSheetFrag;
  *  打开相册或相机
  */
 @SuppressLint("ValidFragment")
-public class CameraBottomFrg extends BaseBottomSheetFrag implements View.OnClickListener{
+public class CameraBottomFrg extends BaseBottomSheetFrg implements View.OnClickListener{
 
 
     private int type;

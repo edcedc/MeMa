@@ -19,9 +19,9 @@ public class OneGlideImageLoader extends ImageLoader {
         DataBean bean = (DataBean) path;
         //具体方法内容自己去选择，次方法是为了减少banner过多的依赖第三方包，所以将这个权限开放给使用者去选择
         RequestOptions options = new RequestOptions();
-        options.placeholder(R.mipmap.place_holder);
+        options.placeholder(R.drawable.no_banner);
         Glide.with(context.getApplicationContext())
-                .load(CloudApi.SERVLET_IMG_URL + bean.getAttachId())
+                .load(bean.getImage() == null ? CloudApi.SERVLET_IMG_URL + bean.getAttachId() : bean.getImage())
                 .apply(options)
                 .into(imageView);
     }

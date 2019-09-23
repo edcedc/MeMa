@@ -2,11 +2,13 @@ package com.yc.mema.adapter;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.v7.widget.AppCompatRatingBar;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.RatingBar;
 
@@ -39,8 +41,17 @@ public class ShopCommentAdapter extends BaseRecyclerviewAdapter<DataBean> {
         viewHolder.tv_name.setText(bean.getNickName());
         viewHolder.tv_time.setText(bean.getCreateTime());
         viewHolder.tv_content.setText(bean.getContent());
-        viewHolder.ratingbar.setNumStars((int) bean.getStarLevel());
+        viewHolder.ratingbar.setNumStars(5);
+        viewHolder.ratingbar.setRating((float) bean.getStarLevel());
         viewHolder.itemView.setOnClickListener(view -> {});
+        List<DataBean> discussImgs = bean.getDiscussImgs();
+        if (discussImgs != null && discussImgs.size() != 0){
+            viewHolder.gridView.setVisibility(View.VISIBLE);
+            GiftDescAdapter adapter = new GiftDescAdapter(act, discussImgs);
+            viewHolder.gridView.setAdapter(adapter);
+        }else {
+            viewHolder.gridView.setVisibility(View.GONE);
+        }
     }
 
     @Override
@@ -54,7 +65,7 @@ public class ShopCommentAdapter extends BaseRecyclerviewAdapter<DataBean> {
         AppCompatTextView tv_name;
         AppCompatTextView tv_time;
         AppCompatTextView tv_content;
-        RatingBar ratingbar;
+        AppCompatRatingBar ratingbar;
         GridView gridView;
 
         public ViewHolder(@NonNull View itemView) {

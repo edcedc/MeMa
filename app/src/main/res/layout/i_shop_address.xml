@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:padding="@dimen/px20"
+    tools:ignore="MissingConstraints"
+    android:background="?actionBarItemBackground"
+    android:layout_height="wrap_content">
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/tv_title"
+        style="@style/Tv13black"/>
+
+    <android.support.v7.widget.AppCompatTextView
+        app:layout_constraintLeft_toRightOf="@id/tv_title"
+        android:id="@+id/tv_phone"
+        android:layout_marginLeft="@dimen/px30"
+        style="@style/Tv13gray"/>
+
+    <android.support.v7.widget.AppCompatTextView
+        app:layout_constraintTop_toBottomOf="@id/tv_title"
+        android:id="@+id/tv_desc"
+        style="@style/Tv13black"/>
+
+    <android.support.v7.widget.AppCompatTextView
+        android:text="@string/mema19"
+        app:layout_constraintTop_toTopOf="@id/tv_edit"
+        app:layout_constraintBottom_toBottomOf="@id/tv_edit"
+        android:id="@+id/tv_moren"
+        android:gravity="center"
+        android:drawablePadding="@dimen/px10"
+        android:drawableLeft="@mipmap/xuanzhe1"
+        style="@style/Tv13black"/>
+
+    <android.support.v7.widget.AppCompatTextView
+        android:text="@string/edit"
+        app:layout_constraintTop_toBottomOf="@id/tv_title"
+        android:id="@+id/tv_edit"
+        app:layout_constraintRight_toLeftOf="@id/tv_del"
+        app:layout_constraintTop_toTopOf="@id/tv_del"
+        app:layout_constraintBottom_toBottomOf="@id/tv_del"
+        android:padding="@dimen/px20"
+        style="@style/Tv13black"/>
+
+    <android.support.v7.widget.AppCompatTextView
+        android:text="@string/delete"
+        app:layout_constraintTop_toBottomOf="@id/tv_desc"
+        app:layout_constraintRight_toRightOf="parent"
+        android:padding="@dimen/px20"
+        android:id="@+id/tv_del"
+        style="@style/Tv13black"/>
+
+</android.support.constraint.ConstraintLayout>

@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <include layout="@layout/include_top"/>
+
+        <LinearLayout
+            android:background="@color/white"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/tv_arrival"
+                android:textColor="@color/black_333333"
+                android:text="@string/new_arrival"
+                android:padding="@dimen/px30"
+                style="@style/Tv12gray" />
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/tv_sales"
+                android:textColor="@color/black_333333"
+                android:text="@string/sales"
+                android:padding="@dimen/px30"
+                style="@style/Tv12gray" />
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/tv_price"
+                android:drawablePadding="@dimen/px10"
+                android:drawableRight="@mipmap/datatransferboth"
+                android:textColor="@color/black_333333"
+                android:text="@string/price"
+                android:padding="@dimen/px30"
+                style="@style/Tv12gray" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1"/>
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/tv_screen"
+                android:textColor="@color/black_333333"
+                android:text="@string/screen"
+                android:padding="@dimen/px30"
+                style="@style/Tv12gray" />
+
+        </LinearLayout>
+
+        <ezy.ui.layout.LoadingLayout
+            android:id="@+id/loadinglayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <com.lcodecore.tkrefreshlayout.TwinklingRefreshLayout
+                android:id="@+id/refreshLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="@dimen/px30"
+                android:background="@color/white_f4f4f4">
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/recyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:nestedScrollingEnabled="false"
+                    android:overScrollMode="never" />
+
+            </com.lcodecore.tkrefreshlayout.TwinklingRefreshLayout>
+
+        </ezy.ui.layout.LoadingLayout>
+
+    </LinearLayout>
+
+</layout>

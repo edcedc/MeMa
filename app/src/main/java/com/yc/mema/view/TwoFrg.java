@@ -1,12 +1,8 @@
 package com.yc.mema.view;
 
-import android.content.res.ColorStateList;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.support.v7.widget.AppCompatTextView;
 import android.view.View;
 
-import com.blankj.utilcode.util.LogUtils;
 import com.lcodecore.tkrefreshlayout.RefreshListenerAdapter;
 import com.lcodecore.tkrefreshlayout.TwinklingRefreshLayout;
 import com.yc.mema.R;
@@ -21,12 +17,13 @@ import com.yc.mema.presenter.TwoPresenter;
 import com.yc.mema.utils.OneGlideImageLoader;
 import com.youth.banner.listener.OnBannerListener;
 import com.youth.banner.transformer.DefaultTransformer;
-import com.zhy.view.flowlayout.FlowLayout;
-import com.zhy.view.flowlayout.TagAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ *  商城
+ */
 public class TwoFrg extends BaseFragment<TwoPresenter, FTwoBinding> implements TwoContract.View, View.OnClickListener, OnBannerListener {
 
     public static TwoFrg newInstance() {
@@ -36,7 +33,7 @@ public class TwoFrg extends BaseFragment<TwoPresenter, FTwoBinding> implements T
         return fragment;
     }
 
-    private int weightPosition = 0;
+    private int weightPosition = -1;
 
     private List<DataBean> listBannerBean = new ArrayList<>();
     private List<DataBean> listLabelBean = new ArrayList<>();
@@ -64,24 +61,27 @@ public class TwoFrg extends BaseFragment<TwoPresenter, FTwoBinding> implements T
         setSwipeBackEnable(false);
         setSofia(false);
         view.findViewById(R.id.et_search).setOnClickListener(this);
-
+        mB.fyClose.setOnClickListener(this);
+        mB.tvArrival.setOnClickListener(this);
+        mB.tvSales.setOnClickListener(this);
+        mB.tvPopular.setOnClickListener(this);
         if (adapter == null) {
             adapter = new ShopAdapter(act, listBean);
         }
-        setRecyclerViewGridType(mB.recyclerView, 2, 60, 60, R.color.white_f4f4f4);
+        setRecyclerViewGridType(mB.recyclerView, 2, 40, 40, R.color.white_f4f4f4);
         mB.recyclerView.setAdapter(adapter);
         showLoadDataing();
-        mB.refreshLayout.startRefresh();
+        setLabel(0);
         setRefreshLayout(mB.refreshLayout, new RefreshListenerAdapter() {
             @Override
             public void onRefresh(TwinklingRefreshLayout refreshLayout) {
-                mPresenter.onRequest(pagerNumber = 1, weightPosition);
+                mPresenter.onRequest(pagerNumber = 1, weightPosition, null, 0, 0, null);
             }
 
             @Override
             public void onLoadMore(TwinklingRefreshLayout refreshLayout) {
                 super.onLoadMore(refreshLayout);
-                mPresenter.onRequest(pagerNumber += 1, weightPosition);
+                mPresenter.onRequest(pagerNumber += 1, weightPosition, null, 0, 0, null);
             }
         });
         mPresenter.onBanner();
@@ -92,9 +92,9 @@ public class TwoFrg extends BaseFragment<TwoPresenter, FTwoBinding> implements T
         mB.rvLabel.setOnItemClickListener((adapterView, view1, i, l) -> {
             DataBean bean = listLabelBean.get(i);
             if (bean.getId().equals("1")){
-                UIHelper.startCategoryFrg(this);
+                UIHelper.startMoreCategoryFrg(this);
             }else {
-
+                UIHelper.startCategoryFrg(this, bean.getId(), bean.getTitle());
             }
         });
     }
@@ -102,10 +102,45 @@ public class TwoFrg extends BaseFragment<TwoPresenter, FTwoBinding> implements T
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
+            case R.id.fy_close:
+                act.finish();
+                break;
             case R.id.et_search:
                 UIHelper.startSearchShopFrg(this);
                 break;
+            case R.id.tv_arrival:
+                setLabel(2);
+                break;
+            case R.id.tv_sales:
+                setLabel(1);
+                break;
+            case R.id.tv_popular:
+                setLabel(0);
+                break;
         }
+    }
+
+    private void setLabel(int type){
+        if (this.weightPosition == type)return;
+        this.weightPosition = type;
+        switch (type){
+            case 2://最新上架
+                mB.tvPopular.setTextColor(act.getResources().getColor(R.color.black_333333));
+                mB.tvArrival.setTextColor(act.getResources().getColor(R.color.red_F67690));
+                mB.tvSales.setTextColor(act.getResources().getColor(R.color.black_333333));
+                break;
+            case 1://销量最高
+                mB.tvPopular.setTextColor(act.getResources().getColor(R.color.black_333333));
+                mB.tvArrival.setTextColor(act.getResources().getColor(R.color.black_333333));
+                mB.tvSales.setTextColor(act.getResources().getColor(R.color.red_F67690));
+                break;
+            case 0://热门推荐
+                mB.tvPopular.setTextColor(act.getResources().getColor(R.color.red_F67690));
+                mB.tvArrival.setTextColor(act.getResources().getColor(R.color.black_333333));
+                mB.tvSales.setTextColor(act.getResources().getColor(R.color.black_333333));
+                break;
+        }
+        mB.refreshLayout.startRefresh();
     }
 
     @Override
@@ -127,7 +162,7 @@ public class TwoFrg extends BaseFragment<TwoPresenter, FTwoBinding> implements T
 
     @Override
     public void setWeight(List<DataBean> list) {
-        mB.flLabel.removeAllViews();
+       /* mB.flLabel.removeAllViews();
         TagAdapter<DataBean> adapter = new TagAdapter<DataBean>(list) {
             @Override
             public View getView(FlowLayout parent, int position, DataBean bean) {
@@ -145,7 +180,7 @@ public class TwoFrg extends BaseFragment<TwoPresenter, FTwoBinding> implements T
                 mB.refreshLayout.startRefresh();
             }
             return true;
-        });
+        });*/
     }
 
     @Override

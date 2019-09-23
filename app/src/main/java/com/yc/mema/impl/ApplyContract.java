@@ -17,13 +17,20 @@ public interface ApplyContract {
     interface View extends IBaseView {
 
         void setRole(List<DataBean> list);
+
+        void onCode();
     }
 
     abstract class Presenter extends BasePresenter<View> {
 
         public abstract void onRole();
 
-        public abstract void onSaveAgent(String name, String phone, String roleId, String county, String text);
+
+        public abstract void onCode(String phone);
+
+        public abstract void onSave(String userName, String wechatNum, String iphone, String vercoed, String inviteCode, String roleId,
+                                    String industry, String county, String directTeam, String mailbox,
+                                    String imgZheng, String imgFan, String imgShou, String cardId);
     }
 
 }

@@ -6,14 +6,20 @@ import android.graphics.Color;
 import android.view.Gravity;
 import android.view.View;
 
+import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.TimeUtils;
+import com.blankj.utilcode.util.ToastUtils;
 import com.yc.mema.bean.DataBean;
+import com.yc.mema.weight.AddressPickTask;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
 import cn.addapp.pickers.common.LineConfig;
+import cn.addapp.pickers.entity.City;
+import cn.addapp.pickers.entity.County;
+import cn.addapp.pickers.entity.Province;
 import cn.addapp.pickers.listeners.OnItemPickListener;
 import cn.addapp.pickers.listeners.OnSingleWheelListener;
 import cn.addapp.pickers.picker.DatePicker;
@@ -136,6 +142,29 @@ public class DatePickerUtils {
             if (listener != null)listener.onWheeled(index, item);
         });
         picker.show();
+    }
+
+    public static void onAddressPicker(Activity act) {
+        AddressPickTask task = new AddressPickTask(act);
+        task.setHideProvince(false);
+        task.setHideCounty(false);
+
+        task.setCallback(new AddressPickTask.Callback() {
+            @Override
+            public void onAddressInitFailed() {
+                ToastUtils.showShort("数据初始化失败");
+            }
+
+            @Override
+            public void onAddressPicked(Province province, City city, County county) {
+                if (county == null) {
+//                    showToast(province.getAreaName() + city.getAreaName());
+                } else {
+                    LogUtils.e(province.getAreaName() + city.getAreaName() + county.getAreaName());
+                }
+            }
+        });
+        task.execute("广东", "广州", "越秀");
     }
 
 }

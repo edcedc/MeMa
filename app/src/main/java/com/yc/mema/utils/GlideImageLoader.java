@@ -3,6 +3,7 @@ package com.yc.mema.utils;
 import android.content.Context;
 import android.widget.ImageView;
 
+import com.blankj.utilcode.util.LogUtils;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.yc.mema.R;
@@ -17,7 +18,7 @@ public class GlideImageLoader extends ImageLoader {
         DataBean bean = (DataBean) path;
         //具体方法内容自己去选择，次方法是为了减少banner过多的依赖第三方包，所以将这个权限开放给使用者去选择
         RequestOptions options = new RequestOptions();
-        options.placeholder(R.mipmap.place_holder);
+        options.placeholder(R.drawable.no_banner);
         Glide.with(context.getApplicationContext())
                 .load(CloudApi.SERVLET_IMG_URL + (bean.getImageId() == null ? bean.getAttachId() : bean.getImageId()))
                 .apply(options)

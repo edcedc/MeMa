@@ -7,6 +7,7 @@ import com.yc.mema.R;
 import com.yc.mema.base.BaseFragment;
 import com.yc.mema.base.BasePresenter;
 import com.yc.mema.base.User;
+import com.yc.mema.bean.AddressBean;
 import com.yc.mema.controller.UIHelper;
 import com.yc.mema.databinding.FInfoBinding;
 import com.yc.mema.event.AddressInEvent;
@@ -15,6 +16,8 @@ import com.yc.mema.presenter.InformationPresenter;
 import com.yc.mema.utils.DatePickerUtils;
 import com.yc.mema.utils.GlideLoadingUtils;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 import org.json.JSONObject;
 
 /**
@@ -77,6 +80,7 @@ public class UserInfoFrg extends BaseFragment<InformationPresenter, FInfoBinding
         mB.lySex.setOnClickListener(this);
         mB.lyAddress.setOnClickListener(this);
         mB.lyZking.setOnClickListener(this);
+        EventBus.getDefault().register(this);
     }
 
     @Override
@@ -106,7 +110,7 @@ public class UserInfoFrg extends BaseFragment<InformationPresenter, FInfoBinding
                 UIHelper.startSexFrg(this);
                 break;
             case R.id.ly_address:
-                UIHelper.startAddressFrg(this, 1, AddressInEvent.USER_INFP_TYPE);
+                UIHelper.startAddressFrg(this, AddressInEvent.USER_INFP_TYPE);
                 break;
             case R.id.ly_zking:
                 UIHelper.startZkingFrg(this);
@@ -126,6 +130,18 @@ public class UserInfoFrg extends BaseFragment<InformationPresenter, FInfoBinding
 
     @Override
     public void onSaveUser() {
+        setData(User.getInstance().getUserObj());
+    }
 
+    @Subscribe
+    public void onMainAddressInEvent(AddressInEvent event){
+        if (event.type != AddressInEvent.USER_INFP_TYPE)return;
+        mPresenter.address(event.parentId.split(",")[2]);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
     }
 }

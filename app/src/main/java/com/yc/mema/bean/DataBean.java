@@ -90,9 +90,127 @@ public class DataBean implements Serializable {
     private String specValue;
     private String valueId;
     private String specSku;
+    private String goodSku;
+    private int status;
+    private String addressId;
+    private String userName;
+    private String counties;
+    private String county;
+    private int goodNumber;
+    private String goodNum;
+    private String orderId;
+    private String orderNum;
+    private double allPrice;
+    private int isAppraise;//0未评价 1已评价
+    private String payTime;//支付时间
+    private String deliveryTime;//发货时间
+    private String cancelTime;//取消订单时间
+    private String receiveTime;//收货时间
+    private String expCode;
+    private String expressNo;
+
+    public String getExpCode() {
+        return expCode;
+    }
+
+    public String getExpressNo() {
+        return expressNo;
+    }
+
+    public String getReceiveTime() {
+        return receiveTime;
+    }
+
+    public String getCancelTime() {
+        return cancelTime;
+    }
+
+    public String getDeliveryTime() {
+        return deliveryTime;
+    }
+
+    public String getPayTime() {
+        return payTime;
+    }
+
+    public int getIsAppraise() {
+        return isAppraise;
+    }
+
+    public double getAllPrice() {
+        return allPrice;
+    }
+
+    public void setAllPrice(double allPrice) {
+        this.allPrice = allPrice;
+    }
+
+    public int getGoodNumber() {
+        return goodNumber;
+    }
+
+    public void setGoodNumber(int goodNumber) {
+        this.goodNumber = goodNumber;
+    }
+
+    public String getOrderNum() {
+        return orderNum;
+    }
+
+    public void setOrderNum(String orderNum) {
+        this.orderNum = orderNum;
+    }
+
+    public String getGoodNum() {
+        return goodNum;
+    }
+
+    public void setGoodNum(String goodNum) {
+        this.goodNum = goodNum;
+    }
+
+    public String getGoodSku() {
+        return goodSku;
+    }
+
+    public void setGoodSku(String goodSku) {
+        this.goodSku = goodSku;
+    }
+
+    public String getOrderId() {
+        return orderId;
+    }
+
+    public String getCounty() {
+        return county;
+    }
+
+    public String getCounties() {
+        return counties;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public String getAddressId() {
+        return addressId;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
 
     public String getSpecSku() {
         return specSku;
+    }
+
+    public void setSpecSku(String specSku) {
+        this.specSku = specSku;
     }
 
     public String getValueId() {
@@ -503,14 +621,18 @@ public class DataBean implements Serializable {
         this.id = id;
     }
 
-
-
     public boolean isAllSelected() {
         return allSelected;
     }
 
     public void setAllSelected(boolean allSelected) {
         this.allSelected = allSelected;
+    }
+
+    private List<DataBean> discussImgs;
+
+    public List<DataBean> getDiscussImgs() {
+        return discussImgs;
     }
 
     private List<DataBean> specValues;
@@ -537,10 +659,10 @@ public class DataBean implements Serializable {
         return informationImg;
     }
 
-    private List<DataBean> goodSupImgs;
+    private List<DataBean> goodSpuImgs;
 
-    public List<DataBean> getGoodSupImgs() {
-        return goodSupImgs;
+    public List<DataBean> getGoodSpuImgs() {
+        return goodSpuImgs;
     }
 
     private List<DataBean> list = new ArrayList<>();

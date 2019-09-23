@@ -30,7 +30,7 @@ import io.reactivex.disposables.Disposable;
 /**
  * Created by 李可乐 on 2016/9/8 0008.
  */
-public abstract class BaseBottomSheetFrag extends BottomSheetDialogFragment {
+public abstract class BaseBottomSheetFrg extends BottomSheetDialogFragment {
     protected Context act;
 
     protected View rootView;

@@ -1,71 +1,68 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:tools="http://schemas.android.com/tools"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
-
-    <android.support.constraint.ConstraintLayout
-        tools:ignore="MissingConstraints"
-        android:background="@color/white_f4f4f4"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <com.yc.mema.weight.NoScrollViewPager
-            android:id="@+id/viewPager"
+        <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:background="@color/white_f4f4f4"
+            tools:ignore="MissingConstraints">
 
-        <com.flyco.roundview.RoundTextView
-            android:id="@+id/tv_world"
-            android:text="@string/world"
-            android:layout_marginTop="@dimen/px60"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintRight_toLeftOf="@id/tv_friend"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:rv_backgroundColor="@color/white"
-            android:padding="@dimen/px15"
-            android:ems="6"
-            android:visibility="invisible"
-            android:clickable="false"
-            android:gravity="center"
-            android:alpha="0.7"
-            app:rv_cornerRadius="@dimen/px80"
-            android:textColor="@color/red_F67690"
-            style="@style/Tv15black" />
+            <com.yc.mema.weight.NoScrollViewPager
+                android:id="@+id/viewPager"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
 
-        <com.flyco.roundview.RoundTextView
-            android:id="@+id/tv_friend"
-            android:layout_marginRight="@dimen/px40"
-            android:visibility="invisible"
-            android:clickable="false"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintLeft_toRightOf="@id/tv_world"
-            app:layout_constraintTop_toTopOf="@id/tv_world"
-            app:layout_constraintBottom_toBottomOf="@id/tv_world"
-            android:alpha="0.7"
-            android:text="@string/good_friend"
-            app:rv_backgroundColor="@color/white"
-            android:padding="@dimen/px15"
-            android:ems="6"
-            android:gravity="center"
-            app:rv_cornerRadius="@dimen/px80"
-            style="@style/Tv15black" />
+            <com.flyco.roundview.RoundTextView
+                android:id="@+id/tv_world"
+                style="@style/Tv15black"
+                android:layout_marginTop="@dimen/px60"
+                android:alpha="0.7"
+                android:clickable="false"
+                android:ems="6"
+                android:gravity="center"
+                android:padding="@dimen/px15"
+                android:text="@string/world"
+                android:textColor="@color/red_F67690"
+                android:visibility="invisible"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toLeftOf="@id/tv_friend"
+                app:layout_constraintTop_toTopOf="parent"
+                app:rv_backgroundColor="@color/white"
+                app:rv_cornerRadius="@dimen/px80" />
 
-        <android.support.v7.widget.AppCompatImageView
-            android:id="@+id/iv_camera"
-            app:layout_goneMarginBottom="@dimen/px60"
-            app:layout_goneMarginTop="@dimen/px60"
-            app:layout_goneMarginRight="@dimen/px60"
-            app:layout_constraintTop_toTopOf="@id/tv_friend"
-            android:layout_marginRight="@dimen/px40"
-            app:layout_constraintBottom_toBottomOf="@id/tv_friend"
-            app:layout_constraintRight_toRightOf="parent"
-            android:background="@mipmap/y40"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            <com.flyco.roundview.RoundTextView
+                android:id="@+id/tv_friend"
+                style="@style/Tv15black"
+                android:layout_marginRight="@dimen/px40"
+                android:alpha="0.7"
+                android:clickable="false"
+                android:ems="6"
+                android:gravity="center"
+                android:padding="@dimen/px15"
+                android:text="@string/good_friend"
+                android:visibility="invisible"
+                app:layout_constraintBottom_toBottomOf="@id/tv_world"
+                app:layout_constraintLeft_toRightOf="@id/tv_world"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="@id/tv_world"
+                app:rv_backgroundColor="@color/white"
+                app:rv_cornerRadius="@dimen/px80" />
 
+            <android.support.v7.widget.AppCompatImageView
+                android:id="@+id/iv_camera"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/px40"
+                android:background="@mipmap/y40"
+                app:layout_constraintBottom_toBottomOf="@id/tv_friend"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="@id/tv_friend"
+                app:layout_goneMarginBottom="@dimen/px60"
+                app:layout_goneMarginRight="@dimen/px60"
+                app:layout_goneMarginTop="@dimen/px60" />
 
-
-    </android.support.constraint.ConstraintLayout>
+        </android.support.constraint.ConstraintLayout>
 
 </layout>

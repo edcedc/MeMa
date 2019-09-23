@@ -28,6 +28,7 @@ import java.util.List;
  * User: 501807647@qq.com
  * Date: 2019/6/16
  * Time: 1:11
+ *  新闻页
  */
 public class ThreeFrg extends BaseFragment<BaseListPresenter, FThreeBinding> implements BaseListContract.View, View.OnClickListener{
 

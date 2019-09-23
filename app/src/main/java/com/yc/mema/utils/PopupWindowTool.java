@@ -1,8 +1,10 @@
 package com.yc.mema.utils;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.drawable.ColorDrawable;
+import android.support.v7.widget.AppCompatEditText;
 import android.text.Html;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -16,9 +18,22 @@ import android.widget.TextView;
 
 import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.ScreenUtils;
+import com.blankj.utilcode.util.StringUtils;
+import com.blankj.utilcode.util.ToastUtils;
 import com.google.zxing.WriterException;
+import com.lxj.xpopup.XPopup;
+import com.lxj.xpopup.core.BasePopupView;
+import com.lxj.xpopup.interfaces.OnConfirmListener;
+import com.lxj.xpopup.interfaces.SimpleCallback;
 import com.yc.mema.R;
+import com.yc.mema.bean.DataBean;
+import com.yc.mema.view.PopupView.ShopPriceScreenView;
 import com.yc.mema.weight.WPopupWindow;
+import com.zhy.view.flowlayout.FlowLayout;
+import com.zhy.view.flowlayout.TagAdapter;
+import com.zhy.view.flowlayout.TagFlowLayout;
+
+import java.util.List;
 
 /**
  * 作者：yc on 2018/8/23.
@@ -37,16 +52,16 @@ public class PopupWindowTool {
         popupWindow.showAtLocation(view, Gravity.CENTER, viewX, viewY);
     }
 
-        public static void showDialog(final Context act, final int type, final DialogListener listener){
+    public static void showDialog(final Context act, final int type, final DialogListener listener) {
         View wh = LayoutInflater.from(act).inflate(R.layout.p_dialog, null);
         final WPopupWindow popupWindow = new WPopupWindow(wh);
         popupWindow.showAtLocation(wh, Gravity.CENTER, 0, 0);
         TextView tvTitle = wh.findViewById(R.id.tv_title);
-        TextView btCancel = wh.findViewById(R.id.bt_cancel);
-        TextView btSubmit = wh.findViewById(R.id.bt_submit);
+        TextView btCancel = wh.findViewById(R.id.tv_cancel);
+        TextView btSubmit = wh.findViewById(R.id.tv_confirm);
         View view = wh.findViewById(R.id.view);
         wh.findViewById(R.id.layout).setOnClickListener(view13 -> popupWindow.dismiss());
-        switch (type){
+        switch (type) {
             case clear:
                 tvTitle.setText("确定清除缓存吗？");
                 break;
@@ -56,17 +71,16 @@ public class PopupWindowTool {
         }
         btCancel.setOnClickListener(view1 -> popupWindow.dismiss());
         btSubmit.setOnClickListener(view12 -> {
-            if (listener != null){
+            if (listener != null) {
                 listener.onClick();
                 popupWindow.dismiss();
             }
         });
     }
 
-    public interface DialogListener{
+    public interface DialogListener {
         void onClick();
     }
-
 
 
     /**
@@ -80,7 +94,7 @@ public class PopupWindowTool {
      */
     public static void createPopupWindow(Context context, View anchor, final OnGestureClickListener listener) {
         // 自定义的布局View
-        View view = LayoutInflater.from(context) .inflate(R.layout.p_report_copy, null, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.p_report_copy, null, false);
         final PopupWindow popupWindow = new PopupWindow();
         popupWindow.setContentView(view);
         popupWindow.setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -96,7 +110,7 @@ public class PopupWindowTool {
         view.findViewById(R.id.tv_copy).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (listener != null){
+                if (listener != null) {
                     listener.copy();
                 }
                 popupWindow.dismiss();
@@ -105,7 +119,7 @@ public class PopupWindowTool {
         view.findViewById(R.id.tv_report).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (listener != null){
+                if (listener != null) {
                     listener.report();
                 }
                 popupWindow.dismiss();
@@ -113,8 +127,9 @@ public class PopupWindowTool {
         });
     }
 
-    public interface OnGestureClickListener{
+    public interface OnGestureClickListener {
         void copy();
+
         void report();
     }
 
@@ -147,7 +162,7 @@ public class PopupWindowTool {
      * @return popupWindow在长按view中的xy轴的偏移量
      */
     private static int[] calculatePopWindowPos(final View anchorView, final View contentView,
-                                              int touchX, int touchY) {
+                                               int touchX, int touchY) {
         final int windowLoc[] = new int[2];
         int offset = 144;
         // 获取屏幕的高宽
@@ -187,5 +202,65 @@ public class PopupWindowTool {
         final float scale = context.getResources().getDisplayMetrics().density;
         return (int) (dipValue * scale + 0.5f);
     }
+
+
+    public static void showShopPriceScreen(final Context act, View view, final onShopPriceScreenClickListener listener) {
+        ShopPriceScreenView popupView = (ShopPriceScreenView) new XPopup.Builder(act)
+                .atView(view)
+//                    .isCenterHorizontal(true)
+                .autoOpenSoftInput(true)
+//                    .offsetX(200)
+//                .dismissOnTouchOutside(false)
+                .setPopupCallback(new SimpleCallback() {
+                    @Override
+                    public void onShow() {
+
+                    }
+
+                    @Override
+                    public void onDismiss() {
+//                            popupView = null;
+                    }
+                })
+                .asCustom(new ShopPriceScreenView(act)).show();
+        popupView.setShopPriceScreenListener((di, gao) -> listener.onClick(di, gao));
+    }
+
+    public interface onShopPriceScreenClickListener{
+        void onClick(int di, int gao);
+    }
+
+    /**
+     *  可已复用的弹窗
+     * @param act
+     */
+    public static XPopup.Builder showDialog(Context act){
+        return new XPopup.Builder(act)
+                .setPopupCallback(new SimpleCallback() {
+                    @Override
+                    public void onCreated() {
+                    }
+
+                    @Override
+                    public void beforeShow() {
+                        super.beforeShow();
+//                        Log.e("tag", "beforeShow，在每次show之前都会执行，可以用来进行多次的数据更新。");
+                    }
+
+                    @Override
+                    public void onShow() {
+                    }
+                    @Override
+                    public void onDismiss() {
+                    }
+                    //如果你自己想拦截返回按键事件，则重写这个方法，返回true即可
+                    @Override
+                    public boolean onBackPressed() {
+//                        ToastUtils.showShort("我拦截的返回按键，按返回键XPopup不会关闭了");
+                        return false;
+                    }
+                });
+    }
+
 
 }

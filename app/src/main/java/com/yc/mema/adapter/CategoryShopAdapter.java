@@ -15,9 +15,11 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.yc.mema.R;
+import com.yc.mema.base.BaseFragment;
 import com.yc.mema.base.BaseRecyclerviewAdapter;
 import com.yc.mema.bean.DataBean;
 import com.yc.mema.controller.CloudApi;
+import com.yc.mema.controller.UIHelper;
 import com.yc.mema.utils.GlideLoadingUtils;
 import com.yc.mema.weight.RoundImageView;
 import com.yc.mema.weight.SizeImageView;
@@ -31,8 +33,8 @@ import java.util.List;
  * Time: 20:31
  */
 public class CategoryShopAdapter extends BaseRecyclerviewAdapter<DataBean> {
-    public CategoryShopAdapter(Context act, List<DataBean> listBean) {
-        super(act, listBean);
+    public CategoryShopAdapter(Context act, BaseFragment root, List<DataBean> listBean) {
+        super(act, root, listBean);
     }
 
     @Override
@@ -42,6 +44,9 @@ public class CategoryShopAdapter extends BaseRecyclerviewAdapter<DataBean> {
         viewHolder.iv_img.setWH(1, 1, true);
         GlideLoadingUtils.load(act, CloudApi.SERVLET_IMG_URL + bean.getAttachId(), viewHolder.iv_img);
         viewHolder.tv_title.setText(bean.getCategoryName());
+        viewHolder.itemView.setOnClickListener(view -> {
+            UIHelper.startCategoryFrg(root, bean.getCategoryId(), bean.getCategoryName());
+        });
     }
 
     @Override

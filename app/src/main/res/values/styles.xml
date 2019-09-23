@@ -16,7 +16,7 @@
 
     <!--parent设置为启动页的theme-->
     <style name="AppTheme.customeTheme" parent="AppTheme">
-        <item name="android:windowBackground">@mipmap/splash</item>
+        <item name="android:windowBackground">@mipmap/y51</item>
         <item name="android:windowFullscreen">?android:windowNoTitle</item>
         <!--
                      <item name="windowActionBar">false</item>
@@ -147,7 +147,11 @@
 
     <style name="Tv13black" parent="TextStyle">
         <item name="android:textColor">@color/black_333333</item>
-        <item name="android:textSize">@dimen/size30</item>
+        <item name="android:textSize">@dimen/size26</item>
+    </style>
+    <style name="Tv12black" parent="TextStyle">
+        <item name="android:textColor">@color/black_333333</item>
+        <item name="android:textSize">@dimen/size24</item>
     </style>
 
     <style name="Tv11gray" parent="TextStyle">

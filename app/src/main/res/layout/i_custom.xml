@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:ignore="MissingConstraints"
+    android:padding="@dimen/px30"
+    android:layout_height="wrap_content">
+
+    <android.support.v7.widget.AppCompatImageView
+        android:id="@+id/iv_img"
+        android:scaleType="fitXY"
+        android:background="@drawable/no_banner"
+        android:layout_width="90dp"
+        android:layout_height="90dp"/>
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/tv_title"
+        app:layout_constraintRight_toRightOf="parent"
+        android:maxLines="2"
+        android:layout_width="0dp"
+        android:layout_marginLeft="@dimen/px30"
+        app:layout_constraintLeft_toRightOf="@id/iv_img"
+        android:layout_marginRight="@dimen/px20"
+        app:layout_constraintRight_toLeftOf="@id/tv_hui"
+        android:textSize="@dimen/size32"
+        style="@style/Tv15black" />
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/tv_hui"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@id/tv_title"
+        app:layout_constraintBottom_toBottomOf="@id/tv_title"
+        android:text="@string/hui"
+        android:gravity="center"
+        android:textColor="@color/white"
+        android:background="@mipmap/list_label_bg"
+        style="@style/Tv12black" />
+
+    <android.support.v7.widget.AppCompatRatingBar
+        android:id="@+id/ratingbar"
+        android:layout_marginLeft="@dimen/px30"
+        android:layout_marginTop="@dimen/px10"
+        app:layout_constraintTop_toBottomOf="@id/tv_title"
+        app:layout_constraintLeft_toRightOf="@id/iv_img"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:maxHeight="15dp"
+        android:minHeight="15dp"
+        android:progressDrawable="@drawable/rb_customized"
+        android:isIndicator="true"
+        android:numStars="5"
+        android:rating="0"
+        android:stepSize="0.5"/>
+
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/tv_content"
+        android:layout_marginLeft="@dimen/px30"
+        android:layout_marginBottom="@dimen/px10"
+        app:layout_constraintBottom_toBottomOf="@id/iv_img"
+        app:layout_constraintLeft_toRightOf="@id/iv_img"
+        android:textColor="@color/red_EE3257"
+        style="@style/Tv12black" />
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/tv_location"
+        android:text="xxxxx"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginBottom="@dimen/px10"
+        app:layout_constraintBottom_toBottomOf="@id/iv_img"
+        style="@style/Tv12gray" />
+
+</android.support.constraint.ConstraintLayout>

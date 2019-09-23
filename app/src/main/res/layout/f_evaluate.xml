@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:ignore="MissingConstraints">
+
+        <include layout="@layout/include_top" />
+
+        <com.lcodecore.tkrefreshlayout.TwinklingRefreshLayout
+            android:id="@+id/refreshLayout"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="@color/white_f4f4f4">
+
+            <android.support.v4.widget.NestedScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <android.support.constraint.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:paddingBottom="@dimen/px30">
+
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/rv_order"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:nestedScrollingEnabled="false"
+                        android:overScrollMode="never" />
+
+                    <View
+                        android:id="@+id/v1"
+                        style="@style/divider_3"
+                        app:layout_constraintTop_toBottomOf="@id/rv_order" />
+
+                    <android.support.v7.widget.AppCompatTextView
+                        android:id="@+id/tv_baby_evaluation"
+                        style="@style/Tv15black"
+                        android:padding="@dimen/px30"
+                        android:text="@string/baby_evaluation"
+                        app:layout_constraintTop_toBottomOf="@id/v1" />
+
+                    <android.support.v7.widget.AppCompatRatingBar
+                        android:id="@+id/ratingbar"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:isIndicator="false"
+                        android:maxHeight="12dp"
+                        android:minHeight="12dp"
+                        android:numStars="5"
+                        android:progressDrawable="@drawable/rb_evaluate"
+                        android:rating="0"
+                        android:stepSize="0.5"
+                        app:layout_constraintBottom_toBottomOf="@id/tv_baby_evaluation"
+                        app:layout_constraintLeft_toRightOf="@id/tv_baby_evaluation"
+                        app:layout_constraintTop_toTopOf="@id/tv_baby_evaluation" />
+
+                    <View
+                        android:id="@+id/v2"
+                        style="@style/divider_3"
+                        app:layout_constraintTop_toBottomOf="@id/tv_baby_evaluation" />
+
+                    <android.support.v7.widget.AppCompatTextView
+                        android:id="@+id/tv_evaluate"
+                        style="@style/Tv15black"
+                        android:padding="@dimen/px30"
+                        android:text="@string/mema25"
+                        app:layout_constraintTop_toBottomOf="@id/v2" />
+
+                    <android.support.v7.widget.AppCompatEditText
+                        android:id="@+id/et_text"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/px30"
+                        android:layout_marginRight="@dimen/px30"
+                        android:gravity="top"
+                        android:hint="@string/please_evaluation"
+                        android:maxLines="4"
+                        android:minLines="5"
+                        android:textSize="@dimen/size30"
+                        app:layout_constraintTop_toBottomOf="@id/tv_evaluate" />
+
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/recyclerView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/px30"
+                        android:nestedScrollingEnabled="false"
+                        android:overScrollMode="never"
+                        app:layout_constraintTop_toBottomOf="@id/et_text" />
+
+                </android.support.constraint.ConstraintLayout>
+
+            </android.support.v4.widget.NestedScrollView>
+
+        </com.lcodecore.tkrefreshlayout.TwinklingRefreshLayout>
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/bt_submit"
+            android:padding="@dimen/px30"
+            android:background="@color/red_EC5B44"
+            android:textColor="@color/white"
+            android:textSize="@dimen/size30"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:text="@string/release"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+</layout>

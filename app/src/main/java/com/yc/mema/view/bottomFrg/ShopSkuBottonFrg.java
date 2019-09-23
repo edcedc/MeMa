@@ -12,11 +12,11 @@ import android.text.Spanned;
 import android.text.style.AbsoluteSizeSpan;
 import android.view.View;
 
-import com.blankj.utilcode.util.LogUtils;
+import com.blankj.utilcode.util.StringUtils;
 import com.google.gson.Gson;
 import com.yc.mema.R;
 import com.yc.mema.adapter.ShopSkuAdapter;
-import com.yc.mema.base.BaseBottomSheetFrag;
+import com.yc.mema.base.BaseBottomSheetFrg;
 import com.yc.mema.bean.DataBean;
 import com.yc.mema.controller.CloudApi;
 import com.yc.mema.utils.GlideLoadingUtils;
@@ -33,28 +33,51 @@ import java.util.List;
  * Date: 2019/8/28
  * Time: 17:24
  */
-public class ShopSkuBottonFrg extends BaseBottomSheetFrag implements View.OnClickListener {
+public class ShopSkuBottonFrg extends BaseBottomSheetFrg implements View.OnClickListener {
 
     private AppCompatImageView ivImg;
     private AppCompatTextView tvPrice;
     private AppCompatTextView tvSales;
     private AppCompatTextView tvSku;
-    private AppCompatTextView tvJia;
     private AppCompatTextView tvNum;
-    private AppCompatTextView tvJian;
     private DataBean bean;
 
     private ShopSkuAdapter adapter;
     private JSONObject valueIds;
     private JSONObject sku;
+    private String skuId;
+    private List<DataBean> specList;
+    private StringBuffer sbName;
+    private String skNum;
+    private double price;
 
     @Override
     public void onClick(View view) {
+        int num = Integer.valueOf(tvNum.getText().toString());
         switch (view.getId()){
             case R.id.bt_submit:
-
+                if (num > Integer.valueOf(skNum)){
+                    return;
+                }
+                if (listener != null){
+                    listener.OnClick(sbName.toString(), num, price);
+                    dismiss();
+                }
                 break;
-
+            case R.id.fy_close:
+                dismiss();
+                break;
+            case R.id.tv_jia:
+                num += 1;
+                tvNum.setText(num + "");
+                break;
+            case R.id.tv_jian:
+                if (num == 0){
+                    return;
+                }
+                num -= 1;
+                tvNum.setText(num + "");
+                break;
         }
     }
 
@@ -68,6 +91,14 @@ public class ShopSkuBottonFrg extends BaseBottomSheetFrag implements View.OnClic
         return R.layout.p_sku;
     }
 
+    private OnClickListener listener;
+    public void setOnClickListener(OnClickListener listener){
+        this.listener = listener;
+    }
+    public interface OnClickListener{
+        void OnClick(String sku, int num, double price);
+    }
+
     @Override
     public void initView(View view) {
         view.findViewById(R.id.bt_submit).setOnClickListener(this);
@@ -75,24 +106,36 @@ public class ShopSkuBottonFrg extends BaseBottomSheetFrag implements View.OnClic
         tvPrice = view.findViewById(R.id.tv_price);
         tvSales = view.findViewById(R.id.tv_sales);
         tvSku = view.findViewById(R.id.tv_sku);
-        tvJia = view.findViewById(R.id.tv_jia);
+        view.findViewById(R.id.tv_jia).setOnClickListener(this);
         tvNum = view.findViewById(R.id.tv_num);
-        tvJian = view.findViewById(R.id.tv_jian);
+        view.findViewById(R.id.tv_jian).setOnClickListener(this);
+        view.findViewById(R.id.fy_close).setOnClickListener(this);
         RecyclerView recyclerView = view.findViewById(R.id.recyclerView);
-
-        List<DataBean> imgs = bean.getGoodSupImgs();
+        List<DataBean> imgs = bean.getGoodSpuImgs();
         if (imgs != null && imgs.size() != 0){
             GlideLoadingUtils.load(act, CloudApi.SERVLET_IMG_URL + imgs.get(0).getAttachId(), ivImg);
         }
-        double price = bean.getPrice();
+        price = bean.getPrice();
         SpannableString hText = new SpannableString("¥" + price);
-        hText.setSpan(new AbsoluteSizeSpan(8, true), 0, 1, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+        hText.setSpan(new AbsoluteSizeSpan(9, true), 0, 1, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
         tvPrice.setText(hText);
 
-        List<DataBean> specList = bean.getSpecList();
-        if (adapter == null){
-            adapter = new ShopSkuAdapter(act, specList);
+        specList = bean.getSpecList();
+        if (sbName != null){
+            String[] split = sbName.toString().split("、");
+            for (int i = 0;i < specList.size();i ++){
+                DataBean bean = specList.get(i);
+                List<DataBean> specValues = bean.getSpecValues();
+                for (DataBean specBean :specValues){
+                    for (String s : split){
+                        if (specBean.getSpecValue().equals(s)){
+                            specBean.setSelect(true);
+                        }
+                    }
+                }
+            }
         }
+        adapter = new ShopSkuAdapter(act, specList);
         recyclerView.setLayoutManager(new LinearLayoutManager(act));
         recyclerView.setHasFixedSize(true);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -102,43 +145,53 @@ public class ShopSkuBottonFrg extends BaseBottomSheetFrag implements View.OnClic
         try {
             JSONObject object = new JSONObject(bean.getSpecSku());
             valueIds = object.optJSONObject("valueIds");
-            sku = object.optJSONObject("sku");
+            this.sku = object.optJSONObject("sku");
         } catch (JSONException e) {
             e.printStackTrace();
         }
         adapter.setListener((list, valueId, b) -> {
-            for (int i = 0;i < specList.size();i ++){
-                DataBean bean = specList.get(i);
-                List<DataBean> specValues = bean.getSpecValues();
-                for (DataBean specBean :specValues){
-                    if (specBean.getValueId().equals(valueId)){
-                        specBean.setSelect(b);
-                    }
-                }
-            }
-
-
-            StringBuffer sb = new StringBuffer();
-            for (int i = 0;i < specList.size();i ++){
+            sbName = new StringBuffer();
+            StringBuffer sbId = new StringBuffer();
+            for (int i = 0; i < specList.size(); i ++){
                 DataBean bean = specList.get(i);
                 List<DataBean> specValues = bean.getSpecValues();
                 for (DataBean specBean :specValues){
                     if (specBean.isSelect()){
-                        sb.append(bean.getValueId()).append(",");
-                        LogUtils.e(bean.getValueId());
+                        sbName.append(specBean.getSpecValue()).append("、");
+                        sbId.append(specBean.getValueId()).append(",");
                     }
                 }
             }
-//            String s = sb.deleteCharAt(sb.length() - 1).toString();
-//            LogUtils.e(s);
-//            String value = valueIds.optString();
-//            if (!StringUtils.isEmpty(value)){
-//                LogUtils.e(value);
-//            }
-//            String sk = sku.optString(sb.toString());
-//            if (!StringUtils.isEmpty(sk)){
-//                LogUtils.e(sk);
-//            }
+            int length = sbName.length();
+            if (length != 0){
+                tvSku.setText("已选：" + sbName.deleteCharAt(length - 1).toString());
+            }else {
+                tvSku.setText("已选：");
+            }
+            int length1 = sbId.length();
+            if (length1 == 0){
+                tvSales.setText("库存有0件");
+                return;
+            }
+            String id = sbId.deleteCharAt(length1 - 1).toString();
+            String value = valueIds.optString(id);
+            if (!StringUtils.isEmpty(value)){
+                tvPrice.setText("");
+                skuId = value;
+                this.price = Double.valueOf(skuId);
+                SpannableString text = new SpannableString("¥" + skuId);
+                text.setSpan(new AbsoluteSizeSpan(9, true), 0, 1, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+                tvPrice.setText(text);
+            }else {
+                skuId = null;
+                this.price = bean.getPrice();
+            }
+            skNum = this.sku.optString(id);
+            if (!StringUtils.isEmpty(skNum)){
+                tvSales.setText("库存" + skNum + "件");
+            }else {
+                tvSales.setText("库存有0件");
+            }
         });
     }
 

@@ -26,7 +26,7 @@
         app:layout_constraintLeft_toRightOf="@+id/iv_head"
         app:layout_constraintTop_toTopOf="@id/iv_head" />
 
-    <RatingBar
+    <android.support.v7.widget.AppCompatRatingBar
         android:id="@+id/ratingbar"
         android:layout_marginLeft="@dimen/px20"
         app:layout_constraintLeft_toRightOf="@id/tv_name"

@@ -75,7 +75,8 @@ public class SetFrg extends BaseFragment<BasePresenter, FSetBinding> implements 
                 UIHelper.startPrivacyFrg(this);
                 break;
             case R.id.tv_clear:
-                PopupWindowTool.showDialog(act, PopupWindowTool.clear, () -> showToast("清楚成功"));
+//                PopupWindowTool.showDialog(act, PopupWindowTool.clear, () -> showToast("清除成功"));
+                showToast("清除成功");
                 break;
             case R.id.tv_help:
                 UIHelper.startHelpFrg(this);

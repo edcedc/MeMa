@@ -1,16 +1,14 @@
 package com.yc.mema.view;
 
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.widget.DividerItemDecoration;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.style.AbsoluteSizeSpan;
-import android.text.style.ForegroundColorSpan;
-import android.view.KeyEvent;
 import android.view.View;
 
 import com.blankj.utilcode.util.LogUtils;
+import com.blankj.utilcode.util.StringUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.google.gson.Gson;
 import com.tencent.smtt.sdk.WebChromeClient;
@@ -18,15 +16,14 @@ import com.tencent.smtt.sdk.WebView;
 import com.tencent.smtt.sdk.WebViewClient;
 import com.yc.mema.R;
 import com.yc.mema.adapter.ShopCommentAdapter;
+import com.yc.mema.base.BaseActivity;
 import com.yc.mema.base.BaseFragment;
 import com.yc.mema.bean.DataBean;
-import com.yc.mema.controller.CloudApi;
 import com.yc.mema.controller.UIHelper;
 import com.yc.mema.databinding.FShopBinding;
 import com.yc.mema.impl.ShopDescContract;
 import com.yc.mema.presenter.ShopDescPresenter;
 import com.yc.mema.utils.GlideImageLoader;
-import com.yc.mema.utils.GlideLoadingUtils;
 import com.yc.mema.view.bottomFrg.ShopSkuBottonFrg;
 import com.yc.mema.weight.LinearDividerItemDecoration;
 import com.youth.banner.BannerConfig;
@@ -45,6 +42,10 @@ public class ShopDescFrg extends BaseFragment<ShopDescPresenter, FShopBinding> i
 
     private String id;
     private int isTrue;
+    private int skuNum;
+    private String skuName;
+    private double skuPrice;
+    private List<DataBean> listShopBean;
 
     public static ShopDescFrg newInstance() {
         Bundle args = new Bundle();
@@ -81,6 +82,15 @@ public class ShopDescFrg extends BaseFragment<ShopDescPresenter, FShopBinding> i
         mB.tvImmediately.setOnClickListener(this);
         mB.tvLook.setOnClickListener(this);
         shopSkuBottonFrg = new ShopSkuBottonFrg();
+        shopSkuBottonFrg.setOnClickListener((sku, num, price) -> {
+            skuNum = num;
+            skuName = sku;
+            skuPrice = price;
+            mB.tvSku.setText("已选：" + sku);
+            SpannableString hText = new SpannableString("¥" + price);
+            hText.setSpan(new AbsoluteSizeSpan(9, true), 0, 1, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+            mB.tvPrice.setText(hText);
+        });
         mPresenter.onRequest(id);
         mPresenter.onComment(pagerNumber = 1, id);
         if (adapter == null){
@@ -132,10 +142,22 @@ public class ShopDescFrg extends BaseFragment<ShopDescPresenter, FShopBinding> i
 
                 break;
             case R.id.tv_collection://收藏
+                if (!((BaseActivity)act).isLogin())return;
                 mPresenter.onColl(id, isTrue);
                 break;
             case R.id.tv_immediately://立即购买
-                UIHelper.startImmediatelyFrg(this);
+                if (!((BaseActivity)act).isLogin())return;
+                if (StringUtils.isEmpty(skuName)){
+                    showToast(getString(R.string.mema18));
+                    return;
+                }
+                for (DataBean bean : listShopBean){
+                    bean.setGoodSku(skuName);
+                    bean.setPrice(skuPrice);
+                    bean.setGoodNumber(skuNum);
+                    bean.setAllPrice(bean.getPrice() * bean.getGoodNumber());
+                }
+                UIHelper.startImmediatelyFrg(this, listShopBean);
                 break;
             case R.id.tv_look:
                 UIHelper.startShopCommentFrg(this, id);
@@ -148,19 +170,21 @@ public class ShopDescFrg extends BaseFragment<ShopDescPresenter, FShopBinding> i
         Bundle bundle = new Bundle();
         bundle.putString("bean", new Gson().toJson(bean));
         shopSkuBottonFrg.setArguments(bundle);
-        List<DataBean> goodSupImgs = bean.getGoodSupImgs();
+        List<DataBean> goodSupImgs = bean.getGoodSpuImgs();
         mB.banner.setImages(goodSupImgs)
                 .setImageLoader(new GlideImageLoader())
                 .start();
         setCollState(bean.getIsTrue());
         double price = bean.getPrice();
         SpannableString hText = new SpannableString("¥" + price);
-        hText.setSpan(new AbsoluteSizeSpan(8, true), 0, 1, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+        hText.setSpan(new AbsoluteSizeSpan(9, true), 0, 1, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
         mB.tvPrice.setText(hText);
         mB.tvTitle.setText(bean.getGoodName());
         mB.tvSales.setText("已售" + bean.getSales() + "件");
-
         mB.webView.loadDataWithBaseURL(null, bean.getRemark(), "text/html", "utf-8", null);
+
+        listShopBean = new ArrayList<>();
+        listShopBean.add(bean);
     }
 
     @Override

@@ -34,6 +34,7 @@ public class ShopDescAct extends BaseActivity {
 
     @Override
     protected void initView() {
+        setSofia(false);
         ShopDescFrg frg = ShopDescFrg.newInstance();
         if (findFragment(ShopDescFrg.class) == null) {
             Bundle bundle = new Bundle();

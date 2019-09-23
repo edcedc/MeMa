@@ -2,6 +2,7 @@ package com.yc.mema.controller;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 
 import com.blankj.utilcode.util.ActivityUtils;
 import com.google.gson.Gson;
@@ -21,7 +22,9 @@ import com.yc.mema.view.CategoryFrg;
 import com.yc.mema.view.ChangePwdFrg;
 import com.yc.mema.view.CollectionFrg;
 import com.yc.mema.view.ComplaintFrg;
-import com.yc.mema.view.FiveFrg;
+import com.yc.mema.view.EditAddressFrg;
+import com.yc.mema.view.act.CustomizedDescAct;
+import com.yc.mema.view.act.EvaluateAct;
 import com.yc.mema.view.ForgetFrg;
 import com.yc.mema.view.HeadFrg;
 import com.yc.mema.view.HelpFrg;
@@ -32,6 +35,10 @@ import com.yc.mema.view.MemaFrg;
 import com.yc.mema.view.MemorandumFrg;
 import com.yc.mema.view.MessageFrg;
 import com.yc.mema.view.MsgFrg;
+import com.yc.mema.view.OrderDescFrg;
+import com.yc.mema.view.OrderListFrg;
+import com.yc.mema.view.OtherCategoryFrg;
+import com.yc.mema.view.PaySuccessFrg;
 import com.yc.mema.view.PrivacyFrg;
 import com.yc.mema.view.ProneFrg;
 import com.yc.mema.view.ReportFrg;
@@ -39,12 +46,11 @@ import com.yc.mema.view.ReportNewsFrg;
 import com.yc.mema.view.SearchGiftFrg;
 import com.yc.mema.view.SearchNewsFrg;
 import com.yc.mema.view.SearchShopFrg;
+import com.yc.mema.view.ShopAddressFrg;
 import com.yc.mema.view.SexFrg;
 import com.yc.mema.view.ShareFrg;
 import com.yc.mema.view.ShopCommentFrg;
-import com.yc.mema.view.ShopDescFrg;
 import com.yc.mema.view.SystemDescFrg;
-import com.yc.mema.view.TwoFrg;
 import com.yc.mema.view.UpdateNameFrg;
 import com.yc.mema.view.UserInfoFrg;
 import com.yc.mema.view.ZkingFrg;
@@ -52,7 +58,9 @@ import com.yc.mema.view.act.GiftAct;
 import com.yc.mema.view.act.HtmlAct;
 import com.yc.mema.view.act.LoginAct;
 import com.yc.mema.view.act.NewsDescAct;
+import com.yc.mema.view.act.OrderListAct;
 import com.yc.mema.view.act.ReleaseAct;
+import com.yc.mema.view.act.ShopAct;
 import com.yc.mema.view.act.ShopDescAct;
 import com.yc.mema.view.act.VideoAct;
 import com.yc.mema.view.act.SetAct;
@@ -80,14 +88,15 @@ public final class UIHelper {
     }
 
     /**
-     *  登录
+     * 登录
      */
     public static void startLoginAct() {
         ActivityUtils.startActivity(LoginAct.class);
     }
 
     /**
-     *  找回密码
+     * 找回密码
+     *
      * @param root
      */
     public static void startForgetFrg(BaseFragment root) {
@@ -98,7 +107,8 @@ public final class UIHelper {
     }
 
     /**
-     *  完善信息
+     * 完善信息
+     *
      * @param root
      * @param data
      */
@@ -135,7 +145,7 @@ public final class UIHelper {
     }
 
     /**
-     *  y24
+     * y24
      */
     public static void startCollectionFrg(BaseFragment root) {
         CollectionFrg frg = new CollectionFrg();
@@ -145,7 +155,8 @@ public final class UIHelper {
     }
 
     /**
-     *  个人信息
+     * 个人信息
+     *
      * @param root
      */
     public static void startUserInfoFrg(BaseFragment root) {
@@ -156,7 +167,7 @@ public final class UIHelper {
     }
 
     /**
-     *  修改头像
+     * 修改头像
      */
     public static void startHeadFrg(BaseFragment root) {
         HeadFrg frg = new HeadFrg();
@@ -166,7 +177,7 @@ public final class UIHelper {
     }
 
     /**
-     *  系统通知详情
+     * 系统通知详情
      */
     public static void startSystemDescFrg(BaseFragment root, DataBean bean) {
         SystemDescFrg frg = new SystemDescFrg();
@@ -177,7 +188,7 @@ public final class UIHelper {
     }
 
     /**
-     *  账号与安全
+     * 账号与安全
      */
     public static void startAccountFrg(BaseFragment root) {
         AccountFrg frg = new AccountFrg();
@@ -187,7 +198,8 @@ public final class UIHelper {
     }
 
     /**
-     *  修改名字
+     * 修改名字
+     *
      * @param root
      */
     public static void startUpdateNameFrg(BaseFragment root) {
@@ -198,7 +210,8 @@ public final class UIHelper {
     }
 
     /**
-     *  么马号
+     * 么马号
+     *
      * @param root
      */
     public static void startMemaFrg(BaseFragment root) {
@@ -209,7 +222,8 @@ public final class UIHelper {
     }
 
     /**
-     *  选择性别
+     * 选择性别
+     *
      * @param root
      */
     public static void startSexFrg(BaseFragment root) {
@@ -220,34 +234,41 @@ public final class UIHelper {
     }
 
     /**
-     *  设置地址
+     * 设置地址
+     *
      * @param root
      */
-    public static void startAddressFrg(BaseFragment root, int type, int startType) {
+    public static void startAddressFrg(BaseFragment root, int startType) {
         AddressFrg frg = new AddressFrg();
         Bundle bundle = new Bundle();
         bundle.putInt("type", startType);
         frg.setArguments(bundle);
-        if (type == 0){
-            ((MainFrg) root.getParentFragment()).startBrotherFragment(frg);
-        }else {
+        Fragment fragment = root.getParentFragment();
+        if (fragment == null) {
             root.start(frg);
+        } else {
+            ((MainFrg) root.getParentFragment()).startBrotherFragment(frg);
         }
     }
 
     /**
-     *  我的二维码
-     * @param root
+     * 我的二维码
      */
     public static void startZkingFrg(BaseFragment root) {
         ZkingFrg frg = new ZkingFrg();
         Bundle bundle = new Bundle();
         frg.setArguments(bundle);
-        root.start(frg);
+        Fragment fragment = root.getParentFragment();
+        if (fragment == null) {
+            root.start(frg);
+        } else {
+            ((MainFrg) root.getParentFragment()).startBrotherFragment(frg);
+        }
     }
 
     /**
-     *  绑定手机号
+     * 绑定手机号
+     *
      * @param root
      */
     public static void startBingPhoneFrg(BaseFragment root) {
@@ -258,7 +279,8 @@ public final class UIHelper {
     }
 
     /**
-     *  修改密码
+     * 修改密码
+     *
      * @param root
      */
     public static void startChangePwdFrg(BaseFragment root) {
@@ -269,7 +291,22 @@ public final class UIHelper {
     }
 
     /**
-     *  消息通知
+     * 支付成功
+     *
+     * @param root
+     * @param allPrice
+     */
+    public static void startPaySuccessFrg(BaseFragment root, double allPrice) {
+        PaySuccessFrg frg = new PaySuccessFrg();
+        Bundle bundle = new Bundle();
+        bundle.putDouble("price", allPrice);
+        frg.setArguments(bundle);
+        root.start(frg);
+    }
+
+    /**
+     * 消息通知
+     *
      * @param root
      */
     public static void startMsgFrg(BaseFragment root) {
@@ -280,7 +317,8 @@ public final class UIHelper {
     }
 
     /**
-     *  隐私
+     * 隐私
+     *
      * @param root
      */
     public static void startPrivacyFrg(BaseFragment root) {
@@ -291,7 +329,8 @@ public final class UIHelper {
     }
 
     /**
-     *  黑名单
+     * 黑名单
+     *
      * @param root
      */
     public static void startBlackListFrg(BaseFragment root) {
@@ -302,7 +341,8 @@ public final class UIHelper {
     }
 
     /**
-     *  记事本
+     * 记事本
+     *
      * @param root
      */
     public static void startMemorandumFrgFrg(BaseFragment root) {
@@ -313,7 +353,8 @@ public final class UIHelper {
     }
 
     /**
-     *  帮助与反馈
+     * 帮助与反馈
+     *
      * @param root
      */
     public static void startHelpFrg(BaseFragment root) {
@@ -324,7 +365,8 @@ public final class UIHelper {
     }
 
     /**
-     *  关于我们
+     * 关于我们
+     *
      * @param root
      */
     public static void startAboutFrg(BaseFragment root) {
@@ -335,7 +377,8 @@ public final class UIHelper {
     }
 
     /**
-     *  生日备忘录
+     * 生日备忘录
+     *
      * @param root
      */
     public static void startBirthdayRecordsFrg(BaseFragment root) {
@@ -346,7 +389,8 @@ public final class UIHelper {
     }
 
     /**
-     *  添加生日记录
+     * 添加生日记录
+     *
      * @param root
      */
     public static void startAddBirthdayRecordsFrg(BaseFragment root) {
@@ -357,7 +401,8 @@ public final class UIHelper {
     }
 
     /**
-     *  用户投诉反馈
+     * 用户投诉反馈
+     *
      * @param root
      * @param id
      */
@@ -371,7 +416,7 @@ public final class UIHelper {
     }
 
     /**
-     *  投诉
+     * 投诉
      */
     public static void startReportFrg(BaseFragment root, String id, int type, String soId, String soName) {
         ReportFrg frg = new ReportFrg();
@@ -385,7 +430,8 @@ public final class UIHelper {
     }
 
     /**
-     *  添加生日记录
+     * 添加生日记录
+     *
      * @param welId
      */
     public static void startGiftAct(String welId) {
@@ -395,7 +441,17 @@ public final class UIHelper {
     }
 
     /**
-     *  搜索礼包
+     * 商家店铺详情
+     */
+    public static void startCustomizedDescAct(DataBean bean) {
+        Bundle bundle = new Bundle();
+        bundle.putString("bean", new Gson().toJson(bean));
+        ActivityUtils.startActivity(bundle, CustomizedDescAct.class);
+    }
+
+    /**
+     * 搜索礼包
+     *
      * @param root
      * @param parentId
      * @param s
@@ -410,7 +466,8 @@ public final class UIHelper {
     }
 
     /**
-     *  搜索新闻 咨询
+     * 搜索新闻 咨询
+     *
      * @param root
      */
     public static void startSearchNewsFrg(BaseFragment root) {
@@ -421,7 +478,8 @@ public final class UIHelper {
     }
 
     /**
-     *  各种举报
+     * 各种举报
+     *
      * @param root
      */
     public static void startReportNewsFrg(BaseFragment root, String discussId, String infoId, int type) {
@@ -433,6 +491,7 @@ public final class UIHelper {
         frg.setArguments(bundle);
         root.start(frg);
     }
+
     public static void startReportNewsFrg(BaseFragment root, String videoId, int type) {
         ReportNewsFrg frg = new ReportNewsFrg();
         Bundle bundle = new Bundle();
@@ -443,7 +502,8 @@ public final class UIHelper {
     }
 
     /**
-     *  我的生日趴
+     * 我的生日趴
+     *
      * @param root
      */
     public static void startProneFrg(BaseFragment root) {
@@ -454,7 +514,8 @@ public final class UIHelper {
     }
 
     /**
-     *  消息
+     * 消息
+     *
      * @param root
      */
     public static void startMessageFrg(BaseFragment root) {
@@ -465,7 +526,8 @@ public final class UIHelper {
     }
 
     /**
-     *  新闻详情
+     * 新闻详情
+     *
      * @param infoId
      */
     public static void startNewsDescAct(String infoId, DataBean bean) {
@@ -476,10 +538,11 @@ public final class UIHelper {
     }
 
     /**
-     *  生日趴
+     * 生日趴
      */
     public static void startVideoAct(int isVideoType, List<DataBean> listBean, int position) {
-        Type type = new TypeToken<ArrayList<DataBean>>() {}.getType();
+        Type type = new TypeToken<ArrayList<DataBean>>() {
+        }.getType();
         String json = new Gson().toJson(listBean, type);
         Bundle bundle = new Bundle();
         bundle.putString("list", json);
@@ -489,22 +552,23 @@ public final class UIHelper {
     }
 
     /**
-     *  录制视频
+     * 录制视频
      */
-    public static void startRecordedAct(Activity act){
+    public static void startRecordedAct(Activity act) {
 //        Intent intent = new Intent(act, RecordedActivity.class);
 //        act.startActivityForResult(intent, 1);
     }
 
     /**
-     *  视频发布
+     * 视频发布
      */
-    public static void startReleaseAct(){
+    public static void startReleaseAct() {
         ActivityUtils.startActivity(ReleaseAct.class);
     }
 
     /**
-     *  推广分析
+     * 推广分享
+     *
      * @param root
      */
     public static void startShareFrg(BaseFragment root) {
@@ -515,7 +579,7 @@ public final class UIHelper {
     }
 
     /**
-     *  申请代理人城市
+     * 申请代理人城市
      */
     public static void startApplyFrg(BaseFragment root) {
         ApplyFrg frg = new ApplyFrg();
@@ -525,50 +589,79 @@ public final class UIHelper {
     }
 
     /**
-     *  获取商品分类推荐
+     * 获取商品分类推荐
+     *
      * @param root
      */
-    public static void startCategoryFrg(BaseFragment root) {
+    public static void startMoreCategoryFrg(BaseFragment root) {
         CategoryFrg frg = new CategoryFrg();
-        Bundle bundle = new Bundle();
-        frg.setArguments(bundle);
-        ((MainFrg) root.getParentFragment()).startBrotherFragment(frg);
-    }
-
-    /**
-     *  搜索商品
-     * @param root
-     */
-    public static void startSearchShopFrg(BaseFragment root) {
-        SearchShopFrg frg = new SearchShopFrg();
-        Bundle bundle = new Bundle();
-        frg.setArguments(bundle);
-        ((MainFrg) root.getParentFragment()).startBrotherFragment(frg);
-    }
-
-    /**
-     *  商品详情
-     * @param goodId
-     */
-    public static void startShopDescAct(String goodId){
-        Bundle bundle = new Bundle();
-        bundle.putString("id", goodId);
-        ActivityUtils.startActivity(bundle, ShopDescAct.class);
-    }
-
-    /**
-     *  立即购买
-     * @param shopDescFrg
-     */
-    public static void startImmediatelyFrg(BaseFragment root) {
-        ImmediatelyFrg frg = new ImmediatelyFrg();
         Bundle bundle = new Bundle();
         frg.setArguments(bundle);
         root.start(frg);
     }
 
     /**
-     *  查看商品全部评论
+     * 获取商品分类更多
+     *
+     * @param root
+     * @param categoryId
+     * @param title
+     */
+    public static void startCategoryFrg(BaseFragment root, String categoryId, String title) {
+        OtherCategoryFrg frg = new OtherCategoryFrg();
+        Bundle bundle = new Bundle();
+        bundle.putString("categoryId", categoryId);
+        bundle.putString("title", title);
+        frg.setArguments(bundle);
+        Fragment fragment = root.getParentFragment();
+        if (fragment == null) {
+            root.start(frg);
+        } else {
+            ((MainFrg) root.getParentFragment()).startBrotherFragment(frg);
+        }
+    }
+
+    /**
+     * 搜索商品
+     */
+    public static void startSearchShopFrg(BaseFragment root) {
+        SearchShopFrg frg = new SearchShopFrg();
+        Bundle bundle = new Bundle();
+        frg.setArguments(bundle);
+        Fragment fragment = root.getParentFragment();
+        if (fragment == null) {
+            root.start(frg);
+        } else {
+            ((MainFrg) root.getParentFragment()).startBrotherFragment(frg);
+        }
+    }
+
+    /**
+     * 商品详情
+     */
+    public static void startShopDescAct(String goodId) {
+        Bundle bundle = new Bundle();
+        bundle.putString("id", goodId);
+        ActivityUtils.startActivity(bundle, ShopDescAct.class);
+    }
+
+    /**
+     * 立即购买/确认订单
+     */
+    public static void startImmediatelyFrg(BaseFragment root, List<DataBean> listBean) {
+        Type type = new TypeToken<ArrayList<DataBean>>() {
+        }.getType();
+        String json = new Gson().toJson(listBean, type);
+        ImmediatelyFrg frg = new ImmediatelyFrg();
+        Bundle bundle = new Bundle();
+        bundle.putString("list", json);
+        frg.setArguments(bundle);
+        root.start(frg);
+    }
+
+    /**
+     * 查看商品全部评论
+     *
      * @param root
      * @param id
      */
@@ -578,5 +671,77 @@ public final class UIHelper {
         bundle.putString("id", id);
         frg.setArguments(bundle);
         root.start(frg);
+    }
+
+    /**
+     * 我的收获地址
+     *
+     * @param root
+     */
+    public static void startShopAddressFrg(BaseFragment root) {
+        ShopAddressFrg frg = new ShopAddressFrg();
+        Bundle bundle = new Bundle();
+        frg.setArguments(bundle);
+        Fragment fragment = root.getParentFragment();
+        if (fragment == null) {
+            root.start(frg);
+        } else {
+            ((MainFrg) root.getParentFragment()).startBrotherFragment(frg);
+        }
+    }
+
+    /**
+     * 编辑/新增收获地址
+     */
+    public static void startEditAddressFrg(BaseFragment root, String id, DataBean bean) {
+        EditAddressFrg frg = new EditAddressFrg();
+        Bundle bundle = new Bundle();
+        bundle.putString("id", id);
+        bundle.putString("bean", new Gson().toJson(bean));
+        frg.setArguments(bundle);
+        root.start(frg);
+    }
+
+    /**
+     * 查看订单列表
+     */
+    public static void startOrderListAct(int position) {
+        Bundle bundle = new Bundle();
+        bundle.putInt("position", position);
+        ActivityUtils.startActivity(bundle, OrderListAct.class);
+    }
+
+    /**
+     * 商城
+     */
+    public static void startShopAct() {
+        ActivityUtils.startActivity(ShopAct.class);
+    }
+
+    /**
+     * 订单详情
+     *
+     * @param root
+     */
+    public static void startOrderDescFrg(BaseFragment root, String goodId) {
+        OrderDescFrg frg = new OrderDescFrg();
+        Bundle bundle = new Bundle();
+        bundle.putString("id", goodId);
+        frg.setArguments(bundle);
+        Fragment fragment = root.getParentFragment();
+        if (fragment == null) {
+            root.start(frg);
+        } else {
+            ((OrderListFrg) root.getParentFragment()).startBrotherFragment(frg);
+        }
+    }
+
+    /**
+     * 订单评价
+     */
+    public static void startEvaluateFrg(DataBean bean) {
+        Bundle bundle = new Bundle();
+        bundle.putString("bean", new Gson().toJson(bean));
+        ActivityUtils.startActivity(bundle, EvaluateAct.class);
     }
 }

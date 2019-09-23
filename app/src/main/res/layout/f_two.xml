@@ -29,6 +29,19 @@
                 android:padding="@dimen/px30"
                 app:layout_constraintTop_toTopOf="parent">
 
+                <FrameLayout
+                    android:id="@+id/fy_close"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <android.support.v7.widget.AppCompatImageView
+                        android:layout_width="wrap_content"
+                        android:layout_marginRight="@dimen/px30"
+                        android:background="@mipmap/y37"
+                        android:layout_height="wrap_content" />
+
+                </FrameLayout>
+
                 <com.yc.mema.weight.DrawableLeftCenterTextView
                     android:id="@+id/tv_location"
                     android:visibility="gone"
@@ -88,21 +101,44 @@
 
                        <LinearLayout
                            android:layout_marginTop="@dimen/px20"
-                           android:padding="@dimen/px20"
                            android:background="@color/white_f4f4f4"
                            android:layout_width="match_parent"
                            android:layout_height="wrap_content"
                            android:orientation="vertical">
 
-                           <com.zhy.view.flowlayout.TagFlowLayout
-                               android:id="@+id/fl_label"
+                           <LinearLayout
                                android:layout_width="match_parent"
                                android:layout_height="wrap_content"
-                               app:max_select="1" />
+                               android:orientation="horizontal">
+
+                               <android.support.v7.widget.AppCompatTextView
+                                   android:id="@+id/tv_popular"
+                                   android:textColor="@color/black_333333"
+                                   android:text="@string/popular"
+                                   android:padding="@dimen/px30"
+                                   style="@style/Tv12gray" />
+
+                               <android.support.v7.widget.AppCompatTextView
+                                   android:id="@+id/tv_sales"
+                                   android:textColor="@color/black_333333"
+                                   android:text="@string/sales"
+                                   android:padding="@dimen/px30"
+                                   style="@style/Tv12gray" />
+
+                               <android.support.v7.widget.AppCompatTextView
+                                   android:id="@+id/tv_arrival"
+                                   android:textColor="@color/black_333333"
+                                   android:text="@string/new_arrival"
+                                   android:padding="@dimen/px30"
+                                   style="@style/Tv12gray" />
+
+                           </LinearLayout>
 
                            <android.support.v7.widget.RecyclerView
                                android:id="@+id/recyclerView"
-                               android:layout_marginTop="@dimen/px20"
+                               android:layout_marginLeft="@dimen/px30"
+                               android:layout_marginRight="@dimen/px30"
+                               android:layout_marginBottom="@dimen/px30"
                                android:layout_width="match_parent"
                                android:layout_height="wrap_content"
                                android:nestedScrollingEnabled="false"

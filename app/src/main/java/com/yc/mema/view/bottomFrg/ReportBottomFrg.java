@@ -4,7 +4,7 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.yc.mema.R;
-import com.yc.mema.base.BaseBottomSheetFrag;
+import com.yc.mema.base.BaseBottomSheetFrg;
 
 /**
  * Created by Android Studio.
@@ -12,7 +12,7 @@ import com.yc.mema.base.BaseBottomSheetFrag;
  * Date: 2019/7/28
  * Time: 16:18
  */
-public class ReportBottomFrg extends BaseBottomSheetFrag implements View.OnClickListener {
+public class ReportBottomFrg extends BaseBottomSheetFrg implements View.OnClickListener {
 
     @Override
     public void onClick(View view) {

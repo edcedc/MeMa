@@ -67,7 +67,7 @@ public class CategoryFrg extends BaseFragment<CategoryPresenter, FCategoryBindin
         });
         mPresenter.onRequest("0", pagerNumber = 1);
         if (adapter == null) {
-            adapter = new CategoryShopAdapter(act, listBean);
+            adapter = new CategoryShopAdapter(act, this, listBean);
         }
         setRecyclerViewGridType(mB.recyclerView, 3, 40, 20, R.color.white);
         mB.recyclerView.setAdapter(adapter);

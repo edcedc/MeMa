@@ -103,8 +103,7 @@ public class VideoFrg extends BaseFragment<VideoPresenter, FVideoBinding> implem
     @Override
     protected void initParms(Bundle bundle) {
         type = bundle.getInt("isVideoType");
-        Type type = new TypeToken<ArrayList<DataBean>>() {
-        }.getType();
+        Type type = new TypeToken<ArrayList<DataBean>>() {}.getType();
         if (this.type != NORMAL_VIDEO) {
             listBean = new Gson().fromJson(bundle.getString("list"), type);
         }
