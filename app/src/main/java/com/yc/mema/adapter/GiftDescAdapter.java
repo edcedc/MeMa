@@ -49,6 +49,13 @@ public class GiftDescAdapter extends BaseListViewAdapter<DataBean> {
             }
             PictureSelectorTool.PictureMediaType((Activity) act, list, position);
         });
+
+        for (DataBean bean1 : bean.getDiscussImgs()){
+
+        }
+        List<String> list = new ArrayList<>();
+        list.add("");
+
         return convertView;
     }
 

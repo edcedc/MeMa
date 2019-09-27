@@ -1,0 +1,485 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <android.support.v4.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:fillViewport="true">
+
+            <android.support.constraint.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/white"
+                android:paddingBottom="@dimen/px50"
+                tools:ignore="MissingConstraints">
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/tv_operator_information"
+                    style="@style/Tv12gray"
+                    android:layout_width="match_parent"
+                    android:background="@color/white_f4f4f4"
+                    android:padding="@dimen/px30"
+                    android:text="@string/operator_information" />
+
+                <android.support.v7.widget.AppCompatEditText
+                    android:id="@+id/et_name"
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:gravity="center"
+                    android:hint="@string/error_2"
+                    android:maxLength="11"
+                    android:minEms="5"
+                    android:padding="@dimen/px30"
+                    android:textSize="@dimen/size32"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_operator_information" />
+
+                <android.support.v7.widget.AppCompatTextView
+                    style="@style/Tv15gray"
+                    android:padding="@dimen/px30"
+                    android:text="@string/operator_name"
+                    android:textColor="@color/tab_unselect"
+                    android:textSize="@dimen/size32"
+                    app:layout_constraintBottom_toBottomOf="@id/et_name"
+                    app:layout_constraintTop_toTopOf="@id/et_name" />
+
+                <View
+                    android:id="@+id/v1"
+                    style="@style/divider_3"
+                    app:layout_constraintTop_toBottomOf="@id/et_name" />
+
+                <android.support.v7.widget.AppCompatEditText
+                    android:id="@+id/et_phone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:gravity="center"
+                    android:hint="@string/error_2"
+                    android:inputType="phone"
+                    android:maxLength="11"
+                    android:minEms="5"
+                    android:padding="@dimen/px30"
+                    android:textSize="@dimen/size32"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/v1" />
+
+                <android.support.v7.widget.AppCompatTextView
+                    style="@style/Tv15gray"
+                    android:padding="@dimen/px30"
+                    android:text="@string/phone"
+                    android:textColor="@color/tab_unselect"
+                    android:textSize="@dimen/size32"
+                    app:layout_constraintBottom_toBottomOf="@id/et_phone"
+                    app:layout_constraintTop_toTopOf="@id/et_phone" />
+
+                <View
+                    android:id="@+id/v2"
+                    style="@style/divider_3"
+                    app:layout_constraintTop_toBottomOf="@id/et_phone" />
+
+                <android.support.v7.widget.AppCompatEditText
+                    android:id="@+id/et_operator_id"
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:gravity="center"
+                    android:hint="@string/error_2"
+                    android:minEms="5"
+                    android:padding="@dimen/px30"
+                    android:textSize="@dimen/size32"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/v2" />
+
+                <android.support.v7.widget.AppCompatTextView
+                    style="@style/Tv15gray"
+                    android:padding="@dimen/px30"
+                    android:text="@string/operator_id"
+                    android:textColor="@color/tab_unselect"
+                    android:textSize="@dimen/size32"
+                    app:layout_constraintBottom_toBottomOf="@id/et_operator_id"
+                    app:layout_constraintTop_toTopOf="@id/et_operator_id" />
+
+                <View
+                    android:id="@+id/v3"
+                    style="@style/divider_3"
+                    app:layout_constraintTop_toBottomOf="@id/et_operator_id" />
+
+                <android.support.v7.widget.AppCompatEditText
+                    android:id="@+id/et_operator_num"
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:gravity="center"
+                    android:hint="@string/error_2"
+                    android:maxLength="20"
+                    android:minEms="5"
+                    android:padding="@dimen/px30"
+                    android:textSize="@dimen/size32"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/v3" />
+
+                <android.support.v7.widget.AppCompatTextView
+                    style="@style/Tv15gray"
+                    android:padding="@dimen/px30"
+                    android:text="@string/operator_num"
+                    android:textColor="@color/tab_unselect"
+                    android:textSize="@dimen/size32"
+                    app:layout_constraintBottom_toBottomOf="@id/et_operator_num"
+                    app:layout_constraintTop_toTopOf="@id/et_operator_num" />
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/tv_bank_info"
+
+                    style="@style/Tv12gray"
+                    android:layout_width="match_parent"
+                    android:background="@color/white_f4f4f4"
+                    android:padding="@dimen/px30"
+                    android:text="@string/bank_info"
+                    app:layout_constraintTop_toBottomOf="@id/et_operator_num" />
+
+                <View
+                    android:id="@+id/v4"
+                    style="@style/divider_3"
+                    app:layout_constraintTop_toBottomOf="@id/tv_bank_info" />
+
+                <android.support.v7.widget.AppCompatEditText
+                    android:id="@+id/et_opening_bank"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:gravity="center"
+
+                    android:hint="@string/error_2"
+                    android:maxLength="11"
+                    android:minEms="5"
+                    android:padding="@dimen/px30"
+                    android:textSize="@dimen/size32"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/v4" />
+
+                <android.support.v7.widget.AppCompatTextView
+                    style="@style/Tv15gray"
+                    android:padding="@dimen/px30"
+                    android:text="@string/opening_bank"
+                    android:textColor="@color/tab_unselect"
+                    android:textSize="@dimen/size32"
+                    app:layout_constraintBottom_toBottomOf="@id/et_opening_bank"
+                    app:layout_constraintTop_toTopOf="@id/et_opening_bank" />
+
+                <View
+                    android:id="@+id/v5"
+                    style="@style/divider_3"
+                    app:layout_constraintTop_toBottomOf="@id/et_opening_bank" />
+
+                <android.support.v7.widget.AppCompatEditText
+                    android:id="@+id/et_reserve_phone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:gravity="center"
+                    android:hint="@string/error_2"
+                    android:inputType="phone"
+                    android:maxLength="11"
+                    android:minEms="5"
+                    android:padding="@dimen/px30"
+                    android:textSize="@dimen/size32"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/v5" />
+
+                <android.support.v7.widget.AppCompatTextView
+                    style="@style/Tv15gray"
+                    android:padding="@dimen/px30"
+                    android:text="@string/reserve_phone"
+                    android:textColor="@color/tab_unselect"
+                    android:textSize="@dimen/size32"
+                    app:layout_constraintBottom_toBottomOf="@id/et_reserve_phone"
+                    app:layout_constraintTop_toTopOf="@id/et_reserve_phone" />
+
+                <View
+                    android:id="@+id/v6"
+                    style="@style/divider_3"
+                    app:layout_constraintTop_toBottomOf="@id/et_reserve_phone" />
+
+                <android.support.v7.widget.AppCompatEditText
+                    android:id="@+id/et_bank_num"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:gravity="center"
+                    android:hint="@string/error_2"
+
+                    android:maxLength="20"
+                    android:minEms="5"
+                    android:padding="@dimen/px30"
+                    android:textSize="@dimen/size32"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/v6" />
+
+                <android.support.v7.widget.AppCompatTextView
+                    style="@style/Tv15gray"
+                    android:padding="@dimen/px30"
+                    android:text="@string/bank_num"
+                    android:textColor="@color/tab_unselect"
+                    android:textSize="@dimen/size32"
+                    app:layout_constraintBottom_toBottomOf="@id/et_bank_num"
+                    app:layout_constraintTop_toTopOf="@id/et_bank_num" />
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/tv_regional_info"
+                    style="@style/Tv12gray"
+                    android:layout_width="match_parent"
+                    android:background="@color/white_f4f4f4"
+                    android:padding="@dimen/px30"
+                    android:text="@string/regional_info"
+                    app:layout_constraintTop_toBottomOf="@id/et_bank_num" />
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/tv_address"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="?actionBarItemBackground"
+                    android:drawableRight="@mipmap/y16"
+                    android:gravity="center|right"
+                    android:hint="@string/error_2"
+                    android:maxLength="20"
+                    android:minEms="5"
+                    android:paddingTop="@dimen/px30"
+                    android:paddingRight="@dimen/px30"
+                    android:paddingBottom="@dimen/px30"
+                    android:textSize="@dimen/size32"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_regional_info" />
+
+                <android.support.v7.widget.AppCompatTextView
+                    style="@style/Tv15gray"
+                    android:padding="@dimen/px30"
+                    android:text="@string/address"
+                    android:textColor="@color/tab_unselect"
+                    android:textSize="@dimen/size32"
+                    app:layout_constraintBottom_toBottomOf="@id/tv_address"
+                    app:layout_constraintTop_toTopOf="@id/tv_address" />
+
+                <View
+                    android:id="@+id/v7"
+                    style="@style/divider_3"
+                    app:layout_constraintTop_toBottomOf="@id/tv_address" />
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/tv_detailed_address"
+                    style="@style/Tv15gray"
+                    android:padding="@dimen/px30"
+                    android:text="@string/detailed_address"
+                    android:textColor="@color/tab_unselect"
+                    android:textSize="@dimen/size32"
+                    app:layout_constraintTop_toBottomOf="@id/v7" />
+
+                <android.support.v7.widget.AppCompatEditText
+                    android:id="@+id/et_address"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:gravity="top|left"
+                    android:hint="@string/mema27"
+                    android:maxLength="20"
+                    android:maxLines="4"
+                    android:minEms="5"
+                    android:minLines="4"
+                    android:padding="@dimen/px30"
+                    android:textSize="@dimen/size32"
+                    app:layout_constraintTop_toBottomOf="@id/tv_detailed_address" />
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/tv_store_info"
+                    style="@style/Tv12gray"
+                    android:layout_width="match_parent"
+                    android:background="@color/white_f4f4f4"
+                    android:padding="@dimen/px30"
+                    android:text="@string/store_info"
+                    app:layout_constraintTop_toBottomOf="@id/et_address" />
+
+                <android.support.v7.widget.AppCompatTextView
+                    style="@style/Tv12gray"
+                    android:padding="@dimen/px30"
+                    android:text="@string/mema28"
+                    android:textColor="@color/red_EC5B44"
+                    app:layout_constraintBottom_toBottomOf="@id/tv_store_info"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/tv_store_info" />
+
+                <CheckBox
+                    android:id="@+id/cb_merchants"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:button="@drawable/cb_tentry"
+                    android:padding="@dimen/px30"
+                    android:text="@string/merchants"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_store_info" />
+
+                <CheckBox
+                    android:id="@+id/cb_shop"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:button="@drawable/cb_tentry"
+                    android:padding="@dimen/px30"
+                    android:text="@string/shop"
+                    app:layout_constraintBottom_toBottomOf="@id/cb_merchants"
+                    app:layout_constraintRight_toLeftOf="@id/cb_merchants"
+                    app:layout_constraintTop_toTopOf="@id/cb_merchants" />
+
+                <android.support.v7.widget.AppCompatTextView
+                    style="@style/Tv15gray"
+                    android:padding="@dimen/px30"
+                    android:text="@string/mema29"
+                    android:textColor="@color/tab_unselect"
+                    android:textSize="@dimen/size32"
+                    app:layout_constraintBottom_toBottomOf="@id/cb_merchants"
+                    app:layout_constraintTop_toTopOf="@id/cb_merchants" />
+
+                <View
+                    android:id="@+id/v8"
+                    style="@style/divider_3"
+                    app:layout_constraintTop_toBottomOf="@id/cb_merchants" />
+
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/tv_category"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="?actionBarItemBackground"
+                    android:drawableRight="@mipmap/y16"
+                    android:gravity="right"
+                    android:hint="@string/error_2"
+                    android:maxLength="20"
+                    android:minEms="5"
+                    android:paddingTop="@dimen/px30"
+                    android:paddingRight="@dimen/px30"
+                    android:paddingBottom="@dimen/px30"
+                    android:textSize="@dimen/size32"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/v8" />
+
+
+                <android.support.v7.widget.AppCompatTextView
+                    style="@style/Tv15gray"
+                    android:padding="@dimen/px30"
+                    android:text="@string/business_category"
+                    android:textColor="@color/tab_unselect"
+                    android:textSize="@dimen/size32"
+                    app:layout_constraintBottom_toBottomOf="@id/tv_category"
+                    app:layout_constraintTop_toTopOf="@id/tv_category" />
+
+                <View
+                    android:id="@+id/v9"
+                    style="@style/divider_3"
+                    app:layout_constraintTop_toBottomOf="@id/tv_category" />
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/tv_m"
+                    android:text="㎡"
+                    android:layout_marginRight="@dimen/px30"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/et_store_area"
+                    app:layout_constraintBottom_toBottomOf="@id/et_store_area"
+                    style="@style/Tv12black" />
+
+                <android.support.v7.widget.AppCompatEditText
+                    android:id="@+id/et_store_area"
+                    app:layout_constraintRight_toLeftOf="@id/tv_m"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:gravity="center|right"
+                    android:hint="@string/error_2"
+                    android:inputType="phone"
+                    android:maxLength="10"
+                    android:minEms="5"
+                    android:paddingLeft="@dimen/px30"
+                    android:paddingTop="@dimen/px30"
+                    android:paddingBottom="@dimen/px30"
+                    android:textSize="@dimen/size32"
+                    app:layout_constraintTop_toBottomOf="@id/v9" />
+
+                <android.support.v7.widget.AppCompatTextView
+                    style="@style/Tv15gray"
+                    android:padding="@dimen/px30"
+                    android:text="@string/store_area"
+                    android:textColor="@color/tab_unselect"
+                    android:textSize="@dimen/size32"
+                    app:layout_constraintBottom_toBottomOf="@id/et_store_area"
+                    app:layout_constraintTop_toTopOf="@id/et_store_area" />
+
+                <View
+                    android:id="@+id/v10"
+                    style="@style/divider_3"
+                    app:layout_constraintTop_toBottomOf="@id/et_store_area" />
+
+                <android.support.v7.widget.AppCompatEditText
+                    android:id="@+id/et_business_scope"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:gravity="center"
+                    android:hint="@string/error_2"
+                    android:maxLength="20"
+                    android:minEms="5"
+                    android:padding="@dimen/px30"
+                    android:textSize="@dimen/size32"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/v10" />
+
+                <android.support.v7.widget.AppCompatTextView
+                    style="@style/Tv15gray"
+                    android:padding="@dimen/px30"
+                    android:text="@string/business_scope"
+                    android:textColor="@color/tab_unselect"
+                    android:textSize="@dimen/size32"
+                    app:layout_constraintBottom_toBottomOf="@id/et_business_scope"
+                    app:layout_constraintTop_toTopOf="@id/et_business_scope" />
+
+
+                <View
+                    android:id="@+id/v11"
+                    style="@style/divider_3"
+                    app:layout_constraintTop_toBottomOf="@id/et_business_scope" />
+
+
+            </android.support.constraint.ConstraintLayout>
+
+        </android.support.v4.widget.NestedScrollView>
+
+
+        <com.flyco.roundview.RoundTextView
+            android:id="@+id/bt_submit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/px20"
+            android:gravity="center"
+            android:padding="@dimen/px20"
+            android:text="@string/next"
+            android:textColor="@color/white"
+            android:textSize="@dimen/size30"
+            app:rv_backgroundColor="@color/red_EC5B44"
+            app:rv_cornerRadius="@dimen/px10" />
+
+    </LinearLayout>
+
+
+</layout>
+

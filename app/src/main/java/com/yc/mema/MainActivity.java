@@ -30,6 +30,7 @@ import com.yc.mema.base.BaseActivity;
 import com.yc.mema.bean.AddressBean;
 import com.yc.mema.event.CameraInEvent;
 import com.yc.mema.event.LocationInEvent;
+import com.yc.mema.utils.AndroidBug5497Workaround;
 import com.yc.mema.view.MainFrg;
 
 import org.greenrobot.eventbus.EventBus;
@@ -60,6 +61,7 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected void initView() {
+//        AndroidBug5497Workaround.assistActivity(this);
         setSwipeBackEnable(false);
         if (findFragment(MainFrg.class) == null) {
             loadRootFragment(R.id.fl_container, MainFrg.newInstance());

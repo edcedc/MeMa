@@ -92,29 +92,29 @@ public class MainFrg extends BaseFragment<BasePresenter, FMainBinding> implement
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        SupportFragment firstFragment = findChildFragment(SixFrg.class);
-        if (firstFragment == null) {
-            mFragments[FIRST] = SixFrg.newInstance();
-            mFragments[SECOND] = ThreeFrg.newInstance();
-            mFragments[THIRD] = FourFrg.newInstance();
-            mFragments[FOUR] = FiveFrg.newInstance();
+            SupportFragment firstFragment = findChildFragment(SixFrg.class);
+            if (firstFragment == null) {
+                mFragments[FIRST] = SixFrg.newInstance();
+                mFragments[SECOND] = ThreeFrg.newInstance();
+                mFragments[THIRD] = FourFrg.newInstance();
+                mFragments[FOUR] = FiveFrg.newInstance();
 
-            loadMultipleRootFragment(R.id.fl_container,
-                    FIRST,
-                    mFragments[FIRST],
-                    mFragments[SECOND],
-                    mFragments[THIRD],
-                    mFragments[FOUR]);
-        } else {
-            // 这里库已经做了Fragment恢复,所有不需要额外的处理了, 不会出现重叠问题
+                loadMultipleRootFragment(R.id.fl_container,
+                        FIRST,
+                        mFragments[FIRST],
+                        mFragments[SECOND],
+                        mFragments[THIRD],
+                        mFragments[FOUR]);
+            } else {
+                // 这里库已经做了Fragment恢复,所有不需要额外的处理了, 不会出现重叠问题
 
-            // 这里我们需要拿到mFragments的引用
-            mFragments[FIRST] = firstFragment;
-            mFragments[SECOND] = findChildFragment(ThreeFrg.class);
-            mFragments[THIRD] = findChildFragment(FourFrg.class);
-            mFragments[FOUR] = findChildFragment(FiveFrg.class);
-        }
-        setSwipeBackEnable(false);
+                // 这里我们需要拿到mFragments的引用
+                mFragments[FIRST] = firstFragment;
+                mFragments[SECOND] = findChildFragment(ThreeFrg.class);
+                mFragments[THIRD] = findChildFragment(FourFrg.class);
+                mFragments[FOUR] = findChildFragment(FiveFrg.class);
+            }
+            setSwipeBackEnable(false);
     }
 
     @Override

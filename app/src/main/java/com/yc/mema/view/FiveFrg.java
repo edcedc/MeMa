@@ -84,6 +84,7 @@ public class FiveFrg extends BaseFragment<FivePresenter, FFiveBinding> implement
         mB.tvShipped.setOnClickListener(this);
         mB.tvReceived.setOnClickListener(this);
         mB.tvEvaluate.setOnClickListener(this);
+        mB.tvEntry.setOnClickListener(this);
         mB.refreshLayout.setEnableLoadmore(false);
         setRefreshLayout(mB.refreshLayout, new RefreshListenerAdapter() {
             @Override
@@ -140,6 +141,9 @@ public class FiveFrg extends BaseFragment<FivePresenter, FFiveBinding> implement
                 break;
             case R.id.iv_zking:
                 UIHelper.startZkingFrg(this);
+                break;
+            case R.id.tv_entry:
+                UIHelper.starTentryFrg(this);
                 break;
         }
     }

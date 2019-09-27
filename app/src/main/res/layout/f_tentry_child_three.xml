@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:padding="@dimen/px30"
+        tools:ignore="MissingConstraints">
+
+
+        <android.support.v7.widget.AppCompatTextView
+            android:layout_marginTop="@dimen/px100"
+            android:gravity="center"
+            android:drawablePadding="@dimen/px30"
+            android:drawableTop="@mipmap/shop_verify_processing"
+            android:textSize="@dimen/size36"
+            android:text="审核中"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            style="@style/Tv12black" />
+
+    </android.support.constraint.ConstraintLayout>
+
+
+</layout>

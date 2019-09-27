@@ -11,6 +11,7 @@ import com.lzy.okgo.request.GetRequest;
 import com.lzy.okgo.request.PostRequest;
 import com.lzy.okrx2.adapter.ObservableBody;
 import com.lzy.okrx2.adapter.ObservableResponse;
+import com.yc.mema.base.TentryBean;
 import com.yc.mema.base.User;
 import com.yc.mema.bean.BaseListBean;
 import com.yc.mema.bean.BaseResponseBean;
@@ -39,7 +40,7 @@ import io.reactivex.schedulers.Schedulers;
 public class CloudApi {
 
     private static final String url =
-//            "192.168.1.143:8080";
+//            "192.168.1.143";
 //            "119.23.111.246:8080";
             "47.106.179.240";
 
@@ -116,12 +117,20 @@ public class CloudApi {
 
 
     /**
+     * 获取福利分类列表
+     */
+    public static final String welfareGetWelfareClassifys = "welfare/getWelfareClassifys";
+
+
+    /**
      * 更新/保存用户
      */
     public static Observable<Response<BaseResponseBean<DataBean>>> userSaveUser(String head, String nickName, String birthday, String sex, String parentId, String mema, String updataMema) {
-        PostRequest<BaseResponseBean<DataBean>> post = OkGo.post(SERVLET_URL + "user/saveUser");
+//        PostRequest<BaseResponseBean<DataBean>> post = OkGo.post(SERVLET_URL + "user/saveUser");
+        PostRequest<BaseResponseBean<DataBean>> post = OkGo.post("http://jj123.nat300.top/adv_chain/api/user/update");
         if (!StringUtils.isEmpty(head)) {
-            post.params("file", new File(head));
+            post.params("head", new File(head));
+            post.params("sessionId", "41966fc3bbd94618accb98e23d386877");
         }
         return post
 //                .headers("token", ShareSessionIdCache.getInstance(Utils.getApp()).getSessionId())
@@ -181,6 +190,42 @@ public class CloudApi {
                 .converter(new JsonCallback<BaseResponseBean>() {
                     @Override
                     public void onSuccess(Response<BaseResponseBean> response) {
+
+                    }
+                })
+                .adapt(new ObservableResponse<>())
+                .subscribeOn(Schedulers.io());
+    }
+
+    /**
+     * 保存编辑商家
+     */
+    public static Observable<Response<BaseResponseBean<String>>> businessSaveBusiness(List<LocalMedia> localMediaList) {
+        PostRequest<BaseResponseBean<String>> post = OkGo.post(SERVLET_URL + "business/saveBusiness");
+        if (localMediaList != null && localMediaList.size() != 0) {
+            for (LocalMedia media : localMediaList) {
+                post.params("files", new File(media.getPath()));
+            }
+        }
+        return post
+                .headers("token", ShareSessionIdCache.getInstance(Utils.getApp()).getSessionId())
+                .params("userId", ShareSessionIdCache.getInstance(Utils.getApp()).getUserId())
+                .params("userName", TentryBean.getInstance().name)
+                .params("phone", TentryBean.getInstance().phone)
+                .params("card", TentryBean.getInstance().userId)
+                .params("creditCode", TentryBean.getInstance().num)
+                .params("bank", TentryBean.getInstance().bankName)
+                .params("defaultPhone", TentryBean.getInstance().bankPhone)
+                .params("bankNum", TentryBean.getInstance().bankId)
+                .params("county", TentryBean.getInstance().address.split(",")[2])
+                .params("address", TentryBean.getInstance().addressDesc)
+                .params("type", TentryBean.getInstance().type)
+                .params("classifyId", TentryBean.getInstance().category)
+                .params("area", TentryBean.getInstance().shopArea)
+                .params("scope", TentryBean.getInstance().shopScope)
+                .converter(new NewsCallback<BaseResponseBean<String>>() {
+                    @Override
+                    public void onSuccess(Response<BaseResponseBean<String>> response) {
 
                     }
                 })
@@ -1256,6 +1301,24 @@ public class CloudApi {
                 .adapt(new ObservableResponse<>())
                 .subscribeOn(Schedulers.io());
     }
+
+
+    /**
+     * 获取福利分类列表
+     */
+    public static Observable<Response<BaseResponseBean<List<DataBean>>>> welfareGetWelfareClassifys(String classifyId) {
+        return OkGo.<BaseResponseBean<List<DataBean>>>get(SERVLET_URL + "welfare/getWelfareClassifys")
+                .params("classifyId", classifyId)
+                .converter(new NewsCallback<BaseResponseBean<List<DataBean>>>() {
+                    @Override
+                    public void onSuccess(Response<BaseResponseBean<List<DataBean>>> response) {
+                    }
+                })
+                .adapt(new ObservableResponse<>())
+                .subscribeOn(Schedulers.io());
+    }
+
+
     /**
      * 通用list数据
      */

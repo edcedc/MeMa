@@ -17,6 +17,6 @@
         android:layout_gravity="center"
         android:padding="@dimen/px20"
         android:text="xxxx"
-        style="@style/Tv15black" />
+        style="@style/Tv15gray" />
 
 </FrameLayout>

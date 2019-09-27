@@ -23,6 +23,10 @@ import com.yc.mema.view.ChangePwdFrg;
 import com.yc.mema.view.CollectionFrg;
 import com.yc.mema.view.ComplaintFrg;
 import com.yc.mema.view.EditAddressFrg;
+import com.yc.mema.view.FiveFrg;
+import com.yc.mema.view.ShopCategoryFrg;
+import com.yc.mema.view.TentryChildOneFrg;
+import com.yc.mema.view.TentryFrg;
 import com.yc.mema.view.act.CustomizedDescAct;
 import com.yc.mema.view.act.EvaluateAct;
 import com.yc.mema.view.ForgetFrg;
@@ -247,7 +251,7 @@ public final class UIHelper {
         if (fragment == null) {
             root.start(frg);
         } else {
-            ((MainFrg) root.getParentFragment()).startBrotherFragment(frg);
+            ((TentryFrg) root.getParentFragment()).startBrotherFragment(frg);
         }
     }
 
@@ -541,8 +545,7 @@ public final class UIHelper {
      * 生日趴
      */
     public static void startVideoAct(int isVideoType, List<DataBean> listBean, int position) {
-        Type type = new TypeToken<ArrayList<DataBean>>() {
-        }.getType();
+        Type type = new TypeToken<ArrayList<DataBean>>() {}.getType();
         String json = new Gson().toJson(listBean, type);
         Bundle bundle = new Bundle();
         bundle.putString("list", json);
@@ -743,5 +746,36 @@ public final class UIHelper {
         Bundle bundle = new Bundle();
         bundle.putString("bean", new Gson().toJson(bean));
         ActivityUtils.startActivity(bundle, EvaluateAct.class);
+    }
+
+    /**
+     *  商家入驻
+     */
+    public static void starTentryFrg(BaseFragment root) {
+        TentryFrg frg = new TentryFrg();
+        Bundle bundle = new Bundle();
+        frg.setArguments(bundle);
+        Fragment fragment = root.getParentFragment();
+        if (fragment == null) {
+            root.start(frg);
+        } else {
+            ((MainFrg) root.getParentFragment()).startBrotherFragment(frg);
+        }
+    }
+
+    /**
+     *  商家经营
+     * @param root
+     */
+    public static void startShopCategoryFrg(BaseFragment root) {
+        ShopCategoryFrg frg = new ShopCategoryFrg();
+        Bundle bundle = new Bundle();
+        frg.setArguments(bundle);
+        Fragment fragment = root.getParentFragment();
+        if (fragment == null) {
+            root.start(frg);
+        } else {
+            ((TentryFrg) root.getParentFragment()).startBrotherFragment(frg);
+        }
     }
 }

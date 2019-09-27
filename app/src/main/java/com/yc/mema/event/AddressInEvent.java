@@ -12,6 +12,7 @@ public class AddressInEvent {
     public static final int USER_INFP_TYPE = 1;//用户更新
     public static final int APPLY_TYPE = 2;//申请代理人
     public static final int HARVEST_ADDRESS = 3;//收获地址
+    public static final int TENTRY = 4;//商家入驻
 
     public int type;
 

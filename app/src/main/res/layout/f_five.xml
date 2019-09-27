@@ -262,8 +262,19 @@
                     android:padding="@dimen/px30"
                     android:text="@string/apply" />
 
-                <View style="@style/divider_2" />
+                <View style="@style/divider_3" />
 
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/tv_entry"
+                    style="@style/Tv15black"
+                    android:layout_width="match_parent"
+                    android:background="?actionBarItemBackground"
+                    android:drawableRight="@mipmap/y16"
+                    android:padding="@dimen/px30"
+                    android:text="@string/merchant_entry" />
+
+                <View style="@style/divider_2" />
 
                 <android.support.v7.widget.AppCompatTextView
                     android:id="@+id/tv_set"

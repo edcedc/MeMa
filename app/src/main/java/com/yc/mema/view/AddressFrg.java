@@ -72,6 +72,7 @@ public class AddressFrg extends BaseFragment<InformationPresenter, FAddressBindi
                 break;
             case AddressInEvent.USER_INFP_TYPE:
             case AddressInEvent.HARVEST_ADDRESS:
+            case AddressInEvent.TENTRY:
                 mB.gpLocate.setVisibility(View.GONE);
                 break;
             case AddressInEvent.APPLY_TYPE:

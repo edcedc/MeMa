@@ -28,6 +28,7 @@ public class DataBean implements Serializable {
     private boolean isPlay = true;
     private String imageId;
     private String attachId;
+    private String classifyId;
     private String walTitle;
     private String pcyAdd;
     private String discount;
@@ -80,6 +81,7 @@ public class DataBean implements Serializable {
     private String tips;
     private String bookId;
     private String categoryName;
+    private String classifyTitle;
     private String categoryId;
     private String goodName;
     private int sales;
@@ -108,6 +110,14 @@ public class DataBean implements Serializable {
     private String receiveTime;//收货时间
     private String expCode;
     private String expressNo;
+
+    public String getClassifyId() {
+        return classifyId;
+    }
+
+    public String getClassifyTitle() {
+        return classifyTitle;
+    }
 
     public String getExpCode() {
         return expCode;

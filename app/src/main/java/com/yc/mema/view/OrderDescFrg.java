@@ -79,6 +79,7 @@ public class OrderDescFrg extends BaseFragment<OrderDescPresenter, FShopDescBind
         if (adapter == null){
             adapter = new ConfirmOrdersAdapter(act, this, listBean);
         }
+
         setRecyclerViewType(mB.recyclerView, R.color.white);
         mB.recyclerView.addItemDecoration(new LinearDividerItemDecoration(act, DividerItemDecoration.VERTICAL,  2));
         mB.recyclerView.setAdapter(adapter);

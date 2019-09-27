@@ -7,6 +7,7 @@ import com.yc.mema.bean.DataBean;
 import com.yc.mema.weight.WithScrollGridView;
 
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Created by Android Studio.

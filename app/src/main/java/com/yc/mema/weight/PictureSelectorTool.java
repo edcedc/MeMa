@@ -49,7 +49,7 @@ public class PictureSelectorTool {
     public static void PictureSelectorImage(Activity act, int requst, boolean circleDimmedLayer){
         PictureSelectorImage(act, null, 1, requst, true, circleDimmedLayer);
     }
-    public static void PictureSelectorImage(Activity act, int requst, boolean enableCrop, boolean circleDimmedLayer){
+    public static void PictureSelectorImage(Activity act,  int requst, boolean enableCrop, boolean circleDimmedLayer){
         PictureSelectorImage(act, null, 1, requst, enableCrop, circleDimmedLayer);
     }
 

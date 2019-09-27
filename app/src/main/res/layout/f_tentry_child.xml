@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <android.support.v4.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:fillViewport="true">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <android.support.v7.widget.AppCompatImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="160dp"
+                    android:background="@mipmap/banner" />
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/tv_text"
+                    style="@style/Tv12gray"
+                    android:layout_width="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_margin="@dimen/px40"
+                    android:gravity="center" />
+
+                <com.yc.mema.weight.WithScrollListView
+                    android:id="@+id/listView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:divider="@null" />
+
+            </LinearLayout>
+
+        </android.support.v4.widget.NestedScrollView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/px30"
+            android:orientation="horizontal">
+
+            <CheckBox
+                android:id="@+id/cb"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:button="@drawable/cb_tentry"
+                android:padding="@dimen/px10" />
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/tv_agreement"
+                style="@style/Tv12black"
+                android:text="@string/mema35" />
+
+        </LinearLayout>
+
+        <com.flyco.roundview.RoundTextView
+            android:id="@+id/bt_submit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/px30"
+            android:layout_marginRight="@dimen/px30"
+            android:layout_marginBottom="@dimen/px50"
+            android:gravity="center"
+            android:padding="@dimen/px20"
+            android:text="@string/mema36"
+            android:textColor="@color/white"
+            android:textSize="@dimen/size30"
+            app:layout_constraintTop_toBottomOf="@+id/v11"
+            app:rv_backgroundColor="@color/red_EC5B44"
+            app:rv_cornerRadius="@dimen/px10" />
+
+
+    </LinearLayout>
+
+</layout>
