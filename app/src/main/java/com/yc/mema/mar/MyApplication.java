@@ -9,6 +9,7 @@ import com.baidu.mapapi.SDKInitializer;
 import com.bumptech.glide.request.target.ViewTarget;
 import com.fm.openinstall.OpenInstall;
 import com.nanchen.crashmanager.CrashApplication;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.yc.mema.R;
 import com.yc.mema.service.InitializeService;
 
@@ -33,6 +34,19 @@ public class MyApplication extends CrashApplication {
 
     public static Application getInstance(){
         return sApplication;
+    }
+
+    static  {
+        SmartRefreshLayout.setDefaultRefreshInitializer((context, layout) -> {
+        //开始设置全局的基本参数（可以被下面的DefaultRefreshHeaderCreator覆盖）
+            layout.setReboundDuration(1000);
+            layout.setFooterHeight(100f);
+            layout.setDisableContentWhenLoading(false);
+            layout.setPrimaryColorsId(R.color.red_F58FB5, android.R.color.white);
+            layout.setDisableContentWhenRefresh(true);//是否在刷新的时候禁止列表的操作
+            layout.setDisableContentWhenLoading(true);//是否在加载的时候禁止列表的操作
+            layout.setEnableNestedScroll(true);//是否启用嵌套滚动
+        });
     }
 
 }

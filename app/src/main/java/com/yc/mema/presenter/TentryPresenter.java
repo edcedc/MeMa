@@ -97,7 +97,7 @@ public class TentryPresenter extends TentryContract.Presenter {
         localMediaList.add(new LocalMedia(ship, 0, 0, ""));
 
         CloudApi.businessSaveBusiness(localMediaList)
-                .doOnSubscribe(disposable -> {})
+                .doOnSubscribe(disposable -> {mView.showLoading();})
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<Response<BaseResponseBean<String>>>() {
                     @Override
@@ -108,9 +108,42 @@ public class TentryPresenter extends TentryContract.Presenter {
                     @Override
                     public void onNext(Response<BaseResponseBean<String>> baseResponseBeanResponse) {
                         if (baseResponseBeanResponse.body().code == Code.CODE_SUCCESS){
-                              EventBus.getDefault().post(new TentryInEvent(2, 3));
+                              EventBus.getDefault().post(new TentryInEvent(3, 2));
                         }
                         showToast(baseResponseBeanResponse.body().description);
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        mView.onError(e);
+                    }
+
+                    @Override
+                    public void onComplete() {
+                        mView.hideLoading();
+                    }
+                });
+    }
+
+    @Override
+    public void onHelpList() {
+        CloudApi.list2(CloudApi.businessGetGoodsHelps)
+                .doOnSubscribe(disposable -> {})
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<Response<BaseResponseBean<List<DataBean>>>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                        mView.addDisposable(d);
+                    }
+
+                    @Override
+                    public void onNext(Response<BaseResponseBean<List<DataBean>>> baseResponseBeanResponse) {
+                        if (baseResponseBeanResponse.body().code == Code.CODE_SUCCESS){
+                            List<DataBean> list = baseResponseBeanResponse.body().result;
+                            if (list != null && list.size() != 0){
+                                mView.setData(list);
+                            }
+                        }
                     }
 
                     @Override

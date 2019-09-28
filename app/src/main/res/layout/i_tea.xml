@@ -24,16 +24,18 @@
         android:id="@+id/tv_admission"
         android:layout_marginTop="@dimen/px10"
         app:layout_constraintTop_toBottomOf="@id/tv_title"
-        android:text="@string/admission"
+        android:layout_width="0dp"
+        app:layout_constraintLeft_toLeftOf="parent"
         android:textSize="@dimen/size28"
-        android:paddingRight="@dimen/px20"
         app:layout_constraintRight_toLeftOf="@id/tv_price"
         android:textColor="@color/red_EC5B44"
         style="@style/Tv15black" />
 
     <android.support.v7.widget.AppCompatTextView
         android:id="@+id/tv_price"
+        android:text="0"
         android:layout_marginTop="@dimen/px10"
+        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tv_title"
         app:layout_constraintLeft_toRightOf="@id/tv_admission"
         android:textSize="@dimen/size28"

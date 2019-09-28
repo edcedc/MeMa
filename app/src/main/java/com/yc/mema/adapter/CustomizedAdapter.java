@@ -25,6 +25,7 @@ import java.util.List;
  * Time: 20:00
  */
 public class CustomizedAdapter extends BaseRecyclerviewAdapter<DataBean> {
+
     public CustomizedAdapter(Context act, List<DataBean> listBean) {
         super(act, listBean);
     }
@@ -44,7 +45,7 @@ public class CustomizedAdapter extends BaseRecyclerviewAdapter<DataBean> {
         viewHolder.tv_location.setText("12" +
                 "km");
         viewHolder.ratingbar.setRating((float) 2);
-        viewHolder.itemView.setOnClickListener(view -> UIHelper.startCustomizedDescAct(null));
+        viewHolder.itemView.setOnClickListener(view -> UIHelper.startCustomizedDescAct(bean));
     }
 
     @Override

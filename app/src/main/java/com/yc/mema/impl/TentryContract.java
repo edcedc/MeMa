@@ -4,6 +4,9 @@ import android.widget.ListView;
 
 import com.yc.mema.base.BasePresenter;
 import com.yc.mema.base.IBaseView;
+import com.yc.mema.bean.DataBean;
+
+import java.util.List;
 
 /**
  * Created by Android Studio.
@@ -16,8 +19,7 @@ public interface TentryContract {
 
     interface View extends IBaseView {
 
-
-        void setData(String name, String phone, String userId, String num, String bankName, String bankPhone, String bankId, String address, String addressDesc, int type, String category, String shopArea, String shopScope);
+        void setData(List<DataBean> list);
     }
 
     abstract class Presenter extends BasePresenter<View> {
@@ -27,6 +29,8 @@ public interface TentryContract {
         public abstract void onList(ListView listView);
 
         public abstract void onTwoSure(String yingy, String scsf, String sfz, String sff, String weis, String ship);
+
+        public abstract void onHelpList();
     }
 
 }

@@ -28,10 +28,14 @@ public class HtmlAct extends BaseActivity<BasePresenter, AHtmlBinding> {
     private int type = -1;
     private String url;
 
-    public static final int REGISTER = 4;//隐私协议
     public static final int SYSTEM = 1;//系统通知
+    public static final int REGISTER = 4;//隐私协议
+    public static final int TENTRY = 5;//入驻类型说明
+
+
     public static final int LOOK_WULIU = 2;//查看物流
     public static final int ABOUT = 99;
+    private String title;
 
 
     @Override
@@ -47,6 +51,7 @@ public class HtmlAct extends BaseActivity<BasePresenter, AHtmlBinding> {
     protected void initParms(Bundle bundle) {
         type = bundle.getInt("type");
         url = bundle.getString("url");
+        title = bundle.getString("title");
     }
 
     @Override
@@ -55,18 +60,25 @@ public class HtmlAct extends BaseActivity<BasePresenter, AHtmlBinding> {
         switch (type){
             case SYSTEM:
                 setTitle("系统通知");
+                mB.webView.loadUrl(url);
                 break;
             case REGISTER:
                 setTitle("隐私协议");
+                mB.webView.loadUrl(url);
                 break;
             case LOOK_WULIU:
                 setTitle("物流信息");
+                mB.webView.loadUrl(url);
+                break;
+            case TENTRY:
+                setTitle("入驻类型说明");
+                mB.webView.loadUrl(url);
                 break;
             default:
-                setTitle("详情");
+                setTitle(title);
+                mB.webView.loadDataWithBaseURL(null, url, "text/html", "utf-8", null);
                 break;
         }
-        mB.webView.loadUrl(url);
         mB.webView.setWebViewClient(new WebViewClient() {
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {

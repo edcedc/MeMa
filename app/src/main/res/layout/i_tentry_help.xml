@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:background="?actionBarItemBackground"
+    android:orientation="vertical"
+    android:layout_height="wrap_content">
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/tv_text"
+        android:padding="@dimen/px30"
+        android:layout_width="match_parent"
+        android:drawableRight="@mipmap/list_arrow"
+        style="@style/Tv15black" />
+
+    <View
+        android:layout_marginLeft="@dimen/px30"
+        style="@style/divider_3"/>
+
+</LinearLayout>

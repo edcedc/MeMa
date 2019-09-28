@@ -27,6 +27,7 @@ public class DataBean implements Serializable {
     private String url;
     private boolean isPlay = true;
     private String imageId;
+    private String classifyImg;
     private String attachId;
     private String classifyId;
     private String walTitle;
@@ -110,6 +111,15 @@ public class DataBean implements Serializable {
     private String receiveTime;//收货时间
     private String expCode;
     private String expressNo;
+    private String reason;
+
+    public String getClassifyImg() {
+        return classifyImg;
+    }
+
+    public String getReason() {
+        return reason;
+    }
 
     public String getClassifyId() {
         return classifyId;
@@ -639,6 +649,12 @@ public class DataBean implements Serializable {
         this.allSelected = allSelected;
     }
 
+    private List<DataBean> list, bannerList;
+
+    public List<DataBean> getBannerList() {
+        return bannerList;
+    }
+
     private List<DataBean> discussImgs;
 
     public List<DataBean> getDiscussImgs() {
@@ -675,8 +691,6 @@ public class DataBean implements Serializable {
         return goodSpuImgs;
     }
 
-    private List<DataBean> list = new ArrayList<>();
-
     public void setList(List<DataBean> list) {
         this.list = list;
     }
@@ -708,4 +722,5 @@ public class DataBean implements Serializable {
     public DataBean getInfoList() {
         return infoList;
     }
+
 }

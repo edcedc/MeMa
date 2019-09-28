@@ -8,6 +8,7 @@ import com.yc.mema.R;
 import com.yc.mema.base.BaseFragment;
 import com.yc.mema.base.BasePresenter;
 import com.yc.mema.bean.AddressBean;
+import com.yc.mema.controller.UIHelper;
 import com.yc.mema.databinding.FTentryBinding;
 import com.yc.mema.event.AddressInEvent;
 import com.yc.mema.event.BusinessCassificationInEvent;
@@ -34,6 +35,8 @@ public class TentryFrg extends BaseFragment<BasePresenter, FTentryBinding> imple
 
     private SupportFragment[] mFragments = new SupportFragment[4];
 
+    private int type;
+    private String reason;
 
     @Override
     public void initPresenter() {
@@ -42,7 +45,8 @@ public class TentryFrg extends BaseFragment<BasePresenter, FTentryBinding> imple
 
     @Override
     protected void initParms(Bundle bundle) {
-
+        type = bundle.getInt("type");
+        reason = bundle.getString("reason");
     }
 
     @Override
@@ -70,8 +74,20 @@ public class TentryFrg extends BaseFragment<BasePresenter, FTentryBinding> imple
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         SupportFragment firstFragment = findChildFragment(TentryChildFrg.class);
+        Bundle bundle = new Bundle();
+        bundle.putInt("type", type);
+        bundle.putString("reason", reason);
         if (firstFragment == null) {
-            mFragments[FIRST] = TentryChildFrg.newInstance();
+            switch (type){
+                case 3:
+                    mFragments[FIRST] = TentryChildFrg.newInstance();
+                    break;
+                default:
+                    TentryChildThreeFrg frg = TentryChildThreeFrg.newInstance();
+                    frg.setArguments(bundle);
+                    mFragments[FIRST] = frg;
+                    break;
+            }
             mFragments[SECOND] = TentryChildOneFrg.newInstance();
             mFragments[THIRD] = TentryChildTwoFrg.newInstance();
             mFragments[FOUR] = TentryChildThreeFrg.newInstance();
@@ -92,11 +108,15 @@ public class TentryFrg extends BaseFragment<BasePresenter, FTentryBinding> imple
             mFragments[FOUR] = TentryChildThreeFrg.newInstance();
         }
         setSwipeBackEnable(false);
+
+
+//        showHideFragment(mFragments[2], mFragments[1]);
     }
 
     @Override
     protected void setOnRightClickListener() {
         super.setOnRightClickListener();
+        UIHelper.startTentryHelpFrg(this);
     }
 
     @Override
@@ -155,7 +175,8 @@ public class TentryFrg extends BaseFragment<BasePresenter, FTentryBinding> imple
                 setType(1);
                 break;
             case 3:
-                setType(2);
+//                setType(2);
+                mB.layout.setVisibility(View.GONE);
                 break;
         }
     }

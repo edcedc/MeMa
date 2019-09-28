@@ -24,11 +24,14 @@
             android:paddingLeft="@dimen/px30"
             android:paddingTop="@dimen/px60"
             android:paddingRight="@dimen/px30"
-            android:paddingBottom="@dimen/px30">
+            android:paddingBottom="@dimen/px10">
 
             <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/tv_location"
                 style="@style/Tv15white"
+                android:padding="@dimen/px20"
                 android:layout_marginRight="@dimen/px20"
+                android:background="?actionBarItemBackground"
                 android:drawableRight="@mipmap/icon_arrow_down"
                 android:drawablePadding="@dimen/px10"
                 android:text="广州" />
@@ -36,7 +39,7 @@
             <com.flyco.roundview.RoundFrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="@dimen/px20"
+                android:padding="@dimen/px15"
                 app:rv_backgroundColor="@color/white"
                 app:rv_cornerRadius="@dimen/px60">
 
@@ -89,165 +92,34 @@
                         app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintRight_toRightOf="parent" />
 
-                    <android.support.v7.widget.AppCompatTextView
-                        android:id="@+id/tv_delicacies"
-                        style="@style/Tv12black"
-                        android:layout_width="0dp"
+                    <com.yc.mema.weight.WithScrollGridView
+                        android:id="@+id/gridView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/px30"
-                        android:layout_weight="1"
-                        android:drawableTop="@mipmap/food"
-                        android:drawablePadding="@dimen/px20"
-                        android:gravity="center"
-                        android:padding="@dimen/px10"
-                        android:text="@string/delicacies"
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintRight_toLeftOf="@id/tv_entertainment"
+                        android:numColumns="5"
                         app:layout_constraintTop_toBottomOf="@id/banner" />
 
-                    <android.support.v7.widget.AppCompatTextView
-                        android:id="@+id/tv_entertainment"
-                        style="@style/Tv12black"
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:drawableTop="@mipmap/entertainment"
-                        android:drawablePadding="@dimen/px20"
-                        android:gravity="center"
-                        android:padding="@dimen/px10"
-                        android:text="@string/entertainment"
-                        app:layout_constraintBottom_toBottomOf="@id/tv_delicacies"
-                        app:layout_constraintLeft_toRightOf="@id/tv_delicacies"
-                        app:layout_constraintRight_toLeftOf="@id/tv_hotel_boom"
-                        app:layout_constraintTop_toTopOf="@id/tv_delicacies" />
-
-                    <android.support.v7.widget.AppCompatTextView
-                        android:id="@+id/tv_hotel_boom"
-                        style="@style/Tv12black"
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:drawableTop="@mipmap/hotel"
-                        android:drawablePadding="@dimen/px20"
-                        android:gravity="center"
-                        android:padding="@dimen/px10"
-                        android:text="@string/hotel_boom"
-                        app:layout_constraintBottom_toBottomOf="@id/tv_entertainment"
-                        app:layout_constraintLeft_toRightOf="@id/tv_entertainment"
-                        app:layout_constraintRight_toLeftOf="@id/tv_rong_yue"
-                        app:layout_constraintTop_toTopOf="@id/tv_entertainment" />
-
-                    <android.support.v7.widget.AppCompatTextView
-                        android:id="@+id/tv_rong_yue"
-                        style="@style/Tv12black"
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:drawableTop="@mipmap/beauty"
-                        android:drawablePadding="@dimen/px20"
-                        android:gravity="center"
-                        android:padding="@dimen/px10"
-                        android:text="@string/rong_yue"
-                        app:layout_constraintBottom_toBottomOf="@id/tv_hotel_boom"
-                        app:layout_constraintLeft_toRightOf="@id/tv_hotel_boom"
-                        app:layout_constraintRight_toLeftOf="@id/tv_present"
-                        app:layout_constraintTop_toTopOf="@id/tv_hotel_boom" />
-
-                    <android.support.v7.widget.AppCompatTextView
-                        android:id="@+id/tv_present"
-                        style="@style/Tv12black"
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:drawableTop="@mipmap/gift"
-                        android:drawablePadding="@dimen/px20"
-                        android:gravity="center"
-                        android:padding="@dimen/px10"
-                        android:text="@string/present"
-                        app:layout_constraintBottom_toBottomOf="@id/tv_rong_yue"
-                        app:layout_constraintLeft_toRightOf="@id/tv_rong_yue"
-                        app:layout_constraintRight_toRightOf="parent"
-                        app:layout_constraintTop_toTopOf="@id/tv_rong_yue" />
-
-                    <android.support.v7.widget.AppCompatTextView
-                        style="@style/Tv15black"
-                        android:layout_weight="1"
-                        android:padding="@dimen/px30"
-                        android:text="@string/experience"
-                        android:textSize="@dimen/size32"
-                        android:textStyle="bold"
-                        app:layout_constraintBottom_toBottomOf="@id/tv_free_more"
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintTop_toTopOf="@id/tv_free_more" />
-
-                    <android.support.v7.widget.AppCompatTextView
-                        android:id="@+id/tv_free_more"
-                        style="@style/Tv12gray"
-                        android:padding="@dimen/px30"
-                        android:text="@string/look_more"
-                        app:layout_constraintRight_toRightOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/tv_delicacies" />
-
                     <android.support.v7.widget.RecyclerView
-                        android:id="@+id/rv_tea"
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintRight_toRightOf="parent"
-                        android:layout_marginLeft="@dimen/px30"
-                        android:layout_marginRight="@dimen/px30"
+                        android:id="@+id/rv_desc"
+                        app:layout_constraintTop_toBottomOf="@id/banner"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:nestedScrollingEnabled="false"
-                        android:overScrollMode="never"
-                        app:layout_constraintTop_toBottomOf="@id/tv_free_more" />
-
-                    <com.yc.mema.weight.RoundImageView
-                        android:id="@+id/iv_img"
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintRight_toRightOf="parent"
-                        android:layout_marginLeft="@dimen/px30"
-                        android:layout_marginRight="@dimen/px30"
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/px200"
-                        android:layout_marginTop="@dimen/px50"
-                        android:scaleType="fitXY"
-                        android:src="@drawable/no_banner"
-                        app:layout_constraintTop_toBottomOf="@id/rv_tea" />
+                        android:overScrollMode="never" />
 
                     <android.support.v7.widget.AppCompatTextView
                         style="@style/Tv15black"
-                        android:padding="@dimen/px30"
-                        android:text="@string/cake_shop"
-                        android:textSize="@dimen/size32"
-                        android:textStyle="bold"
-                        app:layout_constraintBottom_toBottomOf="@id/tv_tea_more"
-                        app:layout_constraintTop_toTopOf="@id/tv_tea_more" />
-
-                    <android.support.v7.widget.AppCompatTextView
-                        android:id="@+id/tv_tea_more"
-                        style="@style/Tv12gray"
-                        android:padding="@dimen/px30"
-                        android:text="@string/look_more"
-                        app:layout_constraintRight_toRightOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/iv_img" />
-
-                    <android.support.v7.widget.RecyclerView
-                        android:id="@+id/rv_cake"
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintRight_toRightOf="parent"
-                        android:layout_marginLeft="@dimen/px30"
-                        android:layout_marginRight="@dimen/px30"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:nestedScrollingEnabled="false"
-                        android:overScrollMode="never"
-                        app:layout_constraintTop_toBottomOf="@id/tv_tea_more" />
-
-                    <android.support.v7.widget.AppCompatTextView
-                        style="@style/Tv15black"
-                        android:layout_marginTop="@dimen/px20"
                         android:layout_weight="1"
                         android:padding="@dimen/px30"
                         android:text="@string/customized"
                         android:textSize="@dimen/size32"
                         android:textStyle="bold"
-                        app:layout_constraintTop_toBottomOf="@id/rv_cake" />
+                        app:layout_constraintTop_toBottomOf="@id/rv_desc" />
 
                 </android.support.constraint.ConstraintLayout>
+
+                <View style="@style/divider_3" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -299,27 +171,42 @@
 
             </android.support.design.widget.AppBarLayout>
 
-            <android.support.v4.widget.NestedScrollView
-                android:layout_width="match_parent"
-                app:layout_behavior="@string/appbar_scrolling_view_behavior"
-                android:layout_height="wrap_content">
 
-                <com.lcodecore.tkrefreshlayout.TwinklingRefreshLayout
+
+
+                <com.scwang.smartrefresh.layout.SmartRefreshLayout
                     android:id="@+id/refreshLayout"
+                    app:layout_behavior="@string/appbar_scrolling_view_behavior"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@color/white_f4f4f4">
+                    android:background="@android:color/white"
+                    app:srlAccentColor="@android:color/white"
+                    app:srlHeaderMaxDragRate="2.5"
+                    app:srlPrimaryColor="@android:color/darker_gray">
 
-                    <com.yc.mema.weight.WithScrollListView
-                        android:id="@+id/listView"
-                        android:background="@color/white"
-                        android:divider="@null"
+                    <com.scwang.smartrefresh.header.MaterialHeader
+                        android:layout_marginTop="?attr/actionBarSize"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"/>
+                        android:layout_height="wrap_content" />
 
-                </com.lcodecore.tkrefreshlayout.TwinklingRefreshLayout>
+                    <android.support.v4.widget.NestedScrollView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:fillViewport="true">
 
-            </android.support.v4.widget.NestedScrollView>
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/recyclerView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:nestedScrollingEnabled="false"
+                        android:overScrollMode="never"
+                        tools:listitem="@android:layout/simple_list_item_2" />
+
+                    </android.support.v4.widget.NestedScrollView>
+
+
+                </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+
 
         </android.support.design.widget.CoordinatorLayout>
 

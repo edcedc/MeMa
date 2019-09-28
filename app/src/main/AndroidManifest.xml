@@ -105,6 +105,21 @@
             android:resizeableActivity="true"
             android:theme="@style/AppTheme.NoActionBar.SwipeBack"
             android:screenOrientation="portrait"/>
+         <activity
+            android:name=".view.act.OrderDescAct"
+            android:resizeableActivity="true"
+            android:theme="@style/AppTheme.NoActionBar.SwipeBack"
+            android:screenOrientation="portrait"/>
+          <activity
+            android:name=".view.act.BusinessDescAct"
+            android:resizeableActivity="true"
+            android:theme="@style/AppTheme.NoActionBar.SwipeBack"
+            android:screenOrientation="portrait"/>
+           <activity
+            android:name=".view.act.AddressAct"
+            android:resizeableActivity="true"
+            android:theme="@style/AppTheme.NoActionBar.SwipeBack"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".view.act.VideoAct"
             android:resizeableActivity="true"

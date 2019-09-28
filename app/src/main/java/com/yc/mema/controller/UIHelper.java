@@ -27,6 +27,9 @@ import com.yc.mema.view.FiveFrg;
 import com.yc.mema.view.ShopCategoryFrg;
 import com.yc.mema.view.TentryChildOneFrg;
 import com.yc.mema.view.TentryFrg;
+import com.yc.mema.view.TentryHelpFrg;
+import com.yc.mema.view.act.AddressAct;
+import com.yc.mema.view.act.BusinessDescAct;
 import com.yc.mema.view.act.CustomizedDescAct;
 import com.yc.mema.view.act.EvaluateAct;
 import com.yc.mema.view.ForgetFrg;
@@ -130,6 +133,12 @@ public final class UIHelper {
     public static void startHtmlAct(int type, String url) {
         Bundle bundle = new Bundle();
         bundle.putInt("type", type);
+        bundle.putString("url", url);
+        ActivityUtils.startActivity(bundle, HtmlAct.class);
+    }
+    public static void startHtmlAct(String title, String url) {
+        Bundle bundle = new Bundle();
+        bundle.putString("title", title);
         bundle.putString("url", url);
         ActivityUtils.startActivity(bundle, HtmlAct.class);
     }
@@ -239,20 +248,11 @@ public final class UIHelper {
 
     /**
      * 设置地址
-     *
-     * @param root
      */
-    public static void startAddressFrg(BaseFragment root, int startType) {
-        AddressFrg frg = new AddressFrg();
+    public static void startAddressAct(int startType) {
         Bundle bundle = new Bundle();
         bundle.putInt("type", startType);
-        frg.setArguments(bundle);
-        Fragment fragment = root.getParentFragment();
-        if (fragment == null) {
-            root.start(frg);
-        } else {
-            ((TentryFrg) root.getParentFragment()).startBrotherFragment(frg);
-        }
+        ActivityUtils.startActivity(bundle, AddressAct.class);
     }
 
     /**
@@ -434,7 +434,7 @@ public final class UIHelper {
     }
 
     /**
-     * 添加生日记录
+     * 礼包 商家 福利
      *
      * @param welId
      */
@@ -722,6 +722,14 @@ public final class UIHelper {
     }
 
     /**
+     * 商家二级页面
+     */
+    public static void startBusinessDescAct() {
+        Bundle bundle = new Bundle();
+        ActivityUtils.startActivity(bundle, BusinessDescAct.class);
+    }
+
+    /**
      * 订单详情
      *
      * @param root
@@ -751,10 +759,12 @@ public final class UIHelper {
     /**
      *  商家入驻
      */
-    public static void starTentryFrg(BaseFragment root) {
+    public static void starTentryFrg(BaseFragment root, int handle, String reason) {
         TentryFrg frg = new TentryFrg();
         Bundle bundle = new Bundle();
         frg.setArguments(bundle);
+        bundle.putInt("type", handle);
+        bundle.putString("reason", reason);
         Fragment fragment = root.getParentFragment();
         if (fragment == null) {
             root.start(frg);
@@ -769,6 +779,22 @@ public final class UIHelper {
      */
     public static void startShopCategoryFrg(BaseFragment root) {
         ShopCategoryFrg frg = new ShopCategoryFrg();
+        Bundle bundle = new Bundle();
+        frg.setArguments(bundle);
+        Fragment fragment = root.getParentFragment();
+        if (fragment == null) {
+            root.start(frg);
+        } else {
+            ((TentryFrg) root.getParentFragment()).startBrotherFragment(frg);
+        }
+    }
+
+    /**
+     *  商家入驻帮助
+     * @param root
+     */
+    public static void startTentryHelpFrg(BaseFragment root) {
+        TentryHelpFrg frg = new TentryHelpFrg();
         Bundle bundle = new Bundle();
         frg.setArguments(bundle);
         Fragment fragment = root.getParentFragment();

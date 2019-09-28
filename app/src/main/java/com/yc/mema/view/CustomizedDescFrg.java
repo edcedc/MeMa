@@ -2,6 +2,7 @@ package com.yc.mema.view;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -15,6 +16,8 @@ import android.view.View;
 import com.blankj.utilcode.util.LogUtils;
 import com.flyco.tablayout.listener.OnTabSelectListener;
 import com.google.gson.Gson;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 import com.yc.mema.R;
 import com.yc.mema.adapter.CustomizedAdapter;
 import com.yc.mema.adapter.CustomizedChildAdapter;
@@ -57,10 +60,7 @@ public class CustomizedDescFrg extends BaseFragment<CustomizedPresenter, FCustom
     private TeaAdapter cakeAdapter;
 
     private List<DataBean> listBean = new ArrayList<>();
-    private CustomizedChildAdapter adapter;
-
-    private String[] titles = new String[]{"热门"};
-    private ArrayList<Fragment> fragments = new ArrayList<>();
+    private CustomizedAdapter adapter;
 
     @Override
     public void initPresenter() {
@@ -86,22 +86,8 @@ public class CustomizedDescFrg extends BaseFragment<CustomizedPresenter, FCustom
         mB.toolbarLayout.setCollapsedTitleGravity(Gravity.CENTER);//设置收缩后标题的位置
         mB.toolbarLayout.setExpandedTitleColor(Color.WHITE);//设置展开后标题的颜色
         mB.toolbarLayout.setCollapsedTitleTextColor(Color.WHITE);//设置收缩后标题的颜色
-//        fragments.add(new CustomizedChildFrg());
-//        mB.viewPager.setAdapter(new MyPagerAdapter(getChildFragmentManager(), fragments, titles));
-//        mB.tbLayout.setViewPager(mB.viewPager);
-//        mB.viewPager.setOffscreenPageLimit(0);
-//        mB.tbLayout.setOnTabSelectListener(new OnTabSelectListener() {
-//            @Override
-//            public void onTabSelect(int position) {
-//                mB.viewPager.setCurrentItem(position);
-//            }
-//
-//            @Override
-//            public void onTabReselect(int position) {
-//            }
-//        });
-        if (cakeAdapter == null){
-            cakeAdapter = new TeaAdapter(act, listCakeBean, 1);
+       if (cakeAdapter == null){
+            cakeAdapter = new TeaAdapter(act, listCakeBean);
         }
         mB.rvHot.setAdapter(cakeAdapter);
         LinearLayoutManager slayoutManager = new LinearLayoutManager(act);
@@ -111,17 +97,12 @@ public class CustomizedDescFrg extends BaseFragment<CustomizedPresenter, FCustom
         mB.rvHot.setItemAnimator(new DefaultItemAnimator());
         mB.rvHot.addItemDecoration(new LinearDividerItemDecoration(act, DividerItemDecoration.HORIZONTAL,  40, Color.parseColor("#ffffff")));
 
-//        mB.recyclerView.setAdapter(adapter);
-//        setRecyclerViewType(mB.recyclerView);
-//        mB.recyclerView.addItemDecoration(new LinearDividerItemDecoration(act, DividerItemDecoration.VERTICAL,  2));
-        mB.refreshLayout.setEnableRefresh(false);
-        adapter = new CustomizedChildAdapter(act, listBean);
-        mB.listView.setAdapter(adapter);
-        showLoadDataing();
-//        mB.refreshLayout.setPureScrollModeOn();
-        mPresenter.onDesc();
-        mPresenter.onHot();
-        mPresenter.onRequest(pagerNumber = 1);
+        if (adapter == null) {
+            adapter = new CustomizedAdapter(act, listBean);
+        }
+        mB.recyclerView.setAdapter(adapter);
+        setRecyclerViewType(mB.recyclerView);
+        mB.recyclerView.addItemDecoration(new LinearDividerItemDecoration(act, DividerItemDecoration.VERTICAL,  2));
 
         mB.tvTitle.setText(bean.getWalTitle());
         mB.ratingbar.setRating(4);
@@ -139,6 +120,24 @@ public class CustomizedDescFrg extends BaseFragment<CustomizedPresenter, FCustom
                 .start();
 
         setToolBar();
+
+        showLoadDataing();
+//        mB.refreshLayout.setPureScrollModeOn();
+        mPresenter.onDesc();
+        mPresenter.onHot();
+        mPresenter.onRequest(pagerNumber = 1);
+        mB.refreshLayout.setEnableRefresh(false);
+        mB.refreshLayout.setOnLoadMoreListener(new OnRefreshLoadMoreListener() {
+            @Override
+            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+//                mPresenter.onRequest(pagerNumber = 1);
+//                mB.refreshLayout.setEnableRefresh(false);
+            }
+            @Override
+            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
+                mPresenter.onRequest(pagerNumber += 1);
+            }
+        });
     }
 
     /**
@@ -216,13 +215,18 @@ public class CustomizedDescFrg extends BaseFragment<CustomizedPresenter, FCustom
 
     @Override
     public void setRefreshLayoutMode(int totalRow) {
-//        super.setRefreshLayoutMode(listBean.size(), totalRow, mB.refreshLayout);
+        if (listBean.size() == totalRow) {
+            mB.refreshLayout.setEnableLoadMore(false);
+        }else {
+            mB.refreshLayout.setEnableLoadMore(true);
+        }
     }
 
     @Override
     public void hideLoading() {
         super.hideLoading();
-//        super.setRefreshLayout(pagerNumber, mB.refreshLayout);
+        mB.refreshLayout.finishRefresh();
+        mB.refreshLayout.finishLoadMore();
     }
 
     @Override
@@ -230,9 +234,6 @@ public class CustomizedDescFrg extends BaseFragment<CustomizedPresenter, FCustom
         List<DataBean> list = (List<DataBean>) data;
         if (pagerNumber == 1) {
             listBean.clear();
-//            mB.refreshLayout.finishRefreshing();
-        } else {
-//            mB.refreshLayout.finishLoadmore();
         }
         listBean.addAll(list);
         adapter.notifyDataSetChanged();
@@ -240,6 +241,7 @@ public class CustomizedDescFrg extends BaseFragment<CustomizedPresenter, FCustom
 
     @Override
     public void OnBannerClick(int position) {
+        DataBean bean = listBannerBean.get(position);
 
     }
 }

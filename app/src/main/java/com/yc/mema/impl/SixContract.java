@@ -21,10 +21,9 @@ public interface SixContract {
 
         void setBanner(List<DataBean> list);
 
-        void setTea(List<DataBean> list);
+        void setHomeClassify(List<DataBean> list);
 
-        void setCake(List<DataBean> list);
-
+        void setLabel(List<DataBean> list);
     }
 
     abstract class Presenter extends BasePresenter<View> {
@@ -33,9 +32,7 @@ public interface SixContract {
 
         public abstract void onLabel();
 
-        public abstract void onTea();
-
-        public abstract void onCake();
+        public abstract void onGetHomeClassify(String ids);
 
         public abstract void onRequest(int pagerNumber);
     }

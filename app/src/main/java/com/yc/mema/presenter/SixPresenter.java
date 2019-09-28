@@ -24,38 +24,105 @@ import io.reactivex.disposables.Disposable;
 public class SixPresenter extends SixContract.Presenter{
     @Override
     public void onBanner() {
-        List<DataBean> list = new ArrayList<>();
-        for (int i =0;i<5;i++){
-            DataBean bean = new DataBean();
-            bean.setImage("https://wx3.sinaimg.cn/mw690/78a9167dgy1g6vqt27xilj212c0hsdp6.jpg");
-            list.add(bean);
-        }
-        mView.setBanner(list);
+        CloudApi.list2(CloudApi.welfareGetWelfareLunList)
+                .doOnSubscribe(disposable -> {})
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<Response<BaseResponseBean<List<DataBean>>>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                        mView.addDisposable(d);
+                    }
+
+                    @Override
+                    public void onNext(Response<BaseResponseBean<List<DataBean>>> baseResponseBeanResponse) {
+                        if (baseResponseBeanResponse.body().code == Code.CODE_SUCCESS){
+                            List<DataBean> list = baseResponseBeanResponse.body().result;
+                            if (list != null){
+                                mView.setBanner(list);
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        mView.onError(e);
+                    }
+
+                    @Override
+                    public void onComplete() {
+                        mView.hideLoading();
+                    }
+                });
     }
 
     @Override
     public void onLabel() {
+        CloudApi.list2(CloudApi.welfareGetWelfareClassifys)
+                .doOnSubscribe(disposable -> {})
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<Response<BaseResponseBean<List<DataBean>>>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                        mView.addDisposable(d);
+                    }
 
+                    @Override
+                    public void onNext(Response<BaseResponseBean<List<DataBean>>> baseResponseBeanResponse) {
+                        if (baseResponseBeanResponse.body().code == Code.CODE_SUCCESS){
+                            List<DataBean> list = baseResponseBeanResponse.body().result;
+                            if (list != null){
+                                for (DataBean bean : list){
+                                    bean.setAttachId(bean.getClassifyImg());
+                                    bean.setTitle(bean.getClassifyTitle());
+                                }
+                                mView.setLabel(list);
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        mView.onError(e);
+                    }
+
+                    @Override
+                    public void onComplete() {
+                        mView.hideLoading();
+                    }
+                });
     }
 
     @Override
-    public void onTea() {
-        List<DataBean> list = new ArrayList<>();
-        for (int i =0;i<5;i++){
-            DataBean bean = new DataBean();
-            list.add(bean);
-        }
-        mView.setTea(list);
-    }
+    public void onGetHomeClassify(String ids) {
+        CloudApi.welfareGetHomeClassify(null)
+                .doOnSubscribe(disposable -> {})
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<Response<BaseResponseBean<List<DataBean>>>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                        mView.addDisposable(d);
+                    }
 
-    @Override
-    public void onCake() {
-        List<DataBean> list = new ArrayList<>();
-        for (int i =0;i<5;i++){
-            DataBean bean = new DataBean();
-            list.add(bean);
-        }
-        mView.setCake(list);
+                    @Override
+                    public void onNext(Response<BaseResponseBean<List<DataBean>>> baseResponseBeanResponse) {
+                        if (baseResponseBeanResponse.body().code == Code.CODE_SUCCESS){
+                            List<DataBean> list = baseResponseBeanResponse.body().result;
+                            if (list != null){
+                                mView.setHomeClassify(list);
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        mView.onError(e);
+                    }
+
+                    @Override
+                    public void onComplete() {
+                        mView.hideLoading();
+                    }
+                });
     }
 
     @Override

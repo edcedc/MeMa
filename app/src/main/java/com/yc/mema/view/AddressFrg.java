@@ -36,6 +36,15 @@ import java.util.List;
  */
 public class AddressFrg extends BaseFragment<InformationPresenter, FAddressBinding> implements InformationContract.View, View.OnClickListener {
 
+    public static AddressFrg newInstance() {
+
+        Bundle args = new Bundle();
+
+        AddressFrg fragment = new AddressFrg();
+        fragment.setArguments(args);
+        return fragment;
+    }
+
     private List<DataBean> listBean = new ArrayList<>();
     private AddressAdapter adapter;
     private StringBuffer sb = new StringBuffer();
@@ -68,15 +77,14 @@ public class AddressFrg extends BaseFragment<InformationPresenter, FAddressBindi
         setTitle(getString(R.string.set_address), getString(R.string.submit1));
         switch (type){
             case AddressInEvent.GIFT_TYPE:
+            case AddressInEvent.LIWU:
+            case AddressInEvent.APPLY_TYPE:
 
                 break;
             case AddressInEvent.USER_INFP_TYPE:
             case AddressInEvent.HARVEST_ADDRESS:
             case AddressInEvent.TENTRY:
                 mB.gpLocate.setVisibility(View.GONE);
-                break;
-            case AddressInEvent.APPLY_TYPE:
-
                 break;
         }
         // 定位初始化

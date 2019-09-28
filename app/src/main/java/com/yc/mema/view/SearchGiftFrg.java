@@ -126,7 +126,7 @@ public class SearchGiftFrg extends BaseFragment<SearchGiftPresenter, FSearchGift
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.tv_location:
-                UIHelper.startAddressFrg(this, AddressInEvent.GIFT_TYPE);
+                UIHelper.startAddressAct(AddressInEvent.GIFT_TYPE);
                 break;
             case R.id.tv_search:
                 pop();

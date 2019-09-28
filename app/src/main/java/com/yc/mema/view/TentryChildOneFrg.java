@@ -8,6 +8,7 @@ import android.view.View;
 import com.yc.mema.R;
 import com.yc.mema.base.BaseFragment;
 import com.yc.mema.base.BasePresenter;
+import com.yc.mema.bean.DataBean;
 import com.yc.mema.controller.UIHelper;
 import com.yc.mema.databinding.FTentryChildOneBinding;
 import com.yc.mema.event.AddressInEvent;
@@ -18,6 +19,8 @@ import com.yc.mema.presenter.TentryPresenter;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
+
+import java.util.List;
 
 /**
  * Created by Android Studio.
@@ -63,24 +66,6 @@ public class TentryChildOneFrg extends BaseFragment<TentryPresenter, FTentryChil
         mB.tvAddress.setOnClickListener(this);
         mB.tvCategory.setOnClickListener(this);
         EventBus.getDefault().register(this);
-        mB.etStoreArea.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-                if (editable.length() != 0){
-                    mB.etStoreArea.setText(editable.toString() + "㎡");
-                }
-            }
-        });
     }
 
     @Override
@@ -92,7 +77,7 @@ public class TentryChildOneFrg extends BaseFragment<TentryPresenter, FTentryChil
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.tv_address:
-                UIHelper.startAddressFrg(this, AddressInEvent.TENTRY);
+                UIHelper.startAddressAct(AddressInEvent.TENTRY);
                 break;
             case R.id.bt_submit:
                 mPresenter.onSure(mB.etName.getText().toString(), mB.etPhone.getText().toString(), mB.etOperatorId.getText().toString(), mB.etOperatorNum.getText().toString(), mB.etOpeningBank.getText().toString(),
@@ -125,8 +110,9 @@ public class TentryChildOneFrg extends BaseFragment<TentryPresenter, FTentryChil
         EventBus.getDefault().unregister(this);
     }
 
-    @Override
-    public void setData(String name, String phone, String userId, String num, String bankName, String bankPhone, String bankId, String address, String addressDesc, int type, String category, String shopArea, String shopScope) {
-    }
 
+    @Override
+    public void setData(List<DataBean> list) {
+
+    }
 }

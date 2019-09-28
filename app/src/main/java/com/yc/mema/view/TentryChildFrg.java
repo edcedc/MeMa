@@ -10,6 +10,7 @@ import android.view.View;
 
 import com.yc.mema.R;
 import com.yc.mema.base.BaseFragment;
+import com.yc.mema.bean.DataBean;
 import com.yc.mema.controller.UIHelper;
 import com.yc.mema.databinding.FTentryChildBinding;
 import com.yc.mema.databinding.FTentryChildOneBinding;
@@ -18,9 +19,12 @@ import com.yc.mema.event.BusinessCassificationInEvent;
 import com.yc.mema.event.TentryInEvent;
 import com.yc.mema.impl.TentryContract;
 import com.yc.mema.presenter.TentryPresenter;
+import com.yc.mema.view.act.HtmlAct;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
+
+import java.util.List;
 
 /**
  * Created by Android Studio.
@@ -76,7 +80,7 @@ public class TentryChildFrg extends BaseFragment<TentryPresenter, FTentryChildBi
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.tv_agreement:
-
+                UIHelper.startHtmlAct(HtmlAct.TENTRY, null);
                 break;
             case R.id.bt_submit:
                 if (!mB.cb.isChecked()){
@@ -89,8 +93,7 @@ public class TentryChildFrg extends BaseFragment<TentryPresenter, FTentryChildBi
     }
 
     @Override
-    public void setData(String name, String phone, String userId, String num, String bankName, String bankPhone, String bankId, String address, String addressDesc, int type, String category, String shopArea, String shopScope) {
-
+    public void setData(List<DataBean> list) {
+        
     }
-
 }

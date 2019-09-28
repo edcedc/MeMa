@@ -288,31 +288,40 @@
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
             <View
-                android:id="@+id/v4"
-                style="@style/divider_3"
-                app:layout_constraintTop_toBottomOf="@id/layout" />
+                style="@style/divider_3"/>
 
-            <android.support.v4.widget.NestedScrollView
-                android:layout_width="match_parent"
+            <com.scwang.smartrefresh.layout.SmartRefreshLayout
+                android:id="@+id/refreshLayout"
                 app:layout_behavior="@string/appbar_scrolling_view_behavior"
-                android:layout_height="wrap_content">
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@android:color/white"
+                app:srlAccentColor="@android:color/white"
+                app:srlHeaderMaxDragRate="2.5"
+                app:srlPrimaryColor="@android:color/darker_gray">
 
-                <com.lcodecore.tkrefreshlayout.TwinklingRefreshLayout
-                    android:id="@+id/refreshLayout"
+                <com.scwang.smartrefresh.header.MaterialHeader
+                    android:layout_marginTop="?attr/actionBarSize"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <android.support.v4.widget.NestedScrollView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@color/white_f4f4f4">
+                    android:fillViewport="true">
 
-                    <com.yc.mema.weight.WithScrollListView
-                        android:id="@+id/listView"
-                        android:background="@color/white"
-                        android:divider="@null"
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/recyclerView"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"/>
+                        android:layout_height="wrap_content"
+                        android:nestedScrollingEnabled="false"
+                        android:overScrollMode="never"
+                        tools:listitem="@android:layout/simple_list_item_2" />
 
-                </com.lcodecore.tkrefreshlayout.TwinklingRefreshLayout>
+                </android.support.v4.widget.NestedScrollView>
 
-            </android.support.v4.widget.NestedScrollView>
+
+            </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 
         </LinearLayout>
 

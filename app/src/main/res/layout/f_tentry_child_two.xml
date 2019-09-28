@@ -37,7 +37,6 @@
                     <android.support.v7.widget.AppCompatTextView
                         style="@style/Tv15gray"
                         android:text="@string/business_license"
-                        android:paddingTop="@dimen/px30"
                         android:paddingBottom="@dimen/px30"
                         android:textColor="@color/tab_unselect"
                         android:textSize="@dimen/size32" />
@@ -111,7 +110,6 @@
 
                     <android.support.v7.widget.AppCompatTextView
                         style="@style/Tv15gray"
-                        android:paddingTop="@dimen/px30"
                         android:paddingBottom="@dimen/px30"
                         android:text="@string/mema32"
                         android:textColor="@color/tab_unselect"

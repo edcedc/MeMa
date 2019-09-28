@@ -41,6 +41,15 @@ import java.util.List;
  */
 public class OrderDescFrg extends BaseFragment<OrderDescPresenter, FShopDescBinding> implements OrderDescContract.View, View.OnClickListener {
 
+    public static OrderDescFrg newInstance() {
+        
+        Bundle args = new Bundle();
+        
+        OrderDescFrg fragment = new OrderDescFrg();
+        fragment.setArguments(args);
+        return fragment;
+    }
+    
     private String orderId;
 
     private List<DataBean> listBean = new ArrayList<>();

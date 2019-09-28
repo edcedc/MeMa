@@ -104,4 +104,43 @@ public class FivePresenter extends FiveContract.Presenter{
                 });
     }
 
+    @Override
+    public void onBusinessGetBusiness() {
+        CloudApi.businessGetBusiness()
+                .doOnSubscribe(disposable -> {})
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<Response<BaseResponseBean<DataBean>>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                        mView.addDisposable(d);
+                    }
+
+                    @Override
+                    public void onNext(Response<BaseResponseBean<DataBean>> baseResponseBeanResponse) {
+                        if (baseResponseBeanResponse.body().code == Code.CODE_SUCCESS){
+                            DataBean result = baseResponseBeanResponse.body().result;
+                            int handle;
+                            String reason = null;
+                            if (result != null){
+                                handle = result.getHandle();
+                                reason = result.getReason();
+                            }else {
+                                handle = 3;
+                            }
+                            mView.setGetBusiness(handle, reason);
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        mView.onError(e);
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+    }
+
 }

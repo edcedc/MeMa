@@ -14,6 +14,7 @@ import com.luck.picture.lib.PictureSelector;
 import com.luck.picture.lib.entity.LocalMedia;
 import com.yc.mema.R;
 import com.yc.mema.base.BaseFragment;
+import com.yc.mema.bean.DataBean;
 import com.yc.mema.databinding.FTentryChildTwoBinding;
 import com.yc.mema.event.CameraInEvent;
 import com.yc.mema.event.TentryInEvent;
@@ -153,13 +154,13 @@ public class TentryChildTwoFrg extends BaseFragment<TentryPresenter, FTentryChil
     }
 
     @Override
-    public void setData(String name, String phone, String userId, String num, String bankName, String bankPhone, String bankId, String address, String addressDesc, int type, String category, String shopArea, String shopScope) {
-
-    }
-
-    @Override
     public void onDestroy() {
         super.onDestroy();
         EventBus.getDefault().unregister(this);
+    }
+
+    @Override
+    public void setData(List<DataBean> list) {
+
     }
 }

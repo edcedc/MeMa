@@ -88,7 +88,7 @@ public class ApplyFrg extends BaseFragment<ApplyPresenter, FApplyBinding> implem
                 });
                 break;
             case R.id.tv_region:
-                UIHelper.startAddressFrg(this, AddressInEvent.APPLY_TYPE);
+                UIHelper.startAddressAct(AddressInEvent.APPLY_TYPE);
                 break;
             case R.id.iv_zheng:
                 PictureSelectorTool.PictureSelectorImage(act, CameraInEvent.USER_ZHENG, false);

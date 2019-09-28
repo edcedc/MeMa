@@ -112,7 +112,7 @@ public class OneFrg extends BaseFragment<OnePresenter, FOneBinding> implements O
                 UIHelper.startSearchGiftFrg(this, parentId, mB.tvLocation.getText().toString());
                 break;
             case R.id.tv_location:
-                UIHelper.startAddressFrg(this, AddressInEvent.GIFT_TYPE);
+                UIHelper.startAddressAct(AddressInEvent.GIFT_TYPE);
                 break;
         }
     }

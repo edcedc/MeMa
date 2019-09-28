@@ -67,7 +67,7 @@ public class EditAddressFrg extends BaseFragment<EditAddressPresenter, FEditAddr
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.tv_location:
-                UIHelper.startAddressFrg(this, AddressInEvent.HARVEST_ADDRESS);
+                UIHelper.startAddressAct(AddressInEvent.HARVEST_ADDRESS);
 //                DatePickerUtils.onAddressPicker(act);
                 break;
             case R.id.bt_submit:

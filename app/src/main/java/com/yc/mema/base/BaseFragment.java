@@ -443,7 +443,7 @@ public abstract class BaseFragment<P extends BasePresenter, VB extends ViewDataB
         RoundTextView topRight = view.findViewById(R.id.top_right);
         ImageView topRightImg = view.findViewById(R.id.top_right_img);
         FrameLayout topRightFy = view.findViewById(R.id.top_right_fy);
-        view.findViewById(R.id.top_view).setVisibility(View.GONE);
+//        view.findViewById(R.id.top_view).setVisibility(View.VISIBLE);
         //需要调用该函数才能设置toolbar的信息
         mAppCompatActivity.setSupportActionBar(toolbar);
         mAppCompatActivity.getSupportActionBar().setTitle("");

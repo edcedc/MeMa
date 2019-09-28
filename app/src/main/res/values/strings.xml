@@ -182,7 +182,7 @@
     <string name="complaints" translatable="false">投诉内容</string>
     <string name="system_notification" translatable="false">系统通知</string>
     <string name="promotion_sharing" translatable="false">推广分享</string>
-    <string name="apply" translatable="false">申请城市代理人</string>
+    <string name="apply" translatable="false">申请代理</string>
     <string name="apply1" translatable="false">代理人申请</string>
     <string name="my_share" translatable="false">我要分享</string>
     <string name="mema13" translatable="false">么马\n程诺科技</string>
@@ -271,4 +271,14 @@
     <string name="mema35" translatable="false">我已阅读并同意《么马商家入驻协议》</string>
     <string name="mema37" translatable="false">"开店前请准备好以下\n6种图片资料\n建议准备齐全后进行申请，不同品类证件要求略有不同，\n具体以填写页面要求为准"</string>
     <string name="mema38" translatable="false">资质上传说明:\n1、么马平台会严格按照标准进行审核，请认真上传资质相关文件；\n2、卫生许可证、食品经营许可证等涉及到相关经营范围的商家才需要上传、其它商家无需上传。</string>
+    <string name="audit_z" translatable="false">审核中</string>
+    <string name="audit_c" translatable="false">审核成功</string>
+    <string name="audit_s" translatable="false">审核失败</string>
+    <string name="mema40" translatable="false">您的店铺已经通过审核，快去发布您的店铺服务吧</string>
+    <string name="mema39" translatable="false">进入我的店铺</string>
+    <string name="mema41" translatable="false">很抱歉，您的认证信息中有部分信息未通过审核，\n请重新提交</string>
+    <string name="mema42" translatable="false">审核结果会已APP站内消息形式通知，请耐心等候！\n预计审核时间：1~3个工作日</string>
+    <string name="resubmission" translatable="false">重新提交</string>
+    <string name="hot_issues" translatable="false">热门问题</string>
+    <string name="problem_issues" translatable="false">常见问题</string>
 </resources>

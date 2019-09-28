@@ -18,6 +18,8 @@ public interface FiveContract {
         void setData(JSONObject userObj);
 
         void setDateError();
+
+        void setGetBusiness(int handle, String reason);
     }
 
     abstract class Presenter extends BasePresenter<View> {
@@ -25,6 +27,8 @@ public interface FiveContract {
         public abstract void onInfo();
 
         public abstract void onaUserAgent(FiveFrg fiveFrg);
+
+        public abstract void onBusinessGetBusiness();
     }
 
 }
