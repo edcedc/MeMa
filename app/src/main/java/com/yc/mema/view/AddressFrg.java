@@ -2,15 +2,19 @@ package com.yc.mema.view;
 
 import android.os.Bundle;
 import android.view.View;
-
 import com.baidu.location.Address;
 import com.baidu.location.BDAbstractLocationListener;
 import com.baidu.location.BDLocation;
 import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
+import com.baidu.mapapi.search.core.SearchResult;
+import com.baidu.mapapi.search.geocode.GeoCodeOption;
+import com.baidu.mapapi.search.geocode.GeoCodeResult;
+import com.baidu.mapapi.search.geocode.GeoCoder;
+import com.baidu.mapapi.search.geocode.OnGetGeoCoderResultListener;
+import com.baidu.mapapi.search.geocode.ReverseGeoCodeResult;
 import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.StringUtils;
-import com.yc.mema.BR;
 import com.yc.mema.R;
 import com.yc.mema.adapter.AddressAdapter;
 import com.yc.mema.base.BaseFragment;
@@ -18,12 +22,9 @@ import com.yc.mema.bean.AddressBean;
 import com.yc.mema.bean.DataBean;
 import com.yc.mema.databinding.FAddressBinding;
 import com.yc.mema.event.AddressInEvent;
-import com.yc.mema.event.LocationInEvent;
 import com.yc.mema.impl.InformationContract;
 import com.yc.mema.presenter.InformationPresenter;
-
 import org.greenrobot.eventbus.EventBus;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,7 +35,7 @@ import java.util.List;
  * Time: 12:01
  *  设置地址
  */
-public class AddressFrg extends BaseFragment<InformationPresenter, FAddressBinding> implements InformationContract.View, View.OnClickListener {
+public class AddressFrg extends BaseFragment<InformationPresenter, FAddressBinding> implements InformationContract.View, View.OnClickListener, OnGetGeoCoderResultListener {
 
     public static AddressFrg newInstance() {
 
@@ -56,6 +57,9 @@ public class AddressFrg extends BaseFragment<InformationPresenter, FAddressBindi
     private MyLocationListenner myListener = new MyLocationListenner();
     private LocationClient mLocClient;
     private boolean isLocation = false;
+
+    private GeoCoder mSearch = null; // 搜索模块，也可去掉地图模块独立使用
+
 
     @Override
     public void initPresenter() {
@@ -97,6 +101,10 @@ public class AddressFrg extends BaseFragment<InformationPresenter, FAddressBindi
         option.setIsNeedAddress(true);//反编译获得具体位置，只有网络定位才可以
         mLocClient.setLocOption(option);
         mLocClient.start();
+        // 初始化搜索模块，注册事件监听
+        mSearch = GeoCoder.newInstance();
+        mSearch.setOnGetGeoCodeResultListener(this);
+
         mB.tvLocation.setOnClickListener(this);
         if (adapter == null){
             adapter = new AddressAdapter(act, this, listBean);
@@ -143,22 +151,17 @@ public class AddressFrg extends BaseFragment<InformationPresenter, FAddressBindi
 
                 break;
         }
+
+        String[] split;
         if (isLocation){
-            String location = mB.tvLocation.getText().toString();
-            addressEnd = location.split(" ")[1];
-            LogUtils.e(addressEnd);
-            EventBus.getDefault().post(new AddressInEvent(null, addressEnd, type, location));
+            split = mB.tvLocation.getText().toString().split(" ");
         }else {
-            sb.append(addressEnd);
-            sbId.append(parentId);
-            if (sbId.toString().indexOf("edison") != -1){
-                sbId = sbId.delete(sbId.toString().length() - 7, sbId.toString().length());
-                addressEnd = sb.toString().split(" ")[1];
-            }
-            LogUtils.e(sbId.toString());
-            EventBus.getDefault().post(new AddressInEvent(sbId.toString(), addressEnd, type, mB.tvAll.getText().toString()));
+            split = mB.tvAll.getText().toString().split(" ");
         }
-        pop();
+        // Geo搜索
+        mSearch.geocode(new GeoCodeOption()
+                .city(split[1])
+                .address(split[2]));
     }
 
     @Override
@@ -170,7 +173,7 @@ public class AddressFrg extends BaseFragment<InformationPresenter, FAddressBindi
     public void setData(Object data) {
         List<DataBean> list = (List<DataBean>) data;
         listBean.clear();
-        if (regionLevel == 2 && type == 0){
+        if (regionLevel == 2 && type == AddressInEvent.GIFT_TYPE){
             DataBean bean = new DataBean();
             bean.setRegionName("不限区域");
             bean.setRegionLevel(3);
@@ -202,10 +205,48 @@ public class AddressFrg extends BaseFragment<InformationPresenter, FAddressBindi
         }
     }
 
+    @Override
+    public void onGetGeoCodeResult(GeoCodeResult result) {
+        if (result == null || result.error != SearchResult.ERRORNO.NO_ERROR) {
+            showToast("抱歉，未能找到结果");
+            return;
+        }
+        AddressBean.getInstance().setLocation(result.getLocation().longitude);
+        AddressBean.getInstance().setLatitude(result.getLocation().latitude);
+
+        String[] split;
+        if (isLocation){
+            split = mB.tvLocation.getText().toString().split(" ");
+        }else {
+            sbId.append(parentId);
+            LogUtils.e(sbId);
+            if (sbId.toString().indexOf("edison") != -1){
+                sbId = sbId.delete(sbId.toString().length() - 7, sbId.toString().length());
+            }else {
+                sbId.append(sbId.toString().split(",")[2]);
+            }
+            split = mB.tvAll.getText().toString().split(" ");
+        }
+        AddressBean.getInstance().setCountry(split[0]);
+        AddressBean.getInstance().setProvince(split[1]);
+        AddressBean.getInstance().setCity(split[2]);
+        AddressBean.getInstance().setAddress(AddressBean.getInstance().getCountry() + AddressBean.getInstance().getProvince() + AddressBean.getInstance().getCity());
+        LogUtils.e(AddressBean.getInstance().getCountry(), AddressBean.getInstance().getProvince(),
+                AddressBean.getInstance().getCity(), AddressBean.getInstance().getLatitude(), AddressBean.getInstance().getLocation(),
+        sbId);
+        EventBus.getDefault().post(new AddressInEvent(type, sbId.toString()));
+        act.finish();
+    }
+
+    @Override
+    public void onGetReverseGeoCodeResult(ReverseGeoCodeResult result) {
+
+    }
+
     /**
      * 定位SDK监听函数
      */
-    public class MyLocationListenner extends BDAbstractLocationListener {
+    private class MyLocationListenner extends BDAbstractLocationListener {
 
         @Override
         public void onReceiveLocation(BDLocation location) {
@@ -225,7 +266,7 @@ public class AddressFrg extends BaseFragment<InformationPresenter, FAddressBindi
             AddressBean.getInstance().setDistrict(address.district);
             EventBus.getDefault().post(new LocationInEvent());*/
 
-            mB.tvLocation.setText(address.city + " " + address.district);
+            mB.tvLocation.setText(address.province + " " + address.city + " " + address.district);
             if (address != null){
                 mLocClient.stop();
             }

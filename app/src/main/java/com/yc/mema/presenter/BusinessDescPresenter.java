@@ -1,6 +1,7 @@
 package com.yc.mema.presenter;
 
 import com.lzy.okgo.model.Response;
+import com.yc.mema.bean.AddressBean;
 import com.yc.mema.bean.BaseListBean;
 import com.yc.mema.bean.BaseResponseBean;
 import com.yc.mema.bean.DataBean;
@@ -24,8 +25,8 @@ import io.reactivex.disposables.Disposable;
 public class BusinessDescPresenter extends BusinessDescContract.Presenter{
 
     @Override
-    public void onRequest(int pagerNumber) {
-        CloudApi.welfareGetWelfareList(null, null, 0, pagerNumber)
+    public void onRequest(int pagerNumber, String id, int low, int up, int type) {
+        CloudApi.welfareGetWelfareList(AddressBean.getInstance().getCity(), null, Integer.valueOf(id), pagerNumber, low, up, type)
                 .doOnSubscribe(disposable -> {})
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<Response<BaseResponseBean<BaseListBean<DataBean>>>>() {

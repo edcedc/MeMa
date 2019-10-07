@@ -17,21 +17,11 @@ public class AddressInEvent {
 
     public int type;
 
-    public String parentId, address, allAddress;
+    public String parentId;
 
-    public AddressInEvent(String parentId, String address, int type) {
-        this.parentId = parentId;
-        this.address = address;
+    public AddressInEvent(int type, String parentId) {
         this.type = type;
-    }
-
-    public AddressInEvent(String parentId, String address, int type, String allAddress) {
         this.parentId = parentId;
-        this.address = address;
-        this.type = type;
-        this.allAddress = allAddress;
     }
-
-
 
 }

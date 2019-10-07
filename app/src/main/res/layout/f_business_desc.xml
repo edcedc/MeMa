@@ -34,17 +34,20 @@
                     android:orientation="horizontal">
 
                     <android.support.v7.widget.AppCompatTextView
+                        android:id="@+id/tv_zh"
                         style="@style/Tv12black"
                         android:drawableRight="@mipmap/icon_arrow_down_black"
                         android:padding="@dimen/px30"
                         android:text="@string/sorting" />
 
                     <android.support.v7.widget.AppCompatTextView
+                        android:id="@+id/tv_distance"
                         style="@style/Tv12black"
                         android:padding="@dimen/px30"
                         android:text="@string/distance" />
 
                     <android.support.v7.widget.AppCompatTextView
+                        android:id="@+id/tv_sales"
                         style="@style/Tv12black"
                         android:padding="@dimen/px30"
                         android:text="@string/volume" />
@@ -55,6 +58,7 @@
                         android:layout_weight="1" />
 
                     <android.support.v7.widget.AppCompatTextView
+                        android:id="@+id/tv_screen"
                         style="@style/Tv12black"
                         android:drawableRight="@mipmap/icon_filter"
                         android:drawablePadding="@dimen/px10"

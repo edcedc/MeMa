@@ -8,6 +8,7 @@ import android.view.View;
 import com.yc.mema.R;
 import com.yc.mema.base.BaseFragment;
 import com.yc.mema.base.BasePresenter;
+import com.yc.mema.bean.AddressBean;
 import com.yc.mema.bean.DataBean;
 import com.yc.mema.controller.UIHelper;
 import com.yc.mema.databinding.FTentryChildOneBinding;
@@ -95,7 +96,7 @@ public class TentryChildOneFrg extends BaseFragment<TentryPresenter, FTentryChil
     public void onMainAddressInEvent(AddressInEvent event){
         if (event.type != AddressInEvent.TENTRY)return;
         parentId = event.parentId;
-        mB.tvAddress.setText(event.allAddress);
+        mB.tvAddress.setText(AddressBean.getInstance().getAddress());
     }
 
     @Subscribe

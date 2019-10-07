@@ -8,7 +8,6 @@ import com.yc.mema.callback.Code;
 import com.yc.mema.controller.CloudApi;
 import com.yc.mema.impl.SixContract;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.Observer;
@@ -126,8 +125,8 @@ public class SixPresenter extends SixContract.Presenter{
     }
 
     @Override
-    public void onRequest(int pagerNumber) {
-        CloudApi.welfareGetWelfareList(null, null, 0, pagerNumber)
+    public void onRequest(int pagerNumber, int low, int up, int type, String county) {
+        CloudApi.welfareGetWelfareList(county, null, 0, pagerNumber, low, up, type)
                 .doOnSubscribe(disposable -> {})
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<Response<BaseResponseBean<BaseListBean<DataBean>>>>() {

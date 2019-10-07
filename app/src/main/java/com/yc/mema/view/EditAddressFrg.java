@@ -79,8 +79,8 @@ public class EditAddressFrg extends BaseFragment<EditAddressPresenter, FEditAddr
     @Subscribe
     public void onMainAddressInEvent(AddressInEvent event){
         if (event.type != AddressInEvent.HARVEST_ADDRESS)return;
-        parentId = event.parentId.split(",")[2];
-        mB.tvLocation.setText(event.allAddress);
+        parentId = event.parentId;
+        mB.tvLocation.setText(AddressBean.getInstance().getAddress());
     }
 
     @Override

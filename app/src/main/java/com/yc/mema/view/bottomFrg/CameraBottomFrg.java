@@ -4,8 +4,11 @@ import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.View;
 
+import com.luck.picture.lib.entity.LocalMedia;
 import com.yc.mema.R;
 import com.yc.mema.base.BaseBottomSheetFrg;
+
+import java.util.ArrayList;
 
 
 /**
@@ -44,6 +47,11 @@ public class CameraBottomFrg extends BaseBottomSheetFrg implements View.OnClickL
         view.findViewById(R.id.tv_photo).setOnClickListener(this);
         view.findViewById(R.id.tv_save).setOnClickListener(this);
         view.findViewById(R.id.layout).setOnClickListener(this);
+
+        ArrayList<LocalMedia> localMediaList = new ArrayList<>();
+        for (LocalMedia media1 : localMediaList){
+
+        }
 
         switch (type){
             case 0:

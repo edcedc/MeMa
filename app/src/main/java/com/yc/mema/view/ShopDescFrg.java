@@ -46,6 +46,7 @@ public class ShopDescFrg extends BaseFragment<ShopDescPresenter, FShopBinding> i
     private String skuName;
     private double skuPrice;
     private List<DataBean> listShopBean;
+    private List<DataBean> specList;
 
     public static ShopDescFrg newInstance() {
         Bundle args = new Bundle();
@@ -136,6 +137,7 @@ public class ShopDescFrg extends BaseFragment<ShopDescPresenter, FShopBinding> i
                 act.finish();
                 break;
             case R.id.tv_sku:
+                if (specList == null)return;
                 shopSkuBottonFrg.show(getChildFragmentManager(), "dialog");
                 break;
             case R.id.tv_customer://客服
@@ -167,6 +169,7 @@ public class ShopDescFrg extends BaseFragment<ShopDescPresenter, FShopBinding> i
 
     @Override
     public void setData(DataBean bean) {
+        specList = bean.getSpecList();
         Bundle bundle = new Bundle();
         bundle.putString("bean", new Gson().toJson(bean));
         shopSkuBottonFrg.setArguments(bundle);

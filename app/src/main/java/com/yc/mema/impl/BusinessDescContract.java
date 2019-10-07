@@ -23,7 +23,7 @@ public interface BusinessDescContract {
 
     abstract class Presenter extends BasePresenter<View> {
 
-        public abstract void onRequest(int pagerNumber);
+        public abstract void onRequest(int pagerNumber, String id, int low, int up, int type);
 
         public abstract void onBanner();
 

@@ -136,7 +136,7 @@ public class UserInfoFrg extends BaseFragment<InformationPresenter, FInfoBinding
     @Subscribe
     public void onMainAddressInEvent(AddressInEvent event){
         if (event.type != AddressInEvent.USER_INFP_TYPE)return;
-        mPresenter.address(event.parentId.split(",")[2]);
+        mPresenter.address(event.parentId);
     }
 
     @Override

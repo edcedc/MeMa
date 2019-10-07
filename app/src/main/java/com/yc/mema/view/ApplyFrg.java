@@ -9,6 +9,7 @@ import com.bumptech.glide.Glide;
 import com.luck.picture.lib.PictureSelector;
 import com.yc.mema.R;
 import com.yc.mema.base.BaseFragment;
+import com.yc.mema.bean.AddressBean;
 import com.yc.mema.bean.DataBean;
 import com.yc.mema.controller.UIHelper;
 import com.yc.mema.databinding.FApplyBinding;
@@ -133,8 +134,8 @@ public class ApplyFrg extends BaseFragment<ApplyPresenter, FApplyBinding> implem
 
     @Subscribe
     public void onMainAddressInEvent(AddressInEvent event){
-        county = event.parentId.split(",")[2];
-        mB.tvRegion.setText(event.address);
+        county = event.parentId;
+        mB.tvRegion.setText(AddressBean.getInstance().getCity());
     }
 
     @Override

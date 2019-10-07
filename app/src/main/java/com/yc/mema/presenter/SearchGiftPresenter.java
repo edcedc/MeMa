@@ -28,7 +28,7 @@ import io.reactivex.disposables.Disposable;
 public class SearchGiftPresenter extends SearchGiftContract.Presenter {
     @Override
     public void onRequest(String county, String text, int pagetNumber) {
-        CloudApi.welfareGetWelfareList(county, text, 0, pagetNumber)
+        CloudApi.welfareGetWelfareList(county, text, 0, pagetNumber, 0, 0, 0)
                 .doOnSubscribe(disposable -> {})
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<Response<BaseResponseBean<BaseListBean<DataBean>>>>() {

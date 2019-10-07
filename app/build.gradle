@@ -12,11 +12,15 @@ android {
         versionCode rootProject.ext.versionCode as Integer
         versionName rootProject.ext.versionName as String
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        manifestPlaceholders = [
+                GETUI_APP_ID : "Y4SyoBmkOy7fa1opXcBeX2",
+                GETUI_APP_KEY : "lacooe14PcA5Xq24Ds9anA",
+                GETUI_APP_SECRET : "b2gvUt28Dp5EGFoMW6vYK5"
+        ]
         ndk {
             abiFilters "armeabi", "armeabi-v7a", "arm64-v8a", "x86", "mips"
         }
         multiDexEnabled true
-
     }
     lintOptions {
         checkReleaseBuilds false
@@ -193,6 +197,8 @@ dependencies {
 
     //XPopup
     implementation 'com.lxj:xpopup:1.8.9'
+    //个推
+    implementation 'com.getui:sdk:2.13.3.0'
 
     //点击加载框
     implementation project(path: ':ToprightmenuLibrary')

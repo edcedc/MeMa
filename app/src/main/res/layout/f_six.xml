@@ -37,6 +37,7 @@
                 android:text="广州" />
 
             <com.flyco.roundview.RoundFrameLayout
+                android:id="@+id/tv_search"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="@dimen/px15"
@@ -102,7 +103,7 @@
 
                     <android.support.v7.widget.RecyclerView
                         android:id="@+id/rv_desc"
-                        app:layout_constraintTop_toBottomOf="@id/banner"
+                        app:layout_constraintTop_toBottomOf="@id/gridView"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:nestedScrollingEnabled="false"
@@ -127,17 +128,20 @@
                     android:orientation="horizontal">
 
                     <android.support.v7.widget.AppCompatTextView
+                        android:id="@+id/tv_zh"
                         style="@style/Tv12black"
                         android:drawableRight="@mipmap/icon_arrow_down_black"
                         android:padding="@dimen/px30"
                         android:text="@string/sorting" />
 
                     <android.support.v7.widget.AppCompatTextView
+                        android:id="@+id/tv_distance"
                         style="@style/Tv12black"
                         android:padding="@dimen/px30"
                         android:text="@string/distance" />
 
                     <android.support.v7.widget.AppCompatTextView
+                        android:id="@+id/tv_sales"
                         style="@style/Tv12black"
                         android:padding="@dimen/px30"
                         android:text="@string/volume" />
@@ -148,6 +152,7 @@
                         android:layout_weight="1" />
 
                     <android.support.v7.widget.AppCompatTextView
+                        android:id="@+id/tv_screen"
                         style="@style/Tv12black"
                         android:drawableRight="@mipmap/icon_filter"
                         android:drawablePadding="@dimen/px10"

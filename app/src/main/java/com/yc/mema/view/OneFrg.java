@@ -4,8 +4,6 @@ import android.os.Bundle;
 import android.support.v7.widget.DividerItemDecoration;
 import android.view.View;
 
-import com.baidu.location.Address;
-import com.blankj.utilcode.util.LogUtils;
 import com.lcodecore.tkrefreshlayout.RefreshListenerAdapter;
 import com.lcodecore.tkrefreshlayout.TwinklingRefreshLayout;
 import com.yc.mema.R;
@@ -16,7 +14,6 @@ import com.yc.mema.bean.DataBean;
 import com.yc.mema.controller.UIHelper;
 import com.yc.mema.databinding.FOneBinding;
 import com.yc.mema.event.AddressInEvent;
-import com.yc.mema.event.LocationInEvent;
 import com.yc.mema.impl.OneContract;
 import com.yc.mema.presenter.OnePresenter;
 import com.yc.mema.utils.OneGlideImageLoader;
@@ -102,7 +99,7 @@ public class OneFrg extends BaseFragment<OnePresenter, FOneBinding> implements O
             }
         });
 
-        mB.tvLocation.setText("广州");
+        mB.tvLocation.setText(AddressBean.getInstance().getCity());
     }
 
     @Override
@@ -183,14 +180,8 @@ public class OneFrg extends BaseFragment<OnePresenter, FOneBinding> implements O
     public void onMainAddressInEvent(AddressInEvent event){
         if (event.type != AddressInEvent.GIFT_TYPE)return;
         parentId = event.parentId;
-        mB.tvLocation.setText(event.address);
+        mB.tvLocation.setText(AddressBean.getInstance().getCity());
         mB.refreshLayout.startRefresh();
-        AddressBean.getInstance().setDistrict(event.address);
-    }
-
-    @Subscribe
-    public void onMainLocationInEvent(LocationInEvent event){
-        mB.tvLocation.setText(AddressBean.getInstance().getDistrict());
     }
 
     @Override

@@ -6,13 +6,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
-import android.graphics.BitmapFactory;
-import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.view.View;
-import android.widget.TextView;
 
 import com.baidu.location.Address;
 import com.baidu.location.BDAbstractLocationListener;
@@ -20,17 +16,11 @@ import com.baidu.location.BDLocation;
 import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
 import com.baidu.mapapi.SDKInitializer;
-import com.baidu.mapapi.map.MapStatus;
-import com.baidu.mapapi.map.MapStatusUpdateFactory;
-import com.baidu.mapapi.map.MyLocationData;
-import com.baidu.mapapi.model.LatLng;
 import com.blankj.utilcode.util.LogUtils;
 import com.umeng.socialize.UMShareAPI;
 import com.yc.mema.base.BaseActivity;
 import com.yc.mema.bean.AddressBean;
 import com.yc.mema.event.CameraInEvent;
-import com.yc.mema.event.LocationInEvent;
-import com.yc.mema.utils.AndroidBug5497Workaround;
 import com.yc.mema.view.MainFrg;
 
 import org.greenrobot.eventbus.EventBus;
@@ -90,7 +80,13 @@ public class MainActivity extends BaseActivity {
         option.setScanSpan(1000);
         option.setIsNeedAddress(true);//反编译获得具体位置，只有网络定位才可以
         mLocClient.setLocOption(option);
-        mLocClient.start();
+//        mLocClient.start();
+
+        // 注册 intentService 后 PushDemoReceiver 无效, sdk 会使用 DemoIntentService 传递数据,
+        // AndroidManifest 对应保留一个即可(如果注册 DemoIntentService, 可以去掉 PushDemoReceiver, 如果注册了
+        // IntentService, 必须在 AndroidManifest 中声明)
+//        PushManager.getInstance().registerPushIntentService(this.getApplicationContext(), IntentService.class);
+//        PushManager.getInstance().bindAlias(this, "999");
     }
 
     @Override
@@ -189,7 +185,7 @@ public class MainActivity extends BaseActivity {
             AddressBean.getInstance().setProvince(address.province);
             AddressBean.getInstance().setCity(address.city);
             AddressBean.getInstance().setDistrict(address.district);
-            EventBus.getDefault().post(new LocationInEvent());
+//            EventBus.getDefault().post(new LocationInEvent());
             if (address != null){
                 mLocClient.stop();
             }

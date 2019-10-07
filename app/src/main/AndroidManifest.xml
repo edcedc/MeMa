@@ -21,10 +21,7 @@
     <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
     <!-- 获取应用市场-->
     <!--<category android:name="android.intent.category.APP_MARKET" />-->
-    <!-- 以下两个权限用于Demo中定位功能展示，如果开发者实际不需要百度定位功能，可不申请 -->
-    <!-- 这个权限用于进行网络定位 -->
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <!-- 这个权限用于访问GPS定位 -->
+    <!--定位-->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <supports-screens
@@ -256,6 +253,20 @@
                 <data android:scheme="u52vwi"  />
             </intent-filter>
         </activity>
+
+        <!--个推-->
+        <!-- 用户自定义服务继承自GTIntentService,作为SDK与APP桥梁服务,用来接收各种消息和命令回复-->
+        <service android:name=".service.gt.IntentService"
+            android:permission="android.permission.BIND_JOB_SERVICE"/>
+
+        <!-- 配置SDK核心服务 -->
+        <!-- process必须指定为":pushservice"，切勿随意更改 -->
+        <service
+            android:name=".service.gt.PushService"
+            android:exported="true"
+            android:label="PushService"
+            android:process=":pushservice">
+        </service>
 
     </application>
 

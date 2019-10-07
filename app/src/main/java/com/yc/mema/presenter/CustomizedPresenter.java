@@ -47,7 +47,7 @@ public class CustomizedPresenter extends CustomizedContract.Presenter{
 
     @Override
     public void onRequest(int pagerNumber) {
-        CloudApi.welfareGetWelfareList(null, null, 0, pagerNumber)
+        CloudApi.welfareGetWelfareList(null, null, 0, pagerNumber, 0, 0, 0)
                 .doOnSubscribe(disposable -> {})
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<Response<BaseResponseBean<BaseListBean<DataBean>>>>() {

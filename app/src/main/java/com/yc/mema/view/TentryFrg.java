@@ -7,12 +7,8 @@ import android.view.View;
 import com.yc.mema.R;
 import com.yc.mema.base.BaseFragment;
 import com.yc.mema.base.BasePresenter;
-import com.yc.mema.bean.AddressBean;
 import com.yc.mema.controller.UIHelper;
 import com.yc.mema.databinding.FTentryBinding;
-import com.yc.mema.event.AddressInEvent;
-import com.yc.mema.event.BusinessCassificationInEvent;
-import com.yc.mema.event.LocationInEvent;
 import com.yc.mema.event.TentryInEvent;
 
 import org.greenrobot.eventbus.EventBus;

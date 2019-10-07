@@ -13,7 +13,6 @@ import com.yc.mema.bean.DataBean;
 import com.yc.mema.view.AboutFrg;
 import com.yc.mema.view.AccountFrg;
 import com.yc.mema.view.AddBirthdayRecordsFrg;
-import com.yc.mema.view.AddressFrg;
 import com.yc.mema.view.ApplyFrg;
 import com.yc.mema.view.BingPhoneFrg;
 import com.yc.mema.view.BirthdayRecordsFrg;
@@ -466,7 +465,12 @@ public final class UIHelper {
         bundle.putString("parentId", parentId);
         bundle.putString("location", s);
         frg.setArguments(bundle);
-        ((MainFrg) root.getParentFragment()).startBrotherFragment(frg);
+        Fragment fragment = root.getParentFragment();
+        if (fragment == null) {
+            root.start(frg);
+        } else {
+            ((MainFrg) root.getParentFragment()).startBrotherFragment(frg);
+        }
     }
 
     /**
@@ -723,9 +727,12 @@ public final class UIHelper {
 
     /**
      * 商家二级页面
+     * @param id
      */
-    public static void startBusinessDescAct() {
+    public static void startBusinessDescAct(String id, String classifyTitle) {
         Bundle bundle = new Bundle();
+        bundle.putString("id", id);
+        bundle.putString("title", classifyTitle);
         ActivityUtils.startActivity(bundle, BusinessDescAct.class);
     }
 

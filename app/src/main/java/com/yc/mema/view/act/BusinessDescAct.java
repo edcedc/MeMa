@@ -14,6 +14,10 @@ import com.yc.mema.view.OrderDescFrg;
  * Time: 19:02
  */
 public class BusinessDescAct extends BaseActivity {
+
+    private String id;
+    private String title;
+
     @Override
     protected void initPresenter() {
 
@@ -27,13 +31,16 @@ public class BusinessDescAct extends BaseActivity {
 
     @Override
     protected void initParms(Bundle bundle) {
-
+        id = bundle.getString("id");
+        title = bundle.getString("title");
     }
 
     @Override
     protected void initView() {
         BusinessDescFrg frg = BusinessDescFrg.newInstance();
         Bundle bundle = new Bundle();
+        bundle.putString("id", id);
+        bundle.putString("title", title);
         frg.setArguments(bundle);
         if (findFragment(BusinessDescFrg.class) == null) {
             loadRootFragment(R.id.fl_container, frg);

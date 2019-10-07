@@ -35,6 +35,9 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 
 /**
  * 作者：yc on 2018/10/22.
@@ -48,6 +51,11 @@ public class FileSaveUtils {
     private static Notification notification; //下载通知进度提示
     private static NotificationCompat.Builder builder;
     private boolean flag = false; //进度框消失标示 之后发送通知
+
+    private RequestBody toRequestBody(String value) {
+        RequestBody requestBody = RequestBody.create(MediaType.parse("text/plain"), value);
+        return requestBody;
+    }
 
     /**
      *  保存本地指定路径加刷新图库

@@ -655,6 +655,10 @@ public class DataBean implements Serializable {
         return bannerList;
     }
 
+    public void setBannerList(List<DataBean> bannerList) {
+        this.bannerList = bannerList;
+    }
+
     private List<DataBean> discussImgs;
 
     public List<DataBean> getDiscussImgs() {

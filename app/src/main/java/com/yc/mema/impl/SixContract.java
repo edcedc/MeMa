@@ -1,11 +1,8 @@
 package com.yc.mema.impl;
 
-import com.yc.mema.base.BaseFragment;
 import com.yc.mema.base.BasePresenter;
 import com.yc.mema.base.IBaseListView;
-import com.yc.mema.base.IBaseView;
 import com.yc.mema.bean.DataBean;
-import com.yc.mema.weight.WithScrollGridView;
 
 import java.util.List;
 
@@ -34,7 +31,7 @@ public interface SixContract {
 
         public abstract void onGetHomeClassify(String ids);
 
-        public abstract void onRequest(int pagerNumber);
+        public abstract void onRequest(int pagerNumber, int low, int up, int type, String county);
     }
 
 }

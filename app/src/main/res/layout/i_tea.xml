@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="165dp"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:ignore="MissingConstraints"
     android:background="?actionBarItemBackground"
     android:layout_height="wrap_content">
@@ -16,29 +17,29 @@
     <android.support.v7.widget.AppCompatTextView
         android:id="@+id/tv_title"
         android:layout_marginTop="@dimen/px10"
-        app:layout_constraintTop_toBottomOf="@id/iv_img"
         android:textSize="@dimen/size28"
         style="@style/Tv15black" />
 
-    <android.support.v7.widget.AppCompatTextView
-        android:id="@+id/tv_admission"
-        android:layout_marginTop="@dimen/px10"
-        app:layout_constraintTop_toBottomOf="@id/tv_title"
-        android:layout_width="0dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        android:textSize="@dimen/size28"
-        app:layout_constraintRight_toLeftOf="@id/tv_price"
-        android:textColor="@color/red_EC5B44"
-        style="@style/Tv15black" />
+   <LinearLayout
+       android:layout_marginTop="@dimen/px10"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:orientation="horizontal">
 
-    <android.support.v7.widget.AppCompatTextView
-        android:id="@+id/tv_price"
-        android:text="0"
-        android:layout_marginTop="@dimen/px10"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_title"
-        app:layout_constraintLeft_toRightOf="@id/tv_admission"
-        android:textSize="@dimen/size28"
-        style="@style/Tv15gray" />
+       <android.support.v7.widget.AppCompatTextView
+           android:id="@+id/tv_admission"
+           android:textSize="@dimen/size28"
+           android:layout_weight="1"
+           android:textColor="@color/red_EC5B44"
+           style="@style/Tv15black" />
 
-</android.support.constraint.ConstraintLayout>
+       <android.support.v7.widget.AppCompatTextView
+           android:id="@+id/tv_price"
+           android:text="0"
+           android:layout_marginLeft="@dimen/px20"
+           android:textSize="@dimen/size28"
+           style="@style/Tv15gray" />
+
+   </LinearLayout>
+
+</LinearLayout>

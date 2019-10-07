@@ -2,6 +2,7 @@ package com.yc.mema.controller;
 
 import com.blankj.utilcode.util.EncodeUtils;
 import com.blankj.utilcode.util.EncryptUtils;
+import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.StringUtils;
 import com.blankj.utilcode.util.Utils;
 import com.luck.picture.lib.entity.LocalMedia;
@@ -13,6 +14,7 @@ import com.lzy.okrx2.adapter.ObservableBody;
 import com.lzy.okrx2.adapter.ObservableResponse;
 import com.yc.mema.base.TentryBean;
 import com.yc.mema.base.User;
+import com.yc.mema.bean.AddressBean;
 import com.yc.mema.bean.BaseListBean;
 import com.yc.mema.bean.BaseResponseBean;
 import com.yc.mema.bean.DataBean;
@@ -40,9 +42,9 @@ import io.reactivex.schedulers.Schedulers;
 public class CloudApi {
 
     private static final String url =
-            "192.168.1.143";
+//            "192.168.1.143";
 //            "119.23.111.246:8080";
-//            "47.106.179.240";
+            "47.106.179.240";
 
     public static final String SERVLET_URL = "http://" +
             url + ":8080/brithday/";
@@ -979,7 +981,8 @@ public class CloudApi {
     /**
      * 获取福利信息列表
      */
-    public static Observable<Response<BaseResponseBean<BaseListBean<DataBean>>>> welfareGetWelfareList(String county, String search, int itemize, int pageNumber) {
+    public static Observable<Response<BaseResponseBean<BaseListBean<DataBean>>>> welfareGetWelfareList(
+            String county, String search, int itemize, int pageNumber, int low, int up, int type) {
         GetRequest<BaseResponseBean<BaseListBean<DataBean>>> request = OkGo.get(SERVLET_URL + "welfare/getWelfareList");
         if (itemize != 0) {
             request.params("itemize", itemize);
@@ -988,7 +991,12 @@ public class CloudApi {
             request.params("like", search);
         }
         return request
+                .params("type", type)
+                .params("low", low)
+                .params("up", up)
                 .params("ids", county)
+                .params("longitude", AddressBean.getInstance().getLocation())
+                .params("latitude", AddressBean.getInstance().getLatitude())
                 .params("page", pageNumber)
                 .params("size", Constants.pageSize)
                 .converter(new NewsCallback<BaseResponseBean<BaseListBean<DataBean>>>() {

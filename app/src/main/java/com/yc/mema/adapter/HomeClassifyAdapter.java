@@ -46,10 +46,6 @@ public class HomeClassifyAdapter extends BaseRecyclerviewAdapter<DataBean> {
 
         List<DataBean> list = bean.getList();
         if (list != null && list.size() != 0){
-            list.addAll(list);
-            list.addAll(list);
-            list.addAll(list);
-            list.addAll(list);
             viewHolder.recyclerView.setVisibility(View.VISIBLE);
             TeaAdapter adapter = new TeaAdapter(act, list);
             LinearLayoutManager tlayoutManager = new LinearLayoutManager(act);

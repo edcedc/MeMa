@@ -39,6 +39,7 @@ public class ShopSkuAdapter extends BaseRecyclerviewAdapter<DataBean> {
         DataBean bean = listBean.get(position);
         viewHolder.tv_name.setText(bean.getSpecName());
         List<DataBean> list = bean.getSpecValues();
+
         TagAdapter<DataBean> adapter = new TagAdapter<DataBean>(list) {
             @Override
             public View getView(FlowLayout parent, int position, DataBean bean) {

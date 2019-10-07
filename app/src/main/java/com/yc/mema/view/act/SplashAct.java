@@ -13,8 +13,6 @@ import com.yc.mema.view.SplashFrg;
  */
 
 public class SplashAct extends BaseActivity {
-
-
     @Override
     protected void initPresenter() {
 

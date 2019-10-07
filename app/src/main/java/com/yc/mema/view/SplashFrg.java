@@ -1,30 +1,36 @@
 package com.yc.mema.view;
 
 import android.Manifest;
-import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.annotation.NonNull;
 import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
 import android.view.View;
 
+import com.baidu.location.Address;
+import com.baidu.location.BDAbstractLocationListener;
+import com.baidu.location.BDLocation;
+import com.baidu.location.LocationClient;
+import com.baidu.location.LocationClientOption;
+import com.baidu.mapapi.SDKInitializer;
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.StringUtils;
 import com.lzy.okgo.model.Response;
-import com.yanzhenjie.permission.Action;
 import com.yanzhenjie.permission.AndPermission;
 import com.yanzhenjie.permission.Permission;
-import com.yanzhenjie.permission.Setting;
 import com.yc.mema.R;
 import com.yc.mema.base.BasePresenter;
 import com.yc.mema.base.User;
-import com.yc.mema.bean.BaseListBean;
+import com.yc.mema.bean.AddressBean;
 import com.yc.mema.bean.BaseResponseBean;
 import com.yc.mema.bean.DataBean;
 import com.yc.mema.callback.Code;
@@ -49,7 +55,6 @@ import org.json.JSONObject;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.Consumer;
 
 /**
  * 作者：yc on 2018/6/15.
@@ -71,7 +76,10 @@ public class SplashFrg extends BaseFragment<BasePresenter, FSplashBinding> imple
     private final int mHandle_splash = 0;
     private final int mHandle_permission = 1;
 
-    private Activity act;
+    private boolean isPermissionRequested;
+    private SDKReceiver mReceiver;
+    private MyLocationListenner myListener = new MyLocationListenner();
+    private LocationClient mLocClient;
 
     @Override
     public void initPresenter() {
@@ -114,6 +122,31 @@ public class SplashFrg extends BaseFragment<BasePresenter, FSplashBinding> imple
             public void onPageScrollStateChanged(int state) {
             }
         });
+
+        requestPermission();
+        // 注册 SDK 广播监听者
+        IntentFilter iFilter = new IntentFilter();
+        iFilter.addAction(SDKInitializer.SDK_BROADTCAST_ACTION_STRING_PERMISSION_CHECK_OK);
+        iFilter.addAction(SDKInitializer.SDK_BROADTCAST_ACTION_STRING_PERMISSION_CHECK_ERROR);
+        iFilter.addAction(SDKInitializer.SDK_BROADCAST_ACTION_STRING_NETWORK_ERROR);
+        mReceiver = new SDKReceiver();
+        act.registerReceiver(mReceiver, iFilter);
+//        Intent intent = new Intent();
+//        intent.setAction(SDKInitializer.SDK_BROADTCAST_ACTION_STRING_PERMISSION_CHECK_OK);
+//        intent.setAction(SDKInitializer.SDK_BROADTCAST_ACTION_STRING_PERMISSION_CHECK_ERROR);
+//        intent.setAction(SDKInitializer.SDK_BROADCAST_ACTION_STRING_NETWORK_ERROR);
+//        sendBroadcast(intent);
+
+        // 定位初始化
+        mLocClient = new LocationClient(act);
+        mLocClient.registerLocationListener(myListener);
+        LocationClientOption option = new LocationClientOption();
+        option.setOpenGps(true); // 打开gps
+        option.setCoorType("bd09ll"); // 设置坐标类型
+        option.setScanSpan(1000);
+        option.setIsNeedAddress(true);//反编译获得具体位置，只有网络定位才可以
+        mLocClient.setLocOption(option);
+//        mLocClient.start();
     }
 
     private void getDuideList() {
@@ -171,14 +204,6 @@ public class SplashFrg extends BaseFragment<BasePresenter, FSplashBinding> imple
         }
     };
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        if (handler != null) {
-            handler.removeCallbacksAndMessages(null);
-            handler = null;
-        }
-    }
 
     /**
      * 设置权限
@@ -245,14 +270,15 @@ public class SplashFrg extends BaseFragment<BasePresenter, FSplashBinding> imple
      * 权限都成功
      */
     private void setPermissionOk() {
-        String sessionId = ShareSessionIdCache.getInstance(act).getSessionId();
-        String userId = ShareSessionIdCache.getInstance(act).getUserId();
-        if (!StringUtils.isEmpty(sessionId) && !StringUtils.isEmpty(userId)) {
-            info();
-        } else {
-            startNext();
-        }
-        ShareIsLoginCache.getInstance(act).save(true);
+        mLocClient.start();
+//        String sessionId = ShareSessionIdCache.getInstance(act).getSessionId();
+//        String userId = ShareSessionIdCache.getInstance(act).getUserId();
+//        if (!StringUtils.isEmpty(sessionId) && !StringUtils.isEmpty(userId)) {
+//            info();
+//        } else {
+//            startNext();
+//        }
+//        ShareIsLoginCache.getInstance(act).save(true);
     }
 
     private void info(){
@@ -299,5 +325,113 @@ public class SplashFrg extends BaseFragment<BasePresenter, FSplashBinding> imple
     @Override
     public void OnBannerClick(int position) {
 
+    }
+
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (handler != null) {
+            handler.removeCallbacksAndMessages(null);
+            handler = null;
+        }
+        // 取消监听 SDK 广播
+        act.unregisterReceiver(mReceiver);
+    }
+
+    /**
+     * Android6.0之后需要动态申请权限
+     */
+    private void requestPermission() {
+        if (Build.VERSION.SDK_INT >= 23 && !isPermissionRequested) {
+
+            isPermissionRequested = true;
+
+            ArrayList<String> permissionsList = new ArrayList<>();
+
+            String[] permissions = {
+                    Manifest.permission.ACCESS_NETWORK_STATE,
+                    Manifest.permission.INTERNET,
+                    Manifest.permission.ACCESS_COARSE_LOCATION,
+                    Manifest.permission.ACCESS_FINE_LOCATION,
+                    Manifest.permission.CAMERA,
+                    Manifest.permission.READ_EXTERNAL_STORAGE,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE,
+            };
+
+            for (String perm : permissions) {
+                if (PackageManager.PERMISSION_GRANTED != act.checkSelfPermission(perm)) {
+                    permissionsList.add(perm);
+                    // 进入到这里代表没有权限.
+                }
+            }
+
+            if (!permissionsList.isEmpty()) {
+                requestPermissions(permissionsList.toArray(new String[permissionsList.size()]), 0);
+            }
+        }
+    }
+
+    /**
+     * 构造广播监听类，监听 SDK key 验证以及网络异常广播
+     */
+    private class SDKReceiver extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            if (TextUtils.isEmpty(action)) {
+                return;
+            }
+            if (action.equals(SDKInitializer.SDK_BROADTCAST_ACTION_STRING_PERMISSION_CHECK_ERROR)) {
+                // 开放鉴权错误信息描述
+                LogUtils.e("key 验证出错! 错误码 :"
+                        + intent.getIntExtra(SDKInitializer.SDK_BROADTCAST_INTENT_EXTRA_INFO_KEY_ERROR_CODE, 0)
+                        + " ; 错误信息 ："
+                        + intent.getStringExtra(SDKInitializer.SDK_BROADTCAST_INTENT_EXTRA_INFO_KEY_ERROR_MESSAGE));
+            } else if (action.equals(SDKInitializer.SDK_BROADTCAST_ACTION_STRING_PERMISSION_CHECK_OK)) {
+//                showToast("key 验证成功! 功能可以正常使用");
+                LogUtils.e("key 验证成功! 功能可以正常使用");
+
+            } else if (action.equals(SDKInitializer.SDK_BROADCAST_ACTION_STRING_NETWORK_ERROR)) {
+                LogUtils.e("网络出错");
+            }
+        }
+    }
+
+    /**
+     * 定位SDK监听函数
+     */
+    public class MyLocationListenner extends BDAbstractLocationListener {
+
+        @Override
+        public void onReceiveLocation(BDLocation location) {
+            // map view 销毁后不在处理新接收的位置
+            if (location == null) {
+                return;
+            }
+            LogUtils.e(location.getLatitude(), location.getLongitude(),
+                    location.getProvince(),  location.getCity(),
+                    location.getAddrStr());
+            Address address = location.getAddress();
+            AddressBean.getInstance().setLocation(location.getLongitude());
+            AddressBean.getInstance().setLatitude(location.getLatitude());
+            AddressBean.getInstance().setCountry(address.country);
+            AddressBean.getInstance().setProvince(address.province);
+            AddressBean.getInstance().setCity(address.city);
+            AddressBean.getInstance().setDistrict(address.district);
+//            EventBus.getDefault().post(new LocationInEvent());
+            if (address != null){
+                mLocClient.stop();
+
+                String sessionId = ShareSessionIdCache.getInstance(act).getSessionId();
+                String userId = ShareSessionIdCache.getInstance(act).getUserId();
+                if (!StringUtils.isEmpty(sessionId) && !StringUtils.isEmpty(userId)) {
+                    info();
+                } else {
+                    startNext();
+                }
+                ShareIsLoginCache.getInstance(act).save(true);
+            }
+        }
     }
 }

@@ -298,10 +298,10 @@ public abstract class BaseFragment<P extends BasePresenter, VB extends ViewDataB
      * @param refreshLayout
      */
     protected void setRefreshLayoutMode(int listSize, int totalRow, TwinklingRefreshLayout refreshLayout) {
-        if (totalRow == 0){
-            showLoadEmpty();
-            return;
-        }
+//        if (totalRow == 0){
+//            showLoadEmpty();
+//            return;
+//        }
         if (listSize == totalRow) {
             refreshLayout.setEnableLoadmore(false);
         }else {
