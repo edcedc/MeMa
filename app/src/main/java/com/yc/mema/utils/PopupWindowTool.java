@@ -1,39 +1,25 @@
 package com.yc.mema.utils;
 
-import android.app.Dialog;
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.graphics.drawable.ColorDrawable;
-import android.support.v7.widget.AppCompatEditText;
-import android.text.Html;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
-import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
-import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.ScreenUtils;
-import com.blankj.utilcode.util.StringUtils;
-import com.blankj.utilcode.util.ToastUtils;
-import com.google.zxing.WriterException;
 import com.lxj.xpopup.XPopup;
-import com.lxj.xpopup.core.BasePopupView;
-import com.lxj.xpopup.interfaces.OnConfirmListener;
+import com.lxj.xpopup.enums.PopupAnimation;
+import com.lxj.xpopup.enums.PopupPosition;
 import com.lxj.xpopup.interfaces.SimpleCallback;
 import com.yc.mema.R;
-import com.yc.mema.bean.DataBean;
-import com.yc.mema.view.PopupView.ShopPriceScreenView;
+import com.yc.mema.view.PopupView.PShopPriceScreenView;
+import com.yc.mema.view.PopupView.PInviteCodeView;
+import com.yc.mema.view.PopupView.PSortView;
 import com.yc.mema.weight.WPopupWindow;
-import com.zhy.view.flowlayout.FlowLayout;
-import com.zhy.view.flowlayout.TagAdapter;
-import com.zhy.view.flowlayout.TagFlowLayout;
-
-import java.util.List;
 
 /**
  * 作者：yc on 2018/8/23.
@@ -205,7 +191,7 @@ public class PopupWindowTool {
 
 
     public static void showShopPriceScreen(final Context act, View view, final onShopPriceScreenClickListener listener) {
-        ShopPriceScreenView popupView = (ShopPriceScreenView) new XPopup.Builder(act)
+        PShopPriceScreenView popupView = (PShopPriceScreenView) new XPopup.Builder(act)
                 .atView(view)
 //                    .isCenterHorizontal(true)
                 .autoOpenSoftInput(true)
@@ -222,7 +208,7 @@ public class PopupWindowTool {
 //                            popupView = null;
                     }
                 })
-                .asCustom(new ShopPriceScreenView(act)).show();
+                .asCustom(new PShopPriceScreenView(act)).show();
         popupView.setShopPriceScreenListener((di, gao) -> listener.onClick(di, gao));
     }
 
@@ -262,5 +248,31 @@ public class PopupWindowTool {
                 });
     }
 
+    /**
+     *  查看推广码
+     */
+    public static void showCode(Context act){
+        PInviteCodeView customPopup = new PInviteCodeView(act);
+        new XPopup.Builder(act)
+                .popupAnimation(PopupAnimation.values()[0])
+                .autoOpenSoftInput(false)
+                .asCustom(customPopup)
+                .show();
+    }
+
+    /**
+     *  综合排序
+     */
+    public static PSortView showSort(Context act, View view){
+        PSortView customPopup = new PSortView(act);
+        new XPopup.Builder(act)
+                .atView(view)
+                .popupPosition(PopupPosition.Bottom)
+                .popupAnimation(PopupAnimation.values()[0])
+                .autoOpenSoftInput(false)
+                .asCustom(customPopup)
+                .show();
+       return customPopup;
+    }
 
 }

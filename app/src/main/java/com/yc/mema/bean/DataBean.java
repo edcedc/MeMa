@@ -111,7 +111,22 @@ public class DataBean implements Serializable {
     private String receiveTime;//收货时间
     private String expCode;
     private String expressNo;
+    private String distance;
     private String reason;
+    private String latitude;
+    private String longitude;
+
+    public String getDistance() {
+        return distance;
+    }
+
+    public String getLatitude() {
+        return latitude;
+    }
+
+    public String getLongitude() {
+        return longitude;
+    }
 
     public String getClassifyImg() {
         return classifyImg;
@@ -690,6 +705,22 @@ public class DataBean implements Serializable {
     }
 
     private List<DataBean> goodSpuImgs;
+    private List<DataBean> welfareList;
+    private List<DataBean> homeBannerList;
+    private List<DataBean> goodSpuList;
+
+    public List<DataBean> getGoodSpuList() {
+        return goodSpuList;
+    }
+
+    public List<DataBean> getHomeBannerList() {
+        return homeBannerList;
+    }
+
+    public List<DataBean> getWelfareList() {
+        return welfareList;
+    }
+
 
     public List<DataBean> getGoodSpuImgs() {
         return goodSpuImgs;

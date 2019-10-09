@@ -278,7 +278,12 @@
     <string name="mema39" translatable="false">进入我的店铺</string>
     <string name="mema41" translatable="false">很抱歉，您的认证信息中有部分信息未通过审核，\n请重新提交</string>
     <string name="mema42" translatable="false">审核结果会已APP站内消息形式通知，请耐心等候！\n预计审核时间：1~3个工作日</string>
+    <string name="mema43" translatable="false">生成我的推广码</string>
+    <string name="mema45" translatable="false">保存到相册</string>
+    <string name="mema46" translatable="false">我的邀请码</string>
+    <string name="mema44" translatable="false">——广东程诺网络科技有限公司——</string>
     <string name="resubmission" translatable="false">重新提交</string>
     <string name="hot_issues" translatable="false">热门问题</string>
     <string name="problem_issues" translatable="false">常见问题</string>
+    <string name="mema_agent" translatable="false">么马代理</string>
 </resources>

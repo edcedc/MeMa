@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import com.yc.mema.R;
 import com.yc.mema.base.BaseRecyclerviewAdapter;
 import com.yc.mema.bean.DataBean;
+import com.yc.mema.controller.CloudApi;
 import com.yc.mema.controller.UIHelper;
 import com.yc.mema.utils.GlideLoadingUtils;
 
@@ -37,12 +38,12 @@ public class CustomizedAdapter extends BaseRecyclerviewAdapter<DataBean> {
 
         List<DataBean> welfareImgs = bean.getWelfareImgs();
         if (welfareImgs != null && welfareImgs.size() != 0){
-            GlideLoadingUtils.load(act, welfareImgs.get(0).getAttachId(), viewHolder.iv_img);
+            GlideLoadingUtils.load(act, CloudApi.SERVLET_IMG_URL + welfareImgs.get(0).getAttachId(), viewHolder.iv_img);
         }
         viewHolder.tv_title.setText(bean.getWalTitle());
         viewHolder.tv_content.setText("100" +
                 "元通用代金券");
-        viewHolder.tv_location.setText("12" +
+        viewHolder.tv_location.setText(bean.getDistance() +
                 "km");
         viewHolder.ratingbar.setRating((float) 2);
         viewHolder.itemView.setOnClickListener(view -> UIHelper.startCustomizedDescAct(bean));

@@ -138,14 +138,14 @@ public class CloudApi {
      * 更新/保存用户
      */
     public static Observable<Response<BaseResponseBean<DataBean>>> userSaveUser(String head, String nickName, String birthday, String sex, String parentId, String mema, String updataMema) {
-//        PostRequest<BaseResponseBean<DataBean>> post = OkGo.post(SERVLET_URL + "user/saveUser");
-        PostRequest<BaseResponseBean<DataBean>> post = OkGo.post("http://jj123.nat300.top/adv_chain/api/user/update");
+        PostRequest<BaseResponseBean<DataBean>> post = OkGo.post(SERVLET_URL + "user/saveUser");
+//        PostRequest<BaseResponseBean<DataBean>> post = OkGo.post("http://jj123.nat300.top/adv_chain/api/user/update");
         if (!StringUtils.isEmpty(head)) {
             post.params("head", new File(head));
-            post.params("sessionId", "41966fc3bbd94618accb98e23d386877");
+//            post.params("sessionId", "41966fc3bbd94618accb98e23d386877");
         }
         return post
-//                .headers("token", ShareSessionIdCache.getInstance(Utils.getApp()).getSessionId())
+                .headers("token", ShareSessionIdCache.getInstance(Utils.getApp()).getSessionId())
                 .params("userId", User.getInstance().getUserId())
                 .params("nickName", nickName)
                 .params("birthday", birthday)
@@ -992,8 +992,8 @@ public class CloudApi {
         }
         return request
                 .params("type", type)
-                .params("low", low)
-                .params("up", up)
+//                .params("low", low)
+//                .params("up", up)
                 .params("ids", county)
                 .params("longitude", AddressBean.getInstance().getLocation())
                 .params("latitude", AddressBean.getInstance().getLatitude())
@@ -1360,12 +1360,12 @@ public class CloudApi {
     /**
      * 获取首页信息
      */
-    public static Observable<Response<BaseResponseBean<List<DataBean>>>> welfareGetHomeClassify(String ids) {
-        return OkGo.<BaseResponseBean<List<DataBean>>>get(SERVLET_URL + "welfare/getHomeClassify")
+    public static Observable<Response<BaseResponseBean<DataBean>>> welfareGetHomeClassify(String ids) {
+        return OkGo.<BaseResponseBean<DataBean>>get(SERVLET_URL + "welfare/getHomeClassify")
                 .params("ids", ids)
-                .converter(new NewsCallback<BaseResponseBean<List<DataBean>>>() {
+                .converter(new NewsCallback<BaseResponseBean<DataBean>>() {
                     @Override
-                    public void onSuccess(Response<BaseResponseBean<List<DataBean>>> response) {
+                    public void onSuccess(Response<BaseResponseBean<DataBean>> response) {
                     }
                 })
                 .adapt(new ObservableResponse<>())

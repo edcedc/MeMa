@@ -45,11 +45,11 @@ public class ShopCategoryAdapter extends BaseRecyclerviewAdapter<DataBean> {
         viewHolder.tv_title.setText(bean.getCategoryName());
 
         double price = bean.getPrice();
-        int sales = bean.getSales();
+        String sales = bean.getSales() + "";
         SpannableString hText = new SpannableString("¥" + price + "    已售" + sales + "件");
         hText.setSpan(new ForegroundColorSpan(Color.parseColor("#EC5B44")), 0, String.valueOf(price).length() + 1, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
         hText.setSpan(new AbsoluteSizeSpan(10, true), 0, 1, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
-        hText.setSpan(new AbsoluteSizeSpan(10, true), hText.length() - (1 + String.valueOf(sales).length() + 5), hText.length(), Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+        hText.setSpan(new AbsoluteSizeSpan(10, true), hText.length() - (1 + sales.length() + 5), hText.length(), Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
         viewHolder.tv_content.setText(hText);
 
         viewHolder.itemView.setOnClickListener(view -> UIHelper.startShopDescAct(bean.getGoodId()));

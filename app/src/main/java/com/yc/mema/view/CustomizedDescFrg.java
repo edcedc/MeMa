@@ -1,6 +1,8 @@
 package com.yc.mema.view;
 
+import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.AppBarLayout;
@@ -46,6 +48,8 @@ import java.util.List;
 public class CustomizedDescFrg extends BaseFragment<CustomizedPresenter, FCustomizedBinding> implements CustomizedContract.View, View.OnClickListener ,OnBannerListener {
 
     private DataBean bean;
+    private String latitude;
+    private String longitude;
 
     public static CustomizedDescFrg newInstance() {
         Bundle args = new Bundle();
@@ -70,6 +74,8 @@ public class CustomizedDescFrg extends BaseFragment<CustomizedPresenter, FCustom
     @Override
     protected void initParms(Bundle bundle) {
         bean = new Gson().fromJson(bundle.getString("bean"), DataBean.class);
+        latitude = bean.getLatitude();
+        longitude = bean.getLongitude();
     }
 
     @Override
@@ -81,13 +87,14 @@ public class CustomizedDescFrg extends BaseFragment<CustomizedPresenter, FCustom
     protected void initView(View view) {
         setSofia(false);
         mB.fyClose.setOnClickListener(this);
+        mB.tvAddress.setOnClickListener(this);
         mB.toolbarLayout.setTitleEnabled(false);
         mB.toolbarLayout.setExpandedTitleGravity(Gravity.CENTER);//设置展开后标题的位置
         mB.toolbarLayout.setCollapsedTitleGravity(Gravity.CENTER);//设置收缩后标题的位置
         mB.toolbarLayout.setExpandedTitleColor(Color.WHITE);//设置展开后标题的颜色
         mB.toolbarLayout.setCollapsedTitleTextColor(Color.WHITE);//设置收缩后标题的颜色
        if (cakeAdapter == null){
-            cakeAdapter = new TeaAdapter(act, listCakeBean);
+            cakeAdapter = new TeaAdapter(act, listCakeBean, 1);
         }
         mB.rvHot.setAdapter(cakeAdapter);
         LinearLayoutManager slayoutManager = new LinearLayoutManager(act);
@@ -184,6 +191,18 @@ public class CustomizedDescFrg extends BaseFragment<CustomizedPresenter, FCustom
             case R.id.fy_close:
                 act.finish();
                 break;
+            case R.id.tv_address:
+                Intent i1 = new Intent();
+                // 展示地图
+                i1.setData(Uri.parse("baidumap://map/marker?location=" +
+                        latitude +
+                        "," +
+                        longitude +
+                        "&title=" + mB.tvTitle.getText().toString() +
+                        "&content= " + mB.tvAddress.getText().toString() +
+                        "&traffic=on&src=andr.baidu.openAPIdemo"));
+                startActivity(i1);
+                break;
         }
     }
 
@@ -241,7 +260,7 @@ public class CustomizedDescFrg extends BaseFragment<CustomizedPresenter, FCustom
 
     @Override
     public void OnBannerClick(int position) {
-        DataBean bean = listBannerBean.get(position);
+//        DataBean bean = listBannerBean.get(position);
 
     }
 }

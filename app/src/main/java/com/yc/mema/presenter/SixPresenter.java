@@ -96,19 +96,19 @@ public class SixPresenter extends SixContract.Presenter{
         CloudApi.welfareGetHomeClassify(null)
                 .doOnSubscribe(disposable -> {})
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<Response<BaseResponseBean<List<DataBean>>>>() {
+                .subscribe(new Observer<Response<BaseResponseBean<DataBean>>>() {
                     @Override
                     public void onSubscribe(Disposable d) {
                         mView.addDisposable(d);
                     }
 
                     @Override
-                    public void onNext(Response<BaseResponseBean<List<DataBean>>> baseResponseBeanResponse) {
+                    public void onNext(Response<BaseResponseBean<DataBean>> baseResponseBeanResponse) {
                         if (baseResponseBeanResponse.body().code == Code.CODE_SUCCESS){
-                            List<DataBean> list = baseResponseBeanResponse.body().result;
-                            if (list != null){
-                                mView.setHomeClassify(list);
-                            }
+                            DataBean result = baseResponseBeanResponse.body().result;
+                            mView.setFree(result.getWelfareList());
+                            mView.setBannerAdv(result.getHomeBannerList());
+                            mView.setCake(result.getGoodSpuList());
                         }
                     }
 

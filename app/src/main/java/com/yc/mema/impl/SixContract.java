@@ -18,7 +18,9 @@ public interface SixContract {
 
         void setBanner(List<DataBean> list);
 
-        void setHomeClassify(List<DataBean> list);
+        void setFree(List<DataBean> list);
+        void setCake(List<DataBean> list);
+        void setBannerAdv(List<DataBean> list);
 
         void setLabel(List<DataBean> list);
     }

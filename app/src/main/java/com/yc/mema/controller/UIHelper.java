@@ -23,6 +23,7 @@ import com.yc.mema.view.CollectionFrg;
 import com.yc.mema.view.ComplaintFrg;
 import com.yc.mema.view.EditAddressFrg;
 import com.yc.mema.view.FiveFrg;
+import com.yc.mema.view.MemaAgentFrg;
 import com.yc.mema.view.ShopCategoryFrg;
 import com.yc.mema.view.TentryChildOneFrg;
 import com.yc.mema.view.TentryFrg;
@@ -811,4 +812,23 @@ public final class UIHelper {
             ((TentryFrg) root.getParentFragment()).startBrotherFragment(frg);
         }
     }
+
+    /**
+     *  么马代理
+     * @param root
+     */
+    public static void startMemaAgentFrg(BaseFragment root) {
+        MemaAgentFrg frg = new MemaAgentFrg();
+        Bundle bundle = new Bundle();
+        frg.setArguments(bundle);
+        Fragment fragment = root.getParentFragment();
+        if (fragment == null) {
+            root.start(frg);
+        } else {
+            ((MainFrg) root.getParentFragment()).startBrotherFragment(frg);
+        }
+    }
+
+
+
 }

@@ -17,9 +17,9 @@ import com.yc.mema.R;
  * Time: 17:45
  *  商品筛选价格
  */
-public class ShopPriceScreenView extends PartShadowPopupView {
+public class PShopPriceScreenView extends PartShadowPopupView {
 
-    public ShopPriceScreenView(@NonNull Context context) {
+    public PShopPriceScreenView(@NonNull Context context) {
         super(context);
     }
 

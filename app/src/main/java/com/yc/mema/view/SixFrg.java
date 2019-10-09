@@ -1,10 +1,14 @@
 package com.yc.mema.view;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
+import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
 
+import com.blankj.utilcode.util.LogUtils;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 import com.yc.mema.R;
@@ -22,6 +26,7 @@ import com.yc.mema.impl.SixContract;
 import com.yc.mema.presenter.SixPresenter;
 import com.yc.mema.utils.OneGlideImageLoader;
 import com.yc.mema.utils.PopupWindowTool;
+import com.yc.mema.view.PopupView.PSortView;
 import com.yc.mema.weight.LinearDividerItemDecoration;
 import com.youth.banner.listener.OnBannerListener;
 import com.youth.banner.transformer.DefaultTransformer;
@@ -52,6 +57,7 @@ public class SixFrg extends BaseFragment<SixPresenter, FSixBinding> implements S
     }
 
     private List<DataBean> listBannerBean = new ArrayList<>();
+    private List<DataBean> listBannerAdvBean = new ArrayList<>();
 
     private List<DataBean> listTeaBean = new ArrayList<>();
     private TeaAdapter teaAdapter;
@@ -66,7 +72,7 @@ public class SixFrg extends BaseFragment<SixPresenter, FSixBinding> implements S
     private ShopLabelAdapter labelAdapter;
     private List<DataBean> listLabelBean = new ArrayList<>();
 
-    private int type = 1;
+    private int type;
     private int low;
     private int up;
     private String county;
@@ -103,7 +109,7 @@ public class SixFrg extends BaseFragment<SixPresenter, FSixBinding> implements S
         mB.gridView.setAdapter(labelAdapter);
         mB.gridView.setOnItemClickListener((adapterView, view1, i, l) -> {
             DataBean bean = listLabelBean.get(i);
-            switch (i){
+            switch (i) {
                 case 4:
                     UIHelper.startShopAct();
                     break;
@@ -113,22 +119,44 @@ public class SixFrg extends BaseFragment<SixPresenter, FSixBinding> implements S
             }
         });
 
-        if (classifyAdapter == null){
-            classifyAdapter = new HomeClassifyAdapter(act, listHomeBean);
-        }
-        mB.rvDesc.setAdapter(classifyAdapter);
-        setRecyclerViewType(mB.rvDesc);
+//        if (classifyAdapter == null) {
+//            classifyAdapter = new HomeClassifyAdapter(act, listHomeBean);
+//        }
+//        mB.rvDesc.setAdapter(classifyAdapter);
+//        setRecyclerViewType(mB.rvDesc);
 //        mB.rvDesc.addItemDecoration(new LinearDividerItemDecoration(act, DividerItemDecoration.VERTICAL,  2));
+
+
+        if (teaAdapter == null) {
+            teaAdapter = new TeaAdapter(act, listTeaBean, 1);
+        }
+        mB.rvTea.setAdapter(teaAdapter);
+        LinearLayoutManager tlayoutManager = new LinearLayoutManager(act);
+        tlayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+        mB.rvTea.setLayoutManager(tlayoutManager);
+        mB.rvTea.setHasFixedSize(true);
+        mB.rvTea.setItemAnimator(new DefaultItemAnimator());
+        mB.rvTea.addItemDecoration(new LinearDividerItemDecoration(act, DividerItemDecoration.HORIZONTAL, 40, Color.parseColor("#ffffff")));
+
+        if (cakeAdapter == null) {
+            cakeAdapter = new TeaAdapter(act, listCakeBean, 2);
+        }
+        mB.rvCake.setAdapter(cakeAdapter);
+        LinearLayoutManager slayoutManager = new LinearLayoutManager(act);
+        slayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+        mB.rvCake.setLayoutManager(slayoutManager);
+        mB.rvCake.setHasFixedSize(true);
+        mB.rvCake.setItemAnimator(new DefaultItemAnimator());
+        mB.rvCake.addItemDecoration(new LinearDividerItemDecoration(act, DividerItemDecoration.HORIZONTAL, 40, Color.parseColor("#ffffff")));
+
+
 
         if (adapter == null) {
             adapter = new CustomizedAdapter(act, listBean);
         }
         mB.recyclerView.setAdapter(adapter);
         setRecyclerViewType(mB.recyclerView);
-        mB.recyclerView.addItemDecoration(new LinearDividerItemDecoration(act, DividerItemDecoration.VERTICAL,  2));
-
-        DataBean bean = new DataBean();
-        listBean.add(bean);
+        mB.recyclerView.addItemDecoration(new LinearDividerItemDecoration(act, DividerItemDecoration.VERTICAL, 2));
 
         showLoadDataing();
         mPresenter.onBanner();
@@ -143,6 +171,7 @@ public class SixFrg extends BaseFragment<SixPresenter, FSixBinding> implements S
 //                mPresenter.onRequest(pagerNumber = 1);
 //                mB.refreshLayout.setEnableRefresh(false);
             }
+
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
                 mPresenter.onRequest(pagerNumber += 1, low, up, type, county);
@@ -162,9 +191,25 @@ public class SixFrg extends BaseFragment<SixPresenter, FSixBinding> implements S
     }
 
     @Override
-    public void setHomeClassify(List<DataBean> list) {
-        listHomeBean.addAll(list);
-        classifyAdapter.notifyDataSetChanged();
+    public void setFree(List<DataBean> list) {
+        listTeaBean.addAll(list);
+        teaAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void setCake(List<DataBean> list) {
+        listCakeBean.addAll(list);
+        cakeAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void setBannerAdv(List<DataBean> list) {
+        listBannerAdvBean.addAll(list);
+        mB.bannerAdv.setImages(listBannerBean)
+                .setImageLoader(new OneGlideImageLoader())
+                .setOnBannerListener(this)
+                .setBannerAnimation(DefaultTransformer.class)
+                .start();
     }
 
     @Override
@@ -178,7 +223,7 @@ public class SixFrg extends BaseFragment<SixPresenter, FSixBinding> implements S
 //        super.setRefreshLayoutMode(listBean.size(), totalRow, mB.refreshLayout);
         if (listBean.size() == totalRow) {
             mB.refreshLayout.setEnableLoadMore(false);
-        }else {
+        } else {
             mB.refreshLayout.setEnableLoadMore(true);
         }
     }
@@ -213,7 +258,12 @@ public class SixFrg extends BaseFragment<SixPresenter, FSixBinding> implements S
                 UIHelper.startAddressAct(AddressInEvent.LIWU);
                 break;
             case R.id.tv_zh:
-                setLabel(1);
+//                setLabel(1);
+                PopupWindowTool.showSort(act, mB.tvZh).setOnClickListener((text, type) -> {
+                    LogUtils.e(text, type);
+                    mB.tvZh.setText(text);
+                    mPresenter.onRequest(pagerNumber = 1, low, up, type, county);
+                });
                 break;
             case R.id.tv_distance:
                 setLabel(2);
@@ -235,8 +285,8 @@ public class SixFrg extends BaseFragment<SixPresenter, FSixBinding> implements S
     }
 
     @Subscribe
-    public void onMainAddressInEvent(AddressInEvent event){
-        if (event.type != AddressInEvent.LIWU)return;
+    public void onMainAddressInEvent(AddressInEvent event) {
+        if (event.type != AddressInEvent.LIWU) return;
         county = AddressBean.getInstance().getCity();
         mB.tvLocation.setText(AddressBean.getInstance().getCity());
         mPresenter.onRequest(pagerNumber = 1, 0, 0, 1, county);
@@ -249,10 +299,10 @@ public class SixFrg extends BaseFragment<SixPresenter, FSixBinding> implements S
         EventBus.getDefault().unregister(this);
     }
 
-    private void setLabel(int type){
-        if (this.type == type)return;
+    private void setLabel(int type) {
+        if (this.type == type) return;
         this.type = type;
-        switch (type){
+        switch (type) {
             case 1://综合排序
                 mB.tvZh.setTextColor(act.getResources().getColor(R.color.red_F67690));
                 mB.tvDistance.setTextColor(act.getResources().getColor(R.color.black_333333));

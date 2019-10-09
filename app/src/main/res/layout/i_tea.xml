@@ -10,6 +10,7 @@
 
     <com.yc.mema.weight.RoundImageView
         android:id="@+id/iv_img"
+        android:scaleType="fitXY"
         android:src="@drawable/no_banner"
         android:layout_width="match_parent"
         android:layout_height="120dp"/>
@@ -30,13 +31,13 @@
            android:id="@+id/tv_admission"
            android:textSize="@dimen/size28"
            android:layout_weight="1"
+           android:layout_marginRight="@dimen/px20"
            android:textColor="@color/red_EC5B44"
            style="@style/Tv15black" />
 
        <android.support.v7.widget.AppCompatTextView
            android:id="@+id/tv_price"
            android:text="0"
-           android:layout_marginLeft="@dimen/px20"
            android:textSize="@dimen/size28"
            style="@style/Tv15gray" />
 

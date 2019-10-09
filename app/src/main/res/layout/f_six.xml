@@ -95,28 +95,100 @@
 
                     <com.yc.mema.weight.WithScrollGridView
                         android:id="@+id/gridView"
+                        android:layout_margin="@dimen/px40"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/px30"
                         android:numColumns="5"
                         app:layout_constraintTop_toBottomOf="@id/banner" />
 
+                    <android.support.v7.widget.AppCompatTextView
+                        android:id="@+id/tv_free_more"
+                        android:layout_marginTop="@dimen/px40"
+                        style="@style/Tv12gray"
+                        android:padding="@dimen/px30"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/gridView" />
+
+                    <android.support.v7.widget.AppCompatTextView
+                        style="@style/Tv15black"
+                        android:padding="@dimen/px30"
+                        android:text="@string/experience"
+                        android:textSize="@dimen/size32"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="@id/tv_free_more"
+                        app:layout_constraintTop_toTopOf="@id/tv_free_more" />
+
                     <android.support.v7.widget.RecyclerView
-                        android:id="@+id/rv_desc"
-                        app:layout_constraintTop_toBottomOf="@id/gridView"
+                        android:id="@+id/rv_tea"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        android:layout_marginLeft="@dimen/px30"
+                        android:layout_marginRight="@dimen/px30"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:nestedScrollingEnabled="false"
-                        android:overScrollMode="never" />
+                        android:overScrollMode="never"
+                        app:layout_constraintTop_toBottomOf="@id/tv_free_more" />
+
+                    <com.youth.banner.Banner
+                        app:layout_constraintTop_toBottomOf="@id/rv_tea"
+                        android:id="@+id/banner_adv"
+                        android:layout_marginTop="@dimen/px70"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/px200"
+                        android:layout_marginLeft="@dimen/px30"
+                        android:layout_marginRight="@dimen/px30"
+                        app:image_scale_type="fit_xy"
+                        app:indicator_drawable_selected="@color/red_F67690"
+                        app:indicator_drawable_unselected="@android:color/white"
+                        app:indicator_height="4dp"
+                        app:indicator_margin="4dp"
+                        app:indicator_width="20dp"
+                        app:is_auto_play="true"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent" />
+
+                    <android.support.v7.widget.AppCompatTextView
+                        style="@style/Tv15black"
+                        android:padding="@dimen/px30"
+                        android:text="@string/cake_shop"
+                        android:textSize="@dimen/size32"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="@id/tv_tea_more"
+                        app:layout_constraintTop_toTopOf="@id/tv_tea_more" />
+
+                    <android.support.v7.widget.AppCompatTextView
+                        android:id="@+id/tv_tea_more"
+                        style="@style/Tv12gray"
+                        android:padding="@dimen/px30"
+                        android:layout_marginTop="@dimen/px40"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/banner_adv" />
+
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/rv_cake"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        android:layout_marginLeft="@dimen/px30"
+                        android:layout_marginRight="@dimen/px30"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:nestedScrollingEnabled="false"
+                        android:overScrollMode="never"
+                        app:layout_constraintTop_toBottomOf="@id/tv_tea_more" />
 
                     <android.support.v7.widget.AppCompatTextView
                         style="@style/Tv15black"
                         android:layout_weight="1"
+                        android:layout_marginTop="@dimen/px40"
                         android:padding="@dimen/px30"
                         android:text="@string/customized"
                         android:textSize="@dimen/size32"
                         android:textStyle="bold"
-                        app:layout_constraintTop_toBottomOf="@id/rv_desc" />
+                        app:layout_constraintTop_toBottomOf="@id/rv_cake" />
 
                 </android.support.constraint.ConstraintLayout>
 
@@ -130,7 +202,6 @@
                     <android.support.v7.widget.AppCompatTextView
                         android:id="@+id/tv_zh"
                         style="@style/Tv12black"
-                        android:drawableRight="@mipmap/icon_arrow_down_black"
                         android:padding="@dimen/px30"
                         android:text="@string/sorting" />
 
@@ -154,6 +225,7 @@
                     <android.support.v7.widget.AppCompatTextView
                         android:id="@+id/tv_screen"
                         style="@style/Tv12black"
+                        android:visibility="gone"
                         android:drawableRight="@mipmap/icon_filter"
                         android:drawablePadding="@dimen/px10"
                         android:padding="@dimen/px30"

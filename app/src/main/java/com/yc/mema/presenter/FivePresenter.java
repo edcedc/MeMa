@@ -86,7 +86,8 @@ public class FivePresenter extends FiveContract.Presenter{
                                     showToast("你已提交申请 正在审核");
                                     break;
                                 case 2:
-                                    showToast("你已成为代理人");
+//                                    showToast("你已成为代理人");
+                                    UIHelper.startMemaAgentFrg(fiveFrg);
                                     break;
                             }
                         }
