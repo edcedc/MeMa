@@ -36,18 +36,44 @@ public class CustomizedPresenter extends CustomizedContract.Presenter{
 
     @Override
     public void onHot() {
-        List<DataBean> list = new ArrayList<>();
-        for (int i =0;i<5;i++){
-            DataBean bean = new DataBean();
-            bean.setImage("https://wx3.sinaimg.cn/mw690/78a9167dgy1g6vqt27xilj212c0hsdp6.jpg");
-            list.add(bean);
-        }
-        mView.setHot(list);
+        CloudApi.welfareGetWelfareList(null, null, 0, 1, 0, 0, 1)
+                .doOnSubscribe(disposable -> {})
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<Response<BaseResponseBean<BaseListBean<DataBean>>>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                        mView.addDisposable(d);
+                    }
+
+                    @Override
+                    public void onNext(Response<BaseResponseBean<BaseListBean<DataBean>>> baseResponseBeanResponse) {
+                        if (baseResponseBeanResponse.body().code == Code.CODE_SUCCESS) {
+                            BaseListBean<DataBean> data = baseResponseBeanResponse.body().result;
+                            if (data != null) {
+                                List<DataBean> list = data.getList();
+                                if (list != null) {
+                                    mView.setHot(list);
+                                }
+                                mView.setRefreshLayoutMode(data.getTotalCount());
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        mView.onError(e);
+                    }
+
+                    @Override
+                    public void onComplete() {
+                        mView.hideLoading();
+                    }
+                });
     }
 
     @Override
-    public void onRequest(int pagerNumber) {
-        CloudApi.welfareGetWelfareList(null, null, 0, pagerNumber, 0, 0, 0)
+    public void onRequest(int pagerNumber, int type) {
+        CloudApi.welfareGetWelfareList(null, null, 0, pagerNumber, 0, 0, type)
                 .doOnSubscribe(disposable -> {})
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<Response<BaseResponseBean<BaseListBean<DataBean>>>>() {

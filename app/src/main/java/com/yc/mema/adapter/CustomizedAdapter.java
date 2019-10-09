@@ -40,12 +40,13 @@ public class CustomizedAdapter extends BaseRecyclerviewAdapter<DataBean> {
         if (welfareImgs != null && welfareImgs.size() != 0){
             GlideLoadingUtils.load(act, CloudApi.SERVLET_IMG_URL + welfareImgs.get(0).getAttachId(), viewHolder.iv_img);
         }
+        viewHolder.tv_hui.setVisibility(bean.getFree() == 0 ? View.GONE : View.VISIBLE);
         viewHolder.tv_title.setText(bean.getWalTitle());
         viewHolder.tv_content.setText("100" +
                 "元通用代金券");
         viewHolder.tv_location.setText(bean.getDistance() +
                 "km");
-        viewHolder.ratingbar.setRating((float) 2);
+        viewHolder.ratingbar.setRating((float) bean.getScore());
         viewHolder.itemView.setOnClickListener(view -> UIHelper.startCustomizedDescAct(bean));
     }
 

@@ -31,6 +31,7 @@ import com.yc.mema.databinding.FCustomizedBinding;
 import com.yc.mema.impl.CustomizedContract;
 import com.yc.mema.presenter.CustomizedPresenter;
 import com.yc.mema.utils.OneGlideImageLoader;
+import com.yc.mema.utils.PopupWindowTool;
 import com.yc.mema.weight.LinearDividerItemDecoration;
 import com.youth.banner.BannerConfig;
 import com.youth.banner.listener.OnBannerListener;
@@ -59,6 +60,7 @@ public class CustomizedDescFrg extends BaseFragment<CustomizedPresenter, FCustom
     }
 
     private List<DataBean> listBannerBean = new ArrayList<>();
+    private int type;
 
     private List<DataBean> listCakeBean = new ArrayList<>();
     private TeaAdapter cakeAdapter;
@@ -88,6 +90,10 @@ public class CustomizedDescFrg extends BaseFragment<CustomizedPresenter, FCustom
         setSofia(false);
         mB.fyClose.setOnClickListener(this);
         mB.tvAddress.setOnClickListener(this);
+        mB.tvZh.setOnClickListener(this);
+        mB.tvDistance.setOnClickListener(this);
+        mB.tvSales.setOnClickListener(this);
+        mB.tvScreen.setOnClickListener(this);
         mB.toolbarLayout.setTitleEnabled(false);
         mB.toolbarLayout.setExpandedTitleGravity(Gravity.CENTER);//设置展开后标题的位置
         mB.toolbarLayout.setCollapsedTitleGravity(Gravity.CENTER);//设置收缩后标题的位置
@@ -113,7 +119,7 @@ public class CustomizedDescFrg extends BaseFragment<CustomizedPresenter, FCustom
 
         mB.tvTitle.setText(bean.getWalTitle());
         mB.ratingbar.setRating(4);
-        mB.tvNum.setText("100" +
+        mB.tvNum.setText(bean.getPrice() +
                 "/人");
         mB.tvTime.setText(bean.getBusinessTime());
         mB.tvPhone.setText(bean.getIphone());
@@ -132,7 +138,7 @@ public class CustomizedDescFrg extends BaseFragment<CustomizedPresenter, FCustom
 //        mB.refreshLayout.setPureScrollModeOn();
         mPresenter.onDesc();
         mPresenter.onHot();
-        mPresenter.onRequest(pagerNumber = 1);
+        mPresenter.onRequest(pagerNumber = 1, type);
         mB.refreshLayout.setEnableRefresh(false);
         mB.refreshLayout.setOnLoadMoreListener(new OnRefreshLoadMoreListener() {
             @Override
@@ -142,9 +148,10 @@ public class CustomizedDescFrg extends BaseFragment<CustomizedPresenter, FCustom
             }
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-                mPresenter.onRequest(pagerNumber += 1);
+                mPresenter.onRequest(pagerNumber += 1, type);
             }
         });
+        setLabel(1);
     }
 
     /**
@@ -202,6 +209,21 @@ public class CustomizedDescFrg extends BaseFragment<CustomizedPresenter, FCustom
                         "&content= " + mB.tvAddress.getText().toString() +
                         "&traffic=on&src=andr.baidu.openAPIdemo"));
                 startActivity(i1);
+                break;
+            case R.id.tv_zh:
+//                setLabel(1);
+                PopupWindowTool.showSort(act, mB.tvZh).setOnClickListener((text, type) -> {
+                    LogUtils.e(text, type);
+                    mB.tvZh.setText(text);
+                    mPresenter.onRequest(pagerNumber = 1, type);
+                    setLabel(1);
+                });
+                break;
+            case R.id.tv_distance:
+                setLabel(2);
+                break;
+            case R.id.tv_sales:
+                setLabel(3);
                 break;
         }
     }
@@ -263,4 +285,28 @@ public class CustomizedDescFrg extends BaseFragment<CustomizedPresenter, FCustom
 //        DataBean bean = listBannerBean.get(position);
 
     }
+
+    private void setLabel(int type) {
+        if (this.type == type) return;
+        this.type = type;
+        switch (type) {
+            case 1://综合排序
+                mB.tvZh.setTextColor(act.getResources().getColor(R.color.red_F67690));
+                mB.tvDistance.setTextColor(act.getResources().getColor(R.color.black_333333));
+                mB.tvSales.setTextColor(act.getResources().getColor(R.color.black_333333));
+                break;
+            case 2://距离
+                mB.tvZh.setTextColor(act.getResources().getColor(R.color.black_333333));
+                mB.tvDistance.setTextColor(act.getResources().getColor(R.color.red_F67690));
+                mB.tvSales.setTextColor(act.getResources().getColor(R.color.black_333333));
+                break;
+            case 3://销量最高
+                mB.tvZh.setTextColor(act.getResources().getColor(R.color.black_333333));
+                mB.tvDistance.setTextColor(act.getResources().getColor(R.color.black_333333));
+                mB.tvSales.setTextColor(act.getResources().getColor(R.color.red_F67690));
+                break;
+        }
+        mPresenter.onRequest(pagerNumber = 1, type);
+    }
+
 }

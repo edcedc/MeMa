@@ -115,6 +115,16 @@ public class DataBean implements Serializable {
     private String reason;
     private String latitude;
     private String longitude;
+    private double score;
+    private int free;
+
+    public int getFree() {
+        return free;
+    }
+
+    public double getScore() {
+        return score;
+    }
 
     public String getDistance() {
         return distance;

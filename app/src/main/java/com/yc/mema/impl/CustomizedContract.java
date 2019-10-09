@@ -30,7 +30,7 @@ public interface CustomizedContract {
 
         public abstract void onHot();
 
-        public abstract void onRequest(int pagerNumber);
+        public abstract void onRequest(int pagerNumber, int type);
 
     }
 

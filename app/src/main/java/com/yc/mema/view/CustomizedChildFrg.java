@@ -55,7 +55,7 @@ public class CustomizedChildFrg extends BaseFragment<CustomizedPresenter, FChild
         mB.recyclerView.addItemDecoration(new LinearDividerItemDecoration(act, DividerItemDecoration.VERTICAL,  2));
 
         showLoadDataing();
-        mPresenter.onRequest(pagerNumber = 1);
+        mPresenter.onRequest(pagerNumber = 1, 0);
        /* mB.refreshLayout.setEnableRefresh(false);
         setRefreshLayout(mB.refreshLayout, new RefreshListenerAdapter() {
             @Override
