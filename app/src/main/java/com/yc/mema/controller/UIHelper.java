@@ -30,6 +30,7 @@ import com.yc.mema.view.TentryFrg;
 import com.yc.mema.view.TentryHelpFrg;
 import com.yc.mema.view.act.AddressAct;
 import com.yc.mema.view.act.BusinessDescAct;
+import com.yc.mema.view.act.BusinessGiftAct;
 import com.yc.mema.view.act.CustomizedDescAct;
 import com.yc.mema.view.act.EvaluateAct;
 import com.yc.mema.view.ForgetFrg;
@@ -435,13 +436,20 @@ public final class UIHelper {
 
     /**
      * 礼包 商家 福利
-     *
-     * @param welId
      */
     public static void startGiftAct(String welId) {
         Bundle bundle = new Bundle();
         bundle.putString("id", welId);
         ActivityUtils.startActivity(bundle, GiftAct.class);
+    }
+
+    /**
+     * 礼包 商家 福利2
+     */
+    public static void startBusinessGiftAct(DataBean bean) {
+        Bundle bundle = new Bundle();
+        bundle.putString("bean", new Gson().toJson(bean));
+        ActivityUtils.startActivity(bundle, BusinessGiftAct.class);
     }
 
     /**

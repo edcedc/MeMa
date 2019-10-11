@@ -239,12 +239,13 @@
     <string name="name1" translatable="false">姓名</string>
     <string name="name2" translatable="false">请输入姓名</string>
     <string name="phone" translatable="false">手机号</string>
+    <string name="high" translatable="false">好评</string>
     <string name="qualifications" translatable="false">提交资质</string>
     <string name="audit" translatable="false">资料审核</string>
     <string name="operator_information" translatable="false">经营者信息</string>
     <string name="bank_info" translatable="false">银行卡信息</string>
     <string name="operator_id" translatable="false">经营者身份证</string>
-    <string name="operator_num" translatable="false">经营者注册号/信用代码</string>
+    <string name="operator_num" translatable="false">注册号/信用代码</string>
     <string name="opening_bank" translatable="false">开户行</string>
     <string name="reserve_phone" translatable="false">预留手机号</string>
     <string name="bank_num" translatable="false">卡号</string>

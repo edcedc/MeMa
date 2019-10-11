@@ -230,7 +230,7 @@ public class AddressFrg extends BaseFragment<InformationPresenter, FAddressBindi
         AddressBean.getInstance().setCountry(split[0]);
         AddressBean.getInstance().setProvince(split[1]);
         AddressBean.getInstance().setCity(split[2]);
-        AddressBean.getInstance().setAddress(AddressBean.getInstance().getCountry() + AddressBean.getInstance().getProvince() + AddressBean.getInstance().getCity());
+        AddressBean.getInstance().setAddress(AddressBean.getInstance().getCountry() + " " + AddressBean.getInstance().getProvince() + " " + AddressBean.getInstance().getCity());
         LogUtils.e(AddressBean.getInstance().getCountry(), AddressBean.getInstance().getProvince(),
                 AddressBean.getInstance().getCity(), AddressBean.getInstance().getLatitude(), AddressBean.getInstance().getLocation(),
         sbId);

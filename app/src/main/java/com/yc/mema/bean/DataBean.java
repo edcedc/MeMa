@@ -674,7 +674,11 @@ public class DataBean implements Serializable {
         this.allSelected = allSelected;
     }
 
-    private List<DataBean> list, bannerList;
+
+
+    private List<DataBean> goodSpuImgs, welfareList, homeBannerList, goodSpuList, setmealList, discussImgs, informationImg, welfareImgs,
+            specList, specValues, list, bannerList;
+
 
     public List<DataBean> getBannerList() {
         return bannerList;
@@ -684,40 +688,35 @@ public class DataBean implements Serializable {
         this.bannerList = bannerList;
     }
 
-    private List<DataBean> discussImgs;
 
     public List<DataBean> getDiscussImgs() {
         return discussImgs;
     }
 
-    private List<DataBean> specValues;
 
     public List<DataBean> getSpecValues() {
         return specValues;
     }
 
-    private List<DataBean> specList;
 
     public List<DataBean> getSpecList() {
         return specList;
     }
 
-    private List<DataBean> welfareImgs;
 
     public List<DataBean> getWelfareImgs() {
         return welfareImgs;
     }
 
-    private List<DataBean> informationImg;
 
     public List<DataBean> getInformationImg() {
         return informationImg;
     }
 
-    private List<DataBean> goodSpuImgs;
-    private List<DataBean> welfareList;
-    private List<DataBean> homeBannerList;
-    private List<DataBean> goodSpuList;
+
+    public List<DataBean> getSetmealList() {
+        return setmealList;
+    }
 
     public List<DataBean> getGoodSpuList() {
         return goodSpuList;
@@ -744,9 +743,8 @@ public class DataBean implements Serializable {
         return list;
     }
 
-    private DataBean userList;
+    private DataBean userList, infoDisList, bInfoDisList, infoList;
 
-    private DataBean infoDisList;
 
     public DataBean getUserList() {
         return userList;
@@ -756,13 +754,11 @@ public class DataBean implements Serializable {
         return infoDisList;
     }
 
-    private DataBean bInfoDisList;
 
     public DataBean getbInfoDisList() {
         return bInfoDisList;
     }
 
-    private DataBean infoList;
 
     public DataBean getInfoList() {
         return infoList;

@@ -49,7 +49,7 @@ public class TeaAdapter extends BaseRecyclerviewAdapter<DataBean> {
                     GlideLoadingUtils.load(act, CloudApi.SERVLET_IMG_URL + welfareImgs.get(0).getAttachId(), viewHolder.iv_img);
                 }
                 viewHolder.tv_title.setText(bean.getWalTitle());
-                viewHolder.tv_admission.setText(bean.getDiscount());
+                viewHolder.tv_admission.setText("免费");
                 viewHolder.tv_admission.setVisibility(View.VISIBLE);
                 SpannableString spannableString = new SpannableString("￥" + bean.getPrice());
                 StrikethroughSpan strikethroughSpan = new StrikethroughSpan();
@@ -69,7 +69,7 @@ public class TeaAdapter extends BaseRecyclerviewAdapter<DataBean> {
         viewHolder.itemView.setOnClickListener(view -> {
             switch (type){
                 case 1:
-                    UIHelper.startGiftAct(bean.getWelId());
+                    UIHelper.startBusinessGiftAct(bean);
                     break;
                 case 2:
                     UIHelper.startShopDescAct(bean.getGoodId());

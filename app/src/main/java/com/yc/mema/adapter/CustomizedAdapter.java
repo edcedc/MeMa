@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.blankj.utilcode.util.StringUtils;
 import com.yc.mema.R;
 import com.yc.mema.base.BaseRecyclerviewAdapter;
 import com.yc.mema.bean.DataBean;
@@ -44,10 +45,12 @@ public class CustomizedAdapter extends BaseRecyclerviewAdapter<DataBean> {
         viewHolder.tv_title.setText(bean.getWalTitle());
         viewHolder.tv_content.setText("100" +
                 "元通用代金券");
-        viewHolder.tv_location.setText(bean.getDistance() +
+        String distance = bean.getDistance();
+        viewHolder.tv_location.setVisibility(StringUtils.isEmpty(distance) == true ? View.GONE : View.VISIBLE);
+        viewHolder.tv_location.setText(distance +
                 "km");
         viewHolder.ratingbar.setRating((float) bean.getScore());
-        viewHolder.itemView.setOnClickListener(view -> UIHelper.startCustomizedDescAct(bean));
+        viewHolder.itemView.setOnClickListener(view -> UIHelper.startBusinessGiftAct(bean));
     }
 
     @Override

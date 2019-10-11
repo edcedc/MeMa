@@ -93,7 +93,8 @@
 
                 <android.support.v7.widget.AppCompatEditText
                     android:id="@+id/et_operator_id"
-
+                    android:maxLength="18"
+                    android:digits="@string/digits"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@null"
@@ -121,13 +122,13 @@
 
                 <android.support.v7.widget.AppCompatEditText
                     android:id="@+id/et_operator_num"
-
+                    android:maxLength="18"
+                    android:digits="@string/digits"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@null"
                     android:gravity="center"
                     android:hint="@string/error_2"
-                    android:maxLength="20"
                     android:minEms="5"
                     android:padding="@dimen/px30"
                     android:textSize="@dimen/size32"
@@ -377,6 +378,7 @@
 
 
                 <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/tv_category1"
                     style="@style/Tv15gray"
                     android:padding="@dimen/px30"
                     android:text="@string/business_category"
@@ -389,6 +391,13 @@
                     android:id="@+id/v9"
                     style="@style/divider_3"
                     app:layout_constraintTop_toBottomOf="@id/tv_category" />
+
+                <android.support.constraint.Group
+                    android:id="@+id/gp_category"
+                    android:visibility="gone"
+                    app:constraint_referenced_ids="v9, tv_category, tv_category1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
 
                 <android.support.v7.widget.AppCompatTextView
                     android:id="@+id/tv_m"

@@ -28,6 +28,7 @@ import com.yc.mema.utils.OneGlideImageLoader;
 import com.yc.mema.utils.PopupWindowTool;
 import com.yc.mema.view.PopupView.PSortView;
 import com.yc.mema.weight.LinearDividerItemDecoration;
+import com.youth.banner.BannerConfig;
 import com.youth.banner.listener.OnBannerListener;
 import com.youth.banner.transformer.DefaultTransformer;
 
@@ -103,6 +104,7 @@ public class SixFrg extends BaseFragment<SixPresenter, FSixBinding> implements S
         mB.tvSales.setOnClickListener(this);
         mB.tvScreen.setOnClickListener(this);
         mB.tvSearch.setOnClickListener(this);
+        mB.tvHigh.setOnClickListener(this);
         mB.tvLocation.setText(AddressBean.getInstance().getDistrict());
 
         labelAdapter = new ShopLabelAdapter(act, listLabelBean);
@@ -149,8 +151,6 @@ public class SixFrg extends BaseFragment<SixPresenter, FSixBinding> implements S
         mB.rvCake.setItemAnimator(new DefaultItemAnimator());
         mB.rvCake.addItemDecoration(new LinearDividerItemDecoration(act, DividerItemDecoration.HORIZONTAL, 40, Color.parseColor("#ffffff")));
 
-
-
         if (adapter == null) {
             adapter = new CustomizedAdapter(act, listBean);
         }
@@ -162,7 +162,7 @@ public class SixFrg extends BaseFragment<SixPresenter, FSixBinding> implements S
         mPresenter.onBanner();
         mPresenter.onLabel();
         county = AddressBean.getInstance().getCity();
-        mPresenter.onRequest(pagerNumber = 1, low, up, type, county);
+//        mPresenter.onRequest(pagerNumber = 1, low, up, type, county);
         mPresenter.onGetHomeClassify(null);
         mB.refreshLayout.setEnableRefresh(false);
         mB.refreshLayout.setOnLoadMoreListener(new OnRefreshLoadMoreListener() {
@@ -184,6 +184,7 @@ public class SixFrg extends BaseFragment<SixPresenter, FSixBinding> implements S
     public void setBanner(List<DataBean> list) {
         listBannerBean.addAll(list);
         mB.banner.setImages(listBannerBean)
+                .setBannerStyle(BannerConfig.CIRCLE_INDICATOR)
                 .setImageLoader(new OneGlideImageLoader())
                 .setOnBannerListener(this)
                 .setBannerAnimation(DefaultTransformer.class)
@@ -192,6 +193,7 @@ public class SixFrg extends BaseFragment<SixPresenter, FSixBinding> implements S
 
     @Override
     public void setFree(List<DataBean> list) {
+        mB.gpExp.setVisibility(View.VISIBLE);
         listTeaBean.addAll(list);
         teaAdapter.notifyDataSetChanged();
     }
@@ -205,7 +207,8 @@ public class SixFrg extends BaseFragment<SixPresenter, FSixBinding> implements S
     @Override
     public void setBannerAdv(List<DataBean> list) {
         listBannerAdvBean.addAll(list);
-        mB.bannerAdv.setImages(listBannerBean)
+        mB.bannerAdv.setImages(listBannerAdvBean)
+                .setBannerStyle(BannerConfig.CIRCLE_INDICATOR)
                 .setImageLoader(new OneGlideImageLoader())
                 .setOnBannerListener(this)
                 .setBannerAnimation(DefaultTransformer.class)
@@ -258,19 +261,22 @@ public class SixFrg extends BaseFragment<SixPresenter, FSixBinding> implements S
                 UIHelper.startAddressAct(AddressInEvent.LIWU);
                 break;
             case R.id.tv_zh:
-//                setLabel(1);
-                PopupWindowTool.showSort(act, mB.tvZh).setOnClickListener((text, type) -> {
-                    LogUtils.e(text, type);
-                    mB.tvZh.setText(text);
-                    mPresenter.onRequest(pagerNumber = 1, low, up, type, county);
-                    setLabel(1);
-                });
+                setLabel(1);
+//                PopupWindowTool.showSort(act, mB.tvZh).setOnClickListener((text, type) -> {
+//                    LogUtils.e(text, type);
+//                    mB.tvZh.setText(text);
+//                    mPresenter.onRequest(pagerNumber = 1, low, up, type, county);
+//                    setLabel(1);
+//                });
                 break;
             case R.id.tv_distance:
                 setLabel(2);
                 break;
             case R.id.tv_sales:
                 setLabel(3);
+                break;
+            case R.id.tv_high:
+                setLabel(4);
                 break;
             case R.id.tv_screen:
                 PopupWindowTool.showShopPriceScreen(act, mB.tvZh, (di, gao) -> {
@@ -308,16 +314,25 @@ public class SixFrg extends BaseFragment<SixPresenter, FSixBinding> implements S
                 mB.tvZh.setTextColor(act.getResources().getColor(R.color.red_F67690));
                 mB.tvDistance.setTextColor(act.getResources().getColor(R.color.black_333333));
                 mB.tvSales.setTextColor(act.getResources().getColor(R.color.black_333333));
+                mB.tvHigh.setTextColor(act.getResources().getColor(R.color.black_333333));
                 break;
             case 2://距离
                 mB.tvZh.setTextColor(act.getResources().getColor(R.color.black_333333));
                 mB.tvDistance.setTextColor(act.getResources().getColor(R.color.red_F67690));
                 mB.tvSales.setTextColor(act.getResources().getColor(R.color.black_333333));
+                mB.tvHigh.setTextColor(act.getResources().getColor(R.color.black_333333));
                 break;
             case 3://销量最高
                 mB.tvZh.setTextColor(act.getResources().getColor(R.color.black_333333));
                 mB.tvDistance.setTextColor(act.getResources().getColor(R.color.black_333333));
                 mB.tvSales.setTextColor(act.getResources().getColor(R.color.red_F67690));
+                mB.tvHigh.setTextColor(act.getResources().getColor(R.color.black_333333));
+                break;
+            case 4://好评
+                mB.tvZh.setTextColor(act.getResources().getColor(R.color.black_333333));
+                mB.tvDistance.setTextColor(act.getResources().getColor(R.color.black_333333));
+                mB.tvSales.setTextColor(act.getResources().getColor(R.color.black_333333));
+                mB.tvHigh.setTextColor(act.getResources().getColor(R.color.red_F67690));
                 break;
         }
         mPresenter.onRequest(pagerNumber = 1, low, up, type, county);

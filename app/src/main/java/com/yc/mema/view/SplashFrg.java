@@ -215,7 +215,8 @@ public class SplashFrg extends BaseFragment<BasePresenter, FSplashBinding> imple
                         Manifest.permission.READ_EXTERNAL_STORAGE,
                         Manifest.permission.WRITE_EXTERNAL_STORAGE,//写入外部存储, 允许程序写入外部存储，如SD卡
                         Manifest.permission.CAMERA,//拍照权限, 允许访问摄像头进行拍照
-                        Manifest.permission.ACCESS_FINE_LOCATION
+                        Manifest.permission.ACCESS_FINE_LOCATION,
+                        Manifest.permission.CALL_PHONE
                 )
                 .rationale(new RuntimeRationale())
                 .onGranted(permissions -> setPermissionOk())

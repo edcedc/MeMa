@@ -141,7 +141,7 @@ public class CloudApi {
         PostRequest<BaseResponseBean<DataBean>> post = OkGo.post(SERVLET_URL + "user/saveUser");
 //        PostRequest<BaseResponseBean<DataBean>> post = OkGo.post("http://jj123.nat300.top/adv_chain/api/user/update");
         if (!StringUtils.isEmpty(head)) {
-            post.params("head", new File(head));
+            post.params("headUrl", new File(head));
 //            post.params("sessionId", "41966fc3bbd94618accb98e23d386877");
         }
         return post

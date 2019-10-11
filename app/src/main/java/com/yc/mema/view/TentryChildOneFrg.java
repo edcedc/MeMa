@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
+import android.widget.CompoundButton;
 
 import com.yc.mema.R;
 import com.yc.mema.base.BaseFragment;
@@ -67,6 +68,13 @@ public class TentryChildOneFrg extends BaseFragment<TentryPresenter, FTentryChil
         mB.tvAddress.setOnClickListener(this);
         mB.tvCategory.setOnClickListener(this);
         EventBus.getDefault().register(this);
+        mB.cbShop.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+
+            }
+        });
+         mB.cbMerchants.setOnCheckedChangeListener((compoundButton, b) -> mB.gpCategory.setVisibility(b ? View.VISIBLE : View.GONE));
     }
 
     @Override

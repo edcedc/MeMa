@@ -25,13 +25,7 @@ public class CustomizedPresenter extends CustomizedContract.Presenter{
 
     @Override
     public void onDesc() {
-        List<DataBean> list = new ArrayList<>();
-        for (int i =0;i<5;i++){
-            DataBean bean = new DataBean();
-            bean.setImage("https://wx3.sinaimg.cn/mw690/78a9167dgy1g6vqt27xilj212c0hsdp6.jpg");
-            list.add(bean);
-        }
-        mView.setBanner(list);
+
     }
 
     @Override

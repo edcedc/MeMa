@@ -47,7 +47,7 @@ public class TentryPresenter extends TentryContract.Presenter {
         }
         if (StringUtils.isEmpty(name) ||StringUtils.isEmpty(phone) ||StringUtils.isEmpty(userId) ||StringUtils.isEmpty(num) ||StringUtils.isEmpty(bankName) ||StringUtils.isEmpty(bankPhone) ||StringUtils.isEmpty(bankId) ||StringUtils.isEmpty(address) ||StringUtils.isEmpty(addressDesc) || type == 0 ||StringUtils.isEmpty(category) ||StringUtils.isEmpty(shopArea)){
             showToast(act.getString(R.string.error_));
-//            return;
+            return;
         }
         TentryBean.getInstance().name = name;
         TentryBean.getInstance().phone = phone;

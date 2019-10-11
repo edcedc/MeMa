@@ -38,6 +38,7 @@ public class ShopCategoryFrg extends BaseFragment<ShopCategoryPresenter, FShopCa
     private ShopCategoryRightAdapter categoryRightAdapter;
 
     private String classifyId;
+    private String categoryName;
 
     @Override
     public void initPresenter() {
@@ -62,7 +63,7 @@ public class ShopCategoryFrg extends BaseFragment<ShopCategoryPresenter, FShopCa
         mB.listView.setAdapter(categoryLeftAdapter);
         mB.listView.setOnItemClickListener((adapterView, view1, i, l) -> {
             String parentId = listLeftBean.get(i).getClassifyId();
-            String categoryName = listLeftBean.get(i).getClassifyTitle();
+            categoryName = listLeftBean.get(i).getClassifyTitle();
             if (parentId != classifyId){
                 classifyId = parentId;
                 mB.refreshLayout.startRefresh();
@@ -89,7 +90,7 @@ public class ShopCategoryFrg extends BaseFragment<ShopCategoryPresenter, FShopCa
         categoryRightAdapter.setOnClickListener((position, classifyId, classifyTitle) -> {
             if (this.classifyId == classifyId)return;
             this.classifyId = classifyId;
-            mB.tvText.setText(mB.tvText.getText().toString() + " " + classifyTitle);
+            mB.tvText.setText(categoryName + " " + classifyTitle);
             categoryRightAdapter.setmPosition(position);
             categoryRightAdapter.notifyDataSetChanged();
         });
@@ -111,7 +112,8 @@ public class ShopCategoryFrg extends BaseFragment<ShopCategoryPresenter, FShopCa
         listLeftBean.addAll(result);
         categoryLeftAdapter.setmPosition(0);
         classifyId = listLeftBean.get(0).getClassifyId();
-        mB.tvText.setText(listLeftBean.get(0).getClassifyTitle());
+        categoryName = listLeftBean.get(0).getClassifyTitle();
+        mB.tvText.setText(categoryName);
         mB.refreshLayout.startRefresh();
         categoryLeftAdapter.notifyDataSetChanged();
     }

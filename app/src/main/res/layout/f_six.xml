@@ -83,12 +83,12 @@
                         android:layout_width="match_parent"
                         android:layout_height="160dp"
                         android:layout_margin="@dimen/px30"
-                        app:image_scale_type="fit_xy"
+                        app:image_scale_type="center_crop"
                         app:indicator_drawable_selected="@color/red_F67690"
                         app:indicator_drawable_unselected="@android:color/white"
                         app:indicator_height="4dp"
                         app:indicator_margin="4dp"
-                        app:indicator_width="20dp"
+                        app:indicator_width="4dp"
                         app:is_auto_play="true"
                         app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintRight_toRightOf="parent" />
@@ -113,6 +113,7 @@
                         app:layout_constraintTop_toBottomOf="@id/gridView" />
 
                     <android.support.v7.widget.AppCompatTextView
+                        android:id="@+id/tv_experience"
                         style="@style/Tv15black"
                         android:padding="@dimen/px30"
                         android:text="@string/experience"
@@ -133,6 +134,13 @@
                         android:overScrollMode="never"
                         app:layout_constraintTop_toBottomOf="@id/tv_free_more" />
 
+                    <android.support.constraint.Group
+                        android:id="@+id/gp_exp"
+                        android:visibility="gone"
+                        app:constraint_referenced_ids="rv_tea, tv_free_more, tv_experience"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
                     <com.youth.banner.Banner
                         app:layout_constraintTop_toBottomOf="@id/rv_tea"
                         android:id="@+id/banner_adv"
@@ -141,12 +149,12 @@
                         android:layout_height="@dimen/px200"
                         android:layout_marginLeft="@dimen/px30"
                         android:layout_marginRight="@dimen/px30"
-                        app:image_scale_type="fit_xy"
+                        app:image_scale_type="center_crop"
                         app:indicator_drawable_selected="@color/red_F67690"
                         app:indicator_drawable_unselected="@android:color/white"
                         app:indicator_height="4dp"
                         app:indicator_margin="4dp"
-                        app:indicator_width="20dp"
+                        app:indicator_width="4dp"
                         app:is_auto_play="true"
                         app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintRight_toRightOf="parent" />
@@ -217,6 +225,12 @@
                         android:padding="@dimen/px30"
                         android:text="@string/volume" />
 
+                    <android.support.v7.widget.AppCompatTextView
+                        android:id="@+id/tv_high"
+                        style="@style/Tv12black"
+                        android:padding="@dimen/px30"
+                        android:text="@string/high" />
+
                     <View
                         android:layout_width="0dp"
                         android:layout_height="0dp"
@@ -233,23 +247,7 @@
 
                 </LinearLayout>
 
-                <View style="@style/divider_3" />
-
-                <com.flyco.tablayout.SlidingTabLayout
-                    android:id="@+id/tb_layout"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    tl:tl_indicator_color="@color/transparent"
-                    tl:tl_tab_padding="15dp"
-                    tl:tl_tab_space_equal="false"
-                    tl:tl_textSelectColor="@color/black_333333"
-                    tl:tl_textUnselectColor="@color/tab_gray"
-                    tl:tl_textsize="14sp" />
-
             </android.support.design.widget.AppBarLayout>
-
-
-
 
                 <com.scwang.smartrefresh.layout.SmartRefreshLayout
                     android:id="@+id/refreshLayout"

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:ignore="MissingConstraints"
+    android:background="?actionBarItemBackground"
+    android:layout_height="wrap_content">
+
+    <android.support.v7.widget.AppCompatImageView
+        android:id="@+id/iv_img"
+        android:layout_width="80dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/no_banner"
+        android:layout_height="80dp"/>
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/tv_title"
+        android:layout_marginLeft="@dimen/px30"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toRightOf="@id/iv_img"
+        app:layout_constraintBottom_toTopOf="@+id/tv_price"
+        style="@style/Tv15black" />
+
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/tv_price"
+        android:layout_marginLeft="@dimen/px30"
+        android:textColor="@color/red_EC5B44"
+        app:layout_constraintTop_toBottomOf="@id/tv_title"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toRightOf="@id/iv_img"
+        style="@style/Tv15black" />
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/tv_content"
+        app:layout_constraintTop_toTopOf="@id/tv_price"
+        app:layout_constraintBottom_toBottomOf="@id/tv_price"
+        app:layout_constraintLeft_toRightOf="@id/tv_price"
+        android:layout_marginLeft="@dimen/px20"
+        style="@style/Tv12gray" />
+
+</android.support.constraint.ConstraintLayout>
