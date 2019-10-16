@@ -10,12 +10,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.baidu.mapapi.utils.DistanceUtil;
+import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.StringUtils;
 import com.yc.mema.R;
 import com.yc.mema.base.BaseRecyclerviewAdapter;
+import com.yc.mema.bean.AddressBean;
 import com.yc.mema.bean.DataBean;
 import com.yc.mema.controller.CloudApi;
 import com.yc.mema.controller.UIHelper;
+import com.yc.mema.utils.DistanceUtils;
 import com.yc.mema.utils.GlideLoadingUtils;
 
 import java.util.List;
@@ -46,11 +50,30 @@ public class CustomizedAdapter extends BaseRecyclerviewAdapter<DataBean> {
         viewHolder.tv_content.setText("100" +
                 "元通用代金券");
         String distance = bean.getDistance();
-        viewHolder.tv_location.setVisibility(StringUtils.isEmpty(distance) == true ? View.GONE : View.VISIBLE);
-        viewHolder.tv_location.setText(distance +
-                "km");
+//        viewHolder.tv_location.setVisibility(StringUtils.isEmpty(distance) == true ? View.GONE : View.VISIBLE);
+
         viewHolder.ratingbar.setRating((float) bean.getScore());
-        viewHolder.itemView.setOnClickListener(view -> UIHelper.startBusinessGiftAct(bean));
+
+        String longitude = bean.getLongitude();
+        String latitude = bean.getLatitude();
+        if (!StringUtils.isEmpty(longitude) && !StringUtils.isEmpty(latitude)){
+            double distanceMi = DistanceUtils.getDistanceMi(Double.valueOf(bean.getLongitude()), Double.valueOf(bean.getLatitude()), AddressBean.getInstance().getLocation(), AddressBean.getInstance().getLatitude());
+            if (distanceMi >= 1000){
+                distanceMi = DistanceUtils.getDistance(Double.valueOf(bean.getLongitude()), Double.valueOf(bean.getLatitude()), AddressBean.getInstance().getLocation(), AddressBean.getInstance().getLatitude());
+                viewHolder.tv_location.setText(distanceMi +
+                        "km");
+            }else {
+                viewHolder.tv_location.setText((int) distanceMi +
+                        "km");
+            }
+
+        }
+
+        viewHolder.itemView.setOnClickListener(view -> {
+            UIHelper.startBusinessGiftAct(bean);
+//            LogUtils.e(DistanceUtils.getDistanceMi(Double.valueOf(bean.getLongitude()), Double.valueOf(bean.getLatitude()), AddressBean.getInstance().getLocation(), AddressBean.getInstance().getLatitude()));
+//            LogUtils.e(DistanceUtils.getDistance(Double.valueOf(bean.getLongitude()), Double.valueOf(bean.getLatitude()), AddressBean.getInstance().getLocation(), AddressBean.getInstance().getLatitude()));
+        });
     }
 
     @Override

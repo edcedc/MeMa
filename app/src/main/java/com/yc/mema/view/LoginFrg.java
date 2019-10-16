@@ -110,7 +110,7 @@ public class LoginFrg extends BaseFragment<LoginPresenter, FLoginBinding> implem
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.bt_submit:
-                mPresenter.login    (mB.etPhone.getText().toString(), mB.etCode.getText().toString(), mB.etPwd.getText().toString(), mB.cbSubmit.isChecked(), mPosition);
+                mPresenter.login(mB.etPhone.getText().toString(), mB.etCode.getText().toString(), mB.etPwd.getText().toString(), mB.cbSubmit.isChecked(), mPosition);
                 break;
             case R.id.tv_code:
                 mPresenter.code(mB.etPhone.getText().toString());
@@ -151,6 +151,7 @@ public class LoginFrg extends BaseFragment<LoginPresenter, FLoginBinding> implem
             User.getInstance().setLogin(true);
             ShareSessionIdCache.getInstance(Utils.getApp()).save(data.optString("token"));
             ShareSessionIdCache.getInstance(Utils.getApp()).saveUserId(user.optString("userId"));
+            SharedAccount.getInstance(act).save(user.optString("iphone"), user.optString("password"));
             UIHelper.startMainAct();
             act.finish();
         }

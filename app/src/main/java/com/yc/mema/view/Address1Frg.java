@@ -2,6 +2,7 @@ package com.yc.mema.view;
 
 import android.os.Bundle;
 import android.view.View;
+
 import com.baidu.location.Address;
 import com.baidu.location.BDAbstractLocationListener;
 import com.baidu.location.BDLocation;
@@ -25,7 +26,9 @@ import com.yc.mema.databinding.FAddressBinding;
 import com.yc.mema.event.AddressInEvent;
 import com.yc.mema.impl.InformationContract;
 import com.yc.mema.presenter.InformationPresenter;
+
 import org.greenrobot.eventbus.EventBus;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,13 +39,15 @@ import java.util.List;
  * Time: 12:01
  *  设置地址
  */
-public class AddressFrg extends BaseFragment<InformationPresenter, FAddressBinding> implements InformationContract.View, View.OnClickListener, OnGetGeoCoderResultListener {
+public class Address1Frg extends BaseFragment<InformationPresenter, FAddressBinding> implements InformationContract.View, View.OnClickListener, OnGetGeoCoderResultListener {
 
-    public static AddressFrg newInstance() {
+    private String shangAddress;
+
+    public static Address1Frg newInstance() {
 
         Bundle args = new Bundle();
 
-        AddressFrg fragment = new AddressFrg();
+        Address1Frg fragment = new Address1Frg();
         fragment.setArguments(args);
         return fragment;
     }
@@ -70,6 +75,8 @@ public class AddressFrg extends BaseFragment<InformationPresenter, FAddressBindi
     @Override
     protected void initParms(Bundle bundle) {
         type = bundle.getInt("type");
+        parentId = bundle.getString("parentId");
+        shangAddress = bundle.getString("address");
     }
 
     @Override
@@ -79,19 +86,10 @@ public class AddressFrg extends BaseFragment<InformationPresenter, FAddressBindi
 
     @Override
     protected void initView(View view) {
-        setTitle(getString(R.string.set_address), getString(R.string.submit1));
-        switch (type){
-            case AddressInEvent.GIFT_TYPE:
-            case AddressInEvent.LIWU:
-            case AddressInEvent.APPLY_TYPE:
+        setTitle(getString(R.string.set_address));
+        mB.gpLocate.setVisibility(View.GONE);
+        mB.tvAll.setText(shangAddress);
 
-                break;
-            case AddressInEvent.USER_INFP_TYPE:
-            case AddressInEvent.HARVEST_ADDRESS:
-            case AddressInEvent.TENTRY:
-                mB.gpLocate.setVisibility(View.GONE);
-                break;
-        }
         // 定位初始化
         mLocClient = new LocationClient(act);
         mLocClient.registerLocationListener(myListener);
@@ -101,7 +99,7 @@ public class AddressFrg extends BaseFragment<InformationPresenter, FAddressBindi
         option.setScanSpan(1000);
         option.setIsNeedAddress(true);//反编译获得具体位置，只有网络定位才可以
         mLocClient.setLocOption(option);
-        mLocClient.start();
+//        mLocClient.start();
         // 初始化搜索模块，注册事件监听
         mSearch = GeoCoder.newInstance();
         mSearch.setOnGetGeoCodeResultListener(this);
@@ -113,11 +111,11 @@ public class AddressFrg extends BaseFragment<InformationPresenter, FAddressBindi
         setRecyclerViewType(mB.recyclerView);
         mB.recyclerView.setAdapter(adapter);
         showLoadDataing();
-        mPresenter.onRequest(null);
+        mPresenter.onRequest(parentId);
         adapter.setOnClickListener((parentId, address, regionLevel, position) -> {
             isLocation = false;
-//            mB.gpLocate.setVisibility(View.GONE);
-//            mB.tvAll.setText(sb.toString());
+            mB.gpLocate.setVisibility(View.GONE);
+            mB.tvAll.setText(sb.toString());
             this.regionLevel = regionLevel;
             /*if (regionLevel >= 3){
                 this.addressEnd = address;
@@ -129,10 +127,10 @@ public class AddressFrg extends BaseFragment<InformationPresenter, FAddressBindi
                 sbId.append(parentId).append(",");
                 mPresenter.onRequest(parentId);
             }*/
+            mB.tvAll.setText(shangAddress + " " + address);
             this.parentId = parentId;
-            mB.tvAll.setText(address);
+            UIHelper.startAddress2Frg(this, type, parentId, mB.tvAll.getText().toString());
             LogUtils.e(mB.tvAll.getText().toString(), parentId);
-            UIHelper.startAddress1Frg(this, type, parentId, address);
         });
     }
 

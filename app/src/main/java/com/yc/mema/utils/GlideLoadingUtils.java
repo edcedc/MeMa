@@ -15,6 +15,7 @@ import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.load.engine.bitmap_recycle.BitmapPool;
 import com.bumptech.glide.load.resource.bitmap.BitmapTransformation;
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.SimpleTarget;
@@ -35,8 +36,6 @@ import static com.bumptech.glide.load.resource.bitmap.VideoDecoder.FRAME_OPTION;
 
 public class GlideLoadingUtils {
 
-
-
     public static void load(Context act, Object url, ImageView imageView, boolean isUser) {
         ld(act, url, imageView, isUser);
     }
@@ -48,6 +47,14 @@ public class GlideLoadingUtils {
         ld(act, url, imageView, false);
     }
 
+
+    public static void loadRounded(Context act, Object url, ImageView imageView){
+        //设置图片圆角角度
+        RoundedCorners roundedCorners= new RoundedCorners(6);
+        //通过RequestOptions扩展功能,override:采样率,因为ImageView就这么大,可以压缩图片,降低内存消耗
+        RequestOptions options=RequestOptions.bitmapTransform(roundedCorners).override(300, 300);
+        Glide.with(act).load(url).apply(options).into(imageView);
+    }
 
     private static void ld(Context act, Object url, ImageView imageView, boolean isUser){
         RequestOptions options = new RequestOptions();

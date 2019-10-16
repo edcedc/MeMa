@@ -94,7 +94,7 @@
     <string name="all" translatable="false">全部</string>
     <string name="confirmation_orders" translatable="false">确认订单</string>
     <string name="lock_all" translatable="false">查看全部</string>
-    <string name="mema1" translatable="false">扫喵二维码图案，加我么马</string>
+    <string name="mema1" translatable="false">扫描二维码图案，加我么马</string>
     <string name="account" translatable="false">账号与安全</string>
     <string name="message" translatable="false">新消息通知</string>
     <string name="privacy" translatable="false">隐私</string>
@@ -239,7 +239,7 @@
     <string name="name1" translatable="false">姓名</string>
     <string name="name2" translatable="false">请输入姓名</string>
     <string name="phone" translatable="false">手机号</string>
-    <string name="high" translatable="false">好评</string>
+    <string name="high" translatable="false">评分</string>
     <string name="qualifications" translatable="false">提交资质</string>
     <string name="audit" translatable="false">资料审核</string>
     <string name="operator_information" translatable="false">经营者信息</string>

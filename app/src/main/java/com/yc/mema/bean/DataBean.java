@@ -86,6 +86,7 @@ public class DataBean implements Serializable {
     private String categoryId;
     private String goodName;
     private int sales;
+    private String businessId;
     private String goodId;
     private String remark;
     private double starLevel;
@@ -117,6 +118,15 @@ public class DataBean implements Serializable {
     private String longitude;
     private double score;
     private int free;
+    private String birthday;
+
+    public String getBusinessId() {
+        return businessId;
+    }
+
+    public String getBirthday() {
+        return birthday;
+    }
 
     public int getFree() {
         return free;

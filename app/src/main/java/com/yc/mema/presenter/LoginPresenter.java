@@ -14,6 +14,7 @@ import com.yc.mema.controller.CloudApi;
 import com.yc.mema.impl.LoginContract;
 import com.yc.mema.utils.cache.ShareSessionIdCache;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import io.reactivex.Observer;
@@ -95,6 +96,12 @@ public class LoginPresenter extends LoginContract.Presenter{
                         public void onNext(JSONObject jsonObject) {
                             if (jsonObject.optInt("code") == Code.CODE_SUCCESS){
                                 JSONObject data = jsonObject.optJSONObject("result");
+                                JSONObject user = data.optJSONObject("user");
+                                try {
+                                    user.put("password", pwd);
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
                                 mView.onLogin(data);
                             }
                             showToast(jsonObject.optString("description"));

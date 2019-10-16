@@ -262,12 +262,6 @@ public class SixFrg extends BaseFragment<SixPresenter, FSixBinding> implements S
                 break;
             case R.id.tv_zh:
                 setLabel(1);
-//                PopupWindowTool.showSort(act, mB.tvZh).setOnClickListener((text, type) -> {
-//                    LogUtils.e(text, type);
-//                    mB.tvZh.setText(text);
-//                    mPresenter.onRequest(pagerNumber = 1, low, up, type, county);
-//                    setLabel(1);
-//                });
                 break;
             case R.id.tv_distance:
                 setLabel(2);

@@ -36,7 +36,6 @@
                     <android.support.v7.widget.AppCompatTextView
                         android:id="@+id/tv_zh"
                         style="@style/Tv12black"
-                        android:drawableRight="@mipmap/icon_arrow_down_black"
                         android:padding="@dimen/px30"
                         android:text="@string/sorting" />
 
@@ -52,6 +51,12 @@
                         android:padding="@dimen/px30"
                         android:text="@string/volume" />
 
+                    <android.support.v7.widget.AppCompatTextView
+                        android:id="@+id/tv_high"
+                        style="@style/Tv12black"
+                        android:padding="@dimen/px30"
+                        android:text="@string/high" />
+
                     <View
                         android:layout_width="0dp"
                         android:layout_height="0dp"
@@ -60,6 +65,7 @@
                     <android.support.v7.widget.AppCompatTextView
                         android:id="@+id/tv_screen"
                         style="@style/Tv12black"
+                        android:visibility="gone"
                         android:drawableRight="@mipmap/icon_filter"
                         android:drawablePadding="@dimen/px10"
                         android:padding="@dimen/px30"

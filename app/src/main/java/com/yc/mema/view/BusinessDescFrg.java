@@ -47,7 +47,7 @@ public class BusinessDescFrg extends BaseFragment<BusinessDescPresenter, FBusine
     private List<DataBean> listTeaBean = new ArrayList<>();
     private TeaAdapter teaAdapter;
 
-    private int type = 1;
+    private int type;
     private int low;
     private int up;
 
@@ -72,8 +72,11 @@ public class BusinessDescFrg extends BaseFragment<BusinessDescPresenter, FBusine
         setTitle(title);
         mB.tvZh.setOnClickListener(this);
         mB.tvDistance.setOnClickListener(this);
+        mB.tvZh.setOnClickListener(this);
+        mB.tvDistance.setOnClickListener(this);
         mB.tvSales.setOnClickListener(this);
         mB.tvScreen.setOnClickListener(this);
+        mB.tvHigh.setOnClickListener(this);
         if (adapter == null) {
             adapter = new CustomizedAdapter(act, listBean);
         }
@@ -163,27 +166,39 @@ public class BusinessDescFrg extends BaseFragment<BusinessDescPresenter, FBusine
             case R.id.tv_sales:
                 setLabel(3);
                 break;
+            case R.id.tv_high:
+                setLabel(4);
+                break;
         }
     }
 
     private void setLabel(int type){
-        if (this.type == type)return;
+        if (this.type == type) return;
         this.type = type;
-        switch (type){
+        switch (type) {
             case 1://综合排序
                 mB.tvZh.setTextColor(act.getResources().getColor(R.color.red_F67690));
                 mB.tvDistance.setTextColor(act.getResources().getColor(R.color.black_333333));
                 mB.tvSales.setTextColor(act.getResources().getColor(R.color.black_333333));
+                mB.tvHigh.setTextColor(act.getResources().getColor(R.color.black_333333));
                 break;
             case 2://距离
                 mB.tvZh.setTextColor(act.getResources().getColor(R.color.black_333333));
                 mB.tvDistance.setTextColor(act.getResources().getColor(R.color.red_F67690));
                 mB.tvSales.setTextColor(act.getResources().getColor(R.color.black_333333));
+                mB.tvHigh.setTextColor(act.getResources().getColor(R.color.black_333333));
                 break;
             case 3://销量最高
                 mB.tvZh.setTextColor(act.getResources().getColor(R.color.black_333333));
                 mB.tvDistance.setTextColor(act.getResources().getColor(R.color.black_333333));
                 mB.tvSales.setTextColor(act.getResources().getColor(R.color.red_F67690));
+                mB.tvHigh.setTextColor(act.getResources().getColor(R.color.black_333333));
+                break;
+            case 4://好评
+                mB.tvZh.setTextColor(act.getResources().getColor(R.color.black_333333));
+                mB.tvDistance.setTextColor(act.getResources().getColor(R.color.black_333333));
+                mB.tvSales.setTextColor(act.getResources().getColor(R.color.black_333333));
+                mB.tvHigh.setTextColor(act.getResources().getColor(R.color.red_F67690));
                 break;
         }
         mB.refreshLayout.startRefresh();

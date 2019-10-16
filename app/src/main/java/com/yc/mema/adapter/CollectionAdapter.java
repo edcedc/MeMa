@@ -158,7 +158,7 @@ public class CollectionAdapter extends BaseRecyclerviewAdapter<DataBean> {
                     listener.click(position, bean.isSelect());
                 }
             });
-            viewHolder.itemView.setOnClickListener(view -> UIHelper.startGiftAct(bean.getWelId()));
+            viewHolder.itemView.setOnClickListener(view -> UIHelper.startBusinessGiftAct(bean));
         }
     }
 

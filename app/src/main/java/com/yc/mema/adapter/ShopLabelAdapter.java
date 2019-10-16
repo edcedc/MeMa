@@ -39,7 +39,11 @@ public class ShopLabelAdapter extends BaseListViewAdapter<DataBean> {
         }
         final DataBean bean = listBean.get(position);
         String attachId = bean.getAttachId();
-        GlideLoadingUtils.load(act, CloudApi.SERVLET_IMG_URL + attachId, viewHolder.iv_img);
+        if (bean.getTitle().equals(act.getString(R.string.more))){
+            viewHolder.iv_img.setBackgroundResource(R.mipmap.icon_more);
+        }else {
+            GlideLoadingUtils.load(act, CloudApi.SERVLET_IMG_URL + attachId, viewHolder.iv_img);
+        }
         viewHolder.tv_title.setText(bean.getTitle());
         return convertView;
     }

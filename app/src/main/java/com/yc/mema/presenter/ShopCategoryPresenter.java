@@ -36,6 +36,12 @@ public class ShopCategoryPresenter extends ShopCategoryContract.Presenter{
                     public void onNext(Response<BaseResponseBean<List<DataBean>>> baseResponseBeanResponse) {
                         if (baseResponseBeanResponse.body().code == Code.CODE_SUCCESS){
                             List<DataBean> result = baseResponseBeanResponse.body().result;
+                            for (DataBean bean : result){
+                                if (bean.getClassifyId().equals("5")){
+                                    result.remove(bean);
+                                    break;
+                                }
+                            }
                             mView.setLeft(result);
                         }
                     }

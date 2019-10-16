@@ -47,7 +47,7 @@ public class FiveFrg extends BaseFragment<FivePresenter, FFiveBinding> implement
     public void onSupportVisible() {
         super.onSupportVisible();
         if (isRequest) {
-            if (!((BaseActivity)act).isLogin())return;
+            if (!((BaseActivity) act).isLogin()) return;
             mB.refreshLayout.startRefresh();
         }
         setData(User.getInstance().getUserObj());
@@ -92,7 +92,7 @@ public class FiveFrg extends BaseFragment<FivePresenter, FFiveBinding> implement
 
     @Override
     public void onClick(View view) {
-        if (isRequest)return;
+        if (isRequest) return;
         switch (view.getId()) {
             case R.id.tv_collection:
                 UIHelper.startCollectionFrg(this);
@@ -153,7 +153,7 @@ public class FiveFrg extends BaseFragment<FivePresenter, FFiveBinding> implement
     @Override
     public void setData(JSONObject userObj) {
         isRequest = false;
-        if (userObj == null)return;
+        if (userObj == null) return;
         mB.refreshLayout.finishRefreshing();
         GlideLoadingUtils.load(act, userObj.optString("headUrl"), mB.ivHead, true);
         mB.tvName.setText(userObj.optString("nickName"));

@@ -15,6 +15,7 @@ import com.yc.mema.databinding.FTwoBinding;
 import com.yc.mema.impl.TwoContract;
 import com.yc.mema.presenter.TwoPresenter;
 import com.yc.mema.utils.OneGlideImageLoader;
+import com.youth.banner.BannerConfig;
 import com.youth.banner.listener.OnBannerListener;
 import com.youth.banner.transformer.DefaultTransformer;
 
@@ -147,6 +148,7 @@ public class TwoFrg extends BaseFragment<TwoPresenter, FTwoBinding> implements T
     public void setBanner(List<DataBean> list) {
         listBannerBean.addAll(list);
         mB.banner.setImages(listBannerBean)
+                .setBannerStyle(BannerConfig.CIRCLE_INDICATOR)
                 .setImageLoader(new OneGlideImageLoader())
                 .setOnBannerListener(this)
                 .setBannerAnimation(DefaultTransformer.class)

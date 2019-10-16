@@ -42,8 +42,7 @@ import io.reactivex.schedulers.Schedulers;
 public class CloudApi {
 
     private static final String url =
-//            "192.168.1.143";
-//            "119.23.111.246:8080";
+//            "192.168.43.65";
             "47.106.179.240";
 
     public static final String SERVLET_URL = "http://" +
@@ -139,10 +138,8 @@ public class CloudApi {
      */
     public static Observable<Response<BaseResponseBean<DataBean>>> userSaveUser(String head, String nickName, String birthday, String sex, String parentId, String mema, String updataMema) {
         PostRequest<BaseResponseBean<DataBean>> post = OkGo.post(SERVLET_URL + "user/saveUser");
-//        PostRequest<BaseResponseBean<DataBean>> post = OkGo.post("http://jj123.nat300.top/adv_chain/api/user/update");
         if (!StringUtils.isEmpty(head)) {
-            post.params("headUrl", new File(head));
-//            post.params("sessionId", "41966fc3bbd94618accb98e23d386877");
+            post.params("file", new File(head));
         }
         return post
                 .headers("token", ShareSessionIdCache.getInstance(Utils.getApp()).getSessionId())
@@ -416,7 +413,7 @@ public class CloudApi {
     /**
      * 保存编辑订单
      */
-    public static Observable<Response<BaseResponseBean<DataBean>>> goodSpuSaveGoodsOrder(String goodId, String addressId, String goodSku, int goodNum, double price) {
+    public static Observable<Response<BaseResponseBean<DataBean>>> goodSpuSaveGoodsOrder(String goodId, String addressId, String goodSku, int goodNum, double price, String businessId) {
         return OkGo.<BaseResponseBean<DataBean>>post(SERVLET_URL + "goodSpu/saveGoodsOrder")
                 .headers("token", ShareSessionIdCache.getInstance(Utils.getApp()).getSessionId())
                 .params("userId", ShareSessionIdCache.getInstance(Utils.getApp()).getUserId())
@@ -426,6 +423,7 @@ public class CloudApi {
                 .params("goodNumber", goodNum)
                 .params("price", price)
                 .params("isAppraise", 0)
+                .params("businessId", businessId)
                 .converter(new NewsCallback<BaseResponseBean<DataBean>>() {
                     @Override
                     public void onSuccess(Response<BaseResponseBean<DataBean>> response) {

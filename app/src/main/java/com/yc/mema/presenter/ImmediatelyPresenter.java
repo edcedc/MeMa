@@ -63,13 +63,13 @@ public class ImmediatelyPresenter extends ImmediatelyContract.Presenter{
     }
 
     @Override
-    public void onOrder(String id, String addressId, String sku, int skuNum, double allPrice, String orderId) {
+    public void onOrder(String id, String addressId, String sku, int skuNum, double allPrice, String orderId, String businessId) {
 
         if (StringUtils.isEmpty(addressId)){
             showToast(act.getString(R.string.mema20));
             return;
         }
-        CloudApi.goodSpuSaveGoodsOrder(id, addressId, sku, skuNum, allPrice)
+        CloudApi.goodSpuSaveGoodsOrder(id, addressId, sku, skuNum, allPrice, businessId)
                 .doOnSubscribe(disposable -> {mView.showLoading();})
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<Response<BaseResponseBean<DataBean>>>() {

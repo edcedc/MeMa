@@ -19,6 +19,7 @@ import com.yc.mema.impl.InformationContract;
 import com.yc.mema.presenter.InformationPresenter;
 import com.yc.mema.utils.DatePickerUtils;
 import com.yc.mema.utils.cache.ShareSessionIdCache;
+import com.yc.mema.utils.cache.SharedAccount;
 import com.yc.mema.view.bottomFrg.CameraBottomFrg;
 import com.yc.mema.weight.PictureSelectorTool;
 
@@ -145,6 +146,7 @@ public class InformationFrg extends BaseFragment<InformationPresenter, FInformat
         User.getInstance().setLogin(true);
         ShareSessionIdCache.getInstance(Utils.getApp()).save(data.optString("token"));
         ShareSessionIdCache.getInstance(Utils.getApp()).saveUserId(user.optString("userId"));
+        SharedAccount.getInstance(act).save(user.optString("iphone"), user.optString("password"));
         UIHelper.startMainAct();
         act.finish();
     }

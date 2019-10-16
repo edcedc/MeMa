@@ -134,8 +134,8 @@ public class BusinessGiftDescFrg extends BaseFragment<CustomizedPresenter, FBusi
         mB.recyclerView.addItemDecoration(new LinearDividerItemDecoration(act, DividerItemDecoration.VERTICAL, 2));
 
         mB.tvTitle.setText(bean.getWalTitle());
-        mB.ratingbar.setRating(4);
-        mB.tvNum.setText(bean.getPrice() +
+        mB.ratingbar.setRating((float) bean.getScore());
+        mB.tvNum.setText("100" +
                 "/人");
         mB.tvTime.setText(bean.getBusinessTime());
         mB.tvPhone.setText(bean.getIphone());
@@ -256,7 +256,7 @@ public class BusinessGiftDescFrg extends BaseFragment<CustomizedPresenter, FBusi
                 act.finish();
                 break;
             case R.id.tv_address:
-                MapUtils.startMap(act, Double.valueOf(latitude), Double.valueOf(longitude), mB.tvTitle.getText().toString(), mB.tvAddress.getText().toString());
+                MapUtils.startMap(act, latitude, longitude, mB.tvTitle.getText().toString(), mB.tvAddress.getText().toString());
                 break;
             case R.id.tv_zh:
                 setLabel(1);

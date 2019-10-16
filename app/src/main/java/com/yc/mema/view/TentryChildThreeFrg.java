@@ -70,7 +70,7 @@ public class TentryChildThreeFrg extends BaseFragment<TentryPresenter, FTentryCh
                 mB.tvTitle.setText(getText(R.string.audit_c));
                 mB.tvContent.setText(getText(R.string.mema40));
                 mB.btSubmit.setText(getText(R.string.mema39));
-                mB.btSubmit.setVisibility(View.VISIBLE);
+                mB.btSubmit.setVisibility(View.GONE);
                 break;
             case 2:
                 mB.tvTitle.setCompoundDrawablesWithIntrinsicBounds(null,

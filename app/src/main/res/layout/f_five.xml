@@ -88,6 +88,7 @@
 
                     <android.support.v7.widget.AppCompatImageView
                         android:id="@+id/iv_zking"
+                        android:visibility="gone"
                         style="@style/Tv12white"
                         android:layout_marginRight="@dimen/px70"
                         android:background="@mipmap/weima1"
@@ -98,6 +99,7 @@
                     <android.support.v7.widget.AppCompatImageView
                         style="@style/Tv12white"
                         android:layout_marginRight="@dimen/px30"
+                        android:visibility="gone"
                         android:background="@mipmap/xiala11"
                         app:layout_constraintBottom_toBottomOf="@id/iv_zking"
                         app:layout_constraintRight_toRightOf="parent"

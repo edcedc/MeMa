@@ -8,6 +8,7 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 
 import com.baidu.mapapi.model.LatLng;
+import com.blankj.utilcode.util.StringUtils;
 import com.blankj.utilcode.util.ToastUtils;
 
 import java.util.ArrayList;
@@ -71,7 +72,13 @@ public class MapUtils {
     }
 
 
-    public static void startMap(Activity act, double latitude, double longitude, String title, String address){
+    public static void startMap(Activity act, String la, String lo, String title, String address){
+        if (StringUtils.isEmpty(la) || StringUtils.isEmpty(lo)){
+            ToastUtils.showShort("经纬度无效");
+            return;
+        }
+        double latitude = Double.valueOf(la);
+        double longitude = Double.valueOf(lo);
         Intent intent = new Intent();
         //如果已安装,
         if(MapUtils.isAvilible(act,"com.baidu.BaiduMap")) {//传入指定应用包名

@@ -2,6 +2,7 @@ package com.yc.mema.view;
 
 import android.os.Bundle;
 import android.view.View;
+
 import com.baidu.location.Address;
 import com.baidu.location.BDAbstractLocationListener;
 import com.baidu.location.BDLocation;
@@ -20,12 +21,13 @@ import com.yc.mema.adapter.AddressAdapter;
 import com.yc.mema.base.BaseFragment;
 import com.yc.mema.bean.AddressBean;
 import com.yc.mema.bean.DataBean;
-import com.yc.mema.controller.UIHelper;
 import com.yc.mema.databinding.FAddressBinding;
 import com.yc.mema.event.AddressInEvent;
 import com.yc.mema.impl.InformationContract;
 import com.yc.mema.presenter.InformationPresenter;
+
 import org.greenrobot.eventbus.EventBus;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,13 +38,13 @@ import java.util.List;
  * Time: 12:01
  *  设置地址
  */
-public class AddressFrg extends BaseFragment<InformationPresenter, FAddressBinding> implements InformationContract.View, View.OnClickListener, OnGetGeoCoderResultListener {
+public class Address2Frg extends BaseFragment<InformationPresenter, FAddressBinding> implements InformationContract.View, View.OnClickListener, OnGetGeoCoderResultListener {
 
-    public static AddressFrg newInstance() {
+    public static Address2Frg newInstance() {
 
         Bundle args = new Bundle();
 
-        AddressFrg fragment = new AddressFrg();
+        Address2Frg fragment = new Address2Frg();
         fragment.setArguments(args);
         return fragment;
     }
@@ -58,6 +60,7 @@ public class AddressFrg extends BaseFragment<InformationPresenter, FAddressBindi
     private MyLocationListenner myListener = new MyLocationListenner();
     private LocationClient mLocClient;
     private boolean isLocation = false;
+    private String shangAddress;
 
     private GeoCoder mSearch = null; // 搜索模块，也可去掉地图模块独立使用
 
@@ -70,6 +73,8 @@ public class AddressFrg extends BaseFragment<InformationPresenter, FAddressBindi
     @Override
     protected void initParms(Bundle bundle) {
         type = bundle.getInt("type");
+        parentId = bundle.getString("parentId");
+        shangAddress = bundle.getString("address");
     }
 
     @Override
@@ -80,18 +85,9 @@ public class AddressFrg extends BaseFragment<InformationPresenter, FAddressBindi
     @Override
     protected void initView(View view) {
         setTitle(getString(R.string.set_address), getString(R.string.submit1));
-        switch (type){
-            case AddressInEvent.GIFT_TYPE:
-            case AddressInEvent.LIWU:
-            case AddressInEvent.APPLY_TYPE:
+        mB.gpLocate.setVisibility(View.GONE);
+        mB.tvAll.setText(shangAddress);
 
-                break;
-            case AddressInEvent.USER_INFP_TYPE:
-            case AddressInEvent.HARVEST_ADDRESS:
-            case AddressInEvent.TENTRY:
-                mB.gpLocate.setVisibility(View.GONE);
-                break;
-        }
         // 定位初始化
         mLocClient = new LocationClient(act);
         mLocClient.registerLocationListener(myListener);
@@ -101,7 +97,7 @@ public class AddressFrg extends BaseFragment<InformationPresenter, FAddressBindi
         option.setScanSpan(1000);
         option.setIsNeedAddress(true);//反编译获得具体位置，只有网络定位才可以
         mLocClient.setLocOption(option);
-        mLocClient.start();
+//        mLocClient.start();
         // 初始化搜索模块，注册事件监听
         mSearch = GeoCoder.newInstance();
         mSearch.setOnGetGeoCodeResultListener(this);
@@ -113,11 +109,11 @@ public class AddressFrg extends BaseFragment<InformationPresenter, FAddressBindi
         setRecyclerViewType(mB.recyclerView);
         mB.recyclerView.setAdapter(adapter);
         showLoadDataing();
-        mPresenter.onRequest(null);
+        mPresenter.onRequest(parentId);
         adapter.setOnClickListener((parentId, address, regionLevel, position) -> {
             isLocation = false;
-//            mB.gpLocate.setVisibility(View.GONE);
-//            mB.tvAll.setText(sb.toString());
+            mB.gpLocate.setVisibility(View.GONE);
+            mB.tvAll.setText(sb.toString());
             this.regionLevel = regionLevel;
             /*if (regionLevel >= 3){
                 this.addressEnd = address;
@@ -129,17 +125,16 @@ public class AddressFrg extends BaseFragment<InformationPresenter, FAddressBindi
                 sbId.append(parentId).append(",");
                 mPresenter.onRequest(parentId);
             }*/
+            mB.tvAll.setText(shangAddress + " " + address);
             this.parentId = parentId;
-            mB.tvAll.setText(address);
             LogUtils.e(mB.tvAll.getText().toString(), parentId);
-            UIHelper.startAddress1Frg(this, type, parentId, address);
         });
     }
 
     @Override
     protected void setOnRightClickListener() {
         super.setOnRightClickListener();
-        if (StringUtils.isEmpty(addressEnd) && !isLocation)return;
+//        if (StringUtils.isEmpty(addressEnd) && !isLocation)return;
         switch (type){
             case AddressInEvent.GIFT_TYPE:
 
@@ -221,13 +216,13 @@ public class AddressFrg extends BaseFragment<InformationPresenter, FAddressBindi
         if (isLocation){
             split = mB.tvLocation.getText().toString().split(" ");
         }else {
-            sbId.append(parentId);
+//            sbId.append(parentId);
             LogUtils.e(sbId);
-            if (sbId.toString().indexOf("edison") != -1){
-                sbId = sbId.delete(sbId.toString().length() - 7, sbId.toString().length());
-            }else {
-                sbId.append(sbId.toString().split(",")[2]);
-            }
+//            if (sbId.toString().indexOf("edison") != -1){
+//                sbId = sbId.delete(sbId.toString().length() - 7, sbId.toString().length());
+//            }else {
+//                sbId.append(sbId.toString().split(",")[2]);
+//            }
             split = mB.tvAll.getText().toString().split(" ");
         }
         AddressBean.getInstance().setCountry(split[0]);
@@ -236,8 +231,8 @@ public class AddressFrg extends BaseFragment<InformationPresenter, FAddressBindi
         AddressBean.getInstance().setAddress(AddressBean.getInstance().getCountry() + " " + AddressBean.getInstance().getProvince() + " " + AddressBean.getInstance().getCity());
         LogUtils.e(AddressBean.getInstance().getCountry(), AddressBean.getInstance().getProvince(),
                 AddressBean.getInstance().getCity(), AddressBean.getInstance().getLatitude(), AddressBean.getInstance().getLocation(),
-        sbId);
-        EventBus.getDefault().post(new AddressInEvent(type, sbId.toString()));
+                parentId);
+        EventBus.getDefault().post(new AddressInEvent(type, parentId));
         act.finish();
     }
 

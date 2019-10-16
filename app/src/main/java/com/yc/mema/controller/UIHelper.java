@@ -13,6 +13,8 @@ import com.yc.mema.bean.DataBean;
 import com.yc.mema.view.AboutFrg;
 import com.yc.mema.view.AccountFrg;
 import com.yc.mema.view.AddBirthdayRecordsFrg;
+import com.yc.mema.view.Address1Frg;
+import com.yc.mema.view.Address2Frg;
 import com.yc.mema.view.ApplyFrg;
 import com.yc.mema.view.BingPhoneFrg;
 import com.yc.mema.view.BirthdayRecordsFrg;
@@ -254,6 +256,24 @@ public final class UIHelper {
         Bundle bundle = new Bundle();
         bundle.putInt("type", startType);
         ActivityUtils.startActivity(bundle, AddressAct.class);
+    }
+    public static void startAddress1Frg(BaseFragment root, int startType, String parentId, String address) {
+        Address1Frg frg = new Address1Frg();
+        Bundle bundle = new Bundle();
+        bundle.putInt("type", startType);
+        bundle.putString("parentId", parentId);
+        bundle.putString("address", address);
+        frg.setArguments(bundle);
+        root.start(frg);
+    }
+    public static void startAddress2Frg(BaseFragment root, int startType, String parentId, String address) {
+        Address2Frg frg = new Address2Frg();
+        Bundle bundle = new Bundle();
+        bundle.putInt("type", startType);
+        bundle.putString("parentId", parentId);
+        bundle.putString("address", address);
+        frg.setArguments(bundle);
+        root.start(frg);
     }
 
     /**
