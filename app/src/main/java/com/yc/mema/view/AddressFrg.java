@@ -216,7 +216,6 @@ public class AddressFrg extends BaseFragment<InformationPresenter, FAddressBindi
         }
         AddressBean.getInstance().setLocation(result.getLocation().longitude);
         AddressBean.getInstance().setLatitude(result.getLocation().latitude);
-
         String[] split;
         if (isLocation){
             split = mB.tvLocation.getText().toString().split(" ");
@@ -230,12 +229,12 @@ public class AddressFrg extends BaseFragment<InformationPresenter, FAddressBindi
             }
             split = mB.tvAll.getText().toString().split(" ");
         }
-        AddressBean.getInstance().setCountry(split[0]);
-        AddressBean.getInstance().setProvince(split[1]);
-        AddressBean.getInstance().setCity(split[2]);
-        AddressBean.getInstance().setAddress(AddressBean.getInstance().getCountry() + " " + AddressBean.getInstance().getProvince() + " " + AddressBean.getInstance().getCity());
-        LogUtils.e(AddressBean.getInstance().getCountry(), AddressBean.getInstance().getProvince(),
-                AddressBean.getInstance().getCity(), AddressBean.getInstance().getLatitude(), AddressBean.getInstance().getLocation(),
+        AddressBean.getInstance().setProvince(split[0]);
+        AddressBean.getInstance().setCity(split[1]);
+        AddressBean.getInstance().setDistrict(split[2]);
+        AddressBean.getInstance().setAddress(AddressBean.getInstance().getProvince() + " " + AddressBean.getInstance().getCity() + " " + AddressBean.getInstance().getDistrict());
+        LogUtils.e( AddressBean.getInstance().getProvince(), AddressBean.getInstance().getCity(),AddressBean.getInstance().getDistrict(),
+                AddressBean.getInstance().getLatitude(), AddressBean.getInstance().getLocation(),
         sbId);
         EventBus.getDefault().post(new AddressInEvent(type, sbId.toString()));
         act.finish();
@@ -258,18 +257,17 @@ public class AddressFrg extends BaseFragment<InformationPresenter, FAddressBindi
                 return;
             }
             LogUtils.e(location.getLatitude(), location.getLongitude(),
-                    location.getProvince(),  location.getCity(),
+                    location.getProvince(),  location.getCity(), location.getDistrict(),
                     location.getAddrStr());
             Address address = location.getAddress();
-           /* AddressBean.getInstance().setLocation(location.getLongitude());
-            AddressBean.getInstance().setLatitude(location.getLatitude());
-            AddressBean.getInstance().setCountry(address.country);
-            AddressBean.getInstance().setProvince(address.province);
-            AddressBean.getInstance().setCity(address.city);
-            AddressBean.getInstance().setDistrict(address.district);
-            EventBus.getDefault().post(new LocationInEvent());*/
 
-            mB.tvLocation.setText(address.province + " " + address.city + " " + address.district);
+            String province = address.province;
+            if (StringUtils.isEmpty(province)){
+                mB.tvLocation.setText(AddressBean.getInstance().getProvince() + " " + AddressBean.getInstance().getCity() + " " + AddressBean.getInstance().getDistrict());
+            }else {
+                mB.tvLocation.setText(address.province + " " + address.city + " " + address.district);
+            }
+
             if (address != null){
                 mLocClient.stop();
             }

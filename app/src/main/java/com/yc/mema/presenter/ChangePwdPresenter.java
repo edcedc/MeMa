@@ -34,7 +34,7 @@ public class ChangePwdPresenter extends ChangePwdContract.Presenter {
             showToast(act.getString(R.string.error_phone));
             return;
         }
-        CloudApi.userSendVcode(phone,8)
+        CloudApi.userSendVcode(phone,4)
                 .doOnSubscribe(disposable -> {mView.showLoading();})
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<Response<BaseResponseBean>>() {

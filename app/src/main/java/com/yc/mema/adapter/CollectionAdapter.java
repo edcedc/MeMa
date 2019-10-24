@@ -1,8 +1,14 @@
 package com.yc.mema.adapter;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.RecyclerView;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.style.AbsoluteSizeSpan;
+import android.text.style.ForegroundColorSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -159,6 +165,37 @@ public class CollectionAdapter extends BaseRecyclerviewAdapter<DataBean> {
                 }
             });
             viewHolder.itemView.setOnClickListener(view -> UIHelper.startBusinessGiftAct(bean));
+        }else if (holder instanceof ShopViewHolder){
+            ShopViewHolder viewHolder = (ShopViewHolder) holder;
+            List<DataBean> imgs = bean.getGoodSpuImgs();
+            if (imgs != null && imgs.size() != 0){
+                GlideLoadingUtils.load(act, CloudApi.SERVLET_IMG_URL + imgs.get(0).getAttachId(), viewHolder.iv_img);
+            }
+            viewHolder.tv_title.setText(bean.getGoodName());
+
+            double price = bean.getPrice();
+            String sales = bean.getSales() + "";
+            SpannableString hText = new SpannableString("¥" + price + "    已售" + sales + "件");
+            hText.setSpan(new ForegroundColorSpan(Color.parseColor("#EC5B44")), 0, String.valueOf(price).length() + 1, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+            hText.setSpan(new AbsoluteSizeSpan(10, true), 0, 1, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+            hText.setSpan(new AbsoluteSizeSpan(10, true), hText.length() - (1 + sales.length() + 5), hText.length(), Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+            viewHolder.tv_content.setText(hText);
+
+            viewHolder.itemView.setOnClickListener(view -> UIHelper.startShopDescAct(bean.getGoodId()));
+
+            isDel(viewHolder.cb_submit);
+            viewHolder.cb_submit.setChecked(bean.isSelect());
+            viewHolder.cb_submit.setOnClickListener(view -> {
+                if (listener != null) {
+                    if (bean.isSelect()){
+                        bean.setSelect(false);
+                    }else {
+                        bean.setSelect(true);
+                    }
+                    viewHolder.cb_submit.setChecked(bean.isSelect());
+                    listener.click(position, bean.isSelect());
+                }
+            });
         }
     }
 
@@ -184,8 +221,26 @@ public class CollectionAdapter extends BaseRecyclerviewAdapter<DataBean> {
                 return new ConsultViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.i_consult, parent, false));
             case 2:
                 return new GiftViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.i_gift, parent, false));
+            case 3:
+                return new ShopViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.i_shop, parent, false));
         }
         return null;
+    }
+
+    class ShopViewHolder extends RecyclerView.ViewHolder{
+
+        AppCompatTextView tv_title;
+        AppCompatTextView tv_content;
+        RoundImageView iv_img;
+        CheckBox cb_submit;
+
+        public ShopViewHolder(@NonNull View itemView) {
+            super(itemView);
+            tv_title = itemView.findViewById(R.id.tv_title);
+            tv_content = itemView.findViewById(R.id.tv_content);
+            iv_img = itemView.findViewById(R.id.iv_img);
+            cb_submit = itemView.findViewById(R.id.cb_submit);
+        }
     }
 
     class ProneViewHolder extends RecyclerView.ViewHolder{

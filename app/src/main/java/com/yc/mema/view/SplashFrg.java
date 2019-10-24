@@ -217,6 +217,8 @@ public class SplashFrg extends BaseFragment<BasePresenter, FSplashBinding> imple
                         Manifest.permission.CAMERA,//拍照权限, 允许访问摄像头进行拍照
                         Manifest.permission.ACCESS_FINE_LOCATION,
                         Manifest.permission.CALL_PHONE
+//                        Manifest.permission.CONTROL_LOCATION_UPDATES
+//                        Manifest.permission.INSTALL_LOCATION_PROVIDER
                 )
                 .rationale(new RuntimeRationale())
                 .onGranted(permissions -> setPermissionOk())
@@ -410,16 +412,29 @@ public class SplashFrg extends BaseFragment<BasePresenter, FSplashBinding> imple
             if (location == null) {
                 return;
             }
-            LogUtils.e(location.getLatitude(), location.getLongitude(),
-                    location.getProvince(),  location.getCity(),
-                    location.getAddrStr());
             Address address = location.getAddress();
-            AddressBean.getInstance().setLocation(location.getLongitude());
-            AddressBean.getInstance().setLatitude(location.getLatitude());
-            AddressBean.getInstance().setCountry(address.country);
-            AddressBean.getInstance().setProvince(address.province);
-            AddressBean.getInstance().setCity(address.city);
-            AddressBean.getInstance().setDistrict(address.district);
+            String province = location.getProvince();
+            if (StringUtils.isEmpty(province)){
+                AddressBean.getInstance().setLocation(113.321218);
+                AddressBean.getInstance().setLatitude(23.129386);
+                AddressBean.getInstance().setCountry("中国");
+                AddressBean.getInstance().setProvince("广东省");
+                AddressBean.getInstance().setCity("广州市");
+                AddressBean.getInstance().setDistrict("越秀区");
+                AddressBean.getInstance().setAddress("中国广东省广州市越秀区梅花村街道广州大道中289号-附4楼");
+            }else {
+                AddressBean.getInstance().setLocation(location.getLongitude());
+                AddressBean.getInstance().setLatitude(location.getLatitude());
+                AddressBean.getInstance().setCountry(address.country);
+                AddressBean.getInstance().setProvince(address.province);
+                AddressBean.getInstance().setCity(address.city);
+                AddressBean.getInstance().setDistrict(address.district);
+                AddressBean.getInstance().setAddress(location.getAddrStr());
+            }
+            LogUtils.e(location.getLatitude(), location.getLongitude(),location.getCountry(),
+                    location.getProvince(),  location.getCity(), location.getDistrict(),
+                    location.getAddrStr());
+
 //            EventBus.getDefault().post(new LocationInEvent());
             if (address != null){
                 mLocClient.stop();

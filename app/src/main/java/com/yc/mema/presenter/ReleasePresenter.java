@@ -51,7 +51,7 @@ public class ReleasePresenter extends ReleaseContract.Presenter{
 
     @Override
     public void onRelease(String text, String path, String suolue) {
-        if (StringUtils.isEmpty(text) || StringUtils.isEmpty(path)) {
+        if (StringUtils.isEmpty(text) && StringUtils.isEmpty(path)) {
             showToast(act.getString(R.string.error_));
             return;
         }

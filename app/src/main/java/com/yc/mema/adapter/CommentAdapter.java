@@ -86,7 +86,7 @@ public class CommentAdapter extends BaseRecyclerviewAdapter<DataBean> {
             });
             viewHolder.listView.setOnItemClickListener((adapterView, view, i, l) -> {
                 if (listener != null){
-                    listener.onSecondComment(position, bean.getInfoId(), bean.getDiscussId(), bean.getUserId());
+                    listener.onSecondComment(position, bean.getVideoId(), bean.getDiscussId(), bean.getUserId());
                 }
             });
             viewHolder.tv_lock.setOnClickListener(view -> {

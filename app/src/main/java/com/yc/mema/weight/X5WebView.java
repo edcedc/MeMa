@@ -52,7 +52,7 @@ public class X5WebView extends WebView {
          */
         webSetting.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.NARROW_COLUMNS);
         webSetting.setSupportZoom(true); // 支持缩放
-        webSetting.setBuiltInZoomControls(true);// 设置显示缩放按钮
+        webSetting.setBuiltInZoomControls(false);// 设置显示缩放按钮
         webSetting.setUseWideViewPort(true);//设置webview推荐使用的窗口 //设置可在大视野范围内上下左右拖动，并且可以任意比例缩放
         webSetting.setSupportMultipleWindows(true);
         webSetting.setLoadWithOverviewMode(true);//设置webview加载的页面的模式  //设置默认加载的可视范围是大视野范围

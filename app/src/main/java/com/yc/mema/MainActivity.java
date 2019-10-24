@@ -3,11 +3,15 @@ package com.yc.mema;
 import android.Manifest;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
+import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.Settings;
+import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 
 import com.baidu.location.Address;
@@ -87,6 +91,8 @@ public class MainActivity extends BaseActivity {
         // IntentService, 必须在 AndroidManifest 中声明)
 //        PushManager.getInstance().registerPushIntentService(this.getApplicationContext(), IntentService.class);
 //        PushManager.getInstance().bindAlias(this, "999");
+
+//        openGPSSettings();
     }
 
     @Override
@@ -128,6 +134,55 @@ public class MainActivity extends BaseActivity {
             }
         }
     }
+
+
+    /**
+     * 检测GPS是否打开
+     *
+     * @return
+     */
+    private boolean checkGPSIsOpen() {
+        boolean isOpen;
+        LocationManager locationManager = (LocationManager) act.getSystemService(Context.LOCATION_SERVICE);
+        isOpen = locationManager.isProviderEnabled(android.location.LocationManager.GPS_PROVIDER);
+        return isOpen;
+    }
+
+    private int GPS_REQUEST_CODE = 10;
+
+    /**
+     * 跳转GPS设置
+     */
+    private void openGPSSettings() {
+        if (checkGPSIsOpen()){
+            if (findFragment(MainFrg.class) == null) {
+                loadRootFragment(R.id.fl_container, MainFrg.newInstance());
+            }
+        }else {
+            //没有打开则弹出对话框
+            new AlertDialog.Builder(this)
+                    .setTitle("提示")
+                    .setMessage("当前定位需要打开定位功能\n" + "请点击\"设置\"-\"定位服务\"-打开定位功能。")
+                    // 拒绝, 退出应用
+                    .setNegativeButton(R.string.cancel,
+                            new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+//                                    finish();
+                                }
+                            })
+
+                    .setPositiveButton(R.string.setting,
+                            (dialog, which) -> {
+                                //跳转GPS设置界面
+                                Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                                startActivityForResult(intent, GPS_REQUEST_CODE);
+                            })
+                    .setCancelable(false)
+                    .show();
+        }
+    }
+    private static final int SETTING_REQUESTCODE = 1;
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {

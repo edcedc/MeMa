@@ -88,7 +88,7 @@
                             android:scaleType="centerCrop"
                             android:src="@mipmap/place_holder" />
 
-                        <WebView
+                        <com.yc.mema.weight.X5WebView
                             android:id="@+id/webView"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"

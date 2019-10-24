@@ -687,8 +687,9 @@ public class DataBean implements Serializable {
 
 
     private List<DataBean> goodSpuImgs, welfareList, homeBannerList, goodSpuList, setmealList, discussImgs, informationImg, welfareImgs,
-            specList, specValues, list, bannerList;
+            specList, specValues, bannerList;
 
+    private List<DataBean> list = new ArrayList<>();
 
     public List<DataBean> getBannerList() {
         return bannerList;

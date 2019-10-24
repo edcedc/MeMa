@@ -16,7 +16,10 @@
 
     <android.support.v7.widget.AppCompatTextView
         android:id="@+id/tv_title"
+        android:layout_width="0dp"
+        app:layout_constraintRight_toRightOf="parent"
         android:layout_marginLeft="@dimen/px30"
+        android:maxLines="2"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toRightOf="@id/iv_img"
         app:layout_constraintBottom_toTopOf="@+id/tv_price"

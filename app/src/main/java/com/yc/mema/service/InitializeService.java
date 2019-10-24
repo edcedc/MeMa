@@ -180,6 +180,7 @@ public class InitializeService extends IntentService {
         headers.put("token", ShareSessionIdCache.getInstance(Utils.getApp()).getSessionId());
         //        headers.put("commonHeaderKey2", "commonHeaderValue2");
         com.lzy.okgo.model.HttpParams params = new com.lzy.okgo.model.HttpParams();
+        params.put("state", 0);
         //        params.put("sessionId", User.getInstance().getSessionId());     //param支持中文,直接传,不要自己编码
         //----------------------------------------------------------------------------------------//
 

@@ -1,6 +1,8 @@
 package com.yc.mema.view;
 
+import android.content.Context;
 import android.graphics.Color;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -161,7 +163,7 @@ public class SixFrg extends BaseFragment<SixPresenter, FSixBinding> implements S
         showLoadDataing();
         mPresenter.onBanner();
         mPresenter.onLabel();
-        county = AddressBean.getInstance().getCity();
+        county = AddressBean.getInstance().getDistrict();
 //        mPresenter.onRequest(pagerNumber = 1, low, up, type, county);
         mPresenter.onGetHomeClassify(null);
         mB.refreshLayout.setEnableRefresh(false);
@@ -288,8 +290,8 @@ public class SixFrg extends BaseFragment<SixPresenter, FSixBinding> implements S
     @Subscribe
     public void onMainAddressInEvent(AddressInEvent event) {
         if (event.type != AddressInEvent.LIWU) return;
-        county = AddressBean.getInstance().getCity();
-        mB.tvLocation.setText(AddressBean.getInstance().getCity());
+        county = AddressBean.getInstance().getDistrict();
+        mB.tvLocation.setText(county);
         mPresenter.onRequest(pagerNumber = 1, 0, 0, 1, county);
         setLabel(1);
     }
@@ -331,5 +333,6 @@ public class SixFrg extends BaseFragment<SixPresenter, FSixBinding> implements S
         }
         mPresenter.onRequest(pagerNumber = 1, low, up, type, county);
     }
+
 
 }

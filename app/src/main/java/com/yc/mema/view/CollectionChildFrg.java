@@ -83,6 +83,11 @@ public class CollectionChildFrg extends BaseFragment<CollectionPresenter, FColle
                 setRecyclerViewGridType(mB.recyclerView, 3, 10, 10, R.color.white);
                 setMargins(mB.recyclerView, 30, 0, 30, 0);
                 break;
+            case 3:
+                mB.refreshLayout.setBackgroundColor(act.getResources().getColor(R.color.white));
+                setRecyclerViewGridType(mB.recyclerView, 2, 30, 10, R.color.white);
+                setMargins(mB.recyclerView, 30, 0, 30, 0);
+                break;
             default:
                 setRecyclerViewType(mB.recyclerView);
                 mB.recyclerView.addItemDecoration(new LinearDividerItemDecoration(act, DividerItemDecoration.VERTICAL, 2));

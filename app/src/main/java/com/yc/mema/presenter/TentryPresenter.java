@@ -45,7 +45,11 @@ public class TentryPresenter extends TentryContract.Presenter {
         if (isShop && isMerchants){
             type = 3;
         }
-        if (StringUtils.isEmpty(name) ||StringUtils.isEmpty(phone) ||StringUtils.isEmpty(userId) ||StringUtils.isEmpty(num) ||StringUtils.isEmpty(bankName) ||StringUtils.isEmpty(bankPhone) ||StringUtils.isEmpty(bankId) ||StringUtils.isEmpty(address) ||StringUtils.isEmpty(addressDesc) || type == 0 ||StringUtils.isEmpty(category) ||StringUtils.isEmpty(shopArea)){
+        if (StringUtils.isEmpty(name) ||StringUtils.isEmpty(phone) ||StringUtils.isEmpty(userId) ||StringUtils.isEmpty(num) ||StringUtils.isEmpty(bankName) ||StringUtils.isEmpty(bankPhone) ||StringUtils.isEmpty(bankId) ||StringUtils.isEmpty(address) ||StringUtils.isEmpty(addressDesc) || type == 0 ||StringUtils.isEmpty(shopArea)){
+            showToast(act.getString(R.string.error_));
+            return;
+        }
+        if (type >= 2 && StringUtils.isEmpty(category)){
             showToast(act.getString(R.string.error_));
             return;
         }

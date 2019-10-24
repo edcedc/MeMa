@@ -186,7 +186,13 @@ public class BirthdayRecordsFrg extends BaseFragment<BirthdayRecordsPresenter, F
                 currentCalendars = calendarAdapter.getPagers();
                 if (currentCalendars.get(position % currentCalendars.size()) != null) {
                     CalendarDate date = currentCalendars.get(position % currentCalendars.size()).getSeedDate();
-                    nowString = date.getYear() + "-" + date.getMonth();
+
+                    int month = date.getMonth();
+                    if (month < 10){
+                        nowString = date.getYear() + "-0" + date.getMonth();
+                    }else {
+                        nowString = date.getYear() + "-" + date.getMonth();
+                    }
                     mB.tvDay.setText(nowString);
                     new Handler().postDelayed(() -> mPresenter.onRequest(nowString), 200);
                     LogUtils.e(nowString);
@@ -235,7 +241,7 @@ public class BirthdayRecordsFrg extends BaseFragment<BirthdayRecordsPresenter, F
             markData.put(brithday.split("-")[0] + "-" + month + "-" + day, "1");
         }
         calendarAdapter.setMarkData(markData);
-        calendarAdapter.notifyDataChanged();
+//        calendarAdapter.notifyDataChanged();
     }
 
     @Override

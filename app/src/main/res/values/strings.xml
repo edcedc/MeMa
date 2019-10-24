@@ -145,6 +145,7 @@
     <string name="weixin" translatable="false">微信号</string>
     <string name="weixin1" translatable="false">请输入微信号</string>
     <string name="shop_category" translatable="false">商品分类</string>
+    <string name="shop1" translatable="false">商品</string>
     <string name="cake" translatable="false">蛋糕</string>
     <string name="shop_desc" translatable="false">-----   商品详情   -----</string>
     <string name="eat" translatable="false">吃</string>

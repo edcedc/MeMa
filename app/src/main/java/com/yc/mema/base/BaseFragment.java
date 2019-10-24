@@ -165,6 +165,7 @@ public abstract class BaseFragment<P extends BasePresenter, VB extends ViewDataB
         errorText(e, null);
     }
     private void errorText(Throwable e, String errorName){
+        hideLoading();
         if (null != e) {
             LogUtils.e(e.getMessage(), errorName);
             showToast(e.getMessage());

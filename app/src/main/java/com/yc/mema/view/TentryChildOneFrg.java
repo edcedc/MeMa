@@ -68,11 +68,8 @@ public class TentryChildOneFrg extends BaseFragment<TentryPresenter, FTentryChil
         mB.tvAddress.setOnClickListener(this);
         mB.tvCategory.setOnClickListener(this);
         EventBus.getDefault().register(this);
-        mB.cbShop.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+        mB.cbShop.setOnCheckedChangeListener((compoundButton, b) -> {
 
-            }
         });
          mB.cbMerchants.setOnCheckedChangeListener((compoundButton, b) -> mB.gpCategory.setVisibility(b ? View.VISIBLE : View.GONE));
     }
@@ -119,9 +116,9 @@ public class TentryChildOneFrg extends BaseFragment<TentryPresenter, FTentryChil
         EventBus.getDefault().unregister(this);
     }
 
-
     @Override
     public void setData(List<DataBean> list) {
 
     }
+
 }

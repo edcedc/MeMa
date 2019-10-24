@@ -156,10 +156,15 @@ public class Address2Frg extends BaseFragment<InformationPresenter, FAddressBind
         }else {
             split = mB.tvAll.getText().toString().split(" ");
         }
-        // Geo搜索
-        mSearch.geocode(new GeoCodeOption()
-                .city(split[1])
-                .address(split[2]));
+
+        if (split.length > 2){
+            // Geo搜索
+            mSearch.geocode(new GeoCodeOption()
+                    .city(split[1])
+                    .address(split[2]));
+        }else {
+            showToast("请选择区");
+        }
     }
 
     @Override
@@ -225,12 +230,14 @@ public class Address2Frg extends BaseFragment<InformationPresenter, FAddressBind
 //            }
             split = mB.tvAll.getText().toString().split(" ");
         }
-        AddressBean.getInstance().setCountry(split[0]);
-        AddressBean.getInstance().setProvince(split[1]);
-        AddressBean.getInstance().setCity(split[2]);
-        AddressBean.getInstance().setAddress(AddressBean.getInstance().getCountry() + " " + AddressBean.getInstance().getProvince() + " " + AddressBean.getInstance().getCity());
-        LogUtils.e(AddressBean.getInstance().getCountry(), AddressBean.getInstance().getProvince(),
-                AddressBean.getInstance().getCity(), AddressBean.getInstance().getLatitude(), AddressBean.getInstance().getLocation(),
+        AddressBean.getInstance().setProvince(split[0]);
+        AddressBean.getInstance().setCity(split[1]);
+        AddressBean.getInstance().setDistrict(split[2]);
+        AddressBean.getInstance().setAddress(AddressBean.getInstance().getProvince() + " " + AddressBean.getInstance().getCity() + " " + AddressBean.getInstance().getDistrict());
+        LogUtils.e(
+                AddressBean.getInstance().getProvince(),
+                AddressBean.getInstance().getCity(), AddressBean.getInstance().getDistrict(),
+                AddressBean.getInstance().getLatitude(), AddressBean.getInstance().getLocation(),
                 parentId);
         EventBus.getDefault().post(new AddressInEvent(type, parentId));
         act.finish();

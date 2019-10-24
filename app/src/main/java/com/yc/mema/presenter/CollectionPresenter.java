@@ -37,6 +37,9 @@ public class CollectionPresenter extends CollectionContract.Presenter {
             case 2:
                 url = CloudApi.welfareGetWelCollectList;
                 break;
+            case 3:
+                url = CloudApi.goodSpuGetGoodsSpuCollect;
+                break;
         }
         CloudApi.list(pagetNumber, url)
                 .doOnSubscribe(disposable -> {})
@@ -89,6 +92,9 @@ public class CollectionPresenter extends CollectionContract.Presenter {
                 case 2:
                     sb.append(bean.getWelId()).append(",");
                     break;
+                case 3:
+                    sb.append(bean.getGoodId()).append(",");
+                    break;
             }
             type = bean.getType();
         }
@@ -101,6 +107,9 @@ public class CollectionPresenter extends CollectionContract.Presenter {
                 break;
             case 2:
                 setGift(sb.toString(), list);
+                break;
+            case 3:
+                setShop(sb.toString(), list);
                 break;
         }
     }
@@ -179,6 +188,37 @@ public class CollectionPresenter extends CollectionContract.Presenter {
                     public void onNext(Response<BaseResponseBean> baseResponseBeanResponse) {
                         if (baseResponseBeanResponse.body().code == Code.CODE_SUCCESS){
                             EventBus.getDefault().post(new CollectionDelInEvent(ids));
+                            mView.setDel(list);
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        mView.onError(e);
+                    }
+
+                    @Override
+                    public void onComplete() {
+                        mView.hideLoading();
+                    }
+                });
+    }
+
+    public void setShop(String ids, List<DataBean> list){
+        CloudApi.goodSpuGoodCollect(ids, 0)
+                .doOnSubscribe(disposable -> {
+//                    mView.showLoading();
+                })
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<Response<BaseResponseBean>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                        mView.addDisposable(d);
+                    }
+
+                    @Override
+                    public void onNext(Response<BaseResponseBean> baseResponseBeanResponse) {
+                        if (baseResponseBeanResponse.body().code == Code.CODE_SUCCESS){
                             mView.setDel(list);
                         }
                     }

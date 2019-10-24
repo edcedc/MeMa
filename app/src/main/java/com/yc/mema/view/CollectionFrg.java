@@ -51,10 +51,11 @@ public class CollectionFrg extends BaseFragment<BasePresenter, FCollectBinding> 
         EventBus.getDefault().register(this);
         topRight = view.findViewById(R.id.top_right);
         ArrayList<Fragment> mFragments = new ArrayList<>();
-        String[] strings = new String[3];
+        String[] strings = new String[4];
         strings[0] = getString(R.string.birthday_prone);
         strings[1] = getString(R.string.consult);
         strings[2] = getString(R.string.gift);
+        strings[3] = getString(R.string.shop1);
         for (int i = 0; i < strings.length; i++){
             CollectionChildFrg frg = new CollectionChildFrg();
             Bundle bundle = new Bundle();

@@ -208,6 +208,7 @@ public class VideoFrg extends BaseFragment<VideoPresenter, FVideoBinding> implem
                 @Override
                 public void onRefresh(TwinklingRefreshLayout refreshLayout) {
                     mPresenter.onRequest(pagerNumber = 1, type);
+                    mB.refreshLayout.setEnableRefresh(false);
 //                mB.refreshLayout.setEnableRefresh(false);
                 }
 

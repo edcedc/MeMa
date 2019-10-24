@@ -142,4 +142,19 @@ public class GlideLoadingUtils {
         }
     }*/
 
+    /**
+     * 获取第1秒截图
+     */
+    public static void loadFirstFrame(Context context, String url ,ImageView imageView) {
+        imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+        Glide.with(context) .setDefaultRequestOptions(
+                        new RequestOptions()
+                                .frame(10000000)//单位微秒
+                                .centerCrop()
+                                .error(R.drawable.no_banner)
+                                .placeholder(R.drawable.no_banner) )
+                .load(url)
+                .into(imageView);
+    }
+
 }

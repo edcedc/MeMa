@@ -39,7 +39,6 @@ public class AddBirthdayRecordsPresenter extends AddBirthdayRecordsContract.Pres
                         if (baseResponseBeanResponse.body().code == Code.CODE_SUCCESS){
                             mView.setAdd();
                         }
-                        showToast(baseResponseBeanResponse.body().description);
                     }
 
                     @Override

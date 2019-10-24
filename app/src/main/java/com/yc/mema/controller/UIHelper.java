@@ -843,7 +843,6 @@ public final class UIHelper {
 
     /**
      *  么马代理
-     * @param root
      */
     public static void startMemaAgentFrg(BaseFragment root) {
         MemaAgentFrg frg = new MemaAgentFrg();
@@ -856,7 +855,5 @@ public final class UIHelper {
             ((MainFrg) root.getParentFragment()).startBrotherFragment(frg);
         }
     }
-
-
 
 }

@@ -5,17 +5,16 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.widget.DividerItemDecoration;
 import android.view.View;
-import android.webkit.JavascriptInterface;
-import android.webkit.WebChromeClient;
-import android.webkit.WebView;
-import android.webkit.WebViewClient;
-import android.widget.LinearLayout;
-import android.widget.Toast;
 
+
+import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.google.gson.Gson;
 import com.lcodecore.tkrefreshlayout.RefreshListenerAdapter;
 import com.lcodecore.tkrefreshlayout.TwinklingRefreshLayout;
+import com.tencent.smtt.sdk.WebChromeClient;
+import com.tencent.smtt.sdk.WebView;
+import com.tencent.smtt.sdk.WebViewClient;
 import com.yc.mema.R;
 import com.yc.mema.adapter.CommentAdapter;
 import com.yc.mema.base.BaseActivity;
@@ -118,6 +117,7 @@ public class NewsDescFrg extends BaseFragment<NewsDescPresenter, FNewsDescBindin
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
                 view.loadUrl(url);
+                LogUtils.e(url);
                 return true;
             }
 
@@ -137,6 +137,19 @@ public class NewsDescFrg extends BaseFragment<NewsDescPresenter, FNewsDescBindin
                 }
                 mB.progressBar.setVisibility(View.VISIBLE);
                 mB.progressBar.setProgress(newProgress);
+            }
+        });
+        mB.webView.setWebViewClient(new WebViewClient(){
+            @Override
+            public void onPageFinished(WebView view, String url) {
+                super.onPageFinished(view, url);
+                //这个是一定要加上那个的,配合scrollView和WebView的height=wrap_content属性使用
+                int w = View.MeasureSpec.makeMeasureSpec(0,
+                        View.MeasureSpec.UNSPECIFIED);
+                int h = View.MeasureSpec.makeMeasureSpec(0,
+                        View.MeasureSpec.UNSPECIFIED);
+                //重新测量
+                mB.webView.measure(w, h);
             }
         });
         adapter.setOnClickListener(new CommentAdapter.OnClickListener() {
@@ -227,7 +240,9 @@ public class NewsDescFrg extends BaseFragment<NewsDescPresenter, FNewsDescBindin
         if (img != null && img.size() != 0) {
             GlideLoadingUtils.load(act, CloudApi.SERVLET_IMG_URL + img.get(0).getAttachId(), mB.ivImg);
         }
-        mB.webView.loadDataWithBaseURL(null, bean.getContext(), "text/html", "utf-8", null);
+        mB.webView.loadUrl("http://47.106.179.240/share/#/info?infoId=" + bean.getInfoId());
+        LogUtils.e("http://47.106.179.240/share/#/info?infoId=" + bean.getInfoId());
+//        mB.webView.loadDataWithBaseURL(null, bean.getContext(), "text/html", "utf-8", null);
 
         isTrue = bean.getIsTrue();
         setInfoZanState(isTrue);

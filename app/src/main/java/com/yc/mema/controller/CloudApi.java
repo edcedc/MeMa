@@ -104,6 +104,11 @@ public class CloudApi {
      */
     public static final String welfareGetWelCollectList = "welfare/getWelCollectList";
 
+    /**
+     * 获取我的商品收藏列表
+     */
+    public static final String goodSpuGetGoodsSpuCollect = "goodSpu/getGoodsSpuCollect";
+
 
     /**
      * 获取我的资讯收藏
@@ -145,7 +150,7 @@ public class CloudApi {
                 .headers("token", ShareSessionIdCache.getInstance(Utils.getApp()).getSessionId())
                 .params("userId", User.getInstance().getUserId())
                 .params("nickName", nickName)
-                .params("birthday", birthday)
+                .params("birth", birthday)
                 .params("sex", sex)
                 .params("county", parentId)
                 .params("mema", mema)
@@ -227,7 +232,7 @@ public class CloudApi {
                 .params("bank", TentryBean.getInstance().bankName)
                 .params("defaultPhone", TentryBean.getInstance().bankPhone)
                 .params("bankNum", TentryBean.getInstance().bankId)
-                .params("county", TentryBean.getInstance().address.split(",")[2])
+                .params("county", TentryBean.getInstance().address)
                 .params("address", TentryBean.getInstance().addressDesc)
                 .params("type", TentryBean.getInstance().type)
                 .params("classifyId", TentryBean.getInstance().category)

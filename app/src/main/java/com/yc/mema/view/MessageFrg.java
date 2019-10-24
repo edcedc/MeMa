@@ -52,7 +52,7 @@ public class MessageFrg extends BaseFragment<MessagePresenter, BRecyclerBinding>
         if (adapter == null){
             adapter = new MessageAdapter(act, this, listBean);
         }
-        setRecyclerViewType(mB.recyclerView);
+        setRecyclerViewType(mB.recyclerView, R.color.white);
         mB.recyclerView.addItemDecoration(new LinearDividerItemDecoration(act, DividerItemDecoration.VERTICAL,  2));
         mB.recyclerView.setAdapter(adapter);
 
