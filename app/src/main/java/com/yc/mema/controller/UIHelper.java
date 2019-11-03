@@ -70,6 +70,7 @@ import com.yc.mema.view.act.LoginAct;
 import com.yc.mema.view.act.NewsDescAct;
 import com.yc.mema.view.act.OrderListAct;
 import com.yc.mema.view.act.ReleaseAct;
+import com.yc.mema.view.act.ShareAct;
 import com.yc.mema.view.act.ShopAct;
 import com.yc.mema.view.act.ShopDescAct;
 import com.yc.mema.view.act.VideoAct;
@@ -608,10 +609,11 @@ public final class UIHelper {
      * @param root
      */
     public static void startShareFrg(BaseFragment root) {
-        ShareFrg frg = new ShareFrg();
-        Bundle bundle = new Bundle();
-        frg.setArguments(bundle);
-        ((MainFrg) root.getParentFragment()).startBrotherFragment(frg);
+        ActivityUtils.startActivity(ShareAct.class);
+//        ShareFrg frg = new ShareFrg();
+//        Bundle bundle = new Bundle();
+//        frg.setArguments(bundle);
+//        ((MainFrg) root.getParentFragment()).startBrotherFragment(frg);
     }
 
     /**

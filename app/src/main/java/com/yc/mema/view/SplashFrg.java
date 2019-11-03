@@ -298,7 +298,8 @@ public class SplashFrg extends BaseFragment<BasePresenter, FSplashBinding> imple
                     public void onNext(JSONObject jsonObject) {
                         if (jsonObject.optInt("code") == Code.CODE_SUCCESS){
                             JSONObject data = jsonObject.optJSONObject("result");
-                            User.getInstance().setUserObj(data);
+                            JSONObject user = data.optJSONObject("user");
+                            User.getInstance().setUserObj(user);
                             User.getInstance().setLogin(true);
                         }else {
                             ShareSessionIdCache.getInstance(act).remove();

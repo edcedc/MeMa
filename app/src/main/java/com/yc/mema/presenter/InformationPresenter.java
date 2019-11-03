@@ -47,7 +47,7 @@ public class InformationPresenter extends InformationContract.Presenter {
         }
         JSONObject userObj = User.getInstance().getUserObj();
         String mema = userObj.optString("mema");
-        mema = mema.substring(mema.length() - 4, mema.length());
+        mema = mema.substring(mema.length() - 4);
         mema = time + mema;
         userSaveUser(head, name, time, null, null, "M-" + mema.replaceAll("-", ""), null);
     }
@@ -78,7 +78,7 @@ public class InformationPresenter extends InformationContract.Presenter {
         }
         String regex="^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{4}$";
         Pattern pattern = Pattern.compile(regex);
-        Matcher match=pattern.matcher(mema);
+        Matcher match = pattern.matcher(mema);
         if(!match.matches()){
             showToast(act.getString(R.string.mema12));
             return;
@@ -150,6 +150,7 @@ public class InformationPresenter extends InformationContract.Presenter {
     }
 
     private void userSaveUser(String head, String nickName, String birthday, String sex, String parentId, String mema, String updataMema){
+        LogUtils.e(mema);
         CloudApi.userSaveUser(head, nickName, birthday, sex, parentId, mema, updataMema)
                 .doOnSubscribe(disposable -> {mView.showLoading();})
                 .observeOn(AndroidSchedulers.mainThread())

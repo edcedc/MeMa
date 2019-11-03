@@ -38,6 +38,7 @@ import com.yc.mema.controller.UIHelper;
 import com.yc.mema.databinding.FVideoBinding;
 import com.yc.mema.event.CollectionDelInEvent;
 import com.yc.mema.event.VideoDelInEvent;
+import com.yc.mema.event.VideoInEvent;
 import com.yc.mema.impl.VideoContract;
 import com.yc.mema.presenter.VideoPresenter;
 import com.yc.mema.utils.Constants;
@@ -208,7 +209,7 @@ public class VideoFrg extends BaseFragment<VideoPresenter, FVideoBinding> implem
                 @Override
                 public void onRefresh(TwinklingRefreshLayout refreshLayout) {
                     mPresenter.onRequest(pagerNumber = 1, type);
-                    mB.refreshLayout.setEnableRefresh(false);
+//                    mB.refreshLayout.setEnableRefresh(false);
 //                mB.refreshLayout.setEnableRefresh(false);
                 }
 
@@ -427,6 +428,7 @@ public class VideoFrg extends BaseFragment<VideoPresenter, FVideoBinding> implem
 
     @Override
     public void setDelVideo() {
+        EventBus.getDefault().post(new VideoInEvent(1, null));
         listBean.remove(mPosition);
         adapter.notifyItemRemoved(mPosition);
         adapter.notifyItemChanged(mPosition);
@@ -514,12 +516,16 @@ public class VideoFrg extends BaseFragment<VideoPresenter, FVideoBinding> implem
 
     private void releaseVideo(int index) {
         View itemView = mB.recyclerView.getChildAt(index);
-        final CustomVideoView videoView = itemView.findViewById(R.id.video_view);
-        final ImageView imgThumb = itemView.findViewById(R.id.iv_img);
-        final ImageView imgPlay = itemView.findViewById(R.id.iv_play);
-        videoView.stopPlayback();
-        imgThumb.animate().alpha(1).start();
-        imgPlay.animate().alpha(0f).start();
+        if (itemView == null){
+            releaseVideo(0);
+        }else {
+            final CustomVideoView videoView = itemView.findViewById(R.id.video_view);
+            final ImageView imgThumb = itemView.findViewById(R.id.iv_img);
+            final ImageView imgPlay = itemView.findViewById(R.id.iv_play);
+            videoView.stopPlayback();
+            imgThumb.animate().alpha(1).start();
+            imgPlay.animate().alpha(0f).start();
+        }
     }
 
     @Subscribe
@@ -532,6 +538,11 @@ public class VideoFrg extends BaseFragment<VideoPresenter, FVideoBinding> implem
             }
         }
         adapter.notifyDataSetChanged();
+    }
+
+    @Subscribe
+    public void onVideoInEvent(VideoInEvent event) {
+       mB.refreshLayout.startRefresh();
     }
 
 }

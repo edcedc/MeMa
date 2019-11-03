@@ -145,7 +145,7 @@ public class LoginFrg extends BaseFragment<LoginPresenter, FLoginBinding> implem
     public void onLogin(JSONObject data) {
         JSONObject user = data.optJSONObject("user");
         User.getInstance().setUserObj(user);
-        if (user.optString("headUrl").equals("null") || user.optString("nickName").equals("null") || user.optString("birthday").equals("null")){
+        if (user.optString("headUrl").equals("null") || user.optString("nickName").equals("null") || user.optString("birthday").equals("null") ){
             UIHelper.startInformationFrg(this, data);
         }else {
             User.getInstance().setLogin(true);

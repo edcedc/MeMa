@@ -37,8 +37,6 @@ import java.util.List;
  */
 public class ApplyFrg extends BaseFragment<ApplyPresenter, FApplyBinding> implements ApplyContract.View, View.OnClickListener {
 
-    private String county;
-
     @Override
     public void initPresenter() {
         mPresenter.init(this);
@@ -102,7 +100,7 @@ public class ApplyFrg extends BaseFragment<ApplyPresenter, FApplyBinding> implem
                 break;
             case R.id.bt_submit:
                 mPresenter.onSave(mB.etName.getText().toString(), mB.etWx.getText().toString(), mB.etPhone.getText().toString(),
-                        mB.etCode.getText().toString(), mB.etInfocode.getText().toString(), roleId, mB.etIndustry.getText().toString(), county, mB.etDirect.getText().toString(),
+                        mB.etCode.getText().toString(), mB.etInfocode.getText().toString(), roleId, mB.etIndustry.getText().toString(), mB.tvRegion.getText().toString(), mB.etDirect.getText().toString(),
                         mB.etMailbox.getText().toString(), imgZheng, imgFan, imgShou, mB.etId.getText().toString());
                 break;
         }
@@ -134,8 +132,7 @@ public class ApplyFrg extends BaseFragment<ApplyPresenter, FApplyBinding> implem
 
     @Subscribe
     public void onMainAddressInEvent(AddressInEvent event){
-        county = event.parentId;
-        mB.tvRegion.setText(AddressBean.getInstance().getCity());
+        mB.tvRegion.setText(AddressBean.getInstance().getProvince() + " " + AddressBean.getInstance().getCity() + " " + AddressBean.getInstance().getDistrict());
     }
 
     @Override

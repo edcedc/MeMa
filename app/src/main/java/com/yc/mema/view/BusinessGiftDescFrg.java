@@ -189,7 +189,7 @@ public class BusinessGiftDescFrg extends BaseFragment<CustomizedPresenter, FBusi
                         mB.progressBar.setVisibility(View.GONE);
                         return;
                     }
-//                    mB.progressBar.setVisibility(View.VISIBLE);
+                    mB.progressBar.setVisibility(View.VISIBLE);
                     mB.progressBar.setProgress(newProgress);
                 }
             });

@@ -56,6 +56,11 @@ public class CloudApi {
     public static final String SHARE_URL = "http://" +
             url +
             "/share/#/code?userId=" + User.getInstance().getUserId();
+    //推广用户成为商家
+    public static final String SHARE_BUSINESS_URL = "http://" +
+            "cengnuokeji.com" +
+            "/share/#/register?userId=";
+
 
     public static final String SERVLET_IMG_URL = SERVLET_URL + "attach/showPic?attachId=";
 
@@ -144,7 +149,7 @@ public class CloudApi {
     public static Observable<Response<BaseResponseBean<DataBean>>> userSaveUser(String head, String nickName, String birthday, String sex, String parentId, String mema, String updataMema) {
         PostRequest<BaseResponseBean<DataBean>> post = OkGo.post(SERVLET_URL + "user/saveUser");
         if (!StringUtils.isEmpty(head)) {
-            post.params("file", new File(head));
+//            post.params("file", new File(head));
         }
         return post
                 .headers("token", ShareSessionIdCache.getInstance(Utils.getApp()).getSessionId())
@@ -366,9 +371,11 @@ public class CloudApi {
      * 1审核中  2同意  3拒绝
      */
     public static Observable<Response<BaseResponseBean<DataBean>>> agentGetUserAgent() {
+        JSONObject userObj = User.getInstance().getUserObj();
         return OkGo.<BaseResponseBean<DataBean>>get(SERVLET_URL + "agent/getUserAgent")
                 .headers("token", ShareSessionIdCache.getInstance(Utils.getApp()).getSessionId())
                 .params("userId", ShareSessionIdCache.getInstance(Utils.getApp()).getUserId())
+                .params("phone", userObj.optString("iphone"))
                 .converter(new JsonCallback<BaseResponseBean<DataBean>>() {
                     @Override
                     public void onSuccess(Response<BaseResponseBean<DataBean>> response) {
@@ -384,7 +391,7 @@ public class CloudApi {
      *      处理状态「 0待处理 1同意 2失败」
      */
     public static Observable<Response<BaseResponseBean<DataBean>>> businessGetBusiness() {
-        return OkGo.<BaseResponseBean<DataBean>>get(SERVLET_URL + "business/getBusiness")
+        return OkGo.<BaseResponseBean<DataBean>>get(SERVLET_URL + "business/getUserBusiness")
                 .headers("token", ShareSessionIdCache.getInstance(Utils.getApp()).getSessionId())
                 .params("userId", ShareSessionIdCache.getInstance(Utils.getApp()).getUserId())
                 .converter(new JsonCallback<BaseResponseBean<DataBean>>() {

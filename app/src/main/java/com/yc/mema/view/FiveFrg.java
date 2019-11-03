@@ -4,17 +4,21 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.blankj.utilcode.util.ActivityUtils;
+import com.blankj.utilcode.util.LogUtils;
 import com.lcodecore.tkrefreshlayout.RefreshListenerAdapter;
 import com.lcodecore.tkrefreshlayout.TwinklingRefreshLayout;
+import com.umeng.socialize.ShareAction;
 import com.yc.mema.R;
 import com.yc.mema.base.BaseActivity;
 import com.yc.mema.base.BaseFragment;
 import com.yc.mema.base.User;
+import com.yc.mema.controller.CloudApi;
 import com.yc.mema.controller.UIHelper;
 import com.yc.mema.databinding.FFiveBinding;
 import com.yc.mema.impl.FiveContract;
 import com.yc.mema.presenter.FivePresenter;
 import com.yc.mema.utils.GlideLoadingUtils;
+import com.yc.mema.utils.ShareTool;
 import com.yc.mema.view.act.ShareAct;
 
 import org.json.JSONObject;
@@ -42,6 +46,8 @@ public class FiveFrg extends BaseFragment<FivePresenter, FFiveBinding> implement
     }
 
     private boolean isRequest = true;
+
+    private ShareAction shareAction;
 
     @Override
     public void onSupportVisible() {
@@ -88,6 +94,9 @@ public class FiveFrg extends BaseFragment<FivePresenter, FFiveBinding> implement
                 mPresenter.onInfo();
             }
         });
+
+        shareAction = ShareTool.getInstance(act).shareAction(CloudApi.SHARE_BUSINESS_URL + User.getInstance().getUserId(), "你生日我买单", "海量优质商家入驻，为生日用户提供各种优惠福利。大家都在用这款炒鸡好的生日APP。");
+
     }
 
     @Override
@@ -113,10 +122,11 @@ public class FiveFrg extends BaseFragment<FivePresenter, FFiveBinding> implement
                 UIHelper.startSetAct();
                 break;
             case R.id.tv_share:
+                shareAction.open();
 //                UIHelper.startShareFrg(this);
-                ActivityUtils.startActivity(ShareAct.class);
                 break;
             case R.id.tv_apply:
+//                UIHelper.startApplyFrg(this);
                 mPresenter.onaUserAgent(this);
                 break;
             case R.id.tv_address:

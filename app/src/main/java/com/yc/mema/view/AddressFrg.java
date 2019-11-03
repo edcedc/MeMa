@@ -83,11 +83,10 @@ public class AddressFrg extends BaseFragment<InformationPresenter, FAddressBindi
         switch (type){
             case AddressInEvent.GIFT_TYPE:
             case AddressInEvent.LIWU:
-            case AddressInEvent.APPLY_TYPE:
-
                 break;
             case AddressInEvent.USER_INFP_TYPE:
             case AddressInEvent.HARVEST_ADDRESS:
+            case AddressInEvent.APPLY_TYPE:
             case AddressInEvent.TENTRY:
                 mB.gpLocate.setVisibility(View.GONE);
                 break;

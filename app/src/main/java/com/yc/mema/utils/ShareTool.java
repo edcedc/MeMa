@@ -53,6 +53,10 @@ public class ShareTool {
 
     /****************************分享***********************************/
     public ShareAction shareAction(final String url) {
+        return shareAction(url, act.getString(R.string.share_title), act.getString(R.string.share_content));
+    }
+
+    public ShareAction shareAction(final String url, String title, String content) {
         LogUtils.e(url);
         return new ShareAction(act).setDisplayList(
                 SHARE_MEDIA.WEIXIN,
@@ -62,9 +66,9 @@ public class ShareTool {
                     @Override
                     public void onclick(SnsPlatform snsPlatform, SHARE_MEDIA share_media) {
                         UMWeb web = new UMWeb(url);
-                        web.setTitle(act.getString(R.string.share_title));
-                        web.setDescription(act.getString(R.string.share_content));
-                        web.setThumb(new UMImage(act, R.mipmap.login_logo));
+                        web.setTitle(title);
+                        web.setDescription(content);
+                        web.setThumb(new UMImage(act, R.mipmap.icon_rould));
                         new ShareAction(act)
                                 .withMedia(web)
                                 .setPlatform(share_media)
