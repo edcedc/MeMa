@@ -73,6 +73,7 @@ public class TentryChildTwoFrg extends BaseFragment<TentryPresenter, FTentryChil
 
     @Override
     protected void initView(View view) {
+        setSwipeBackEnable(false);
         mB.ivImg1.setOnClickListener(this);
         mB.ivImg2.setOnClickListener(this);
         mB.ivImg3.setOnClickListener(this);

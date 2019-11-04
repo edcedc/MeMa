@@ -55,6 +55,7 @@ public class TentryChildThreeFrg extends BaseFragment<TentryPresenter, FTentryCh
 
     @Override
     protected void initView(View view) {
+        setSwipeBackEnable(false);
         mB.btSubmit.setOnClickListener(this);
         switch (type){
             case 0:

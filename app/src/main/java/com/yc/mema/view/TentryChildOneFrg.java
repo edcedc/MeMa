@@ -64,6 +64,7 @@ public class TentryChildOneFrg extends BaseFragment<TentryPresenter, FTentryChil
 
     @Override
     protected void initView(View view) {
+        setSwipeBackEnable(false);
         mB.btSubmit.setOnClickListener(this);
         mB.tvAddress.setOnClickListener(this);
         mB.tvCategory.setOnClickListener(this);

@@ -53,6 +53,7 @@ public class TentryFrg extends BaseFragment<BasePresenter, FTentryBinding> imple
     @Override
     protected void initView(View view) {
         setTitle(getString(R.string.merchant_entry), getString(R.string.help1));
+        setSwipeBackEnable(false);
         mB.tvInfo.setOnClickListener(this);
         mB.tvAudit.setOnClickListener(this);
         mB.tvQualifications.setOnClickListener(this);
@@ -103,9 +104,6 @@ public class TentryFrg extends BaseFragment<BasePresenter, FTentryBinding> imple
             mFragments[THIRD] = TentryChildTwoFrg.newInstance();
             mFragments[FOUR] = TentryChildThreeFrg.newInstance();
         }
-        setSwipeBackEnable(false);
-
-
 //        showHideFragment(mFragments[2], mFragments[1]);
     }
 

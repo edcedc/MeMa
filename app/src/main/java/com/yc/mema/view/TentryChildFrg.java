@@ -63,7 +63,7 @@ public class TentryChildFrg extends BaseFragment<TentryPresenter, FTentryChildBi
         mB.tvAgreement.setOnClickListener(this);
         mB.btSubmit.setOnClickListener(this);
         mPresenter.onList(mB.listView);
-
+        setSwipeBackEnable(false);
         ForegroundColorSpan colorSpan = new ForegroundColorSpan(Color.parseColor("#333333"));
         SpannableString hText = new SpannableString(getString(R.string.mema37));
         hText.setSpan(colorSpan, 9, 16, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
