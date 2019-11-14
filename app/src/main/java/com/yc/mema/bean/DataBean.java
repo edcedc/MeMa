@@ -102,6 +102,7 @@ public class DataBean implements Serializable {
     private String county;
     private int goodNumber;
     private String goodNum;
+    private String skuId;
     private String orderId;
     private String orderNum;
     private double allPrice;
@@ -119,6 +120,14 @@ public class DataBean implements Serializable {
     private double score;
     private int free;
     private String birthday;
+
+    public String getSkuId() {
+        return skuId;
+    }
+
+    public void setSkuId(String skuId) {
+        this.skuId = skuId;
+    }
 
     public String getBusinessId() {
         return businessId;

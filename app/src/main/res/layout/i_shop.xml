@@ -13,7 +13,7 @@
         android:layout_height="wrap_content">
 
         <com.yc.mema.weight.RoundImageView
-            android:scaleType="fitXY"
+            android:scaleType="centerCrop"
             android:id="@+id/iv_img"
             android:src="@mipmap/place_holder"
             android:layout_width="match_parent"

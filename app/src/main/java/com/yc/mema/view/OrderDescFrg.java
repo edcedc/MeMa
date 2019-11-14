@@ -101,6 +101,7 @@ public class OrderDescFrg extends BaseFragment<OrderDescPresenter, FShopDescBind
                     mPresenter.onWxPay(orderId, position);
                     break;
                 case 1:
+                    showToast("暂未开通服务");
                     break;
             }
         });

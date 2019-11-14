@@ -3,11 +3,12 @@ package com.yc.mema.weight;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.util.AttributeSet;
+import android.util.DisplayMetrics;
 import android.view.View;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 
-import com.tencent.smtt.sdk.WebSettings;
-import com.tencent.smtt.sdk.WebView;
-import com.tencent.smtt.sdk.WebViewClient;
 
 /**
  * Created by yc on 2017/12/29.
@@ -36,7 +37,7 @@ public class X5WebView extends WebView {
         // this.setWebChromeClient(chromeClient);
         // WebStorage webStorage = WebStorage.getInstance();
         initWebViewSettings(arg0);
-        this.getView().setClickable(true);
+//        this.getView().setClickable(true);
     }
 
     private void initWebViewSettings(Context context) {
@@ -63,9 +64,10 @@ public class X5WebView extends WebView {
         webSetting.setAppCacheMaxSize(Long.MAX_VALUE);
         webSetting.setPluginState(WebSettings.PluginState.ON_DEMAND);
         webSetting.setCacheMode(WebSettings.LOAD_NO_CACHE);
-        webSetting.setTextZoom(100);
+        webSetting.setTextZoom(120);
         setLayerType(View.LAYER_TYPE_NONE,null);//开启硬件加速
-    }
 
+
+    }
 
 }

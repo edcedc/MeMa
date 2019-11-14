@@ -95,7 +95,6 @@ public class FiveFrg extends BaseFragment<FivePresenter, FFiveBinding> implement
             }
         });
 
-        shareAction = ShareTool.getInstance(act).shareAction(CloudApi.SHARE_BUSINESS_URL + User.getInstance().getUserId(), "你生日我买单", "海量优质商家入驻，为生日用户提供各种优惠福利。大家都在用这款炒鸡好的生日APP。");
 
     }
 
@@ -122,6 +121,7 @@ public class FiveFrg extends BaseFragment<FivePresenter, FFiveBinding> implement
                 UIHelper.startSetAct();
                 break;
             case R.id.tv_share:
+                shareAction = ShareTool.getInstance(act).shareAction(CloudApi.SHARE_BUSINESS_URL + User.getInstance().getUserId(), "你生日我买单", "海量优质商家入驻，为生日用户提供各种优惠福利。大家都在用这款炒鸡好的生日APP。");
                 shareAction.open();
 //                UIHelper.startShareFrg(this);
                 break;

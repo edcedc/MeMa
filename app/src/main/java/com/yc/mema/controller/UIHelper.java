@@ -687,8 +687,7 @@ public final class UIHelper {
      * 立即购买/确认订单
      */
     public static void startImmediatelyFrg(BaseFragment root, List<DataBean> listBean) {
-        Type type = new TypeToken<ArrayList<DataBean>>() {
-        }.getType();
+        Type type = new TypeToken<ArrayList<DataBean>>() { }.getType();
         String json = new Gson().toJson(listBean, type);
         ImmediatelyFrg frg = new ImmediatelyFrg();
         Bundle bundle = new Bundle();

@@ -85,7 +85,7 @@ public class SearchGiftFrg extends BaseFragment<SearchGiftPresenter, FSearchGift
         if (adapter == null){
             adapter = new CollectionAdapter(act, listBean, 2);
         }
-        setRecyclerViewType(mB.recyclerView);
+        setRecyclerViewType(mB.recyclerView, R.color.white);
         mB.recyclerView.addItemDecoration(new LinearDividerItemDecoration(act, DividerItemDecoration.VERTICAL,  20));
         mB.recyclerView.setAdapter(adapter);
 
@@ -93,13 +93,13 @@ public class SearchGiftFrg extends BaseFragment<SearchGiftPresenter, FSearchGift
         setRefreshLayout(mB.refreshLayout, new RefreshListenerAdapter() {
             @Override
             public void onRefresh(TwinklingRefreshLayout refreshLayout) {
-                mPresenter.onRequest(parentId == null ? location : parentId, etSearch.getText().toString(), pagerNumber = 1);
+                mPresenter.onRequest(location, etSearch.getText().toString(), pagerNumber = 1);
             }
 
             @Override
             public void onLoadMore(TwinklingRefreshLayout refreshLayout) {
                 super.onLoadMore(refreshLayout);
-                mPresenter.onRequest(parentId == null ? location : parentId, etSearch.getText().toString(), pagerNumber += 1);
+                mPresenter.onRequest(location, etSearch.getText().toString(), pagerNumber += 1);
             }
         });
         etSearch.setOnEditorActionListener((v, actionId, event) -> {
@@ -119,7 +119,7 @@ public class SearchGiftFrg extends BaseFragment<SearchGiftPresenter, FSearchGift
             }
             return false;
         });
-        mB.tvLocation.setText(AddressBean.getInstance().getCity());
+        mB.tvLocation.setText(location);
     }
 
     @Override

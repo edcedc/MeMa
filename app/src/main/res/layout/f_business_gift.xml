@@ -36,7 +36,7 @@
                         android:id="@+id/banner"
                         android:layout_width="match_parent"
                         android:layout_height="260dp"
-                        app:image_scale_type="fit_xy"
+                        app:image_scale_type="center_crop"
                         app:indicator_drawable_selected="@color/red_F67690"
                         app:indicator_drawable_unselected="@android:color/white"
                         app:indicator_height="4dp"
@@ -175,12 +175,13 @@
                         android:max="100"
                         android:progress="0" />
 
-                    <com.yc.mema.weight.X5WebView
+                    <WebView
                         android:id="@+id/webView"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         app:layout_constraintTop_toBottomOf="@id/progressBar"
-                        tools:layout_editor_absoluteX="0dp" />
+                        tools:layout_editor_absoluteX="0dp"
+                        tools:ignore="WebViewLayout" />
 
                     <View
                         android:id="@+id/v5"
@@ -233,7 +234,6 @@
                     </FrameLayout>
 
                     <TextView
-                        android:text="xxxx"
                         android:maxLength="6"
                         android:id="@+id/top_title"
                         android:layout_width="wrap_content"

@@ -57,6 +57,7 @@ public class CustomizedAdapter extends BaseRecyclerviewAdapter<DataBean> {
         String longitude = bean.getLongitude();
         String latitude = bean.getLatitude();
         if (!StringUtils.isEmpty(longitude) && !StringUtils.isEmpty(latitude)){
+            viewHolder.tv_location.setVisibility(View.VISIBLE);
             double distanceMi = DistanceUtils.getDistanceMi(Double.valueOf(bean.getLongitude()), Double.valueOf(bean.getLatitude()), AddressBean.getInstance().getLocation(), AddressBean.getInstance().getLatitude());
             if (distanceMi >= 1000){
                 distanceMi = DistanceUtils.getDistance(Double.valueOf(bean.getLongitude()), Double.valueOf(bean.getLatitude()), AddressBean.getInstance().getLocation(), AddressBean.getInstance().getLatitude());
@@ -64,9 +65,10 @@ public class CustomizedAdapter extends BaseRecyclerviewAdapter<DataBean> {
                         "km");
             }else {
                 viewHolder.tv_location.setText((int) distanceMi +
-                        "km");
+                        "m");
             }
-
+        }else {
+            viewHolder.tv_location.setVisibility(View.GONE);
         }
 
         viewHolder.itemView.setOnClickListener(view -> {

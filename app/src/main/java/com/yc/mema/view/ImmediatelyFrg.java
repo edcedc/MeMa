@@ -51,6 +51,7 @@ public class ImmediatelyFrg extends BaseFragment<ImmediatelyPresenter, FImmediat
     private String orderId;
     private int payPosition;
     private String businessId;
+    private String skuId;
 
     @Override
     public void initPresenter() {
@@ -62,10 +63,12 @@ public class ImmediatelyFrg extends BaseFragment<ImmediatelyPresenter, FImmediat
         type = bundle.getInt("type");
         listBean = new Gson().fromJson(bundle.getString("list"), new TypeToken<ArrayList<DataBean>>() {}.getType());
         if (type == 0){
-            businessId = listBean.get(0).getBusinessId();
-            id = listBean.get(0).getGoodId();
-            sku = listBean.get(0).getGoodSku();
-            skuNum = listBean.get(0).getGoodNumber();
+            DataBean bean = listBean.get(0);
+            businessId = bean.getBusinessId();
+            id = bean.getGoodId();
+            sku = bean.getGoodSku();
+            skuNum = bean.getGoodNumber();
+            skuId = bean.getSkuId();
         }
     }
 
@@ -134,7 +137,7 @@ public class ImmediatelyFrg extends BaseFragment<ImmediatelyPresenter, FImmediat
                     }
                 }
                 if (type == 0){
-                    mPresenter.onOrder(id, addressId, sku, skuNum, allPrice, orderId, businessId);
+                    mPresenter.onOrder(id, addressId, sku, skuNum, allPrice, orderId, businessId, skuId);
                 }
                 break;
         }

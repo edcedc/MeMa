@@ -12,9 +12,9 @@ import com.blankj.utilcode.util.ToastUtils;
 import com.google.gson.Gson;
 import com.lcodecore.tkrefreshlayout.RefreshListenerAdapter;
 import com.lcodecore.tkrefreshlayout.TwinklingRefreshLayout;
-import com.tencent.smtt.sdk.WebChromeClient;
-import com.tencent.smtt.sdk.WebView;
-import com.tencent.smtt.sdk.WebViewClient;
+import android.webkit.WebChromeClient;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import com.yc.mema.R;
 import com.yc.mema.adapter.CommentAdapter;
 import com.yc.mema.base.BaseActivity;
@@ -126,6 +126,17 @@ public class NewsDescFrg extends BaseFragment<NewsDescPresenter, FNewsDescBindin
                 mB.progressBar.setVisibility(View.GONE);
                 ToastUtils.showShort("网页加载失败");
             }
+            @Override
+            public void onPageFinished(WebView view, String url) {
+                super.onPageFinished(view, url);
+                //这个是一定要加上那个的,配合scrollView和WebView的height=wrap_content属性使用
+                int w = View.MeasureSpec.makeMeasureSpec(0,
+                        View.MeasureSpec.UNSPECIFIED);
+                int h = View.MeasureSpec.makeMeasureSpec(0,
+                        View.MeasureSpec.UNSPECIFIED);
+                //重新测量
+                mB.webView.measure(w, h);
+            }
         });
         //进度条
         mB.webView.setWebChromeClient(new WebChromeClient() {
@@ -139,19 +150,7 @@ public class NewsDescFrg extends BaseFragment<NewsDescPresenter, FNewsDescBindin
                 mB.progressBar.setProgress(newProgress);
             }
         });
-        mB.webView.setWebViewClient(new WebViewClient(){
-            @Override
-            public void onPageFinished(WebView view, String url) {
-                super.onPageFinished(view, url);
-                //这个是一定要加上那个的,配合scrollView和WebView的height=wrap_content属性使用
-                int w = View.MeasureSpec.makeMeasureSpec(0,
-                        View.MeasureSpec.UNSPECIFIED);
-                int h = View.MeasureSpec.makeMeasureSpec(0,
-                        View.MeasureSpec.UNSPECIFIED);
-                //重新测量
-                mB.webView.measure(w, h);
-            }
-        });
+
         adapter.setOnClickListener(new CommentAdapter.OnClickListener() {
             @Override
             public void onSecondComment(int position, String infoId, String discussId, String pUserId) {

@@ -107,7 +107,8 @@ public class SixFrg extends BaseFragment<SixPresenter, FSixBinding> implements S
         mB.tvScreen.setOnClickListener(this);
         mB.tvSearch.setOnClickListener(this);
         mB.tvHigh.setOnClickListener(this);
-        mB.tvLocation.setText(AddressBean.getInstance().getDistrict());
+        mB.tvLocation.setText(AddressBean.getInstance().getCity());
+        county = mB.tvLocation.getText().toString();
 
         labelAdapter = new ShopLabelAdapter(act, listLabelBean);
         mB.gridView.setAdapter(labelAdapter);
@@ -163,7 +164,6 @@ public class SixFrg extends BaseFragment<SixPresenter, FSixBinding> implements S
         showLoadDataing();
         mPresenter.onBanner();
         mPresenter.onLabel();
-        county = AddressBean.getInstance().getDistrict();
 //        mPresenter.onRequest(pagerNumber = 1, low, up, type, county);
         mPresenter.onGetHomeClassify(null);
         mB.refreshLayout.setEnableRefresh(false);
@@ -282,7 +282,7 @@ public class SixFrg extends BaseFragment<SixPresenter, FSixBinding> implements S
                 });
                 break;
             case R.id.tv_search:
-                UIHelper.startSearchGiftFrg(this, null, AddressBean.getInstance().getCity());
+                UIHelper.startSearchGiftFrg(this, null, county);
                 break;
         }
     }
@@ -290,7 +290,7 @@ public class SixFrg extends BaseFragment<SixPresenter, FSixBinding> implements S
     @Subscribe
     public void onMainAddressInEvent(AddressInEvent event) {
         if (event.type != AddressInEvent.LIWU) return;
-        county = AddressBean.getInstance().getDistrict();
+        county = AddressBean.getInstance().getCity();
         mB.tvLocation.setText(county);
         mPresenter.onRequest(pagerNumber = 1, 0, 0, 1, county);
         setLabel(1);

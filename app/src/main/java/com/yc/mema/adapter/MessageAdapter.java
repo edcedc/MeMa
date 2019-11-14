@@ -176,7 +176,7 @@ public class MessageAdapter extends BaseRecyclerviewAdapter<DataBean> {
         if (viewType == 0) {
             return new SystemViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.i_system_msg, parent, false));
         } else {
-                return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.i_msg, parent, false));
+            return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.i_msg, parent, false));
         }
     }
 

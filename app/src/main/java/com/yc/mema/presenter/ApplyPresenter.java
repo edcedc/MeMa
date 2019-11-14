@@ -119,6 +119,12 @@ public class ApplyPresenter extends ApplyContract.Presenter{
             showToast(act.getString(R.string.error_));
             return;
         }
+//        mailbox
+        if (!RegexUtils.isEmail(mailbox)){
+            showToast(act.getString(R.string.please_email1));
+            return;
+        }
+
         CloudApi.agentSaveAgent(userName, wechatNum, iphone, vercoed, inviteCode, roleId, industry, county, directTeam, mailbox, imgZheng, imgFan, imgShou, cardId)
                 .doOnSubscribe(disposable -> {})
                 .observeOn(AndroidSchedulers.mainThread())

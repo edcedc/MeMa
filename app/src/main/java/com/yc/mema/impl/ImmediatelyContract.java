@@ -23,7 +23,7 @@ public interface ImmediatelyContract {
 
         public abstract void onAddress();
 
-        public abstract void onOrder(String id, String addressId, String sku, int skuNum, double allPrice, String orderId, String businessId);
+        public abstract void onOrder(String id, String addressId, String sku, int skuNum, double allPrice, String orderId, String businessId, String skuId);
 
         public abstract void onWxPay(String orderId, int po);
     }

@@ -46,6 +46,7 @@ public class ShopSkuBottonFrg extends BaseBottomSheetFrg implements View.OnClick
     private JSONObject valueIds;
     private JSONObject sku;
     private String skuId;
+    private String getSkuId;//库存ID
     private List<DataBean> specList;
     private StringBuffer sbName;
     private String skNum;
@@ -60,7 +61,7 @@ public class ShopSkuBottonFrg extends BaseBottomSheetFrg implements View.OnClick
                     return;
                 }
                 if (listener != null){
-                    listener.OnClick(sbName.toString(), num, price);
+                    listener.OnClick(sbName.toString(), num, price, getSkuId);
                     dismiss();
                 }
                 break;
@@ -96,7 +97,7 @@ public class ShopSkuBottonFrg extends BaseBottomSheetFrg implements View.OnClick
         this.listener = listener;
     }
     public interface OnClickListener{
-        void OnClick(String sku, int num, double price);
+        void OnClick(String sku, int num, double price, String skuId);
     }
 
     @Override
@@ -174,6 +175,7 @@ public class ShopSkuBottonFrg extends BaseBottomSheetFrg implements View.OnClick
                 return;
             }
             String id = sbId.deleteCharAt(length1 - 1).toString();
+            getSkuId = id;
             String value = valueIds.optString(id);
             if (!StringUtils.isEmpty(value)){
                 tvPrice.setText("");

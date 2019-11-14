@@ -60,7 +60,7 @@ public class OrderPresenter extends OrderContract.Presenter{
 
     @Override
     public void onUpdateOrder(int position, String goodId, int type) {
-        CloudApi.goodSpuSaveGoodsOrder(goodId, Constants.waitHarvest)
+        CloudApi.goodSpuSaveGoodsOrder(goodId, type)
                 .doOnSubscribe(disposable -> {mView.showLoading();})
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<Response<BaseResponseBean<DataBean>>>() {

@@ -427,7 +427,7 @@ public class CloudApi {
     /**
      * 保存编辑订单
      */
-    public static Observable<Response<BaseResponseBean<DataBean>>> goodSpuSaveGoodsOrder(String goodId, String addressId, String goodSku, int goodNum, double price, String businessId) {
+    public static Observable<Response<BaseResponseBean<DataBean>>> goodSpuSaveGoodsOrder(String goodId, String addressId, String goodSku, int goodNum, double price, String businessId, String skuId) {
         return OkGo.<BaseResponseBean<DataBean>>post(SERVLET_URL + "goodSpu/saveGoodsOrder")
                 .headers("token", ShareSessionIdCache.getInstance(Utils.getApp()).getSessionId())
                 .params("userId", ShareSessionIdCache.getInstance(Utils.getApp()).getUserId())
@@ -435,6 +435,7 @@ public class CloudApi {
                 .params("addressId", addressId)
                 .params("goodSku", goodSku)
                 .params("goodNumber", goodNum)
+                .params("specNumber", skuId)
                 .params("price", price)
                 .params("isAppraise", 0)
                 .params("businessId", businessId)

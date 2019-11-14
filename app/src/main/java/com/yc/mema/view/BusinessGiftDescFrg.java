@@ -15,9 +15,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
+import android.util.DisplayMetrics;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
+import android.webkit.WebChromeClient;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 
 import com.baidu.mapapi.model.LatLng;
 import com.blankj.utilcode.util.LogUtils;
@@ -28,9 +32,6 @@ import com.flyco.tablayout.listener.OnTabSelectListener;
 import com.google.gson.Gson;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
-import com.tencent.smtt.sdk.WebChromeClient;
-import com.tencent.smtt.sdk.WebView;
-import com.tencent.smtt.sdk.WebViewClient;
 import com.yc.mema.R;
 import com.yc.mema.adapter.CustomizedAdapter;
 import com.yc.mema.adapter.CustomizedChildAdapter;
@@ -135,7 +136,7 @@ public class BusinessGiftDescFrg extends BaseFragment<CustomizedPresenter, FBusi
 
         mB.tvTitle.setText(bean.getWalTitle());
         mB.ratingbar.setRating((float) bean.getScore());
-        mB.tvNum.setText("100" +
+        mB.tvNum.setText((int) bean.getPrice() +
                 "/人");
         mB.tvTime.setText(bean.getBusinessTime());
         mB.tvPhone.setText(bean.getIphone());
@@ -193,6 +194,7 @@ public class BusinessGiftDescFrg extends BaseFragment<CustomizedPresenter, FBusi
                     mB.progressBar.setProgress(newProgress);
                 }
             });
+
         }
 
         mB.refreshLayout.setEnableRefresh(false);

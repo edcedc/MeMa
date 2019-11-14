@@ -92,7 +92,7 @@ public class TwoFrg extends BaseFragment<TwoPresenter, FTwoBinding> implements T
         mB.rvLabel.setAdapter(labelAdapter);
         mB.rvLabel.setOnItemClickListener((adapterView, view1, i, l) -> {
             DataBean bean = listLabelBean.get(i);
-            if (bean.getId().equals("1")){
+            if (bean.getTitle().equals(act.getString(R.string.more))){
                 UIHelper.startMoreCategoryFrg(this);
             }else {
                 UIHelper.startCategoryFrg(this, bean.getId(), bean.getTitle());

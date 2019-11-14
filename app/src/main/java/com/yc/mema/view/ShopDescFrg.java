@@ -6,14 +6,14 @@ import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.style.AbsoluteSizeSpan;
 import android.view.View;
+import android.webkit.WebChromeClient;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 
 import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.StringUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.google.gson.Gson;
-import com.tencent.smtt.sdk.WebChromeClient;
-import com.tencent.smtt.sdk.WebView;
-import com.tencent.smtt.sdk.WebViewClient;
 import com.yc.mema.R;
 import com.yc.mema.adapter.ShopCommentAdapter;
 import com.yc.mema.base.BaseActivity;
@@ -47,6 +47,7 @@ public class ShopDescFrg extends BaseFragment<ShopDescPresenter, FShopBinding> i
     private double skuPrice;
     private List<DataBean> listShopBean;
     private List<DataBean> specList;
+    private String skuId;
 
     public static ShopDescFrg newInstance() {
         Bundle args = new Bundle();
@@ -83,10 +84,11 @@ public class ShopDescFrg extends BaseFragment<ShopDescPresenter, FShopBinding> i
         mB.tvImmediately.setOnClickListener(this);
         mB.tvLook.setOnClickListener(this);
         shopSkuBottonFrg = new ShopSkuBottonFrg();
-        shopSkuBottonFrg.setOnClickListener((sku, num, price) -> {
+        shopSkuBottonFrg.setOnClickListener((sku, num, price, skuId) -> {
             skuNum = num;
             skuName = sku;
             skuPrice = price;
+            this.skuId = skuId;
             mB.tvSku.setText("已选：" + sku);
             SpannableString hText = new SpannableString("¥" + price);
             hText.setSpan(new AbsoluteSizeSpan(9, true), 0, 1, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
@@ -113,7 +115,21 @@ public class ShopDescFrg extends BaseFragment<ShopDescPresenter, FShopBinding> i
                 mB.progressBar.setVisibility(View.GONE);
                 ToastUtils.showShort("网页加载失败");
             }
+
+            @Override
+            public void onPageFinished(WebView view, String url) {
+
+                super.onPageFinished(view, url);
+//                //这个是一定要加上那个的,配合scrollView和WebView的height=wrap_content属性使用
+//                int w = View.MeasureSpec.makeMeasureSpec(0,
+//                        View.MeasureSpec.UNSPECIFIED);
+//                int h = View.MeasureSpec.makeMeasureSpec(0,
+//                        View.MeasureSpec.UNSPECIFIED);
+//                //重新测量
+//                mB.webView.measure(w, h);
+            }
         });
+
         //进度条
         mB.webView.setWebChromeClient(new WebChromeClient() {
             @Override
@@ -157,6 +173,7 @@ public class ShopDescFrg extends BaseFragment<ShopDescPresenter, FShopBinding> i
                     bean.setGoodSku(skuName);
                     bean.setPrice(skuPrice);
                     bean.setGoodNumber(skuNum);
+                    bean.setSkuId(skuId);
                     bean.setAllPrice(bean.getPrice() * bean.getGoodNumber());
                 }
                 UIHelper.startImmediatelyFrg(this, listShopBean);

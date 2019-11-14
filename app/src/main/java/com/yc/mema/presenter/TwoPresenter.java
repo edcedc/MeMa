@@ -120,6 +120,14 @@ public class TwoPresenter extends TwoContract.Presenter {
                                     bean1.setId(bean.getCategoryId());
                                     listBean.add(bean1);
                                 }
+
+                                for (DataBean bean : listBean){
+                                    if (bean.getTitle().equals(act.getString(R.string.more))) {
+                                        listBean.remove(bean);
+                                        listBean.add(listBean.size(), bean);
+                                        break;
+                                    }
+                                }
                                 mView.setLabel(listBean);
                             }
                         }

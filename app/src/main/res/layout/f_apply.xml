@@ -380,9 +380,6 @@
 
                         </com.flyco.roundview.RoundFrameLayout>
 
-
-
-
                         <android.support.v7.widget.AppCompatTextView
                             android:id="@+id/tv_card"
                             style="@style/Tv15black"
@@ -409,6 +406,7 @@
                             <android.support.v7.widget.AppCompatEditText
                                 android:id="@+id/et_id"
                                 style="@style/Tv15black"
+                                android:maxLength="18"
                                 android:layout_width="match_parent"
                                 android:background="@null"
                                 android:hint="@string/upload_card2"

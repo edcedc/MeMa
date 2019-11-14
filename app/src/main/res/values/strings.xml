@@ -227,6 +227,7 @@
     <string name="cake_shop" translatable="false">蛋糕坊</string>
     <string name="please_industry" translatable="false">请输入行业</string>
     <string name="please_email" translatable="false">请输入邮箱地址</string>
+    <string name="please_email1" translatable="false">请验证邮箱是否正确</string>
     <string name="customized" translatable="false">为你定制</string>
     <string name="sorting" translatable="false">综合排序</string>
     <string name="upload_card" translatable="false">上传身份证</string>

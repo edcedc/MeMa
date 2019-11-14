@@ -1,29 +1,23 @@
 package com.yc.mema.view;
 
-import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v4.view.ViewPager;
-import android.support.v7.widget.OrientationHelper;
-import android.util.SparseArray;
 import android.view.View;
-import android.view.ViewGroup;
+
 import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.TimeUtils;
 import com.lcodecore.tkrefreshlayout.RefreshListenerAdapter;
 import com.lcodecore.tkrefreshlayout.TwinklingRefreshLayout;
-import com.ldf.calendar.Utils;
 import com.ldf.calendar.component.CalendarAttr;
 import com.ldf.calendar.component.CalendarViewAdapter;
 import com.ldf.calendar.interf.OnSelectDateListener;
 import com.ldf.calendar.model.CalendarDate;
 import com.ldf.calendar.view.Calendar;
 import com.ldf.calendar.view.MonthPager;
-import com.yc.mema.CustomDayView;
+import com.yc.mema.weight.CustomDayView;
 import com.yc.mema.R;
 import com.yc.mema.adapter.BirthdayRecordsAdapter;
 import com.yc.mema.base.BaseFragment;
-import com.yc.mema.base.BasePresenter;
 import com.yc.mema.bean.DataBean;
 import com.yc.mema.controller.UIHelper;
 import com.yc.mema.databinding.FBirthdayRecordsBinding;
@@ -31,19 +25,14 @@ import com.yc.mema.impl.BirthdayRecordsContract;
 import com.yc.mema.listeners.OnAdapterClickListener;
 import com.yc.mema.presenter.BirthdayRecordsPresenter;
 import com.yc.mema.utils.DatePickerUtils;
-import com.yc.mema.utils.DigitalConversionUtils;
 import com.yc.mema.utils.PopupWindowTool;
-import com.yc.mema.utils.TimeUtil;
 import com.zaaach.toprightmenu.MenuItem;
-import com.zaaach.toprightmenu.TopRightMenu;
 import com.zaaach.toprightmenu.TopRightMenuTool;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Set;
-import java.util.TreeSet;
 
 /**
  * Created by Android Studio.

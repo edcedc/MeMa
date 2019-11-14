@@ -51,7 +51,8 @@ public class MessagePresenter extends MessageContract.Presenter{
 
                     @Override
                     public void onError(Throwable e) {
-                        mView.onError(e);
+//                        mView.onError(e);
+                        mView.hideLoading();
                     }
 
                     @Override

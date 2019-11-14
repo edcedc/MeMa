@@ -73,7 +73,7 @@ public class ConfirmOrdersAdapter extends BaseRecyclerviewAdapter<DataBean> {
             viewHolder.gp_order_num.setVisibility(View.GONE);
         }else {
             viewHolder.gp_order_bottom.setVisibility(View.VISIBLE);
-            viewHolder.gp_order_num.setVisibility(position == 0 ? View.VISIBLE : View.GONE);
+            viewHolder.gp_order_num.setVisibility(View.VISIBLE);
             viewHolder.tv_order_num.setText("订单编号：" + orderNum);
             switch (bean.getStatus()){
                 case Constants.waitPay:

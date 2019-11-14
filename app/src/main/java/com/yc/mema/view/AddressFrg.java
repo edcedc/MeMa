@@ -112,7 +112,7 @@ public class AddressFrg extends BaseFragment<InformationPresenter, FAddressBindi
         setRecyclerViewType(mB.recyclerView);
         mB.recyclerView.setAdapter(adapter);
         showLoadDataing();
-        mPresenter.onRequest(null);
+        mPresenter.onRequest("100");
         adapter.setOnClickListener((parentId, address, regionLevel, position) -> {
             isLocation = false;
 //            mB.gpLocate.setVisibility(View.GONE);
