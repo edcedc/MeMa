@@ -20,6 +20,7 @@ import com.yc.mema.utils.Constants;
 import com.yc.mema.view.bottomFrg.ComplaintBottomFrg;
 import com.zhy.view.flowlayout.FlowLayout;
 import com.zhy.view.flowlayout.TagAdapter;
+import com.zhy.view.flowlayout.TagFlowLayout;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -82,6 +83,7 @@ public class GiftDescFrg extends BaseFragment<GiftDescPresenter, FGiftBinding> i
             if (!((BaseActivity)act).isLogin())return;
             UIHelper.startComplaintFrg(GiftDescFrg.this, id, Constants.CAUSES_WELFARE_COMPLAINTS);
         });
+
     }
 
     @Override
@@ -130,6 +132,7 @@ public class GiftDescFrg extends BaseFragment<GiftDescPresenter, FGiftBinding> i
                     return view;
                 }
             });
+
         }
         List<DataBean> welfareImgs = bean.getWelfareImgs();
         if (welfareImgs != null && welfareImgs.size() != 0){

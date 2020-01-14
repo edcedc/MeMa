@@ -104,6 +104,7 @@ public class LoginFrg extends BaseFragment<LoginPresenter, FLoginBinding> implem
             public void onTabReselect(int position) {
             }
         });
+
     }
 
     @Override

@@ -43,10 +43,10 @@ public class CloudApi {
 
     private static final String url =
 //            "192.168.43.65";
-            "47.106.179.240";
+            "52.83.45.219";
 
     public static final String SERVLET_URL = "http://" +
-            url + ":8080/brithday/";
+            url + "/brithday/";
 
     //物流地址
     public static final String WULIU_URL = "http://" +

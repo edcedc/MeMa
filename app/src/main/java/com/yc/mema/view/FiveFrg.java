@@ -12,6 +12,7 @@ import com.yc.mema.R;
 import com.yc.mema.base.BaseActivity;
 import com.yc.mema.base.BaseFragment;
 import com.yc.mema.base.User;
+import com.yc.mema.bean.DataBean;
 import com.yc.mema.controller.CloudApi;
 import com.yc.mema.controller.UIHelper;
 import com.yc.mema.databinding.FFiveBinding;
@@ -55,8 +56,19 @@ public class FiveFrg extends BaseFragment<FivePresenter, FFiveBinding> implement
         if (isRequest) {
             if (!((BaseActivity) act).isLogin()) return;
             mB.refreshLayout.startRefresh();
+            mB.refreshLayout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                }
+            });
         }
         setData(User.getInstance().getUserObj());
+        String s = "";
+        String[] split = s.split(",");
+        for (int i = 0;i < split.length;i++){
+
+        }
     }
 
 

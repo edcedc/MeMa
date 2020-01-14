@@ -132,11 +132,11 @@ public class ApplyFrg extends BaseFragment<ApplyPresenter, FApplyBinding> implem
         new CountDownTimerUtils(act, 60000, 1000, mB.tvCode).start();
     }
 
-    @Subscribe
-    public void onMainAddressInEvent(AddressInEvent event){
-        county = event.parentId;
-        mB.tvRegion.setText(AddressBean.getInstance().getProvince() + " " + AddressBean.getInstance().getCity() + " " + AddressBean.getInstance().getDistrict());
-    }
+        @Subscribe
+        public void onMainAddressInEvent(AddressInEvent event){
+            county = event.parentId;
+            mB.tvRegion.setText(AddressBean.getInstance().getProvince() + " " + AddressBean.getInstance().getCity() + " " + AddressBean.getInstance().getDistrict());
+        }
 
     @Override
     public void onDestroy() {
